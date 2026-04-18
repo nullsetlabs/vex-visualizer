@@ -37,10 +37,10 @@ PROGRAM_ID = 1
 
 # Push Back 2025-2026 season ID
 # Verify at: https://www.robotevents.com/api/v2/seasons?program%5B%5D=1
-SEASON_ID = 190  # Update if needed
+SEASON_ID = 197  # Push Back 2025-2026
 
 # Worlds 2026 event ID — REQUIRED for Worlds-specific data
-# Find it: https://www.robotevents.com/api/v2/events?program%5B%5D=1&season%5B%5D=190&level%5B%5D=World
+# Find it: https://www.robotevents.com/api/v2/events?program%5B%5D=1&season%5B%5D=197&level%5B%5D=World
 # Or search RobotEvents for "VEX Worlds 2026"
 WORLDS_EVENT_ID = None  # e.g., 54321 — set this once you know it
 
