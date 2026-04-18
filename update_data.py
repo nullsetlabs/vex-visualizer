@@ -61,6 +61,7 @@ DIVISION_NAMES = [
 HEADERS = {
     "Authorization": f"Bearer {TOKEN}",
     "Accept": "application/json",
+    "User-Agent": "VEX-Visualizer/1.0 (GitHub Actions; +https://github.com/arjun-mohanan/vex-visualizer)",
 }
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
