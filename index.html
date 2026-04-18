@@ -2,8 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>VEX Visualizer - Worlds 2026</title>
+
+<!-- Open Graph / Link Preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arjun-mohanan.github.io/vex-visualizer/">
+<meta property="og:title" content="VEX Visualizer - Worlds 2026">
+<meta property="og:description" content="Your Worlds 2026 Command Center. 866 teams, 10 divisions, color-coded by skill tier. Every team. Every stat. Game on.">
+<meta property="og:image" content="https://arjun-mohanan.github.io/vex-visualizer/og-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="VEX Visualizer">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VEX Visualizer - Worlds 2026">
+<meta name="twitter:description" content="Your Worlds 2026 Command Center. 866 teams, 10 divisions, color-coded by skill tier. Every team. Every stat. Game on.">
+<meta name="twitter:image" content="https://arjun-mohanan.github.io/vex-visualizer/og-preview.png">
+
+<!-- General Meta -->
+<meta name="description" content="Interactive VEX Worlds 2026 dashboard featuring 866 teams across 10 divisions. Search teams, compare stats, explore robot types for the Push Back season.">
+<meta name="author" content="Arjun Mohanan">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
 
@@ -30,6 +50,7 @@
     --highlight: #fbbf24;
     --red: #ef4444;
     --green: #22c55e;
+    --bottom-nav-h: 0px;
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -39,43 +60,82 @@
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
+    padding-bottom: var(--bottom-nav-h);
   }
 
-  /* Header */
+  /* ===== HEADER ===== */
   .hero {
     background: linear-gradient(135deg, #1a1040 0%, #0f172a 50%, #0c1a2e 100%);
     border-bottom: 1px solid var(--border);
-    padding: 28px 32px 20px;
+    padding: 16px 24px 12px;
     position: sticky; top: 0; z-index: 100;
   }
   .hero-inner { max-width: 1600px; margin: 0 auto; }
-  .hero-brand { display: flex; align-items: center; gap: 14px; }
+  .hero-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .hero-brand { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
   .hero-logo {
-    width: 44px; height: 44px; border-radius: 12px;
+    width: 40px; height: 40px; border-radius: 10px;
     background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 4px 16px rgba(99,102,241,0.3);
     flex-shrink: 0;
   }
-  .hero-logo svg { width: 26px; height: 26px; }
-  .hero-titles { flex: 1; }
+  .hero-logo svg { width: 24px; height: 24px; }
+  .hero-titles { flex: 1; min-width: 0; }
   .hero h1 {
-    font-size: 26px; font-weight: 800;
-    background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+    font-size: 22px; font-weight: 800;
+    background: linear-gradient(
+      90deg,
+      #818cf8 0%, #c084fc 15%, #f0abfc 30%,
+      #fde68a 45%, #fff 50%,
+      #fde68a 55%, #f0abfc 70%, #c084fc 85%, #818cf8 100%
+    );
+    background-size: 200% 100%;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: shimmer 3s ease-in-out infinite;
     letter-spacing: -0.5px;
+    position: relative;
+    display: inline-block;
+  }
+  .hero h1::after {
+    content: '';
+    position: absolute;
+    inset: -2px -6px;
+    background: linear-gradient(
+      105deg,
+      transparent 0%, transparent 40%,
+      rgba(255,255,255,0.08) 45%,
+      rgba(255,255,255,0.18) 50%,
+      rgba(255,255,255,0.08) 55%,
+      transparent 60%, transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer-glow 3s ease-in-out infinite;
+    border-radius: 4px;
+    pointer-events: none;
   }
   .hero-tagline {
-    font-size: 13px; font-weight: 500; margin-top: 2px;
-    color: var(--text-dim);
-    letter-spacing: 0.3px;
+    font-size: 12px; font-weight: 500; margin-top: 1px;
+    color: var(--text-dim); letter-spacing: 0.3px;
   }
   .hero-tagline em { font-style: normal; color: var(--highlight); font-weight: 600; }
-  .hero-sub { color: var(--text-dim); font-size: 12px; margin-top: 6px; }
+  .hero-sub { color: var(--text-dim); font-size: 11px; margin-top: 4px; }
   .hero-sub span { color: var(--accent2); font-weight: 600; }
-  .hero-credit { font-size: 13px; color: var(--text-dim); margin-top: 4px; letter-spacing: 0.3px; }
+
+  /* 6121E highlight button */
+  .btn-6121e {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;
+    background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.1));
+    border: 1.5px solid var(--highlight); color: var(--highlight);
+    cursor: pointer; transition: all 0.25s; white-space: nowrap;
+    font-family: inherit; flex-shrink: 0;
+  }
+  .btn-6121e:hover { background: rgba(251,191,36,0.25); box-shadow: 0 0 16px rgba(251,191,36,0.2); }
+
+  /* Dev name shimmer */
   .dev-name {
-    font-weight: 800; font-size: 15px;
+    font-weight: 800; font-size: 14px;
     background: linear-gradient(
       90deg,
       #818cf8 0%, #c084fc 15%, #f0abfc 30%,
@@ -118,8 +178,39 @@
     100% { background-position: 200% 50%; }
   }
 
+  /* ===== STICKY SEARCH BAR ===== */
+  .sticky-search {
+    position: sticky; top: 0; z-index: 99;
+    background: linear-gradient(135deg, #1a1040ee, #0f172aee);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 24px;
+    display: none;
+  }
+  .sticky-search.visible { display: block; }
+  .sticky-search .search-inner {
+    max-width: 1600px; margin: 0 auto;
+    display: flex; gap: 8px; align-items: center;
+  }
+
+  /* ===== SEARCH ===== */
+  .search-bar {
+    margin-top: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  }
+  .search-wrapper { position: relative; flex: 1; min-width: 200px; }
+  .search-input {
+    background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08));
+    border: 2px solid var(--accent);
+    color: var(--text); padding: 9px 14px; border-radius: 10px;
+    font-size: 13px; width: 100%; outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 0 16px rgba(99,102,241,0.15), inset 0 1px 2px rgba(0,0,0,0.2);
+    transition: all 0.25s;
+  }
+  .search-input:focus { border-color: var(--highlight); box-shadow: 0 0 20px rgba(251,191,36,0.2), inset 0 1px 2px rgba(0,0,0,0.2); }
+  .search-input::placeholder { color: #7c85a0; }
+
   /* Autocomplete */
-  .search-wrapper { position: relative; }
   .autocomplete-list {
     position: absolute; top: 100%; left: 0; right: 0;
     background: var(--surface2); border: 1px solid var(--border);
@@ -138,36 +229,7 @@
   .ac-item .ac-name { color: var(--text-dim); font-size: 11px; }
   .ac-item .ac-div { font-size: 10px; padding: 2px 8px; border-radius: 10px; background: var(--surface); color: var(--text-dim); }
 
-  /* Navigation tabs */
-  .nav-tabs {
-    display: flex; gap: 6px; margin-top: 16px; flex-wrap: wrap;
-  }
-  .nav-tab {
-    padding: 7px 16px; border-radius: 8px; font-size: 12.5px; font-weight: 600;
-    background: var(--surface); border: 1px solid var(--border);
-    color: var(--text-dim); cursor: pointer; transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .nav-tab:hover { background: var(--surface2); color: var(--text); }
-  .nav-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .nav-tab.focus-tab { border-color: var(--highlight); color: var(--highlight); }
-  .nav-tab.focus-tab.active { background: #92400e; border-color: var(--highlight); color: #fff; }
-
-  /* Search */
-  .search-bar {
-    margin-top: 12px; display: flex; gap: 10px; align-items: center;
-  }
-  .search-bar input {
-    background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08));
-    border: 2px solid var(--accent);
-    color: var(--text); padding: 10px 16px; border-radius: 10px;
-    font-size: 13px; width: 300px; outline: none;
-    font-family: 'JetBrains Mono', monospace;
-    box-shadow: 0 0 16px rgba(99,102,241,0.15), inset 0 1px 2px rgba(0,0,0,0.2);
-    transition: all 0.25s;
-  }
-  .search-bar input:focus { border-color: var(--highlight); box-shadow: 0 0 20px rgba(251,191,36,0.2), inset 0 1px 2px rgba(0,0,0,0.2); }
-  .search-bar input::placeholder { color: #7c85a0; }
+  /* Filter chips */
   .filter-chips { display: flex; gap: 5px; flex-wrap: wrap; }
   .chip {
     padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
@@ -180,34 +242,82 @@
   .chip.rising { background: var(--rising-bg); color: var(--rising); border-color: rgba(100,116,139,0.3); }
   .chip.active { outline: 2px solid currentColor; outline-offset: 1px; }
 
-  /* Main Content */
-  .main { max-width: 1600px; margin: 0 auto; padding: 24px 32px 60px; }
+  /* ===== DIVISION TABS (horizontal scroll) ===== */
+  .div-tabs-wrap {
+    margin-top: 8px; display: flex; gap: 6px; overflow-x: auto;
+    scrollbar-width: none; -ms-overflow-style: none;
+    padding-bottom: 4px;
+  }
+  .div-tabs-wrap::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-dim); cursor: pointer; transition: all 0.2s;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .nav-tab:hover { background: var(--surface2); color: var(--text); }
+  .nav-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-  /* Division overview banner */
+  /* ===== MAIN CONTENT ===== */
+  .main { max-width: 1600px; margin: 0 auto; padding: 20px 24px 40px; }
+
+  /* ===== DIVISION OVERVIEW CARDS (Landing) ===== */
+  .division-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .div-card {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+    border: 1px solid var(--border); border-radius: 14px;
+    padding: 20px; cursor: pointer; transition: all 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .div-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .div-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px rgba(99,102,241,0.15);
+  }
+  .div-card-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .div-card-sub { font-size: 11px; color: var(--text-dim); margin-bottom: 14px; }
+  .div-card-stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+  }
+  .div-card-stat { text-align: center; padding: 8px; background: var(--surface3); border-radius: 8px; }
+  .div-card-stat .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px; font-weight: 800; color: var(--accent2);
+  }
+  .div-card-stat .lbl { font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* ===== DIVISION BANNER ===== */
   .div-banner {
     background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
     border: 1px solid var(--border); border-radius: 14px;
-    padding: 20px 24px; margin-bottom: 20px;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    padding: 18px 20px; margin-bottom: 16px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
   }
-  .div-banner h2 { font-size: 20px; font-weight: 700; }
-  .div-banner .stat-row { display: flex; gap: 24px; }
+  .div-banner h2 { font-size: 18px; font-weight: 700; }
+  .div-banner .stat-row { display: flex; gap: 20px; }
   .div-banner .stat-item { text-align: center; }
-  .div-banner .stat-val { font-size: 22px; font-weight: 800; color: var(--accent2); font-family: 'JetBrains Mono', monospace; }
-  .div-banner .stat-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+  .div-banner .stat-val { font-size: 20px; font-weight: 800; color: var(--accent2); font-family: 'JetBrains Mono', monospace; }
+  .div-banner .stat-label { font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
 
-  /* Team Grid */
+  /* ===== TEAM GRID ===== */
   .team-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     gap: 10px;
   }
-
   .team-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 14px;
+    padding: 12px;
     cursor: pointer;
     transition: all 0.25s;
     position: relative;
@@ -222,7 +332,6 @@
   .team-card.competitive::before { background: var(--competitive); }
   .team-card.developing::before { background: var(--developing); }
   .team-card.rising::before { background: var(--rising); }
-
   .team-card:hover {
     transform: translateY(-3px);
     border-color: var(--accent);
@@ -234,31 +343,31 @@
   }
   .team-card .tc-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 16px; font-weight: 700;
+    font-size: 15px; font-weight: 700;
   }
-  .team-card .tc-name { font-size: 11px; color: var(--text-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .team-card .tc-name { font-size: 10px; color: var(--text-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .team-card .tc-ts {
-    margin-top: 8px;
+    margin-top: 6px;
     display: flex; justify-content: space-between; align-items: baseline;
   }
-  .team-card .tc-ts-val { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 800; }
+  .team-card .tc-ts-val { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 800; }
   .team-card.elite .tc-ts-val { color: var(--elite); }
   .team-card.contender .tc-ts-val { color: var(--contender); }
   .team-card.competitive .tc-ts-val { color: var(--competitive); }
   .team-card.developing .tc-ts-val { color: var(--developing); }
   .team-card.rising .tc-ts-val { color: var(--rising); }
   .team-card .tc-ts-label { font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
-  .team-card .tc-region { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+  .team-card .tc-region { font-size: 10px; color: var(--text-dim); margin-top: 3px; }
   .team-card .tc-wr {
-    font-size: 11px; margin-top: 6px;
-    display: flex; gap: 8px;
+    font-size: 10px; margin-top: 4px;
+    display: flex; gap: 6px;
   }
   .team-card .tc-wr .w { color: var(--green); font-weight: 600; }
   .team-card .tc-wr .l { color: var(--red); font-weight: 600; }
   .team-card .tier-badge {
-    position: absolute; top: 10px; right: 10px;
+    position: absolute; top: 8px; right: 8px;
     font-size: 8px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; padding: 2px 8px; border-radius: 10px;
+    letter-spacing: 1px; padding: 2px 7px; border-radius: 10px;
   }
   .team-card.elite .tier-badge { background: var(--elite-bg); color: var(--elite); }
   .team-card.contender .tier-badge { background: var(--contender-bg); color: var(--contender); }
@@ -266,101 +375,90 @@
   .team-card.developing .tier-badge { background: var(--developing-bg); color: var(--developing); }
   .team-card.rising .tier-badge { background: var(--rising-bg); color: var(--rising); }
 
-  /* Detail Panel (inline) */
-
+  /* ===== DETAIL PANEL ===== */
   .dp-meta-row {
-    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
   }
   .dp-meta-tag {
     padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
     background: var(--surface2); border: 1px solid var(--border);
   }
-
   .stat-tiles {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px; margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px; margin-bottom: 16px;
   }
   .stat-tile {
     background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 10px; padding: 12px; text-align: center;
+    border-radius: 10px; padding: 10px; text-align: center;
   }
   .stat-tile .st-val {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 22px; font-weight: 800;
+    font-size: 20px; font-weight: 800;
   }
   .stat-tile .st-label {
-    font-size: 10px; color: var(--text-dim);
-    text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;
+    font-size: 9px; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px;
   }
   .stat-tile.highlight { border-color: var(--accent); background: rgba(99,102,241,0.08); }
   .stat-tile.highlight .st-val { color: var(--accent2); }
 
   /* Bar chart */
-  .bar-section { margin-bottom: 20px; }
-  .bar-section h3 { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
-  .bar-row {
-    display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
-  }
-  .bar-label { font-size: 11px; width: 80px; text-align: right; color: var(--text-dim); font-weight: 500; }
-  .bar-track { flex: 1; height: 20px; background: var(--surface3); border-radius: 6px; overflow: hidden; position: relative; }
+  .bar-section { margin-bottom: 16px; }
+  .bar-section h3 { font-size: 12px; font-weight: 700; margin-bottom: 8px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .bar-label { font-size: 10px; width: 70px; text-align: right; color: var(--text-dim); font-weight: 500; }
+  .bar-track { flex: 1; height: 18px; background: var(--surface3); border-radius: 6px; overflow: hidden; position: relative; }
   .bar-fill { height: 100%; border-radius: 6px; transition: width 0.6s ease; position: relative; }
-  .bar-fill span { position: absolute; right: 8px; top: 2px; font-size: 11px; font-weight: 700; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+  .bar-fill span { position: absolute; right: 6px; top: 1px; font-size: 10px; font-weight: 700; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
 
-  /* Robot type section */
-  .robot-section { margin-top: 20px; }
-  .robot-section h3 { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
-  .robot-info-card {
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 12px; padding: 16px;
+  /* ===== 6121E COMPACT CARD (modal overlay) ===== */
+  .overlay-6121e {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 16px;
   }
-  .robot-info-card .ric-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-  .robot-info-card .ric-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
-  .robot-info-card .ric-link {
-    display: inline-block; margin-top: 8px;
-    font-size: 11px; color: var(--accent2);
-    text-decoration: none; font-weight: 600;
+  .overlay-6121e.open { display: flex; }
+  .card-6121e {
+    background: linear-gradient(135deg, #1a1040 0%, #0f172a 50%, #1a1040 100%);
+    border: 2px solid var(--highlight); border-radius: 16px;
+    padding: 20px; max-width: 480px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    position: relative;
   }
-  .robot-info-card .ric-link:hover { text-decoration: underline; }
+  .card-6121e-close {
+    position: absolute; top: 10px; right: 12px;
+    background: none; border: none; color: var(--text-dim);
+    font-size: 22px; cursor: pointer; line-height: 1;
+  }
+  .card-6121e h2 {
+    font-size: 20px; font-weight: 800;
+    background: linear-gradient(135deg, var(--highlight), #f97316);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .card-6121e .mini-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px;
+  }
+  .card-6121e .mini-stat {
+    text-align: center; padding: 8px 4px;
+    background: rgba(99,102,241,0.06); border: 1px solid var(--border); border-radius: 8px;
+  }
+  .card-6121e .mini-stat .v {
+    font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 800; color: var(--accent2);
+  }
+  .card-6121e .mini-stat .k { font-size: 8px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .card-6121e .links-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .card-6121e .links-row a, .card-6121e .links-row span {
+    font-size: 11px; font-weight: 600; padding: 5px 12px;
+    border-radius: 6px; text-decoration: none; cursor: pointer;
+    border: 1px solid var(--border);
+  }
 
-  /* Robot Type Explorer tab */
-  .robot-type-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 14px;
-  }
-  .rt-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 20px; cursor: pointer;
-    transition: all 0.25s;
-  }
-  .rt-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .rt-card .rt-icon { font-size: 32px; margin-bottom: 8px; }
-  .rt-card .rt-name { font-size: 16px; font-weight: 700; }
-  .rt-card .rt-desc { font-size: 12px; color: var(--text-dim); margin-top: 6px; line-height: 1.5; }
-  .rt-card .rt-count { font-size: 11px; color: var(--accent2); font-weight: 600; margin-top: 10px; }
-
-  .rt-teams-panel {
-    margin-top: 16px; padding: 16px;
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 12px; display: none;
-  }
-  .rt-teams-panel.open { display: block; }
-  .rt-teams-panel h4 { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
-  .rt-team-list {
-    display: flex; flex-wrap: wrap; gap: 6px;
-  }
-  .rt-team-chip {
-    padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
-    font-family: 'JetBrains Mono', monospace; cursor: pointer; transition: all 0.2s;
-    border: 1px solid transparent;
-  }
-  .rt-team-chip:hover { transform: scale(1.05); }
-
-  /* 6121E Spotlight */
+  /* ===== SPOTLIGHT (reused in detail) ===== */
   .spotlight {
     background: linear-gradient(135deg, #1a1040 0%, #0f172a 50%, #1a1040 100%);
     border: 2px solid var(--highlight);
-    border-radius: 18px; padding: 28px; margin-bottom: 24px;
+    border-radius: 16px; padding: 20px; margin-bottom: 20px;
     position: relative; overflow: hidden;
   }
   .spotlight::before {
@@ -368,29 +466,50 @@
     background: radial-gradient(circle at 20% 50%, rgba(251,191,36,0.06) 0%, transparent 60%);
   }
   .spotlight h2 {
-    font-size: 24px; font-weight: 800;
+    font-size: 22px; font-weight: 800;
     background: linear-gradient(135deg, var(--highlight), #f97316);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     position: relative;
   }
-  .spotlight .sp-sub { color: var(--text-dim); font-size: 13px; margin-top: 4px; position: relative; }
+  .spotlight .sp-sub { color: var(--text-dim); font-size: 12px; margin-top: 3px; position: relative; }
+
+  /* ===== ROBOT TYPE EXPLORER ===== */
+  .robot-type-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .rt-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px; cursor: pointer;
+    transition: all 0.25s;
+  }
+  .rt-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .rt-card .rt-icon { font-size: 28px; margin-bottom: 6px; }
+  .rt-card .rt-name { font-size: 15px; font-weight: 700; }
+  .rt-card .rt-desc { font-size: 11px; color: var(--text-dim); margin-top: 6px; line-height: 1.5; }
+  .rt-card .rt-count { font-size: 11px; color: var(--accent2); font-weight: 600; margin-top: 8px; }
+  .rt-teams-panel {
+    margin-top: 12px; padding: 14px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; display: none;
+  }
+  .rt-teams-panel.open { display: block; }
+  .rt-teams-panel h4 { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+  .rt-team-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .rt-team-chip {
+    padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    font-family: 'JetBrains Mono', monospace; cursor: pointer; transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .rt-team-chip:hover { transform: scale(1.05); }
 
   /* Tab content panels */
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 
-  /* Footer */
-  .footer {
-    text-align: center; padding: 20px;
-    border-top: 1px solid var(--border);
-    font-size: 11px; color: var(--text-dim);
-    margin-top: 40px;
-  }
-  .footer strong { color: var(--text); }
-
   /* Sort Controls */
   .sort-bar {
-    display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+    display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;
   }
   .sort-bar label { font-size: 11px; color: var(--text-dim); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .sort-select {
@@ -414,63 +533,132 @@
 
   /* Legend */
   .legend {
-    display: flex; gap: 16px; flex-wrap: wrap;
-    margin-bottom: 16px; padding: 12px 16px;
+    display: flex; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 12px; padding: 10px 14px;
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 10px;
   }
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
-  /* Scrollbar */
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center; padding: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 11px; color: var(--text-dim);
+    margin-top: 30px;
+  }
+  .footer strong { color: var(--text); }
+
+  /* ===== BOTTOM NAV (mobile only) ===== */
+  .bottom-nav {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(180deg, #111827f0, #0a0e1af8);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    z-index: 200;
+    padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px));
+  }
+  .bottom-nav-inner {
+    display: flex; justify-content: space-around; align-items: center;
+    max-width: 500px; margin: 0 auto;
+  }
+  .bnav-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    background: none; border: none; color: var(--text-dim);
+    font-size: 9px; font-weight: 600; font-family: inherit;
+    cursor: pointer; padding: 6px 8px; min-width: 56px; min-height: 44px;
+    border-radius: 8px; transition: all 0.2s;
+  }
+  .bnav-btn svg { width: 22px; height: 22px; }
+  .bnav-btn.active { color: var(--accent2); }
+  .bnav-btn:active { background: rgba(99,102,241,0.1); }
+
+  /* ===== SCROLLBAR ===== */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-  /* Responsive */
+  /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
-    .hero { padding: 12px 14px; }
-    .hero h1 { font-size: 18px; }
-    .hero-sub { font-size: 11px; }
-    .main { padding: 12px 14px; }
-    .team-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
-    .stat-tiles { grid-template-columns: repeat(2, 1fr); }
-    .nav-tabs { gap: 4px; }
-    .nav-tab { padding: 6px 10px; font-size: 11px; }
-    .search-bar { flex-direction: column; }
-    .search-wrapper { width: 100%; }
-    .search-bar input { width: 100%; }
+    :root { --bottom-nav-h: 64px; }
+    .bottom-nav { display: block; }
+    .hero { padding: 10px 12px 8px; }
+    .hero h1 { font-size: 16px; }
+    .hero-tagline { font-size: 10px; }
+    .hero-sub { font-size: 10px; }
+    .btn-6121e { padding: 5px 10px; font-size: 11px; }
+    .main { padding: 12px 10px 30px; }
+    .sticky-search { padding: 6px 10px; }
+    .division-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .div-card { padding: 14px; }
+    .div-card-name { font-size: 15px; }
+    .div-card-stats { gap: 6px; }
+    .div-card-stat .val { font-size: 15px; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .team-card { padding: 10px; }
+    .team-card .tc-num { font-size: 13px; }
+    .team-card .tc-ts-val { font-size: 16px; }
+    .stat-tiles { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .stat-tile { padding: 8px; }
+    .stat-tile .st-val { font-size: 16px; }
+    .div-tabs-wrap { gap: 4px; }
+    .nav-tab { padding: 5px 10px; font-size: 11px; }
+    .search-bar { flex-direction: column; gap: 6px; }
+    .search-wrapper { width: 100%; min-width: unset; }
     .filter-chips { justify-content: flex-start; }
-    .div-banner { flex-direction: column; gap: 12px; }
-    .div-banner .stat-row { justify-content: flex-start; gap: 16px; }
-    .spotlight { padding: 16px; }
-    .spotlight h2 { font-size: 20px; }
-    .bar-label { width: 60px; font-size: 10px; }
+    .div-banner { flex-direction: column; gap: 10px; padding: 14px; }
+    .div-banner .stat-row { justify-content: flex-start; gap: 14px; }
+    .div-banner h2 { font-size: 16px; }
+    .spotlight { padding: 14px; border-radius: 12px; }
+    .spotlight h2 { font-size: 18px; }
+    .bar-label { width: 55px; font-size: 9px; }
+    .robot-type-grid { grid-template-columns: 1fr; }
+    .card-6121e { padding: 16px; }
+    .card-6121e .mini-stats { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+    .card-6121e .mini-stat .v { font-size: 13px; }
+    .legend { gap: 8px; padding: 8px 10px; }
+    .legend-item { font-size: 9px; }
+    .hero-credit-wrap { display: none; }
+  }
+
+  @media (max-width: 400px) {
+    .division-grid { grid-template-columns: 1fr; }
+    .card-6121e .mini-stats { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
 <body>
 
-<div class="hero">
+<!-- ===== HEADER ===== -->
+<div class="hero" id="heroBar">
   <div class="hero-inner">
-    <div class="hero-brand">
-      <div class="hero-logo">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white" opacity="0.9"/>
-          <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-          <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
-        </svg>
+    <div class="hero-top">
+      <div class="hero-brand">
+        <div class="hero-logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white" opacity="0.9"/>
+            <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+            <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="hero-titles">
+          <h1>VEX Visualizer - Worlds 2026</h1>
+          <div class="hero-tagline">Your Worlds 2026 Command Center. <em>Every team. Every stat. Game on.</em></div>
+        </div>
       </div>
-      <div class="hero-titles">
-        <h1>VEX Visualizer - Worlds 2026</h1>
-        <div class="hero-tagline">Your Worlds 2026 Command Center. <em>Every team. Every stat. Game on.</em></div>
-        <div class="hero-credit">Developed by <a href="https://www.worldcubeassociation.org/persons/2022MOHA07" target="_blank" class="dev-name" style="text-decoration:none;cursor:pointer" title="View Arjun's WCA Profile">Arjun Mohanan</a></div>
-      </div>
+      <button class="btn-6121e" onclick="show6121E()">&#9733; 6121E Conestoga</button>
     </div>
     <div class="hero-sub">2145 Division Predictor &bull; <span>866 High School Teams</span> &bull; Push Back Season (2025-2026) &bull; True Skill data from 03/23</div>
-    <div class="nav-tabs" id="navTabs">
-      <div class="nav-tab focus-tab active" data-tab="spotlight" onclick="switchTab('spotlight')">★ 6121E Spotlight</div>
+    <div class="hero-credit-wrap" style="margin-top:2px">
+      <span style="font-size:12px;color:var(--text-dim)">Developed by <a href="https://www.worldcubeassociation.org/persons/2022MOHA07" target="_blank" class="dev-name" style="text-decoration:none;cursor:pointer" title="View Arjun's WCA Profile">Arjun Mohanan</a></span>
+    </div>
+
+    <!-- Division tabs (horizontal scroll) -->
+    <div class="div-tabs-wrap" id="divTabsWrap">
+      <div class="nav-tab active" data-tab="home" onclick="switchTab('home')">Home</div>
       <div class="nav-tab" data-tab="all" onclick="switchTab('all')">All Teams</div>
       <div class="nav-tab" data-tab="Arts" onclick="switchTab('Arts')">Arts</div>
       <div class="nav-tab" data-tab="Math" onclick="switchTab('Math')">Math</div>
@@ -482,40 +670,80 @@
       <div class="nav-tab" data-tab="Design" onclick="switchTab('Design')">Design</div>
       <div class="nav-tab" data-tab="Research" onclick="switchTab('Research')">Research</div>
       <div class="nav-tab" data-tab="Opportunity" onclick="switchTab('Opportunity')">Opportunity</div>
-      <div class="nav-tab" data-tab="game" onclick="switchTab('game')">📋 Push Back Game</div>
-      <div class="nav-tab" data-tab="robots" onclick="switchTab('robots')">🤖 Robot Types</div>
+      <div class="nav-tab" data-tab="game" onclick="switchTab('game')">Push Back</div>
+      <div class="nav-tab" data-tab="robots" onclick="switchTab('robots')">Robot Types</div>
     </div>
-    <div class="search-bar">
+
+    <!-- Search bar in header -->
+    <div class="search-bar" id="headerSearch">
       <div class="search-wrapper">
-        <input type="text" id="searchInput" placeholder="Search team # or name (e.g. 6121E, Pioneers)..." oninput="handleSearchInput()" onfocus="handleSearchInput()" autocomplete="off">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search team # or name..." oninput="handleSearchInput()" onfocus="handleSearchInput()" autocomplete="off">
         <div class="autocomplete-list" id="acList"></div>
       </div>
-      <div class="filter-chips">
-        <div class="chip elite" onclick="toggleTierFilter('Elite')">Elite (Top 10%)</div>
-        <div class="chip contender" onclick="toggleTierFilter('Contender')">Contender (10-30%)</div>
-        <div class="chip competitive" onclick="toggleTierFilter('Competitive')">Competitive (30-50%)</div>
-        <div class="chip developing" onclick="toggleTierFilter('Developing')">Developing (50-70%)</div>
-        <div class="chip rising" onclick="toggleTierFilter('Rising')">Rising (70%+)</div>
+      <div class="filter-chips" id="filterChips">
+        <div class="chip elite" onclick="toggleTierFilter('Elite')">Elite</div>
+        <div class="chip contender" onclick="toggleTierFilter('Contender')">Contender</div>
+        <div class="chip competitive" onclick="toggleTierFilter('Competitive')">Competitive</div>
+        <div class="chip developing" onclick="toggleTierFilter('Developing')">Developing</div>
+        <div class="chip rising" onclick="toggleTierFilter('Rising')">Rising</div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- ===== STICKY SEARCH (appears on scroll) ===== -->
+<div class="sticky-search" id="stickySearch">
+  <div class="search-inner">
+    <div class="search-wrapper" style="flex:1">
+      <input type="text" class="search-input" id="stickySearchInput" placeholder="Search team # or name..." oninput="handleStickySearchInput()" onfocus="handleStickySearchInput()" autocomplete="off">
+      <div class="autocomplete-list" id="stickyAcList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
 <div class="main" id="mainContent">
-  <!-- Spotlight Tab -->
-  <div class="tab-content active" id="tab-spotlight"></div>
-  <!-- Team Detail (inline, replaces page) -->
+  <div class="tab-content active" id="tab-home"></div>
   <div class="tab-content" id="tab-teamdetail"></div>
-  <!-- All/Division Tabs -->
   <div class="tab-content" id="tab-teams"></div>
-  <!-- Game Overview Tab -->
   <div class="tab-content" id="tab-game"></div>
-  <!-- Robots Tab -->
   <div class="tab-content" id="tab-robots"></div>
 </div>
 
+<!-- ===== 6121E OVERLAY ===== -->
+<div class="overlay-6121e" id="overlay6121e" onclick="if(event.target===this)close6121E()">
+  <div class="card-6121e" id="card6121e"></div>
+</div>
+
+<!-- ===== FOOTER ===== -->
 <div class="footer">
   <strong>VEX Visualizer</strong> &bull; Developed by <a href="https://www.worldcubeassociation.org/persons/2022MOHA07" target="_blank" class="dev-name" style="text-decoration:none;cursor:pointer" title="View Arjun's WCA Profile">Arjun Mohanan</a> &bull; Data: 2145 WORLDS Division Predictor (True Skill updated 03/23) &bull; VEX Worlds 2026 &bull; Push Back Season (2025-2026)
+</div>
+
+<!-- ===== BOTTOM NAV (mobile) ===== -->
+<div class="bottom-nav" id="bottomNav">
+  <div class="bottom-nav-inner">
+    <button class="bnav-btn active" id="bnav-home" onclick="switchTab('home');updateBnav('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="bnav-btn" id="bnav-search" onclick="focusSearch();updateBnav('search')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Search</span>
+    </button>
+    <button class="bnav-btn" id="bnav-6121e" onclick="show6121E();updateBnav('6121e')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span>6121E</span>
+    </button>
+    <button class="bnav-btn" id="bnav-game" onclick="switchTab('game');updateBnav('game')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <span>Game</span>
+    </button>
+    <button class="bnav-btn" id="bnav-robots" onclick="switchTab('robots');updateBnav('robots')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+      <span>Robots</span>
+    </button>
+  </div>
 </div>
 
 <script>
@@ -525,7 +753,7 @@ const ROBOT_TYPES = [
   {
     id: 'conveyor-scorer',
     name: 'Conveyor Scorer (Dex-Style)',
-    icon: '⛓️',
+    icon: '\u26D3\uFE0F',
     desc: 'The reference design from the official Push Back Hero Bot "Dex." Uses a chain-link conveyor belt with inserts to grab Blocks from the intake and lift them up to score into Goals. The conveyor holds Blocks in place as they travel upward. Powered by a motor-driven gear train with rubber bands for tension. This is the most common starting architecture seen across competitive teams this season.',
     searchTerms: ['conveyor', 'dex', 'chain', 'belt', 'hero bot'],
     links: [
@@ -536,7 +764,7 @@ const ROBOT_TYPES = [
   {
     id: 'side-roller',
     name: 'Side Roller Intake',
-    icon: '🔄',
+    icon: '\uD83D\uDD04',
     desc: 'An emerging alternative to horizontal rollers for the Push Back season. Uses vertical/side-mounted rollers that, when properly tuned, can intake Blocks directly from the Loaders without needing an extra mechanism to reach inside the Loader. Favored by teams looking for faster cycle times and a more streamlined intake path.',
     searchTerms: ['side roller', 'vertical roller', 'loader intake', 'roller'],
     links: [
@@ -547,8 +775,8 @@ const ROBOT_TYPES = [
   {
     id: 'burst-loader',
     name: 'Revolver / Burst Loader',
-    icon: '🎰',
-    desc: 'A creative storage-and-fire system that loads multiple Blocks and then discharges them into a Goal in a rapid burst. Since Push Back has no possession limit, these robots can hoard Blocks and score them all at once. Revolver-style rotating magazines are one popular implementation. High risk, high reward — a full burst can swing a match.',
+    icon: '\uD83C\uDFB0',
+    desc: 'A creative storage-and-fire system that loads multiple Blocks and then discharges them into a Goal in a rapid burst. Since Push Back has no possession limit, these robots can hoard Blocks and score them all at once. Revolver-style rotating magazines are one popular implementation. High risk, high reward \u2014 a full burst can swing a match.',
     searchTerms: ['revolver', 'burst', 'magazine', 'hoarding', 'storage', 'no possession limit'],
     links: [
       {label: 'VEX Forum: Push Back Discussion', url: 'https://www.vexforum.com/t/2025-26-vex-v5-robotics-competition-game-push-back/136514'},
@@ -558,8 +786,8 @@ const ROBOT_TYPES = [
   {
     id: 'descorer',
     name: 'Descoring Specialist / Defender',
-    icon: '🛡️',
-    desc: 'Push Back uniquely allows removing (descoring) opponent Blocks from Goals. These robots prioritize defensive mechanisms — arms, plows, or scoops that can reach into Goals and pull out enemy Blocks. Community predictions suggest "large amounts of descoring and defence" will define this season. A strong descorer paired with a fast scorer makes a devastating alliance.',
+    icon: '\uD83D\uDEE1\uFE0F',
+    desc: 'Push Back uniquely allows removing (descoring) opponent Blocks from Goals. These robots prioritize defensive mechanisms \u2014 arms, plows, or scoops that can reach into Goals and pull out enemy Blocks. Community predictions suggest "large amounts of descoring and defence" will define this season. A strong descorer paired with a fast scorer makes a devastating alliance.',
     searchTerms: ['descore', 'defense', 'defensive', 'remove blocks', 'deny'],
     links: [
       {label: 'Push Back Game Manual', url: 'https://www.vexrobotics.com/push-back-manual'},
@@ -569,8 +797,8 @@ const ROBOT_TYPES = [
   {
     id: 'compact-parker',
     name: 'Compact Park Bot',
-    icon: '🅿️',
-    desc: 'Push Back awards a massive +30 bonus if both alliance robots fit in the Park Zone at match end. Compact Park Bots use a deliberately short or foldable chassis to guarantee the double-park bonus. Precision and speed over bulk — smaller bots can navigate the field more nimbly and avoid collisions, then park reliably in the final seconds.',
+    icon: '\uD83C\uDD7F\uFE0F',
+    desc: 'Push Back awards a massive +30 bonus if both alliance robots fit in the Park Zone at match end. Compact Park Bots use a deliberately short or foldable chassis to guarantee the double-park bonus. Precision and speed over bulk \u2014 smaller bots can navigate the field more nimbly and avoid collisions, then park reliably in the final seconds.',
     searchTerms: ['park', 'compact', 'small bot', 'short chassis', 'double park', 'endgame'],
     links: [
       {label: 'VEX Forum: Push Back Discussion', url: 'https://www.vexforum.com/t/2025-26-vex-v5-robotics-competition-game-push-back/136514'},
@@ -580,7 +808,7 @@ const ROBOT_TYPES = [
   {
     id: 'pusher-bot',
     name: 'Pusher / Plowing Bot',
-    icon: '🚜',
+    icon: '\uD83D\uDE9C',
     desc: 'A simpler but effective approach: a strong drivetrain with a wide front plow or scoop that pushes multiple Blocks toward Goals at once. With 88 Blocks on the field, brute-force pushing can be surprisingly efficient. These robots focus on high-torque drivetrains and wedge geometry rather than complex intake mechanisms.',
     searchTerms: ['push', 'plow', 'scoop', 'wedge', 'simple', 'brute force'],
     links: [
@@ -591,8 +819,8 @@ const ROBOT_TYPES = [
   {
     id: 'hybrid-allrounder',
     name: 'Hybrid All-Rounder',
-    icon: '⚡',
-    desc: 'The most versatile (and most complex) build: combines a reliable intake/conveyor for scoring, a descoring capability, and a compact enough frame for parking. These robots try to do it all — score Blocks, clear Loaders, descore opponent Goals, control Zones, and park. Top-tier execution is required to make every subsystem work reliably under match pressure.',
+    icon: '\u26A1',
+    desc: 'The most versatile (and most complex) build: combines a reliable intake/conveyor for scoring, a descoring capability, and a compact enough frame for parking. These robots try to do it all \u2014 score Blocks, clear Loaders, descore opponent Goals, control Zones, and park. Top-tier execution is required to make every subsystem work reliably under match pressure.',
     searchTerms: ['hybrid', 'all-round', 'versatile', 'multi', 'complete'],
     links: [
       {label: 'Getting Started: V5RC Push Back Design', url: 'https://kb.vex.com/hc/en-us/articles/40268233052564-Getting-Started-with-Robot-Design-V5RC-Push-Back'},
@@ -601,12 +829,15 @@ const ROBOT_TYPES = [
   }
 ];
 
+const DIVISIONS = ['Arts','Math','Technology','Science','Engineering','Innovate','Spirit','Design','Research','Opportunity'];
+
 // State
-let currentTab = 'spotlight';
+let currentTab = 'home';
 let activeTierFilters = new Set();
 let searchQuery = '';
 let sortField = 'trueSkill';
 let sortDir = 'desc';
+let previousTab = 'home';
 
 const SORT_OPTIONS = [
   {value: 'trueSkill', label: 'True Skill'},
@@ -627,16 +858,18 @@ const SORT_OPTIONS = [
   {value: 'team', label: 'Team # (A-Z)'},
 ];
 
+/* ===== TAB SWITCHING ===== */
 function switchTab(tab) {
   currentTab = tab;
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`.nav-tab[data-tab="${tab}"]`).classList.add('active');
+  const tabEl = document.querySelector(`.nav-tab[data-tab="${tab}"]`);
+  if (tabEl) tabEl.classList.add('active');
 
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
 
-  if (tab === 'spotlight') {
-    document.getElementById('tab-spotlight').classList.add('active');
-    renderSpotlight();
+  if (tab === 'home') {
+    document.getElementById('tab-home').classList.add('active');
+    renderHome();
   } else if (tab === 'game') {
     document.getElementById('tab-game').classList.add('active');
     renderGameOverview();
@@ -647,10 +880,65 @@ function switchTab(tab) {
     document.getElementById('tab-teams').classList.add('active');
     renderTeams(tab);
   }
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
+/* ===== BOTTOM NAV ===== */
+function updateBnav(id) {
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('bnav-' + id);
+  if (el) el.classList.add('active');
+}
+
+function focusSearch() {
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  setTimeout(() => document.getElementById('searchInput').focus(), 300);
+}
+
+/* ===== 6121E COMPACT CARD ===== */
+function show6121E() {
+  const t = TEAMS_DATA.find(x => x.team === '6121E');
+  if (!t) return;
+  const divTeams = TEAMS_DATA.filter(x => x.division === t.division).sort((a,b) => b.trueSkill - a.trueSkill);
+  const divTSRank = divTeams.findIndex(x => x.team === '6121E') + 1;
+
+  document.getElementById('card6121e').innerHTML = `
+    <button class="card-6121e-close" onclick="close6121E()">&times;</button>
+    <h2>6121E &mdash; The Pioneers</h2>
+    <div style="font-size:11px;color:var(--text-dim);margin-top:3px">${t.region}, ${t.country} &bull; ${t.division} Division &bull; Rank #${t.trueSkillRank} &bull; Div #${divTSRank}/${divTeams.length}</div>
+    <div class="mini-stats">
+      <div class="mini-stat"><div class="v">${t.trueSkill}</div><div class="k">True Skill</div></div>
+      <div class="mini-stat"><div class="v" style="color:${tierColor(t.tier)}">${t.tier}</div><div class="k">Tier</div></div>
+      <div class="mini-stat"><div class="v">${t.wins}-${t.losses}</div><div class="k">Record</div></div>
+      <div class="mini-stat"><div class="v" style="color:var(--green)">${t.winPct}%</div><div class="k">Win %</div></div>
+      <div class="mini-stat"><div class="v">${t.ccwm}</div><div class="k">CCWM</div></div>
+      <div class="mini-stat"><div class="v">${t.opr}</div><div class="k">OPR</div></div>
+      <div class="mini-stat"><div class="v">${t.totalMax}</div><div class="k">Max Score</div></div>
+      <div class="mini-stat"><div class="v">${t.dpr}</div><div class="k">DPR</div></div>
+    </div>
+    <div style="font-size:11px;color:var(--text-dim);margin-top:12px;line-height:1.6">
+      Part of <strong style="color:var(--text)">Conestoga Robotics</strong> (Conestoga High School, PA). Sister teams at Worlds: <strong style="color:var(--text)">6121A</strong> (Technology), <strong style="color:var(--text)">6121B</strong> (Engineering), <strong style="color:var(--text)">6121F</strong> (Math).
+    </div>
+    <div class="links-row">
+      <a href="https://www.robotevents.com/teams/V5RC/6121E" target="_blank" style="color:var(--accent2);background:rgba(99,102,241,0.08)">RobotEvents</a>
+      <a href="https://robotstatistics.com/teams/6121E" target="_blank" style="color:var(--accent2);background:rgba(99,102,241,0.08)">Stats</a>
+      <a href="https://arnavkaushik.com/stogarobotics/" target="_blank" style="color:var(--accent2);background:rgba(99,102,241,0.08)">Conestoga Robotics</a>
+      <span style="color:var(--highlight);background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.3)" onclick="close6121E();openDetail('6121E')">Full Stats</span>
+      <span style="color:var(--highlight);background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.3)" onclick="close6121E();openDetail('6121A')">6121A</span>
+      <span style="color:var(--highlight);background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.3)" onclick="close6121E();openDetail('6121B')">6121B</span>
+      <span style="color:var(--highlight);background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.3)" onclick="close6121E();openDetail('6121F')">6121F</span>
+    </div>
+  `;
+  document.getElementById('overlay6121e').classList.add('open');
+}
+
+function close6121E() {
+  document.getElementById('overlay6121e').classList.remove('open');
+}
+
+/* ===== TIER FILTER ===== */
 function toggleTierFilter(tier) {
-  const chip = document.querySelector(`.chip.${tier.toLowerCase()}`);
+  const chip = document.querySelector('.chip.' + tier.toLowerCase());
   if (activeTierFilters.has(tier)) {
     activeTierFilters.delete(tier);
     chip.classList.remove('active');
@@ -658,34 +946,28 @@ function toggleTierFilter(tier) {
     activeTierFilters.add(tier);
     chip.classList.add('active');
   }
-  if (currentTab !== 'spotlight' && currentTab !== 'robots') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
 function filterTeams() {
   searchQuery = document.getElementById('searchInput').value.toLowerCase();
-  if (currentTab !== 'spotlight' && currentTab !== 'robots') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
-// Autocomplete
+/* ===== AUTOCOMPLETE ===== */
 let acIndex = -1;
-function handleSearchInput() {
-  const val = document.getElementById('searchInput').value.toLowerCase().trim();
-  searchQuery = val;
-  const acList = document.getElementById('acList');
-  acIndex = -1;
 
+function doAutocomplete(val, acListEl, selectFn) {
+  acIndex = -1;
   if (val.length === 0) {
-    acList.classList.remove('show');
-    if (currentTab !== 'spotlight' && currentTab !== 'robots') renderTeams(currentTab);
+    acListEl.classList.remove('show');
     return;
   }
-
   const matches = TEAMS_DATA.filter(t =>
     t.team.toLowerCase().includes(val) ||
     t.teamName.toLowerCase().includes(val) ||
     t.region.toLowerCase().includes(val)
   ).sort((a,b) => {
-    // Exact prefix matches first
     const aStart = a.team.toLowerCase().startsWith(val) ? 0 : 1;
     const bStart = b.team.toLowerCase().startsWith(val) ? 0 : 1;
     if (aStart !== bStart) return aStart - bStart;
@@ -693,19 +975,29 @@ function handleSearchInput() {
   }).slice(0, 12);
 
   if (matches.length > 0) {
-    acList.innerHTML = matches.map((t, i) => `
-      <div class="ac-item" data-team="${t.team}" onclick="selectAcTeam('${t.team}')" onmouseenter="acIndex=${i}">
+    acListEl.innerHTML = matches.map((t, i) => `
+      <div class="ac-item" data-team="${t.team}" onclick="${selectFn}('${t.team}')" onmouseenter="acIndex=${i}">
         <div><span class="ac-team">${highlightMatch(t.team, val)}</span> <span class="ac-name">${highlightMatch(t.teamName, val)}</span></div>
         <div class="ac-div">${t.division} &bull; TS ${t.trueSkill}</div>
       </div>
     `).join('');
-    acList.classList.add('show');
+    acListEl.classList.add('show');
   } else {
-    acList.innerHTML = '<div class="ac-item" style="color:var(--text-dim);font-size:12px">No teams found</div>';
-    acList.classList.add('show');
+    acListEl.innerHTML = '<div class="ac-item" style="color:var(--text-dim);font-size:12px">No teams found</div>';
+    acListEl.classList.add('show');
   }
+}
 
-  if (currentTab !== 'spotlight' && currentTab !== 'robots') renderTeams(currentTab);
+function handleSearchInput() {
+  const val = document.getElementById('searchInput').value.toLowerCase().trim();
+  searchQuery = val;
+  doAutocomplete(val, document.getElementById('acList'), 'selectAcTeam');
+  if (currentTab !== 'home' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+}
+
+function handleStickySearchInput() {
+  const val = document.getElementById('stickySearchInput').value.toLowerCase().trim();
+  doAutocomplete(val, document.getElementById('stickyAcList'), 'selectStickyAcTeam');
 }
 
 function highlightMatch(text, query) {
@@ -722,11 +1014,18 @@ function selectAcTeam(teamId) {
   openDetail(teamId);
 }
 
+function selectStickyAcTeam(teamId) {
+  document.getElementById('stickyAcList').classList.remove('show');
+  document.getElementById('stickySearchInput').value = '';
+  searchQuery = '';
+  openDetail(teamId);
+}
+
+// Keyboard nav for main search
 document.getElementById('searchInput').addEventListener('keydown', function(e) {
   const acList = document.getElementById('acList');
   const items = acList.querySelectorAll('.ac-item[data-team]');
   if (!acList.classList.contains('show') || items.length === 0) return;
-
   if (e.key === 'ArrowDown') {
     e.preventDefault();
     acIndex = Math.min(acIndex + 1, items.length - 1);
@@ -745,13 +1044,51 @@ document.getElementById('searchInput').addEventListener('keydown', function(e) {
   }
 });
 
-// Close autocomplete when clicking outside
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.search-wrapper')) {
-    document.getElementById('acList').classList.remove('show');
+// Keyboard nav for sticky search
+document.getElementById('stickySearchInput').addEventListener('keydown', function(e) {
+  const acList = document.getElementById('stickyAcList');
+  const items = acList.querySelectorAll('.ac-item[data-team]');
+  if (!acList.classList.contains('show') || items.length === 0) return;
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    acIndex = Math.min(acIndex + 1, items.length - 1);
+    items.forEach((it, i) => it.classList.toggle('selected', i === acIndex));
+    items[acIndex]?.scrollIntoView({block:'nearest'});
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    acIndex = Math.max(acIndex - 1, 0);
+    items.forEach((it, i) => it.classList.toggle('selected', i === acIndex));
+    items[acIndex]?.scrollIntoView({block:'nearest'});
+  } else if (e.key === 'Enter' && acIndex >= 0) {
+    e.preventDefault();
+    selectStickyAcTeam(items[acIndex].dataset.team);
+  } else if (e.key === 'Escape') {
+    acList.classList.remove('show');
   }
 });
 
+// Close autocomplete on outside click
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.search-wrapper')) {
+    document.getElementById('acList').classList.remove('show');
+    document.getElementById('stickyAcList').classList.remove('show');
+  }
+});
+
+/* ===== STICKY SEARCH SCROLL LOGIC ===== */
+let stickyVisible = false;
+function checkStickySearch() {
+  const hero = document.getElementById('heroBar');
+  const rect = hero.getBoundingClientRect();
+  const shouldShow = rect.bottom < 0;
+  if (shouldShow !== stickyVisible) {
+    stickyVisible = shouldShow;
+    document.getElementById('stickySearch').classList.toggle('visible', shouldShow);
+  }
+}
+window.addEventListener('scroll', checkStickySearch, {passive: true});
+
+/* ===== SORTING ===== */
 function getFilteredTeams(division) {
   let teams = division === 'all' ? [...TEAMS_DATA] : TEAMS_DATA.filter(t => t.division === division);
   if (searchQuery) {
@@ -760,7 +1097,6 @@ function getFilteredTeams(division) {
   if (activeTierFilters.size > 0) {
     teams = teams.filter(t => activeTierFilters.has(t.tier));
   }
-  // Sort
   const lowerBetter = ['dpr', 'trueSkillRank'];
   teams.sort((a, b) => {
     let va = a[sortField], vb = b[sortField];
@@ -777,12 +1113,12 @@ function getFilteredTeams(division) {
 
 function changeSort(field) {
   sortField = field;
-  if (currentTab !== 'spotlight' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 function toggleSortDir() {
   sortDir = sortDir === 'desc' ? 'asc' : 'desc';
   document.getElementById('sortDirBtn')?.classList.toggle('desc', sortDir === 'desc');
-  if (currentTab !== 'spotlight' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
 function tierColor(tier) {
@@ -790,11 +1126,48 @@ function tierColor(tier) {
   return m[tier] || 'var(--text-dim)';
 }
 
+/* ===== HOME: DIVISION CARDS ===== */
+function renderHome() {
+  const container = document.getElementById('tab-home');
+  const allTeams = TEAMS_DATA;
+  const totalElite = allTeams.filter(t => t.tier === 'Elite').length;
+  const avgTS = (allTeams.reduce((s,t) => s + t.trueSkill, 0) / allTeams.length).toFixed(1);
+  const topTS = Math.max(...allTeams.map(t => t.trueSkill)).toFixed(1);
+
+  let summaryHTML = `
+    <div style="margin-bottom:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+      <div>
+        <h2 style="font-size:20px;font-weight:800">Worlds 2026 Divisions</h2>
+        <div style="font-size:12px;color:var(--text-dim);margin-top:2px">${allTeams.length} teams across 10 divisions &bull; Top TS: ${topTS} &bull; Avg TS: ${avgTS} &bull; ${totalElite} Elite teams</div>
+      </div>
+    </div>`;
+
+  let cardsHTML = DIVISIONS.map(div => {
+    const divTeams = allTeams.filter(t => t.division === div);
+    const dAvg = (divTeams.reduce((s,t) => s + t.trueSkill, 0) / divTeams.length).toFixed(1);
+    const dTop = Math.max(...divTeams.map(t => t.trueSkill)).toFixed(1);
+    const dElite = divTeams.filter(t => t.tier === 'Elite').length;
+    return `
+      <div class="div-card" onclick="switchTab('${div}')">
+        <div class="div-card-name">${div}</div>
+        <div class="div-card-sub">${divTeams.length} teams</div>
+        <div class="div-card-stats">
+          <div class="div-card-stat"><div class="val">${dTop}</div><div class="lbl">Top True Skill</div></div>
+          <div class="div-card-stat"><div class="val">${dAvg}</div><div class="lbl">Avg True Skill</div></div>
+          <div class="div-card-stat"><div class="val" style="color:var(--elite)">${dElite}</div><div class="lbl">Elite Teams</div></div>
+          <div class="div-card-stat"><div class="val">${divTeams.length}</div><div class="lbl">Total Teams</div></div>
+        </div>
+      </div>`;
+  }).join('');
+
+  container.innerHTML = summaryHTML + `<div class="division-grid">${cardsHTML}</div>`;
+}
+
+/* ===== TEAMS VIEW ===== */
 function renderTeams(division) {
   const teams = getFilteredTeams(division);
   const container = document.getElementById('tab-teams');
 
-  // Division stats
   let bannerHTML = '';
   if (division !== 'all') {
     const divTeams = TEAMS_DATA.filter(t => t.division === division);
@@ -804,10 +1177,15 @@ function renderTeams(division) {
     const divR = divTeams[0]?.divRank || '?';
     const projPts = divTeams[0]?.divProjectedPoints || '?';
     bannerHTML = `
+      <div style="margin-bottom:10px">
+        <button onclick="switchTab('home')" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">
+          &larr; All Divisions
+        </button>
+      </div>
       <div class="div-banner">
         <div>
           <h2>${division} Division</h2>
-          <div style="font-size:12px;color:var(--text-dim);margin-top:4px">${divTeams.length} teams &bull; Division Rank #${divR} of 10</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:3px">${divTeams.length} teams &bull; Division Rank #${divR} of 10</div>
         </div>
         <div class="stat-row">
           <div class="stat-item"><div class="stat-val">${topTS}</div><div class="stat-label">Top True Skill</div></div>
@@ -815,6 +1193,13 @@ function renderTeams(division) {
           <div class="stat-item"><div class="stat-val">${eliteCount}</div><div class="stat-label">Elite Teams</div></div>
           <div class="stat-item"><div class="stat-val">${typeof projPts === 'number' ? Math.round(projPts) : projPts}</div><div class="stat-label">Proj. Points</div></div>
         </div>
+      </div>`;
+  } else {
+    bannerHTML = `
+      <div style="margin-bottom:10px">
+        <button onclick="switchTab('home')" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">
+          &larr; All Divisions
+        </button>
       </div>`;
   }
 
@@ -826,20 +1211,6 @@ function renderTeams(division) {
       <div class="legend-item"><div class="legend-dot" style="background:var(--developing)"></div>Developing (50-70%)</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--rising)"></div>Rising (70%+)</div>
     </div>`;
-
-  const cardsHTML = teams.map(t => `
-    <div class="team-card ${t.tier.toLowerCase()} ${t.team === '6121E' ? 'highlighted' : ''}" onclick="openDetail('${t.team}')">
-      <div class="tier-badge">${t.tier}</div>
-      <div class="tc-num">${t.team}</div>
-      <div class="tc-name">${t.teamName || '—'}</div>
-      <div class="tc-ts">
-        <span class="tc-ts-val">${t.trueSkill}</span>
-        <span class="tc-ts-label">True Skill</span>
-      </div>
-      <div class="tc-region">${t.region}${t.country !== 'United States' ? ', '+t.country : ''}</div>
-      <div class="tc-wr"><span class="w">${t.wins}W</span><span class="l">${t.losses}L</span> <span style="color:var(--text-dim)">(${t.winPct}%)</span></div>
-    </div>
-  `).join('');
 
   const sortBarHTML = `
     <div class="sort-bar">
@@ -853,64 +1224,75 @@ function renderTeams(division) {
       <span style="font-size:11px;color:var(--text-dim)">${sortDir==='desc'?'Highest first':'Lowest first'}${sortField==='dpr'||sortField==='trueSkillRank'?' (inverted: lower = better)':''}</span>
     </div>`;
 
+  const cardsHTML = teams.map(t => `
+    <div class="team-card ${t.tier.toLowerCase()} ${t.team === '6121E' ? 'highlighted' : ''}" onclick="openDetail('${t.team}')">
+      <div class="tier-badge">${t.tier}</div>
+      <div class="tc-num">${t.team}</div>
+      <div class="tc-name">${t.teamName || '\u2014'}</div>
+      <div class="tc-ts">
+        <span class="tc-ts-val">${t.trueSkill}</span>
+        <span class="tc-ts-label">True Skill</span>
+      </div>
+      <div class="tc-region">${t.region}${t.country !== 'United States' ? ', '+t.country : ''}</div>
+      <div class="tc-wr"><span class="w">${t.wins}W</span><span class="l">${t.losses}L</span> <span style="color:var(--text-dim)">(${t.winPct}%)</span></div>
+    </div>
+  `).join('');
+
   container.innerHTML = bannerHTML + legendHTML + sortBarHTML + `
-    <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">Showing ${teams.length} teams${division==='all'?' across all divisions':' in '+division+' Division'}</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">Showing ${teams.length} teams${division==='all'?' across all divisions':' in '+division+' Division'}</div>
     <div class="team-grid">${cardsHTML}</div>
   `;
 }
 
-let previousTab = 'spotlight';
-
+/* ===== TEAM DETAIL ===== */
 function openDetail(teamId) {
   const t = TEAMS_DATA.find(x => x.team === teamId);
   if (!t) return;
 
-  // Remember where we came from
   if (currentTab !== 'teamdetail') previousTab = currentTab;
 
   const tsMax = 29.4;
   const bar = (val, max, color) => {
     const pct = Math.min((val/max)*100, 100);
-    return `<div class="bar-fill" style="width:${pct}%;background:${color}"><span>${val}</span></div>`;
+    return '<div class="bar-fill" style="width:'+pct+'%;background:'+color+'"><span>'+val+'</span></div>';
   };
 
-  // Find division rank by TS within division
   const divTeams = TEAMS_DATA.filter(x => x.division === t.division).sort((a,b) => b.trueSkill - a.trueSkill);
   const divTSRank = divTeams.findIndex(x => x.team === t.team) + 1;
-
-  // Find similar-tier teams in same division
   const divRivals = divTeams.filter(x => x.team !== t.team).slice(Math.max(0, divTSRank - 4), divTSRank + 3);
+
+  const backLabel = previousTab === 'home' ? 'Divisions' : previousTab === 'all' ? 'All Teams' : DIVISIONS.includes(previousTab) ? previousTab + ' Division' : 'Back';
 
   const container = document.getElementById('tab-teamdetail');
   container.innerHTML = `
-    <div style="margin-bottom:16px">
-      <button onclick="goBack()" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:8px 18px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit">
-        ← Back${previousTab === 'spotlight' ? ' to 6121E Spotlight' : ''}
+    <div style="margin-bottom:14px">
+      <button onclick="goBack()" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">
+        &larr; ${backLabel}
       </button>
     </div>
 
     <div class="spotlight" style="border-color:${tierColor(t.tier)}">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;position:relative">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;position:relative">
         <div>
-          <h2 style="background:linear-gradient(135deg, ${tierColor(t.tier)}, var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:28px">${t.team} — ${t.teamName || 'Unknown'}</h2>
-          <div class="sp-sub">${t.region}, ${t.country} &bull; ${t.division} Division &bull; Global True Skill Rank #${t.trueSkillRank} &bull; Division TS Rank #${divTSRank}/${divTeams.length}</div>
+          <h2 style="background:linear-gradient(135deg, ${tierColor(t.tier)}, var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:24px">${t.team} &mdash; ${t.teamName || 'Unknown'}</h2>
+          <div class="sp-sub">${t.region}, ${t.country} &bull; ${t.division} Division &bull; Global #${t.trueSkillRank} &bull; Div #${divTSRank}/${divTeams.length}</div>
         </div>
         <div style="position:relative">
-          <div class="dp-meta-tag" style="border-color:${tierColor(t.tier)};color:${tierColor(t.tier)};font-size:14px;padding:8px 20px">${t.tier} ${t.tier==='Elite'?'(Top 10%)':t.tier==='Contender'?'(Top 30%)':t.tier==='Competitive'?'(Top 50%)':t.tier==='Developing'?'(Top 70%)':'(70%+)'}</div>
+          <div class="dp-meta-tag" style="border-color:${tierColor(t.tier)};color:${tierColor(t.tier)};font-size:13px;padding:6px 16px">${t.tier} ${t.tier==='Elite'?'(Top 10%)':t.tier==='Contender'?'(Top 30%)':t.tier==='Competitive'?'(Top 50%)':t.tier==='Developing'?'(Top 70%)':'(70%+)'}</div>
         </div>
       </div>
 
-      ${t.worldsOdds !== 'N/A' ? `<div style="margin-top:12px;position:relative"><span style="font-size:13px;color:var(--highlight);font-weight:600">Worlds Odds: ${t.worldsOdds}</span> &bull; <span style="font-size:13px;color:var(--text-dim)">Division Rank #${t.divRank}/10 (Projected ${typeof t.divProjectedPoints === 'number' ? Math.round(t.divProjectedPoints) : t.divProjectedPoints} pts)</span></div>` : ''}
+      ${t.worldsOdds !== 'N/A' ? '<div style="margin-top:10px;position:relative"><span style="font-size:12px;color:var(--highlight);font-weight:600">Worlds Odds: '+t.worldsOdds+'</span> &bull; <span style="font-size:12px;color:var(--text-dim)">Division Rank #'+t.divRank+'/10 (Projected '+(typeof t.divProjectedPoints === 'number' ? Math.round(t.divProjectedPoints) : t.divProjectedPoints)+' pts)</span></div>' : ''}
 
-      <div class="stat-tiles" style="margin-top:20px;position:relative">
+      <div class="stat-tiles" style="margin-top:16px;position:relative">
         <div class="stat-tile highlight"><div class="st-val">${t.trueSkill}</div><div class="st-label">True Skill</div></div>
         <div class="stat-tile"><div class="st-val" style="color:var(--green)">${t.winPct}%</div><div class="st-label">Win Rate</div></div>
         <div class="stat-tile"><div class="st-val">${t.ccwm}</div><div class="st-label">CCWM</div></div>
         <div class="stat-tile"><div class="st-val">${t.opr}</div><div class="st-label">OPR</div></div>
         <div class="stat-tile"><div class="st-val">${t.dpr}</div><div class="st-label">DPR</div></div>
-        <div class="stat-tile"><div class="st-val">${t.wins}-${t.losses}</div><div class="st-label">W-L Record (${t.matchesPlayed} matches)</div></div>
-        <div class="stat-tile"><div class="st-val">${t.elimWins}-${t.elimLosses}</div><div class="st-label">Elim Record (${t.elimWinPct}%)</div></div>
-        <div class="stat-tile"><div class="st-val">${t.qualWins}-${t.qualLosses}</div><div class="st-label">Qual Record (${t.qualWinPct}%)</div></div>
+        <div class="stat-tile"><div class="st-val">${t.wins}-${t.losses}</div><div class="st-label">W-L (${t.matchesPlayed} matches)</div></div>
+        <div class="stat-tile"><div class="st-val">${t.elimWins}-${t.elimLosses}</div><div class="st-label">Elim (${t.elimWinPct}%)</div></div>
+        <div class="stat-tile"><div class="st-val">${t.qualWins}-${t.qualLosses}</div><div class="st-label">Qual (${t.qualWinPct}%)</div></div>
         <div class="stat-tile"><div class="st-val">${t.awpPerMatch}</div><div class="st-label">AWP/Match</div></div>
         <div class="stat-tile"><div class="st-val">${t.wpPerMatch}</div><div class="st-label">WP/Match</div></div>
         <div class="stat-tile"><div class="st-val">${t.totalMax}</div><div class="st-label">Max Score</div></div>
@@ -919,8 +1301,8 @@ function openDetail(teamId) {
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:20px">
-      <div class="bar-section" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:16px">
+      <div class="bar-section" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px">
         <h3>Performance Breakdown</h3>
         <div class="bar-row"><div class="bar-label">True Skill</div><div class="bar-track">${bar(t.trueSkill, tsMax, 'linear-gradient(90deg, var(--accent), var(--accent2))')}</div></div>
         <div class="bar-row"><div class="bar-label">Win %</div><div class="bar-track">${bar(t.winPct, 100, 'linear-gradient(90deg, #22c55e, #4ade80)')}</div></div>
@@ -929,172 +1311,64 @@ function openDetail(teamId) {
         <div class="bar-row"><div class="bar-label">OPR</div><div class="bar-track">${bar(t.opr, 65, 'linear-gradient(90deg, #06b6d4, #22d3ee)')}</div></div>
         <div class="bar-row"><div class="bar-label">AWP/Match</div><div class="bar-track">${bar(t.awpPerMatch, 1, 'linear-gradient(90deg, #ec4899, #f472b6)')}</div></div>
       </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px">
-        <h3 style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Nearby Rivals in ${t.division} Division</h3>
-        <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">Teams ranked close to ${t.team} by True Skill in their division</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px">
+        <h3 style="font-size:12px;font-weight:700;margin-bottom:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Nearby Rivals in ${t.division}</h3>
+        <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">Teams ranked close to ${t.team} by True Skill</div>
         ${divRivals.map(r => `
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;margin-bottom:4px;background:var(--surface2);border-radius:8px;cursor:pointer;transition:all 0.2s;border:1px solid transparent" onclick="openDetail('${r.team}')" onmouseenter="this.style.borderColor='var(--accent)'" onmouseleave="this.style.borderColor='transparent'">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;margin-bottom:3px;background:var(--surface2);border-radius:8px;cursor:pointer;transition:all 0.2s;border:1px solid transparent" onclick="openDetail('${r.team}')" onmouseenter="this.style.borderColor='var(--accent)'" onmouseleave="this.style.borderColor='transparent'">
             <div>
-              <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px">${r.team}</span>
-              <span style="color:var(--text-dim);font-size:11px;margin-left:6px">${r.teamName}</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px">${r.team}</span>
+              <span style="color:var(--text-dim);font-size:10px;margin-left:4px">${r.teamName}</span>
             </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:${tierColor(r.tier)}">${r.trueSkill}</span>
-              <span style="font-size:9px;padding:2px 8px;border-radius:10px;background:${r.tier==='Elite'?'var(--elite-bg)':r.tier==='Contender'?'var(--contender-bg)':r.tier==='Competitive'?'var(--competitive-bg)':r.tier==='Developing'?'var(--developing-bg)':'var(--rising-bg)'};color:${tierColor(r.tier)};font-weight:700">${r.tier}</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:${tierColor(r.tier)};font-size:12px">${r.trueSkill}</span>
+              <span style="font-size:8px;padding:2px 6px;border-radius:10px;background:${r.tier==='Elite'?'var(--elite-bg)':r.tier==='Contender'?'var(--contender-bg)':r.tier==='Competitive'?'var(--competitive-bg)':r.tier==='Developing'?'var(--developing-bg)':'var(--rising-bg)'};color:${tierColor(r.tier)};font-weight:700">${r.tier}</span>
             </div>
           </div>
         `).join('')}
       </div>
     </div>
 
-    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px">
-      <a href="https://www.robotevents.com/teams/V5RC/${t.team}" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:12px;padding:8px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">View on RobotEvents →</a>
-      <a href="https://robotstatistics.com/teams/${t.team}" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:12px;padding:8px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">View on RobotStatistics →</a>
-      <a href="https://www.youtube.com/results?search_query=VEX+${t.team}+robot+reveal+2025+2026" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:12px;padding:8px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">Search YouTube for Robot Reveal →</a>
-      <button onclick="switchTab('${t.division}')" style="color:var(--accent2);font-weight:600;font-size:12px;padding:8px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-family:inherit">View All ${t.division} Division Teams →</button>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+      <a href="https://www.robotevents.com/teams/V5RC/${t.team}" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:11px;padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px">RobotEvents &rarr;</a>
+      <a href="https://robotstatistics.com/teams/${t.team}" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:11px;padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px">RobotStatistics &rarr;</a>
+      <a href="https://www.youtube.com/results?search_query=VEX+${t.team}+robot+reveal+2025+2026" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:11px;padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px">YouTube Reveal &rarr;</a>
+      <button onclick="switchTab('${t.division}')" style="color:var(--accent2);font-weight:600;font-size:11px;padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-family:inherit">All ${t.division} Teams &rarr;</button>
     </div>
   `;
 
-  // Switch to teamdetail view
   currentTab = 'teamdetail';
   document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
   document.getElementById('tab-teamdetail').classList.add('active');
-  // Deactivate nav tabs visually
   document.querySelectorAll('.nav-tab').forEach(nt => nt.classList.remove('active'));
-  // Scroll to top
   window.scrollTo({top: 0, behavior: 'smooth'});
-  // Close autocomplete
   document.getElementById('acList').classList.remove('show');
+  document.getElementById('stickyAcList').classList.remove('show');
 }
 
 function goBack() {
-  switchTab(previousTab || 'spotlight');
+  switchTab(previousTab || 'home');
 }
 
-// Spotlight
-function renderSpotlight() {
-  const t = TEAMS_DATA.find(x => x.team === '6121E');
-  const artsDivTeams = TEAMS_DATA.filter(x => x.division === 'Arts').sort((a,b) => b.trueSkill - a.trueSkill);
-  const divTSRank = artsDivTeams.findIndex(x => x.team === '6121E') + 1;
-  const artsElite = artsDivTeams.filter(x => x.tier === 'Elite');
-  const artsContenders = artsDivTeams.filter(x => x.tier === 'Contender');
-
-  const container = document.getElementById('tab-spotlight');
-  container.innerHTML = `
-    <div class="spotlight">
-      <h2>★ 6121E — The Pioneers</h2>
-      <div class="sp-sub">${t.region}, ${t.country} &bull; Arts Division &bull; Global True Skill Rank #${t.trueSkillRank}</div>
-
-      <div class="stat-tiles" style="margin-top:20px;position:relative">
-        <div class="stat-tile highlight"><div class="st-val">${t.trueSkill}</div><div class="st-label">True Skill</div></div>
-        <div class="stat-tile"><div class="st-val" style="color:${tierColor(t.tier)}">${t.tier}</div><div class="st-label">Tier Ranking</div></div>
-        <div class="stat-tile"><div class="st-val">${t.wins}-${t.losses}</div><div class="st-label">Season Record</div></div>
-        <div class="stat-tile highlight"><div class="st-val">${t.winPct}%</div><div class="st-label">Win Rate</div></div>
-        <div class="stat-tile"><div class="st-val">${t.ccwm}</div><div class="st-label">CCWM</div></div>
-        <div class="stat-tile"><div class="st-val">${t.opr}</div><div class="st-label">OPR</div></div>
-        <div class="stat-tile"><div class="st-val">${t.dpr}</div><div class="st-label">DPR</div></div>
-        <div class="stat-tile"><div class="st-val">${t.totalMax}</div><div class="st-label">Max Score</div></div>
-        <div class="stat-tile"><div class="st-val">${t.elimWins}-${t.elimLosses}</div><div class="st-label">Elim Record</div></div>
-        <div class="stat-tile"><div class="st-val">${t.awpPerMatch}</div><div class="st-label">AWP/Match</div></div>
-        <div class="stat-tile"><div class="st-val">#${divTSRank}</div><div class="st-label">Arts Div TS Rank</div></div>
-        <div class="stat-tile"><div class="st-val">${t.worldsOdds.replace('1 in ','1:')}</div><div class="st-label">Worlds Odds</div></div>
-      </div>
-
-      <div style="margin-top:12px;position:relative;font-size:12px;color:var(--text-dim);line-height:1.7">
-        6121E is part of <strong style="color:var(--text)">Conestoga Robotics</strong> from Conestoga High School in Pennsylvania, a multi-team program (6121A through 6121F).
-        The team is described as "very dedicated, always trying to impress everyone with their skill of building and design, striving towards success."
-        Sister teams <strong style="color:var(--text)">6121A</strong> (Technology Division), <strong style="color:var(--text)">6121B</strong> (Engineering), and <strong style="color:var(--text)">6121F</strong> (Math) are also competing at Worlds 2026.
-      </div>
-
-      <div style="margin-top:16px;position:relative;display:flex;flex-wrap:wrap;gap:10px">
-        <a href="https://www.robotevents.com/teams/V5RC/6121E" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:12px;padding:8px 16px;background:rgba(99,102,241,0.08);border:1px solid var(--border);border-radius:8px">View 6121E on RobotEvents →</a>
-        <a href="https://robotstatistics.com/teams/6121E" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:12px;padding:8px 16px;background:rgba(99,102,241,0.08);border:1px solid var(--border);border-radius:8px">View Stats →</a>
-        <a href="https://arnavkaushik.com/stogarobotics/" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:12px;padding:8px 16px;background:rgba(99,102,241,0.08);border:1px solid var(--border);border-radius:8px">Conestoga Robotics →</a>
-        <a href="https://arnavkaushik.com/stogarobotics/teams/6121E/" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:12px;padding:8px 16px;background:rgba(99,102,241,0.08);border:1px solid var(--border);border-radius:8px">6121E Team Page →</a>
-        <span style="cursor:pointer;color:var(--highlight);font-weight:600;font-size:12px;padding:8px 16px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.3);border-radius:8px" onclick="openDetail('6121A')">View Sister Team 6121A →</span>
-        <span style="cursor:pointer;color:var(--highlight);font-weight:600;font-size:12px;padding:8px 16px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.3);border-radius:8px" onclick="openDetail('6121B')">View 6121B →</span>
-        <span style="cursor:pointer;color:var(--highlight);font-weight:600;font-size:12px;padding:8px 16px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.3);border-radius:8px" onclick="openDetail('6121F')">View 6121F →</span>
-      </div>
-    </div>
-
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px">
-      <h3 style="font-size:14px;font-weight:700;margin-bottom:10px">🔥 Key Rivals to Watch in Arts Division</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px">
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer" onclick="openDetail('2054V')">
-          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px">2054V</span><span style="font-size:12px;color:var(--elite);font-weight:700">TS 28.1 — Elite</span></div>
-          <div style="font-size:11px;color:var(--text-dim);margin-top:4px"><strong style="color:var(--text)">Pika Pika</strong> — Utah. Named after Pikachu. Features a powerful 33W intake. Robotics Skills Champions at UND Signature Event. <span style="color:var(--elite)">Arts Division #1 seed.</span></div>
-        </div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer" onclick="openDetail('7405R')">
-          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px">7405R</span><span style="font-size:12px;color:var(--elite);font-weight:700">TS 27.8 — Elite</span></div>
-          <div style="font-size:11px;color:var(--text-dim);margin-top:4px"><strong style="color:var(--text)">Millburn Riptide</strong> — New Jersey. Won Excellence Award (highest honor) + automatic Worlds qualification. Part of Millburn Robotics powerhouse.</div>
-        </div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer" onclick="openDetail('1069A')">
-          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px">1069A</span><span style="font-size:12px;color:var(--elite);font-weight:700">TS 27.6 — Elite</span></div>
-          <div style="font-size:11px;color:var(--text-dim);margin-top:4px"><strong style="color:var(--text)">After Hours</strong> — Colorado. Won Excellence + Robot Skills + Tournament Champion + Design Award across multiple events. Multi-award threat.</div>
-        </div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer" onclick="openDetail('119B')">
-          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px">119B</span><span style="font-size:12px;color:var(--elite);font-weight:700">TS 27.7 — Elite</span></div>
-          <div style="font-size:11px;color:var(--text-dim);margin-top:4px"><strong style="color:var(--text)">BOTMAN</strong> — Connecticut. Consistently elite performer with strong elimination record (78.4% win rate in elims).</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="div-banner">
-      <div>
-        <h2>Arts Division Overview</h2>
-        <div style="font-size:12px;color:var(--text-dim);margin-top:4px">${artsDivTeams.length} teams &bull; Division Rank #7 of 10 &bull; Projected ${Math.round(t.divProjectedPoints)} total points</div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-item"><div class="stat-val">${artsDivTeams[0].trueSkill}</div><div class="stat-label">Top TS</div></div>
-        <div class="stat-item"><div class="stat-val">${(artsDivTeams.reduce((s,x)=>s+x.trueSkill,0)/artsDivTeams.length).toFixed(1)}</div><div class="stat-label">Avg TS</div></div>
-        <div class="stat-item"><div class="stat-val">${artsElite.length}</div><div class="stat-label">Elite</div></div>
-        <div class="stat-item"><div class="stat-val">${artsContenders.length}</div><div class="stat-label">Contenders</div></div>
-      </div>
-    </div>
-
-    <h3 style="font-size:14px;font-weight:700;margin-bottom:4px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">6121E's Division Rivals — Arts Division Teams</h3>
-    <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px">Click any team to see full stats. 6121E is highlighted with a golden border.</div>
-
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--elite)"></div>Elite (Top 10%)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--contender)"></div>Contender (10-30%)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--competitive)"></div>Competitive (30-50%)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--developing)"></div>Developing (50-70%)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--rising)"></div>Rising (70%+)</div>
-    </div>
-
-    <div class="team-grid">
-      ${artsDivTeams.map(x => `
-        <div class="team-card ${x.tier.toLowerCase()} ${x.team === '6121E' ? 'highlighted' : ''}" onclick="openDetail('${x.team}')">
-          <div class="tier-badge">${x.tier}</div>
-          <div class="tc-num">${x.team}</div>
-          <div class="tc-name">${x.teamName || '—'}</div>
-          <div class="tc-ts">
-            <span class="tc-ts-val">${x.trueSkill}</span>
-            <span class="tc-ts-label">True Skill</span>
-          </div>
-          <div class="tc-region">${x.region}</div>
-          <div class="tc-wr"><span class="w">${x.wins}W</span><span class="l">${x.losses}L</span> <span style="color:var(--text-dim)">(${x.winPct}%)</span></div>
-        </div>
-      `).join('')}
-    </div>
-  `;
-}
-
-// Game Overview
+/* ===== GAME OVERVIEW ===== */
 function renderGameOverview() {
   const container = document.getElementById('tab-game');
   container.innerHTML = `
+    <div style="margin-bottom:10px">
+      <button onclick="switchTab('home')" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">
+        &larr; Home
+      </button>
+    </div>
     <div class="div-banner" style="border-color:var(--accent)">
       <div>
-        <h2>📋 VEX V5RC Push Back — Game Overview (2025-2026)</h2>
-        <div style="font-size:12px;color:var(--text-dim);margin-top:4px">The game being played at VEX Worlds 2026 &bull; 12'×12' field &bull; 2v2 alliance matches</div>
+        <h2>VEX V5RC Push Back &mdash; Game Overview (2025-2026)</h2>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:3px">The game being played at VEX Worlds 2026 &bull; 12'x12' field &bull; 2v2 alliance matches</div>
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:20px">
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px">
-        <h3 style="font-size:15px;font-weight:700;margin-bottom:10px">🎯 Game Objective</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:16px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Game Objective</h3>
         <p style="font-size:12px;color:var(--text-dim);line-height:1.7">
           Two alliances of two teams each compete to score <strong style="color:var(--text)">Blocks</strong> into <strong style="color:var(--text)">Goals</strong>,
           control <strong style="color:var(--text)">Zones</strong> within Goals, clear <strong style="color:var(--text)">Loaders</strong>, and
@@ -1102,21 +1376,21 @@ function renderGameOverview() {
           where teams must balance offense and defense to maintain Goal control.
         </p>
       </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px">
-        <h3 style="font-size:15px;font-weight:700;margin-bottom:10px">🏟️ Field Elements</h3>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Field Elements</h3>
         <p style="font-size:12px;color:var(--text-dim);line-height:1.7">
           <strong style="color:var(--text)">88 Blocks</strong> on the field.
           <strong style="color:var(--text)">4 Goals</strong>: 2 Long Goals (14 blocks each) + 2 Center Goals (upper &amp; lower sections, 7 blocks each).
           <strong style="color:var(--text)">2 Park Zones</strong> (one per alliance).
           <strong style="color:var(--text)">Loaders</strong> for additional Block supply.
-          Teams can manipulate <em>both their own and opponent game pieces</em> — descoring is legal!
+          Teams can manipulate <em>both their own and opponent game pieces</em> &mdash; descoring is legal!
         </p>
       </div>
     </div>
 
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px">
-      <h3 style="font-size:15px;font-weight:700;margin-bottom:14px">📊 Scoring Breakdown</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">Scoring Breakdown</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px">
         <div class="stat-tile" style="border-color:var(--accent)"><div class="st-val" style="color:var(--accent2)">10 pts</div><div class="st-label">Autonomous Bonus</div></div>
         <div class="stat-tile"><div class="st-val" style="color:var(--highlight)">3 pts</div><div class="st-label">Each Block Scored</div></div>
         <div class="stat-tile"><div class="st-val" style="color:var(--contender)">10 pts</div><div class="st-label">Controlled Zone (Long Goal)</div></div>
@@ -1127,50 +1401,54 @@ function renderGameOverview() {
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:20px">
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px">
-        <h3 style="font-size:15px;font-weight:700;margin-bottom:10px">⚔️ Key Strategic Elements</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:16px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Key Strategic Elements</h3>
         <p style="font-size:12px;color:var(--text-dim);line-height:1.8">
-          <strong style="color:var(--red)">Descoring is legal</strong> — You can remove opponent Blocks from their Goals. This makes defense a core strategy, not just an afterthought.<br><br>
-          <strong style="color:var(--highlight)">No possession limit</strong> — Unlike many past seasons, robots can hold as many Blocks as they want, enabling burst-scoring and hoarding strategies.<br><br>
-          <strong style="color:var(--green)">Double-park bonus is massive</strong> — 30 points for both robots parking vs just 8 for one. Compact robot designs that guarantee the double-park are highly valued.<br><br>
-          <strong style="color:var(--contender)">Zone control > raw scoring</strong> — Controlling Zones in Long Goals (10 pts each) and Center Goals (6-8 pts) can be worth more than individual Blocks (3 pts each).
+          <strong style="color:var(--red)">Descoring is legal</strong> &mdash; You can remove opponent Blocks from their Goals. This makes defense a core strategy, not just an afterthought.<br><br>
+          <strong style="color:var(--highlight)">No possession limit</strong> &mdash; Unlike many past seasons, robots can hold as many Blocks as they want, enabling burst-scoring and hoarding strategies.<br><br>
+          <strong style="color:var(--green)">Double-park bonus is massive</strong> &mdash; 30 points for both robots parking vs just 8 for one. Compact robot designs that guarantee the double-park are highly valued.<br><br>
+          <strong style="color:var(--contender)">Zone control > raw scoring</strong> &mdash; Controlling Zones in Long Goals (10 pts each) and Center Goals (6-8 pts) can be worth more than individual Blocks (3 pts each).
         </p>
       </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px">
-        <h3 style="font-size:15px;font-weight:700;margin-bottom:10px">🤖 Hero Bot: Dex</h3>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Hero Bot: Dex</h3>
         <p style="font-size:12px;color:var(--text-dim);line-height:1.8">
           <strong style="color:var(--text)">Drivetrain:</strong> 4-wheel, 2-motor drive for field maneuverability<br><br>
           <strong style="color:var(--text)">Intake:</strong> Multiple gear trains + rubber bands + chain links grab Blocks and lift them to the Conveyor. Uses 2.75" wheels, powered by 1 motor<br><br>
           <strong style="color:var(--text)">Conveyor:</strong> Chain links with Conveyor Belt Inserts lift Blocks and score into Goals. Inserts hold Blocks in place during transit<br><br>
-          <strong style="color:var(--text)">Design philosophy:</strong> A reference starting architecture — most competitive teams begin here and innovate beyond it
+          <strong style="color:var(--text)">Design philosophy:</strong> A reference starting architecture &mdash; most competitive teams begin here and innovate beyond it
         </p>
-        <a href="https://kb.vex.com/hc/en-us/articles/40241402832660-An-Introduction-to-Dex-The-V5RC-Push-Back-Hero-Bot" target="_blank" style="display:inline-block;margin-top:8px;font-size:11px;color:var(--accent2);text-decoration:none;font-weight:600">Read about Dex on VEX Library →</a>
+        <a href="https://kb.vex.com/hc/en-us/articles/40241402832660-An-Introduction-to-Dex-The-V5RC-Push-Back-Hero-Bot" target="_blank" style="display:inline-block;margin-top:6px;font-size:11px;color:var(--accent2);text-decoration:none;font-weight:600">Read about Dex on VEX Library &rarr;</a>
       </div>
     </div>
 
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px">
-      <h3 style="font-size:15px;font-weight:700;margin-bottom:10px">🔗 Official Resources</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;font-size:12px">
-        <a href="https://www.vexrobotics.com/push-back-manual" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Game Manual →</a>
-        <a href="https://kb.vex.com/hc/en-us/articles/40268233052564-Getting-Started-with-Robot-Design-V5RC-Push-Back" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Getting Started with Design →</a>
-        <a href="https://www.robotevents.com/V5RC/2025-2026/QA" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Official Q&A →</a>
-        <a href="https://education.vex.com/stemlabs/v5/competition-101-v5rc-push-back" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Competition 101 STEM Lab →</a>
-        <a href="https://www.vexforum.com/t/2025-26-vex-v5-robotics-competition-game-push-back/136514" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">VEX Forum Discussion →</a>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Official Resources</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;font-size:12px">
+        <a href="https://www.vexrobotics.com/push-back-manual" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Game Manual &rarr;</a>
+        <a href="https://kb.vex.com/hc/en-us/articles/40268233052564-Getting-Started-with-Robot-Design-V5RC-Push-Back" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Getting Started &rarr;</a>
+        <a href="https://www.robotevents.com/V5RC/2025-2026/QA" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Official Q&amp;A &rarr;</a>
+        <a href="https://education.vex.com/stemlabs/v5/competition-101-v5rc-push-back" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Competition 101 &rarr;</a>
+        <a href="https://www.vexforum.com/t/2025-26-vex-v5-robotics-competition-game-push-back/136514" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">VEX Forum &rarr;</a>
       </div>
     </div>
   `;
 }
 
-// Robot Types
+/* ===== ROBOT TYPES ===== */
 function renderRobotTypes() {
   const container = document.getElementById('tab-robots');
-
   container.innerHTML = `
+    <div style="margin-bottom:10px">
+      <button onclick="switchTab('home')" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">
+        &larr; Home
+      </button>
+    </div>
     <div class="div-banner">
       <div>
-        <h2>🤖 Robot Design Archetypes — Push Back Season (2025-2026)</h2>
-        <div style="font-size:12px;color:var(--text-dim);margin-top:4px">Click a robot type to see teams commonly associated with that design. Click team chips to view full stats.</div>
+        <h2>Robot Design Archetypes &mdash; Push Back (2025-2026)</h2>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:3px">Click a robot type to see teams. Click team chips for full stats.</div>
       </div>
     </div>
 
@@ -1180,48 +1458,45 @@ function renderRobotTypes() {
           <div class="rt-icon">${rt.icon}</div>
           <div class="rt-name">${rt.name}</div>
           <div class="rt-desc">${rt.desc}</div>
-          <div style="margin-top:12px">
-            ${rt.links.map(l => `<a href="${l.url}" target="_blank" style="display:inline-block;margin-right:12px;font-size:11px;color:var(--accent2);text-decoration:none;font-weight:600">${l.label} →</a>`).join('')}
+          <div style="margin-top:10px">
+            ${rt.links.map(l => `<a href="${l.url}" target="_blank" style="display:inline-block;margin-right:10px;font-size:11px;color:var(--accent2);text-decoration:none;font-weight:600">${l.label} &rarr;</a>`).join('')}
           </div>
-          <div class="rt-count" id="rt-count-${rt.id}">Click to explore teams →</div>
+          <div class="rt-count" id="rt-count-${rt.id}">Click to explore teams &rarr;</div>
         </div>
         <div class="rt-teams-panel" id="rt-panel-${rt.id}"></div>
       `).join('')}
     </div>
 
-    <div style="margin-top:24px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:14px">
-      <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">About Push Back Robot Design Meta</h3>
+    <div style="margin-top:20px;padding:18px;background:var(--surface);border:1px solid var(--border);border-radius:14px">
+      <h3 style="font-size:13px;font-weight:700;margin-bottom:8px">About Push Back Robot Design Meta</h3>
       <p style="font-size:12px;color:var(--text-dim);line-height:1.7">
-        The 2025-2026 <strong style="color:var(--text)">Push Back</strong> season features 88 Blocks, 4 Goals (2 Long + 2 Center), Loaders, and Park Zones on a 12'×12' field. Teams score by placing Blocks in Goals (3 pts each), controlling Zones within Goals, clearing Loaders, and Parking at match end (+30 bonus for double-park). A key strategic twist: <strong style="color:var(--text)">descoring is legal</strong> — you can remove opponent Blocks from their Goals, making defense a core part of the meta unlike many prior seasons.
+        The 2025-2026 <strong style="color:var(--text)">Push Back</strong> season features 88 Blocks, 4 Goals (2 Long + 2 Center), Loaders, and Park Zones on a 12'x12' field. Teams score by placing Blocks in Goals (3 pts each), controlling Zones within Goals, clearing Loaders, and Parking at match end (+30 bonus for double-park). A key strategic twist: <strong style="color:var(--text)">descoring is legal</strong> &mdash; you can remove opponent Blocks from their Goals, making defense a core part of the meta.
       </p>
-      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-top:8px">
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-top:6px">
         Community predictions suggest this season will feature "large amounts of descoring, defence, and Block hoarding." With <strong style="color:var(--text)">no possession limit</strong>, burst-loading strategies and high-capacity storage designs are viable. The Hero Bot <strong style="color:var(--text)">Dex</strong> establishes a baseline with its conveyor + intake approach, but teams are already innovating with side rollers, revolver magazines, and compact park-optimized frames.
       </p>
-      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-top:8px">
-        Note: Robot design categorization is based on common archetypes emerging in the Push Back community. Many teams use hybrid designs combining elements from multiple categories. For the most accurate information about a specific team's robot, visit their RobotEvents page or search for their reveal video on YouTube.
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-top:6px">
+        Note: Robot design categorization is based on common archetypes emerging in the Push Back community. Many teams use hybrid designs combining elements from multiple categories.
       </p>
-      <p style="font-size:12px;margin-top:8px">
-        <a href="https://www.youtube.com/results?search_query=VEX+Push+Back+robot+reveal+2025+2026" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600">Search YouTube for Push Back Robot Reveals →</a>
+      <p style="font-size:12px;margin-top:6px">
+        <a href="https://www.youtube.com/results?search_query=VEX+Push+Back+robot+reveal+2025+2026" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600">YouTube: Push Back Reveals &rarr;</a>
         &nbsp;&bull;&nbsp;
-        <a href="https://www.vexforum.com/t/push-back-robot-prediction/136469" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600">VEX Forum: Robot Predictions →</a>
+        <a href="https://www.vexforum.com/t/push-back-robot-prediction/136469" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600">Forum: Robot Predictions &rarr;</a>
         &nbsp;&bull;&nbsp;
-        <a href="https://www.vexforum.com/t/8059-super-early-season-robot-reveals-for-push-back/138153" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600">Early Season Reveals →</a>
+        <a href="https://www.vexforum.com/t/8059-super-early-season-robot-reveals-for-push-back/138153" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600">Early Reveals &rarr;</a>
       </p>
     </div>
   `;
 }
 
 function toggleRobotTeams(rtId) {
-  const panel = document.getElementById(`rt-panel-${rtId}`);
+  const panel = document.getElementById('rt-panel-' + rtId);
   if (panel.classList.contains('open')) {
     panel.classList.remove('open');
     return;
   }
-  // Close others
   document.querySelectorAll('.rt-teams-panel').forEach(p => p.classList.remove('open'));
 
-  // Show all teams grouped by tier for this robot type
-  // Since we don't have exact robot type data per team, show all teams grouped by tier
   const allTeams = [...TEAMS_DATA].sort((a,b) => b.trueSkill - a.trueSkill);
   const tiers = ['Elite', 'Contender', 'Competitive', 'Developing', 'Rising'];
 
@@ -1230,11 +1505,12 @@ function toggleRobotTeams(rtId) {
     const tierTeams = allTeams.filter(t => t.tier === tier);
     if (tierTeams.length === 0) continue;
     const tc = tierColor(tier);
-    html += `<div style="margin-bottom:10px"><div style="font-size:11px;font-weight:700;color:${tc};margin-bottom:4px">${tier} (${tierTeams.length} teams)</div><div class="rt-team-list">`;
-    html += tierTeams.slice(0, tier === 'Elite' ? 50 : 20).map(t =>
-      `<span class="rt-team-chip" style="background:${t.tier==='Elite'?'var(--elite-bg)':t.tier==='Contender'?'var(--contender-bg)':t.tier==='Competitive'?'var(--competitive-bg)':t.tier==='Developing'?'var(--developing-bg)':'var(--rising-bg)'};color:${tc}" onclick="openDetail('${t.team}')" title="${t.teamName} — TS:${t.trueSkill}">${t.team}</span>`
+    html += '<div style="margin-bottom:8px"><div style="font-size:11px;font-weight:700;color:'+tc+';margin-bottom:4px">'+tier+' ('+tierTeams.length+' teams)</div><div class="rt-team-list">';
+    const limit = tier === 'Elite' ? 50 : 20;
+    html += tierTeams.slice(0, limit).map(t =>
+      '<span class="rt-team-chip" style="background:'+(t.tier==='Elite'?'var(--elite-bg)':t.tier==='Contender'?'var(--contender-bg)':t.tier==='Competitive'?'var(--competitive-bg)':t.tier==='Developing'?'var(--developing-bg)':'var(--rising-bg)')+';color:'+tc+'" onclick="openDetail(\''+t.team+'\')" title="'+t.teamName+' \u2014 TS:'+t.trueSkill+'">'+t.team+'</span>'
     ).join('');
-    if (tierTeams.length > (tier === 'Elite' ? 50 : 20)) html += `<span style="font-size:10px;color:var(--text-dim);padding:4px 8px">+${tierTeams.length - (tier === 'Elite' ? 50 : 20)} more</span>`;
+    if (tierTeams.length > limit) html += '<span style="font-size:10px;color:var(--text-dim);padding:4px 8px">+'+(tierTeams.length - limit)+' more</span>';
     html += '</div></div>';
   }
 
@@ -1242,16 +1518,18 @@ function toggleRobotTeams(rtId) {
   panel.classList.add('open');
 }
 
-// Keyboard shortcut
+/* ===== KEYBOARD SHORTCUTS ===== */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     document.getElementById('acList').classList.remove('show');
+    document.getElementById('stickyAcList').classList.remove('show');
+    close6121E();
     if (currentTab === 'teamdetail') goBack();
   }
 });
 
-// Initialize
-renderSpotlight();
+/* ===== INITIALIZE ===== */
+renderHome();
 </script>
 
 </body>
