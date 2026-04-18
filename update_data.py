@@ -654,6 +654,61 @@ def has_data_changed(new_data):
         return True
 
 
+def is_data_quality_ok(new_data):
+    """
+    SAFEGUARD: Refuse to overwrite good data with bad data.
+    Checks that the new data isn't obviously worse than what we have.
+    """
+    json_path = os.path.join(SCRIPT_DIR, "teams_data.json")
+    force = os.environ.get("FORCE_REBUILD", "false").lower() == "true"
+
+    if not os.path.exists(json_path):
+        log("  No existing data — accepting new data.")
+        return True
+
+    try:
+        with open(json_path, "r") as f:
+            old_data = json.load(f)
+    except Exception:
+        return True
+
+    old_count = len(old_data)
+    new_count = len(new_data)
+
+    # Check 1: Don't replace many teams with very few
+    if old_count > 100 and new_count < old_count * 0.5:
+        log(f"  SAFEGUARD: New data has {new_count} teams vs {old_count} existing. Too few — skipping.")
+        if force:
+            log("  FORCE_REBUILD is set — overriding safeguard.")
+            return True
+        return False
+
+    # Check 2: Don't accept data where most teams have 0 trueSkill
+    if new_count > 0:
+        zero_ts = sum(1 for t in new_data if t.get("trueSkill", 0) == 0)
+        zero_pct = zero_ts / new_count * 100
+        if zero_pct > 50:
+            log(f"  SAFEGUARD: {zero_pct:.0f}% of teams have 0 True Skill — data looks incomplete. Skipping.")
+            if force:
+                log("  FORCE_REBUILD is set — overriding safeguard.")
+                return True
+            return False
+
+    # Check 3: Don't accept data with no divisions assigned
+    if new_count > 0:
+        no_div = sum(1 for t in new_data if not t.get("division"))
+        no_div_pct = no_div / new_count * 100
+        if no_div_pct > 80:
+            log(f"  SAFEGUARD: {no_div_pct:.0f}% of teams have no division — data looks incomplete. Skipping.")
+            if force:
+                log("  FORCE_REBUILD is set — overriding safeguard.")
+                return True
+            return False
+
+    log(f"  Data quality OK: {new_count} teams (was {old_count})")
+    return True
+
+
 # ---------------------------------------------------------------------------
 # Main Strategies
 # ---------------------------------------------------------------------------
@@ -708,6 +763,10 @@ def run_worlds_event_mode():
         log("No data changes detected — skipping rebuild.")
         return False
 
+    if not is_data_quality_ok(teams_data):
+        log("Data quality check failed — keeping existing data.")
+        return False
+
     return build_html(teams_data)
 
 
@@ -747,6 +806,10 @@ def run_season_mode():
 
     if not has_data_changed(teams_data):
         log("No data changes detected — skipping rebuild.")
+        return False
+
+    if not is_data_quality_ok(teams_data):
+        log("Data quality check failed — keeping existing data.")
         return False
 
     return build_html(teams_data)
