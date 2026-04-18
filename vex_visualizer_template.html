@@ -908,6 +908,7 @@ function show6121E() {
     <div style="font-size:11px;color:var(--text-dim);margin-top:3px">${t.region}, ${t.country} &bull; ${t.division} Division &bull; Rank #${t.trueSkillRank} &bull; Div #${divTSRank}/${divTeams.length}</div>
     <div class="mini-stats">
       <div class="mini-stat"><div class="v">${t.trueSkill}</div><div class="k">True Skill</div></div>
+      <div class="mini-stat"><div class="v" style="color:var(--accent2)">#${t.trueSkillRank}</div><div class="k">Global Rank</div></div>
       <div class="mini-stat"><div class="v" style="color:${tierColor(t.tier)}">${t.tier}</div><div class="k">Tier</div></div>
       <div class="mini-stat"><div class="v">${t.wins}-${t.losses}</div><div class="k">Record</div></div>
       <div class="mini-stat"><div class="v" style="color:var(--green)">${t.winPct}%</div><div class="k">Win %</div></div>
@@ -1174,8 +1175,7 @@ function renderTeams(division) {
     const avgTS = (divTeams.reduce((s,t) => s + t.trueSkill, 0) / divTeams.length).toFixed(1);
     const topTS = Math.max(...divTeams.map(t => t.trueSkill)).toFixed(1);
     const eliteCount = divTeams.filter(t => t.tier === 'Elite').length;
-    const divR = divTeams[0]?.divRank || '?';
-    const projPts = divTeams[0]?.divProjectedPoints || '?';
+    const divStrR = divTeams[0]?.divStrengthRank || '?';
     bannerHTML = `
       <div style="margin-bottom:10px">
         <button onclick="switchTab('home')" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">
@@ -1185,13 +1185,12 @@ function renderTeams(division) {
       <div class="div-banner">
         <div>
           <h2>${division} Division</h2>
-          <div style="font-size:11px;color:var(--text-dim);margin-top:3px">${divTeams.length} teams &bull; Division Rank #${divR} of 10</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:3px">${divTeams.length} teams &bull; Division Strength #${divStrR} of 10</div>
         </div>
         <div class="stat-row">
           <div class="stat-item"><div class="stat-val">${topTS}</div><div class="stat-label">Top True Skill</div></div>
           <div class="stat-item"><div class="stat-val">${avgTS}</div><div class="stat-label">Avg True Skill</div></div>
           <div class="stat-item"><div class="stat-val">${eliteCount}</div><div class="stat-label">Elite Teams</div></div>
-          <div class="stat-item"><div class="stat-val">${typeof projPts === 'number' ? Math.round(projPts) : projPts}</div><div class="stat-label">Proj. Points</div></div>
         </div>
       </div>`;
   } else {
@@ -1233,6 +1232,7 @@ function renderTeams(division) {
         <span class="tc-ts-val">${t.trueSkill}</span>
         <span class="tc-ts-label">True Skill</span>
       </div>
+      <div style="font-size:10px;color:var(--accent2);font-weight:600;font-family:'JetBrains Mono',monospace;margin-top:2px">Global #${t.trueSkillRank} &bull; Div #${t.divRank}/${t.divTotal || '?'}</div>
       <div class="tc-region">${t.region}${t.country !== 'United States' ? ', '+t.country : ''}</div>
       <div class="tc-wr"><span class="w">${t.wins}W</span><span class="l">${t.losses}L</span> <span style="color:var(--text-dim)">(${t.winPct}%)</span></div>
     </div>
@@ -1282,10 +1282,11 @@ function openDetail(teamId) {
         </div>
       </div>
 
-      ${t.worldsOdds !== 'N/A' ? '<div style="margin-top:10px;position:relative"><span style="font-size:12px;color:var(--highlight);font-weight:600">Worlds Odds: '+t.worldsOdds+'</span> &bull; <span style="font-size:12px;color:var(--text-dim)">Division Rank #'+t.divRank+'/10 (Projected '+(typeof t.divProjectedPoints === 'number' ? Math.round(t.divProjectedPoints) : t.divProjectedPoints)+' pts)</span></div>' : ''}
+      ${t.worldsOdds !== 'N/A' ? '<div style="margin-top:10px;position:relative"><span style="font-size:12px;color:var(--highlight);font-weight:600">Worlds Odds: '+t.worldsOdds+'</span> &bull; <span style="font-size:12px;color:var(--text-dim)">Div Rank #'+t.divRank+'/'+divTeams.length+' in '+t.division+' &bull; Division Strength #'+(t.divStrengthRank||'?')+'/10</span></div>' : ''}
 
       <div class="stat-tiles" style="margin-top:16px;position:relative">
         <div class="stat-tile highlight"><div class="st-val">${t.trueSkill}</div><div class="st-label">True Skill</div></div>
+        <div class="stat-tile" style="border-color:var(--accent)"><div class="st-val" style="color:var(--accent2)">#${t.trueSkillRank}</div><div class="st-label">Global Rank</div></div>
         <div class="stat-tile"><div class="st-val" style="color:var(--green)">${t.winPct}%</div><div class="st-label">Win Rate</div></div>
         <div class="stat-tile"><div class="st-val">${t.ccwm}</div><div class="st-label">CCWM</div></div>
         <div class="stat-tile"><div class="st-val">${t.opr}</div><div class="st-label">OPR</div></div>
