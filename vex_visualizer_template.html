@@ -28,6 +28,7 @@
 <meta name="keywords" content="VEX Worlds 2026, VEX Robotics, Push Back, scouting, VRC, V5RC, True Skill, team stats, division rankings, VEX competition, robot competition, STEM">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0a0e1a">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%230a0e1a'/%3E%3Cline x1='12' y1='2' x2='12' y2='4.5' stroke='%23fbbf24' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='2' r='1' fill='%23fbbf24'/%3E%3Crect x='5' y='5' width='14' height='10' rx='2.5' fill='white'/%3E%3Ccircle cx='9' cy='10' r='2' fill='%236366f1'/%3E%3Ccircle cx='15' cy='10' r='2' fill='%236366f1'/%3E%3Ccircle cx='9.4' cy='9.5' r='0.6' fill='white'/%3E%3Ccircle cx='15.4' cy='9.5' r='0.6' fill='white'/%3E%3Crect x='9' y='12.5' width='6' height='1' rx='0.5' fill='%236366f1' opacity='0.6'/%3E%3Crect x='7.5' y='16.5' width='9' height='4.5' rx='1.5' fill='white' opacity='0.8'/%3E%3C/svg%3E">
 <meta name="google-site-verification" content="ZLURI9WNIHbxgm39K3BbDu2iQWqkUlMBLNOiSIR-lNM" />
 
 <!-- JSON-LD Structured Data -->
@@ -163,50 +164,12 @@
   .hero-sub { color: var(--text-dim); font-size: 11px; margin-top: 4px; }
   .hero-sub span { color: var(--accent2); font-weight: 600; }
 
-  /* 6121E highlight button */
-  .btn-6121e {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;
-    background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.1));
-    border: 1.5px solid var(--highlight); color: var(--highlight);
-    cursor: pointer; transition: all 0.25s; white-space: nowrap;
-    font-family: inherit; flex-shrink: 0;
-  }
-  .btn-6121e:hover { background: rgba(251,191,36,0.25); box-shadow: 0 0 16px rgba(251,191,36,0.2); }
 
-  /* Dev name shimmer */
+  /* Dev name (plain) */
   .dev-name {
-    font-weight: 800; font-size: 14px;
-    background: linear-gradient(
-      90deg,
-      #818cf8 0%, #c084fc 15%, #f0abfc 30%,
-      #fde68a 45%, #fff 50%,
-      #fde68a 55%, #f0abfc 70%, #c084fc 85%, #818cf8 100%
-    );
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmer 3s ease-in-out infinite;
-    position: relative;
-    display: inline-block;
-    padding: 0 2px;
-  }
-  .dev-name::after {
-    content: '';
-    position: absolute;
-    inset: -2px -6px;
-    background: linear-gradient(
-      105deg,
-      transparent 0%, transparent 40%,
-      rgba(255,255,255,0.12) 45%,
-      rgba(255,255,255,0.25) 50%,
-      rgba(255,255,255,0.12) 55%,
-      transparent 60%, transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer-glow 3s ease-in-out infinite;
-    border-radius: 4px;
-    pointer-events: none;
+    font-weight: 700;
+    color: var(--accent2);
+    display: inline;
   }
   @keyframes shimmer {
     0% { background-position: 100% 50%; }
@@ -650,8 +613,6 @@
     .hero-tagline { font-size: 10px; }
     .hero-sub { font-size: 10px; text-align: center; }
     .hero-meta-row { justify-content: center; }
-    .hero-credit-wrap { text-align: center; }
-    .btn-6121e { align-self: center; padding: 5px 10px; font-size: 11px; }
     .main { padding: 12px 10px 30px; }
     .sticky-search { padding: 6px 10px; }
     .division-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -683,7 +644,6 @@
     .card-6121e .mini-stat .v { font-size: 13px; }
     .legend { gap: 8px; padding: 8px 10px; }
     .legend-item { font-size: 9px; }
-    .hero-credit-wrap { display: block; margin-top: 2px; }
   }
 
   @media (max-width: 400px) {
@@ -703,9 +663,25 @@
       <div class="hero-brand">
         <div class="hero-logo">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white" opacity="0.9"/>
-            <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-            <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+            <!-- Antenna -->
+            <line x1="12" y1="1" x2="12" y2="4" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+            <circle cx="12" cy="1" r="1" fill="#fbbf24" opacity="0.9"/>
+            <!-- Head -->
+            <rect x="4" y="4" width="16" height="12" rx="3" fill="white" opacity="0.9"/>
+            <!-- Eyes -->
+            <circle cx="9" cy="10" r="2.2" fill="#6366f1"/>
+            <circle cx="15" cy="10" r="2.2" fill="#6366f1"/>
+            <circle cx="9.5" cy="9.5" r="0.7" fill="white"/>
+            <circle cx="15.5" cy="9.5" r="0.7" fill="white"/>
+            <!-- Mouth -->
+            <rect x="9" y="13" width="6" height="1.2" rx="0.6" fill="#6366f1" opacity="0.6"/>
+            <!-- Ears -->
+            <rect x="1.5" y="7" width="2" height="5" rx="1" fill="white" opacity="0.6"/>
+            <rect x="20.5" y="7" width="2" height="5" rx="1" fill="white" opacity="0.6"/>
+            <!-- Body -->
+            <rect x="7" y="17" width="10" height="5" rx="2" fill="white" opacity="0.7"/>
+            <rect x="9" y="18.5" width="2" height="2" rx="0.5" fill="#6366f1" opacity="0.5"/>
+            <rect x="13" y="18.5" width="2" height="2" rx="0.5" fill="#6366f1" opacity="0.5"/>
           </svg>
         </div>
         <div class="hero-titles">
@@ -713,13 +689,9 @@
           <div class="hero-tagline">Your Worlds 2026 Command Center. <em>Every team. Every stat. Game on.</em></div>
         </div>
       </div>
-      <button class="btn-6121e" onclick="show6121E()">&#9733; 6121E Conestoga</button>
     </div>
     <div class="hero-meta-row">
       <div class="hero-sub"><span>866 High School Teams</span> &bull; 10 Divisions &bull; Push Back Season (2025-2026)</div>
-    </div>
-    <div class="hero-credit-wrap" style="margin-top:2px">
-      <span style="font-size:11px;color:var(--text-dim)">Developed by <a href="https://www.worldcubeassociation.org/persons/2022MOHA07" target="_blank" class="dev-name" style="text-decoration:none;cursor:pointer" title="View Arjun's WCA Profile">Arjun Mohanan</a> &bull; Live data updates</span>
     </div>
 
     <!-- Division tabs (horizontal scroll) -->
@@ -799,10 +771,6 @@
     <button class="bnav-btn" id="bnav-search" onclick="focusSearch();updateBnav('search')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <span>Search</span>
-    </button>
-    <button class="bnav-btn" id="bnav-6121e" onclick="show6121E();updateBnav('6121e')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      <span>6121E</span>
     </button>
     <button class="bnav-btn" id="bnav-game" onclick="switchTab('game');updateBnav('game')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
