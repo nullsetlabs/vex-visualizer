@@ -254,64 +254,105 @@ def fetch_event_divisions(event_id):
     return event_data
 
 
-def fetch_season_skills_rankings():
+def verify_token():
     """
-    Fetch season-wide skills rankings (World Skills Standings).
-    This gives us global skills rankings without per-team calls.
+    Verify the API token works by calling a simple endpoint.
+    Returns True if token is valid.
     """
-    log("Fetching season skills rankings...")
-    skills = api_get(f"/seasons/{SEASON_ID}/skills", {"program[]": PROGRAM_ID})
-    log(f"  Got {len(skills)} season skills entries")
-
-    by_team = {}
-    for s in skills:
-        team_info = s.get("team", {})
-        team_num = team_info.get("number", "")
-        if team_num:
-            if team_num not in by_team:
-                by_team[team_num] = []
-            by_team[team_num].append(s)
-    return by_team
+    log("Verifying API token...")
+    test_url = f"{API_BASE}/seasons/{SEASON_ID}"
+    req = urllib.request.Request(test_url, headers=HEADERS)
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            body = json.loads(resp.read().decode())
+            season_name = body.get("name", "Unknown")
+            log(f"  Token OK — Season: {season_name}")
+            return True
+    except urllib.error.HTTPError as e:
+        log(f"  Token verification FAILED — HTTP {e.code}")
+        if e.code == 401:
+            log("  Your token may be invalid or expired.")
+        elif e.code == 403:
+            log("  Your token may not have the required permissions.")
+        try:
+            err_body = e.read().decode()[:200]
+            log(f"  Response: {err_body}")
+        except Exception:
+            pass
+        return False
+    except Exception as e:
+        log(f"  Token verification error: {e}")
+        return False
 
 
 def fetch_season_events():
-    """Fetch recent events for the season to aggregate stats."""
+    """Fetch events for the season using /seasons/{id}/events endpoint."""
     log("Fetching season events...")
-    events = api_get("/events", {
-        "program[]": PROGRAM_ID,
-        "season[]": SEASON_ID,
-    })
+    events = api_get(f"/seasons/{SEASON_ID}/events")
+    if not events:
+        # Fallback: try /events with season filter
+        log("  Trying fallback /events endpoint...")
+        events = api_get("/events", {
+            "program[]": PROGRAM_ID,
+            "season[]": SEASON_ID,
+        })
     log(f"  Got {len(events)} events")
     return events
 
 
+def find_worlds_event(events):
+    """Find the Worlds event from the event list."""
+    for event in events:
+        name = (event.get("name", "") or "").lower()
+        level = (event.get("level", "") or "").lower()
+        if "world" in level or "world" in name:
+            log(f"  Found Worlds event: {event.get('name')} (ID: {event.get('id')})")
+            return event
+    return None
+
+
 # ---------------------------------------------------------------------------
-# Fallback: Season-Wide Collection (when WORLDS_EVENT_ID is not set)
+# Season-Wide Collection (when WORLDS_EVENT_ID is not set)
 # ---------------------------------------------------------------------------
 
 def fetch_season_teams():
     """Fetch all teams registered for the season."""
     log("Fetching all season teams...")
+    # Try with season filter first
     teams = api_get("/teams", {
         "program[]": PROGRAM_ID,
-        "registered": "true",
+        "season[]": SEASON_ID,
     }, max_pages=20)
+    if not teams:
+        # Fallback: just program filter
+        log("  Trying fallback without season filter...")
+        teams = api_get("/teams", {
+            "program[]": PROGRAM_ID,
+        }, max_pages=5)
     log(f"  Got {len(teams)} teams")
     return teams
 
 
 def collect_from_recent_events(teams_dict, max_events=10):
     """
-    Collect rankings from the most recent events.
+    Collect rankings and skills from the most recent events.
     More efficient than per-team calls — fetches event-level data.
     """
     events = fetch_season_events()
 
     # Sort by end date, most recent first
     events.sort(key=lambda e: e.get("end", ""), reverse=True)
+
+    # Filter to events that are completed (have end dates in the past)
+    now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    completed = [e for e in events if (e.get("end", "") or "") <= now_str]
+    if completed:
+        events = completed
+
     events = events[:max_events]
 
     rankings_by_team = {}
+    skills_by_team = {}
     matches_by_team = {}
 
     for i, event in enumerate(events):
@@ -321,6 +362,7 @@ def collect_from_recent_events(teams_dict, max_events=10):
 
         # Fetch rankings for this event
         event_rankings = api_get(f"/events/{eid}/rankings")
+        log(f"    Rankings: {len(event_rankings)} entries")
         for r in event_rankings:
             team_num = r.get("team", {}).get("number", "")
             if team_num and team_num in teams_dict:
@@ -328,9 +370,19 @@ def collect_from_recent_events(teams_dict, max_events=10):
                     rankings_by_team[team_num] = []
                 rankings_by_team[team_num].append(r)
 
+        # Fetch skills for this event
+        event_skills = api_get(f"/events/{eid}/skills")
+        log(f"    Skills: {len(event_skills)} entries")
+        for s in event_skills:
+            team_num = s.get("team", {}).get("number", "")
+            if team_num and team_num in teams_dict:
+                if team_num not in skills_by_team:
+                    skills_by_team[team_num] = []
+                skills_by_team[team_num].append(s)
+
         time.sleep(0.5)
 
-    return rankings_by_team, matches_by_team
+    return rankings_by_team, skills_by_team, matches_by_team
 
 
 # ---------------------------------------------------------------------------
@@ -666,8 +718,14 @@ def run_season_mode():
     """
     log("Running in Season mode (event-level aggregation)")
 
-    # Fetch season skills rankings (one call, all teams)
-    skills_by_team = fetch_season_skills_rankings()
+    # First try to auto-detect Worlds event
+    events = fetch_season_events()
+    worlds = find_worlds_event(events)
+    if worlds:
+        global WORLDS_EVENT_ID
+        WORLDS_EVENT_ID = worlds.get("id")
+        log(f"  Auto-detected Worlds event ID: {WORLDS_EVENT_ID}")
+        return run_worlds_event_mode()
 
     # Fetch teams from season
     raw_teams = fetch_season_teams()
@@ -679,7 +737,7 @@ def run_season_mode():
 
     # Collect from recent events (efficient: event-level, not per-team)
     log("Collecting from recent events...")
-    rankings_by_team, matches_by_team = collect_from_recent_events(teams_dict)
+    rankings_by_team, skills_by_team, matches_by_team = collect_from_recent_events(teams_dict)
 
     # Process
     teams_data = process_teams(
@@ -707,10 +765,17 @@ def main():
 
     log("=" * 60)
     log("VEX Visualizer Data Update")
+    log(f"  Token: {'set (' + TOKEN[:6] + '...)' if TOKEN else 'NOT SET'}")
     log(f"  Worlds week: {'YES' if worlds_week else 'no'}")
     log(f"  Worlds month: {'YES' if worlds_month else 'no'}")
     log(f"  Worlds event ID: {WORLDS_EVENT_ID or 'not set'}")
     log("=" * 60)
+
+    # Verify token before making API calls
+    if not verify_token():
+        log("Token verification failed. Please check your ROBOTEVENTS_TOKEN secret.")
+        log("  Make sure the token is a valid Bearer token from robotevents.com/api/v2")
+        sys.exit(1)
 
     if WORLDS_EVENT_ID:
         success = run_worlds_event_mode()
