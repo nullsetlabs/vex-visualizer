@@ -24,6 +24,46 @@
 <!-- General Meta -->
 <meta name="description" content="Interactive VEX Worlds 2026 dashboard featuring 866 teams across 10 divisions. Search teams, compare stats, explore robot types for the Push Back season.">
 <meta name="author" content="Arjun Mohanan">
+<link rel="canonical" href="https://arjun-mohanan.github.io/vex-visualizer/">
+<meta name="keywords" content="VEX Worlds 2026, VEX Robotics, Push Back, scouting, VRC, V5RC, True Skill, team stats, division rankings, VEX competition, robot competition, STEM">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="google-site-verification" content="ZLURI9WNIHbxgm39K3BbDu2iQWqkUlMBLNOiSIR-lNM" />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "VEX Visualizer - Worlds 2026",
+  "description": "Interactive scouting dashboard for VEX Worlds 2026 featuring 866 teams across 10 divisions with True Skill ratings, win rates, and live data updates.",
+  "url": "https://arjun-mohanan.github.io/vex-visualizer/",
+  "applicationCategory": "Sports, Education",
+  "operatingSystem": "Any",
+  "author": {
+    "@type": "Person",
+    "name": "Arjun Mohanan"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "about": {
+    "@type": "SportsEvent",
+    "name": "VEX Worlds 2026",
+    "startDate": "2026-04-28",
+    "endDate": "2026-05-03",
+    "location": {
+      "@type": "Place",
+      "name": "Kay Bailey Hutchison Convention Center",
+      "address": "Dallas, TX"
+    },
+    "sport": "Robotics"
+  }
+}
+</script>
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
 
@@ -82,6 +122,7 @@
   }
   .hero-logo svg { width: 24px; height: 24px; }
   .hero-titles { flex: 1; min-width: 0; }
+  .hero-meta-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
   .hero h1 {
     font-size: 22px; font-weight: 800;
     background: linear-gradient(
@@ -192,6 +233,9 @@
     max-width: 1600px; margin: 0 auto;
     display: flex; gap: 8px; align-items: center;
   }
+  .sticky-search .search-input {
+    padding: 8px 14px; font-size: 12px;
+  }
 
   /* ===== SEARCH ===== */
   .search-bar {
@@ -247,6 +291,17 @@
     margin-top: 8px; display: flex; gap: 6px; overflow-x: auto;
     scrollbar-width: none; -ms-overflow-style: none;
     padding-bottom: 4px;
+    position: relative;
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  }
+  .div-tabs-wrap.scrolled-end {
+    -webkit-mask-image: linear-gradient(to left, black 85%, transparent 100%);
+    mask-image: linear-gradient(to left, black 85%, transparent 100%);
+  }
+  .div-tabs-wrap.scrolled-mid {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 85%, transparent 100%);
   }
   .div-tabs-wrap::-webkit-scrollbar { display: none; }
   .nav-tab {
@@ -586,10 +641,17 @@
     :root { --bottom-nav-h: 64px; }
     .bottom-nav { display: block; }
     .hero { padding: 10px 12px 8px; }
-    .hero h1 { font-size: 16px; }
+    .hero-top { flex-direction: column; align-items: stretch; gap: 6px; }
+    .hero-brand { justify-content: center; gap: 8px; }
+    .hero-logo { width: 32px; height: 32px; }
+    .hero-logo svg { width: 20px; height: 20px; }
+    .hero-titles { text-align: center; }
+    .hero h1 { font-size: 18px; white-space: nowrap; }
     .hero-tagline { font-size: 10px; }
-    .hero-sub { font-size: 10px; }
-    .btn-6121e { padding: 5px 10px; font-size: 11px; }
+    .hero-sub { font-size: 10px; text-align: center; }
+    .hero-meta-row { justify-content: center; }
+    .hero-credit-wrap { text-align: center; }
+    .btn-6121e { align-self: center; padding: 5px 10px; font-size: 11px; }
     .main { padding: 12px 10px 30px; }
     .sticky-search { padding: 6px 10px; }
     .division-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -626,7 +688,9 @@
 
   @media (max-width: 400px) {
     .division-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
     .card-6121e .mini-stats { grid-template-columns: repeat(2, 1fr); }
+    .hero h1 { font-size: 16px; }
   }
 </style>
 </head>
@@ -651,9 +715,11 @@
       </div>
       <button class="btn-6121e" onclick="show6121E()">&#9733; 6121E Conestoga</button>
     </div>
-    <div class="hero-sub">2145 Division Predictor &bull; <span>866 High School Teams</span> &bull; Push Back Season (2025-2026) &bull; True Skill data from 03/23</div>
+    <div class="hero-meta-row">
+      <div class="hero-sub"><span>866 High School Teams</span> &bull; 10 Divisions &bull; Push Back Season (2025-2026)</div>
+    </div>
     <div class="hero-credit-wrap" style="margin-top:2px">
-      <span style="font-size:12px;color:var(--text-dim)">Developed by <a href="https://www.worldcubeassociation.org/persons/2022MOHA07" target="_blank" class="dev-name" style="text-decoration:none;cursor:pointer" title="View Arjun's WCA Profile">Arjun Mohanan</a></span>
+      <span style="font-size:11px;color:var(--text-dim)">Developed by <a href="https://www.worldcubeassociation.org/persons/2022MOHA07" target="_blank" class="dev-name" style="text-decoration:none;cursor:pointer" title="View Arjun's WCA Profile">Arjun Mohanan</a> &bull; Live data updates</span>
     </div>
 
     <!-- Division tabs (horizontal scroll) -->
@@ -717,7 +783,10 @@
 
 <!-- ===== FOOTER ===== -->
 <div class="footer">
-  <strong>VEX Visualizer</strong> &bull; Developed by <a href="https://www.worldcubeassociation.org/persons/2022MOHA07" target="_blank" class="dev-name" style="text-decoration:none;cursor:pointer" title="View Arjun's WCA Profile">Arjun Mohanan</a> &bull; Data: 2145 WORLDS Division Predictor (True Skill updated 03/23) &bull; VEX Worlds 2026 &bull; Push Back Season (2025-2026)
+  <strong>VEX Visualizer</strong> &bull; Developed by <a href="https://www.worldcubeassociation.org/persons/2022MOHA07" target="_blank" class="dev-name" style="text-decoration:none;cursor:pointer" title="View Arjun's WCA Profile">Arjun Mohanan</a> &bull; VEX Worlds 2026 &bull; Push Back Season (2025-2026)
+  <div style="margin-top:8px;font-size:10px;color:#556;line-height:1.5;max-width:700px;margin-left:auto;margin-right:auto">
+    This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International. VEX and VEX Robotics are trademarks or service marks of Innovation First International. All competition data is sourced from publicly available information.
+  </div>
 </div>
 
 <!-- ===== BOTTOM NAV (mobile) ===== -->
@@ -748,6 +817,20 @@
 
 <script>
 const TEAMS_DATA = TEAMS_JSON_PLACEHOLDER;
+
+/* Tab scroll indicator */
+(function() {
+  const wrap = document.getElementById('divTabsWrap');
+  if (!wrap) return;
+  function updateScrollClass() {
+    const sl = wrap.scrollLeft, sw = wrap.scrollWidth, cw = wrap.clientWidth;
+    wrap.classList.remove('scrolled-end', 'scrolled-mid');
+    if (sl + cw >= sw - 10) wrap.classList.add('scrolled-end');
+    else if (sl > 10) wrap.classList.add('scrolled-mid');
+  }
+  wrap.addEventListener('scroll', updateScrollClass, { passive: true });
+  setTimeout(updateScrollClass, 100);
+})();
 
 const ROBOT_TYPES = [
   {
@@ -1144,19 +1227,22 @@ function renderHome() {
     </div>`;
 
   let cardsHTML = DIVISIONS.map(div => {
-    const divTeams = allTeams.filter(t => t.division === div);
+    const divTeams = allTeams.filter(t => t.division === div).sort((a,b) => b.trueSkill - a.trueSkill);
     const dAvg = (divTeams.reduce((s,t) => s + t.trueSkill, 0) / divTeams.length).toFixed(1);
-    const dTop = Math.max(...divTeams.map(t => t.trueSkill)).toFixed(1);
+    const dTop = divTeams[0];
     const dElite = divTeams.filter(t => t.tier === 'Elite').length;
     return `
       <div class="div-card" onclick="switchTab('${div}')">
         <div class="div-card-name">${div}</div>
         <div class="div-card-sub">${divTeams.length} teams</div>
         <div class="div-card-stats">
-          <div class="div-card-stat"><div class="val">${dTop}</div><div class="lbl">Top True Skill</div></div>
+          <div class="div-card-stat"><div class="val">${dTop.trueSkill.toFixed(1)}</div><div class="lbl">Top True Skill</div></div>
           <div class="div-card-stat"><div class="val">${dAvg}</div><div class="lbl">Avg True Skill</div></div>
           <div class="div-card-stat"><div class="val" style="color:var(--elite)">${dElite}</div><div class="lbl">Elite Teams</div></div>
           <div class="div-card-stat"><div class="val">${divTeams.length}</div><div class="lbl">Total Teams</div></div>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text-dim);border-top:1px solid var(--border);padding-top:8px">
+          <span style="color:var(--elite);font-weight:700">#1</span> ${dTop.team} <span style="opacity:0.6">${dTop.teamName || ''}</span> <span style="color:var(--accent2);font-weight:600">(${dTop.trueSkill.toFixed(1)})</span>
         </div>
       </div>`;
   }).join('');

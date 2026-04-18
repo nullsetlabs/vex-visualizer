@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arjun-mohanan.github.io/vex-visualizer/sitemap.xml

@@ -622,7 +622,7 @@ def build_html(teams_data):
 
     # Update the data timestamp in the HTML
     timestamp = datetime.now(timezone.utc).strftime("%m/%d %H:%M UTC")
-    html = html.replace("True Skill data from 03/23", f"Data updated {timestamp}")
+    html = html.replace("Live data updates", f"Data updated {timestamp}")
 
     output_path = os.path.join(SCRIPT_DIR, "index.html")
     with open(output_path, "w") as f:
