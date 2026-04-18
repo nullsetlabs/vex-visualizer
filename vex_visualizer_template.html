@@ -22,7 +22,7 @@
 <meta name="twitter:image" content="https://arjun-mohanan.github.io/vex-visualizer/og-preview.png">
 
 <!-- General Meta -->
-<meta name="description" content="Interactive VEX Worlds 2026 dashboard featuring 866 teams across 10 divisions. Search teams, compare stats, explore robot types for the Push Back season.">
+<meta name="description" content="Interactive VEX Worlds 2026 scouting dashboard featuring 866 teams across 10 divisions. Search teams, compare stats, and explore the Push Back season.">
 <meta name="author" content="Arjun Mohanan">
 <link rel="canonical" href="https://arjun-mohanan.github.io/vex-visualizer/">
 <meta name="keywords" content="VEX Worlds 2026, VEX Robotics, Push Back, scouting, VRC, V5RC, True Skill, team stats, division rankings, VEX competition, robot competition, STEM">
@@ -492,35 +492,6 @@
   .spotlight .sp-sub { color: var(--text-dim); font-size: 12px; margin-top: 3px; position: relative; }
 
   /* ===== ROBOT TYPE EXPLORER ===== */
-  .robot-type-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 14px;
-  }
-  .rt-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 18px; cursor: pointer;
-    transition: all 0.25s;
-  }
-  .rt-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .rt-card .rt-icon { font-size: 28px; margin-bottom: 6px; }
-  .rt-card .rt-name { font-size: 15px; font-weight: 700; }
-  .rt-card .rt-desc { font-size: 11px; color: var(--text-dim); margin-top: 6px; line-height: 1.5; }
-  .rt-card .rt-count { font-size: 11px; color: var(--accent2); font-weight: 600; margin-top: 8px; }
-  .rt-teams-panel {
-    margin-top: 12px; padding: 14px;
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 12px; display: none;
-  }
-  .rt-teams-panel.open { display: block; }
-  .rt-teams-panel h4 { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
-  .rt-team-list { display: flex; flex-wrap: wrap; gap: 6px; }
-  .rt-team-chip {
-    padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
-    font-family: 'JetBrains Mono', monospace; cursor: pointer; transition: all 0.2s;
-    border: 1px solid transparent;
-  }
-  .rt-team-chip:hover { transform: scale(1.05); }
-
   /* Tab content panels */
   .tab-content { display: none; }
   .tab-content.active { display: block; }
@@ -638,7 +609,6 @@
     .spotlight { padding: 14px; border-radius: 12px; }
     .spotlight h2 { font-size: 18px; }
     .bar-label { width: 55px; font-size: 9px; }
-    .robot-type-grid { grid-template-columns: 1fr; }
     .card-6121e { padding: 16px; }
     .card-6121e .mini-stats { grid-template-columns: repeat(4, 1fr); gap: 4px; }
     .card-6121e .mini-stat .v { font-size: 13px; }
@@ -709,13 +679,12 @@
       <div class="nav-tab" data-tab="Research" onclick="switchTab('Research')">Research</div>
       <div class="nav-tab" data-tab="Opportunity" onclick="switchTab('Opportunity')">Opportunity</div>
       <div class="nav-tab" data-tab="game" onclick="switchTab('game')">Push Back</div>
-      <div class="nav-tab" data-tab="robots" onclick="switchTab('robots')">Robot Types</div>
     </div>
 
     <!-- Search bar in header -->
     <div class="search-bar" id="headerSearch">
       <div class="search-wrapper">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search team # or name..." oninput="handleSearchInput()" onfocus="handleSearchInput()" autocomplete="off">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search team number for stats..." oninput="handleSearchInput()" onfocus="handleSearchInput()" autocomplete="off">
         <div class="autocomplete-list" id="acList"></div>
       </div>
       <div class="filter-chips" id="filterChips">
@@ -733,7 +702,7 @@
 <div class="sticky-search" id="stickySearch">
   <div class="search-inner">
     <div class="search-wrapper" style="flex:1">
-      <input type="text" class="search-input" id="stickySearchInput" placeholder="Search team # or name..." oninput="handleStickySearchInput()" onfocus="handleStickySearchInput()" autocomplete="off">
+      <input type="text" class="search-input" id="stickySearchInput" placeholder="Search team number for stats..." oninput="handleStickySearchInput()" onfocus="handleStickySearchInput()" autocomplete="off">
       <div class="autocomplete-list" id="stickyAcList"></div>
     </div>
   </div>
@@ -745,7 +714,6 @@
   <div class="tab-content" id="tab-teamdetail"></div>
   <div class="tab-content" id="tab-teams"></div>
   <div class="tab-content" id="tab-game"></div>
-  <div class="tab-content" id="tab-robots"></div>
 </div>
 
 <!-- ===== 6121E OVERLAY ===== -->
@@ -756,8 +724,11 @@
 <!-- ===== FOOTER ===== -->
 <div class="footer">
   <strong>VEX Visualizer</strong> &bull; Developed by <a href="https://www.worldcubeassociation.org/persons/2022MOHA07" target="_blank" class="dev-name" style="text-decoration:none;cursor:pointer" title="View Arjun's WCA Profile">Arjun Mohanan</a> &bull; VEX Worlds 2026 &bull; Push Back Season (2025-2026)
-  <div style="margin-top:8px;font-size:10px;color:#556;line-height:1.5;max-width:700px;margin-left:auto;margin-right:auto">
-    This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International. VEX and VEX Robotics are trademarks or service marks of Innovation First International. All competition data is sourced from publicly available information.
+  <div style="margin-top:6px;font-size:10px;color:#556;line-height:1.5;max-width:700px;margin-left:auto;margin-right:auto">
+    Team statistics and True Skill ratings sourced from the <a href="https://www.chiefdelphi.com" target="_blank" style="color:#6366f1;text-decoration:none">2145 Division Predictor</a> spreadsheet and <a href="https://www.robotevents.com" target="_blank" style="color:#6366f1;text-decoration:none">RobotEvents</a>. Game information from the <a href="https://www.vexrobotics.com/push-back-manual" target="_blank" style="color:#6366f1;text-decoration:none">official VEX Push Back Game Manual</a>.
+  </div>
+  <div style="margin-top:6px;font-size:10px;color:#445;line-height:1.5;max-width:700px;margin-left:auto;margin-right:auto">
+    This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International. VEX and VEX Robotics are trademarks or service marks of Innovation First International.
   </div>
 </div>
 
@@ -775,10 +746,6 @@
     <button class="bnav-btn" id="bnav-game" onclick="switchTab('game');updateBnav('game')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
       <span>Game</span>
-    </button>
-    <button class="bnav-btn" id="bnav-robots" onclick="switchTab('robots');updateBnav('robots')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
-      <span>Robots</span>
     </button>
   </div>
 </div>
@@ -799,86 +766,6 @@ const TEAMS_DATA = TEAMS_JSON_PLACEHOLDER;
   wrap.addEventListener('scroll', updateScrollClass, { passive: true });
   setTimeout(updateScrollClass, 100);
 })();
-
-const ROBOT_TYPES = [
-  {
-    id: 'conveyor-scorer',
-    name: 'Conveyor Scorer (Dex-Style)',
-    icon: '\u26D3\uFE0F',
-    desc: 'The reference design from the official Push Back Hero Bot "Dex." Uses a chain-link conveyor belt with inserts to grab Blocks from the intake and lift them up to score into Goals. The conveyor holds Blocks in place as they travel upward. Powered by a motor-driven gear train with rubber bands for tension. This is the most common starting architecture seen across competitive teams this season.',
-    searchTerms: ['conveyor', 'dex', 'chain', 'belt', 'hero bot'],
-    links: [
-      {label: 'Dex Hero Bot Introduction', url: 'https://kb.vex.com/hc/en-us/articles/40241402832660-An-Introduction-to-Dex-The-V5RC-Push-Back-Hero-Bot'},
-      {label: 'Getting Started: V5RC Push Back Design', url: 'https://kb.vex.com/hc/en-us/articles/40268233052564-Getting-Started-with-Robot-Design-V5RC-Push-Back'}
-    ]
-  },
-  {
-    id: 'side-roller',
-    name: 'Side Roller Intake',
-    icon: '\uD83D\uDD04',
-    desc: 'An emerging alternative to horizontal rollers for the Push Back season. Uses vertical/side-mounted rollers that, when properly tuned, can intake Blocks directly from the Loaders without needing an extra mechanism to reach inside the Loader. Favored by teams looking for faster cycle times and a more streamlined intake path.',
-    searchTerms: ['side roller', 'vertical roller', 'loader intake', 'roller'],
-    links: [
-      {label: 'VEX Forum: Early Season Robot Reveals', url: 'https://www.vexforum.com/t/8059-super-early-season-robot-reveals-for-push-back/138153'},
-      {label: 'Push Back Robot Predictions', url: 'https://www.vexforum.com/t/push-back-robot-prediction/136469'}
-    ]
-  },
-  {
-    id: 'burst-loader',
-    name: 'Revolver / Burst Loader',
-    icon: '\uD83C\uDFB0',
-    desc: 'A creative storage-and-fire system that loads multiple Blocks and then discharges them into a Goal in a rapid burst. Since Push Back has no possession limit, these robots can hoard Blocks and score them all at once. Revolver-style rotating magazines are one popular implementation. High risk, high reward \u2014 a full burst can swing a match.',
-    searchTerms: ['revolver', 'burst', 'magazine', 'hoarding', 'storage', 'no possession limit'],
-    links: [
-      {label: 'VEX Forum: Push Back Discussion', url: 'https://www.vexforum.com/t/2025-26-vex-v5-robotics-competition-game-push-back/136514'},
-      {label: 'Push Back Robot Predictions', url: 'https://www.vexforum.com/t/push-back-robot-prediction/136469'}
-    ]
-  },
-  {
-    id: 'descorer',
-    name: 'Descoring Specialist / Defender',
-    icon: '\uD83D\uDEE1\uFE0F',
-    desc: 'Push Back uniquely allows removing (descoring) opponent Blocks from Goals. These robots prioritize defensive mechanisms \u2014 arms, plows, or scoops that can reach into Goals and pull out enemy Blocks. Community predictions suggest "large amounts of descoring and defence" will define this season. A strong descorer paired with a fast scorer makes a devastating alliance.',
-    searchTerms: ['descore', 'defense', 'defensive', 'remove blocks', 'deny'],
-    links: [
-      {label: 'Push Back Game Manual', url: 'https://www.vexrobotics.com/push-back-manual'},
-      {label: 'VEX Forum: Push Back Strategy', url: 'https://www.vexforum.com/t/2025-26-vex-v5-robotics-competition-game-push-back/136514'}
-    ]
-  },
-  {
-    id: 'compact-parker',
-    name: 'Compact Park Bot',
-    icon: '\uD83C\uDD7F\uFE0F',
-    desc: 'Push Back awards a massive +30 bonus if both alliance robots fit in the Park Zone at match end. Compact Park Bots use a deliberately short or foldable chassis to guarantee the double-park bonus. Precision and speed over bulk \u2014 smaller bots can navigate the field more nimbly and avoid collisions, then park reliably in the final seconds.',
-    searchTerms: ['park', 'compact', 'small bot', 'short chassis', 'double park', 'endgame'],
-    links: [
-      {label: 'VEX Forum: Push Back Discussion', url: 'https://www.vexforum.com/t/2025-26-vex-v5-robotics-competition-game-push-back/136514'},
-      {label: 'Push Back Overview', url: 'https://rforce.vision/2025/06/18/strategic-kickoff-for-push-back-vex-v5-2025-2026/'}
-    ]
-  },
-  {
-    id: 'pusher-bot',
-    name: 'Pusher / Plowing Bot',
-    icon: '\uD83D\uDE9C',
-    desc: 'A simpler but effective approach: a strong drivetrain with a wide front plow or scoop that pushes multiple Blocks toward Goals at once. With 88 Blocks on the field, brute-force pushing can be surprisingly efficient. These robots focus on high-torque drivetrains and wedge geometry rather than complex intake mechanisms.',
-    searchTerms: ['push', 'plow', 'scoop', 'wedge', 'simple', 'brute force'],
-    links: [
-      {label: 'Push Back Game Manual', url: 'https://www.vexrobotics.com/push-back-manual'},
-      {label: 'Getting Started: V5RC Push Back Design', url: 'https://kb.vex.com/hc/en-us/articles/40268233052564-Getting-Started-with-Robot-Design-V5RC-Push-Back'}
-    ]
-  },
-  {
-    id: 'hybrid-allrounder',
-    name: 'Hybrid All-Rounder',
-    icon: '\u26A1',
-    desc: 'The most versatile (and most complex) build: combines a reliable intake/conveyor for scoring, a descoring capability, and a compact enough frame for parking. These robots try to do it all \u2014 score Blocks, clear Loaders, descore opponent Goals, control Zones, and park. Top-tier execution is required to make every subsystem work reliably under match pressure.',
-    searchTerms: ['hybrid', 'all-round', 'versatile', 'multi', 'complete'],
-    links: [
-      {label: 'Getting Started: V5RC Push Back Design', url: 'https://kb.vex.com/hc/en-us/articles/40268233052564-Getting-Started-with-Robot-Design-V5RC-Push-Back'},
-      {label: 'Competition 101: V5RC Push Back', url: 'https://education.vex.com/stemlabs/v5/competition-101-v5rc-push-back'}
-    ]
-  }
-];
 
 const DIVISIONS = ['Arts','Math','Technology','Science','Engineering','Innovate','Spirit','Design','Research','Opportunity'];
 
@@ -924,9 +811,6 @@ function switchTab(tab) {
   } else if (tab === 'game') {
     document.getElementById('tab-game').classList.add('active');
     renderGameOverview();
-  } else if (tab === 'robots') {
-    document.getElementById('tab-robots').classList.add('active');
-    renderRobotTypes();
   } else {
     document.getElementById('tab-teams').classList.add('active');
     renderTeams(tab);
@@ -998,12 +882,12 @@ function toggleTierFilter(tier) {
     activeTierFilters.add(tier);
     chip.classList.add('active');
   }
-  if (currentTab !== 'home' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
 function filterTeams() {
   searchQuery = document.getElementById('searchInput').value.toLowerCase();
-  if (currentTab !== 'home' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
 /* ===== AUTOCOMPLETE ===== */
@@ -1044,7 +928,7 @@ function handleSearchInput() {
   const val = document.getElementById('searchInput').value.toLowerCase().trim();
   searchQuery = val;
   doAutocomplete(val, document.getElementById('acList'), 'selectAcTeam');
-  if (currentTab !== 'home' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
 function handleStickySearchInput() {
@@ -1077,6 +961,15 @@ function selectStickyAcTeam(teamId) {
 document.getElementById('searchInput').addEventListener('keydown', function(e) {
   const acList = document.getElementById('acList');
   const items = acList.querySelectorAll('.ac-item[data-team]');
+  if (e.key === 'Escape') { acList.classList.remove('show'); return; }
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    if (acList.classList.contains('show') && items.length > 0) {
+      const idx = acIndex >= 0 ? acIndex : 0;
+      selectAcTeam(items[idx].dataset.team);
+    }
+    return;
+  }
   if (!acList.classList.contains('show') || items.length === 0) return;
   if (e.key === 'ArrowDown') {
     e.preventDefault();
@@ -1088,11 +981,6 @@ document.getElementById('searchInput').addEventListener('keydown', function(e) {
     acIndex = Math.max(acIndex - 1, 0);
     items.forEach((it, i) => it.classList.toggle('selected', i === acIndex));
     items[acIndex]?.scrollIntoView({block:'nearest'});
-  } else if (e.key === 'Enter' && acIndex >= 0) {
-    e.preventDefault();
-    selectAcTeam(items[acIndex].dataset.team);
-  } else if (e.key === 'Escape') {
-    acList.classList.remove('show');
   }
 });
 
@@ -1100,6 +988,15 @@ document.getElementById('searchInput').addEventListener('keydown', function(e) {
 document.getElementById('stickySearchInput').addEventListener('keydown', function(e) {
   const acList = document.getElementById('stickyAcList');
   const items = acList.querySelectorAll('.ac-item[data-team]');
+  if (e.key === 'Escape') { acList.classList.remove('show'); return; }
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    if (acList.classList.contains('show') && items.length > 0) {
+      const idx = acIndex >= 0 ? acIndex : 0;
+      selectStickyAcTeam(items[idx].dataset.team);
+    }
+    return;
+  }
   if (!acList.classList.contains('show') || items.length === 0) return;
   if (e.key === 'ArrowDown') {
     e.preventDefault();
@@ -1111,11 +1008,6 @@ document.getElementById('stickySearchInput').addEventListener('keydown', functio
     acIndex = Math.max(acIndex - 1, 0);
     items.forEach((it, i) => it.classList.toggle('selected', i === acIndex));
     items[acIndex]?.scrollIntoView({block:'nearest'});
-  } else if (e.key === 'Enter' && acIndex >= 0) {
-    e.preventDefault();
-    selectStickyAcTeam(items[acIndex].dataset.team);
-  } else if (e.key === 'Escape') {
-    acList.classList.remove('show');
   }
 });
 
@@ -1165,12 +1057,12 @@ function getFilteredTeams(division) {
 
 function changeSort(field) {
   sortField = field;
-  if (currentTab !== 'home' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 function toggleSortDir() {
   sortDir = sortDir === 'desc' ? 'asc' : 'desc';
   document.getElementById('sortDirBtn')?.classList.toggle('desc', sortDir === 'desc');
-  if (currentTab !== 'home' && currentTab !== 'robots' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
 function tierColor(tier) {
@@ -1487,91 +1379,13 @@ function renderGameOverview() {
         <a href="https://education.vex.com/stemlabs/v5/competition-101-v5rc-push-back" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Competition 101 &rarr;</a>
         <a href="https://www.vexforum.com/t/2025-26-vex-v5-robotics-competition-game-push-back/136514" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">VEX Forum &rarr;</a>
       </div>
-    </div>
-  `;
-}
-
-/* ===== ROBOT TYPES ===== */
-function renderRobotTypes() {
-  const container = document.getElementById('tab-robots');
-  container.innerHTML = `
-    <div style="margin-bottom:10px">
-      <button onclick="switchTab('home')" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">
-        &larr; Home
-      </button>
-    </div>
-    <div class="div-banner">
-      <div>
-        <h2>Robot Design Archetypes &mdash; Push Back (2025-2026)</h2>
-        <div style="font-size:11px;color:var(--text-dim);margin-top:3px">Click a robot type to see teams. Click team chips for full stats.</div>
+      <div style="margin-top:12px;font-size:10px;color:var(--text-dim);line-height:1.5">
+        Game rules and scoring from the <a href="https://www.vexrobotics.com/push-back-manual" target="_blank" style="color:var(--accent2);text-decoration:none">official VEX Push Back Game Manual</a>.
       </div>
     </div>
-
-    <div class="robot-type-grid">
-      ${ROBOT_TYPES.map(rt => `
-        <div class="rt-card" onclick="toggleRobotTeams('${rt.id}')">
-          <div class="rt-icon">${rt.icon}</div>
-          <div class="rt-name">${rt.name}</div>
-          <div class="rt-desc">${rt.desc}</div>
-          <div style="margin-top:10px">
-            ${rt.links.map(l => `<a href="${l.url}" target="_blank" style="display:inline-block;margin-right:10px;font-size:11px;color:var(--accent2);text-decoration:none;font-weight:600">${l.label} &rarr;</a>`).join('')}
-          </div>
-          <div class="rt-count" id="rt-count-${rt.id}">Click to explore teams &rarr;</div>
-        </div>
-        <div class="rt-teams-panel" id="rt-panel-${rt.id}"></div>
-      `).join('')}
-    </div>
-
-    <div style="margin-top:20px;padding:18px;background:var(--surface);border:1px solid var(--border);border-radius:14px">
-      <h3 style="font-size:13px;font-weight:700;margin-bottom:8px">About Push Back Robot Design Meta</h3>
-      <p style="font-size:12px;color:var(--text-dim);line-height:1.7">
-        The 2025-2026 <strong style="color:var(--text)">Push Back</strong> season features 88 Blocks, 4 Goals (2 Long + 2 Center), Loaders, and Park Zones on a 12'x12' field. Teams score by placing Blocks in Goals (3 pts each), controlling Zones within Goals, clearing Loaders, and Parking at match end (+30 bonus for double-park). A key strategic twist: <strong style="color:var(--text)">descoring is legal</strong> &mdash; you can remove opponent Blocks from their Goals, making defense a core part of the meta.
-      </p>
-      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-top:6px">
-        Community predictions suggest this season will feature "large amounts of descoring, defence, and Block hoarding." With <strong style="color:var(--text)">no possession limit</strong>, burst-loading strategies and high-capacity storage designs are viable. The Hero Bot <strong style="color:var(--text)">Dex</strong> establishes a baseline with its conveyor + intake approach, but teams are already innovating with side rollers, revolver magazines, and compact park-optimized frames.
-      </p>
-      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-top:6px">
-        Note: Robot design categorization is based on common archetypes emerging in the Push Back community. Many teams use hybrid designs combining elements from multiple categories.
-      </p>
-      <p style="font-size:12px;margin-top:6px">
-        <a href="https://www.youtube.com/results?search_query=VEX+Push+Back+robot+reveal+2025+2026" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600">YouTube: Push Back Reveals &rarr;</a>
-        &nbsp;&bull;&nbsp;
-        <a href="https://www.vexforum.com/t/push-back-robot-prediction/136469" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600">Forum: Robot Predictions &rarr;</a>
-        &nbsp;&bull;&nbsp;
-        <a href="https://www.vexforum.com/t/8059-super-early-season-robot-reveals-for-push-back/138153" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600">Early Reveals &rarr;</a>
-      </p>
-    </div>
   `;
 }
 
-function toggleRobotTeams(rtId) {
-  const panel = document.getElementById('rt-panel-' + rtId);
-  if (panel.classList.contains('open')) {
-    panel.classList.remove('open');
-    return;
-  }
-  document.querySelectorAll('.rt-teams-panel').forEach(p => p.classList.remove('open'));
-
-  const allTeams = [...TEAMS_DATA].sort((a,b) => b.trueSkill - a.trueSkill);
-  const tiers = ['Elite', 'Contender', 'Competitive', 'Developing', 'Rising'];
-
-  let html = '<h4>All Teams by Tier (click any team for full stats)</h4>';
-  for (const tier of tiers) {
-    const tierTeams = allTeams.filter(t => t.tier === tier);
-    if (tierTeams.length === 0) continue;
-    const tc = tierColor(tier);
-    html += '<div style="margin-bottom:8px"><div style="font-size:11px;font-weight:700;color:'+tc+';margin-bottom:4px">'+tier+' ('+tierTeams.length+' teams)</div><div class="rt-team-list">';
-    const limit = tier === 'Elite' ? 50 : 20;
-    html += tierTeams.slice(0, limit).map(t =>
-      '<span class="rt-team-chip" style="background:'+(t.tier==='Elite'?'var(--elite-bg)':t.tier==='Contender'?'var(--contender-bg)':t.tier==='Competitive'?'var(--competitive-bg)':t.tier==='Developing'?'var(--developing-bg)':'var(--rising-bg)')+';color:'+tc+'" onclick="openDetail(\''+t.team+'\')" title="'+t.teamName+' \u2014 TS:'+t.trueSkill+'">'+t.team+'</span>'
-    ).join('');
-    if (tierTeams.length > limit) html += '<span style="font-size:10px;color:var(--text-dim);padding:4px 8px">+'+(tierTeams.length - limit)+' more</span>';
-    html += '</div></div>';
-  }
-
-  panel.innerHTML = html;
-  panel.classList.add('open');
-}
 
 /* ===== KEYBOARD SHORTCUTS ===== */
 document.addEventListener('keydown', e => {
