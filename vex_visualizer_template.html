@@ -491,10 +491,99 @@
   }
   .spotlight .sp-sub { color: var(--text-dim); font-size: 12px; margin-top: 3px; position: relative; }
 
-  /* ===== ROBOT TYPE EXPLORER ===== */
   /* Tab content panels */
   .tab-content { display: none; }
   .tab-content.active { display: block; }
+
+  /* ===== LIVE RESULTS ===== */
+  .live-pulse {
+    display: inline-block; width: 8px; height: 8px;
+    background: #ef4444; border-radius: 50%;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+    margin-right: 4px; vertical-align: middle;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+  }
+  .match-feed { display: flex; flex-direction: column; gap: 8px; }
+  .match-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 14px; transition: border-color 0.2s;
+  }
+  .match-card:hover { border-color: var(--accent); }
+  .match-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+  }
+  .match-label { font-size: 10px; color: var(--text-dim); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .match-div-tag { font-size: 9px; padding: 2px 8px; border-radius: 10px; background: var(--surface2); color: var(--text-dim); font-weight: 600; }
+  .match-alliances { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; }
+  .match-alliance {
+    display: flex; flex-wrap: wrap; gap: 4px; align-items: center;
+  }
+  .match-alliance.red { justify-content: flex-end; }
+  .match-alliance.blue { justify-content: flex-start; }
+  .match-team-chip {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    padding: 3px 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s;
+  }
+  .match-team-chip.red { background: rgba(239,68,68,0.12); color: #f87171; }
+  .match-team-chip.blue { background: rgba(96,165,250,0.12); color: #60a5fa; }
+  .match-team-chip:hover { transform: scale(1.05); }
+  .match-score {
+    font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 800;
+    text-align: center; min-width: 80px; letter-spacing: -0.5px;
+  }
+  .match-score .red-score { color: #f87171; }
+  .match-score .blue-score { color: #60a5fa; }
+  .match-score .vs { color: var(--text-dim); font-size: 10px; margin: 0 2px; }
+  .match-score .winner { text-decoration: underline; text-underline-offset: 3px; }
+  .standings-table {
+    width: 100%; border-collapse: collapse; font-size: 11px;
+  }
+  .standings-table th {
+    text-align: left; padding: 6px 8px; font-size: 10px; font-weight: 700;
+    color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .standings-table td {
+    padding: 5px 8px; border-bottom: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .standings-table tr:hover { background: var(--surface2); }
+  .standings-table .rank-col { font-weight: 700; color: var(--text-dim); width: 30px; }
+  .standings-table .team-col { font-weight: 600; cursor: pointer; color: var(--accent2); }
+  .standings-table .team-col:hover { text-decoration: underline; }
+  .live-div-tabs {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
+  }
+  .live-div-tab {
+    padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 600;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-dim); cursor: pointer; transition: all 0.2s; font-family: inherit;
+  }
+  .live-div-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  /* Update notification banner */
+  .update-banner {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+    background: linear-gradient(135deg, #1e40af, #6366f1);
+    color: white; padding: 10px 16px; text-align: center;
+    font-size: 13px; font-weight: 600;
+    transform: translateY(-100%); transition: transform 0.4s ease;
+    display: flex; justify-content: center; align-items: center; gap: 12px;
+  }
+  .update-banner.show { transform: translateY(0); }
+  .update-banner button {
+    background: white; color: #1e40af; border: none; padding: 5px 14px;
+    border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer;
+    font-family: inherit;
+  }
+  .update-banner .dismiss {
+    background: transparent; color: rgba(255,255,255,0.7); padding: 5px 8px;
+    font-size: 18px; line-height: 1;
+  }
 
   /* Sort Controls */
   .sort-bar {
@@ -627,6 +716,13 @@
 <body>
 
 <!-- ===== HEADER ===== -->
+<!-- Update notification banner (hidden by default) -->
+<div class="update-banner" id="updateBanner">
+  <span><span class="live-pulse"></span> New match results available</span>
+  <button onclick="location.reload()">Refresh</button>
+  <button class="dismiss" onclick="dismissUpdate()">&times;</button>
+</div>
+
 <div class="hero" id="heroBar">
   <div class="hero-inner">
     <div class="hero-top">
@@ -714,6 +810,7 @@
   <div class="tab-content" id="tab-teamdetail"></div>
   <div class="tab-content" id="tab-teams"></div>
   <div class="tab-content" id="tab-game"></div>
+  <div class="tab-content" id="tab-live"></div>
 </div>
 
 <!-- ===== 6121E OVERLAY ===== -->
@@ -752,6 +849,7 @@
 
 <script>
 const TEAMS_DATA = TEAMS_JSON_PLACEHOLDER;
+const LIVE_DATA = LIVE_DATA_PLACEHOLDER;
 
 /* Tab scroll indicator */
 (function() {
@@ -811,6 +909,9 @@ function switchTab(tab) {
   } else if (tab === 'game') {
     document.getElementById('tab-game').classList.add('active');
     renderGameOverview();
+  } else if (tab === 'live') {
+    document.getElementById('tab-live').classList.add('active');
+    renderLiveResults();
   } else {
     document.getElementById('tab-teams').classList.add('active');
     renderTeams(tab);
@@ -882,12 +983,12 @@ function toggleTierFilter(tier) {
     activeTierFilters.add(tier);
     chip.classList.add('active');
   }
-  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'live' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
 function filterTeams() {
   searchQuery = document.getElementById('searchInput').value.toLowerCase();
-  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'live' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
 /* ===== AUTOCOMPLETE ===== */
@@ -928,7 +1029,7 @@ function handleSearchInput() {
   const val = document.getElementById('searchInput').value.toLowerCase().trim();
   searchQuery = val;
   doAutocomplete(val, document.getElementById('acList'), 'selectAcTeam');
-  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'live' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
 function handleStickySearchInput() {
@@ -1057,12 +1158,12 @@ function getFilteredTeams(division) {
 
 function changeSort(field) {
   sortField = field;
-  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'live' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 function toggleSortDir() {
   sortDir = sortDir === 'desc' ? 'asc' : 'desc';
   document.getElementById('sortDirBtn')?.classList.toggle('desc', sortDir === 'desc');
-  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'teamdetail') renderTeams(currentTab);
+  if (currentTab !== 'home' && currentTab !== 'game' && currentTab !== 'live' && currentTab !== 'teamdetail') renderTeams(currentTab);
 }
 
 function tierColor(tier) {
@@ -1276,6 +1377,45 @@ function openDetail(teamId) {
       </div>
     </div>
 
+    ${(function() {
+      if (!LIVE_DATA || !LIVE_DATA.matches) return '';
+      const teamMatches = LIVE_DATA.matches.filter(m => (m.red||[]).includes(t.team) || (m.blue||[]).includes(t.team));
+      if (teamMatches.length === 0) return '';
+
+      // Calc Worlds W-L from live matches
+      let wW = 0, wL = 0;
+      teamMatches.forEach(m => {
+        const onRed = (m.red||[]).includes(t.team);
+        if (onRed && m.redScore > m.blueScore) wW++;
+        else if (onRed && m.redScore < m.blueScore) wL++;
+        else if (!onRed && m.blueScore > m.redScore) wW++;
+        else if (!onRed && m.blueScore < m.redScore) wL++;
+      });
+
+      return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px">' +
+        '<h3 style="font-size:12px;font-weight:700;margin-bottom:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px"><span class="live-pulse"></span> Worlds 2026 Matches (' + wW + '-' + wL + ')</h3>' +
+        '<div class="match-feed">' +
+        teamMatches.slice(0, 20).map(m => {
+          const onRed = (m.red||[]).includes(t.team);
+          const won = onRed ? m.redScore > m.blueScore : m.blueScore > m.redScore;
+          const lost = onRed ? m.redScore < m.blueScore : m.blueScore < m.redScore;
+          const resultColor = won ? 'var(--green)' : lost ? 'var(--red)' : 'var(--text-dim)';
+          const resultLabel = won ? 'W' : lost ? 'L' : 'T';
+          return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--surface2);border-radius:8px;border-left:3px solid ' + resultColor + '">' +
+            '<div style="font-size:11px"><span style="color:var(--text-dim);font-weight:600">' + m.round + ' ' + m.num + '</span> <span style="color:var(--text-dim);font-size:10px">' + m.div + '</span></div>' +
+            '<div style="display:flex;align-items:center;gap:8px">' +
+              '<span style="font-family:\'JetBrains Mono\',monospace;font-size:12px;font-weight:700">' +
+                '<span style="color:#f87171">' + m.redScore + '</span> - <span style="color:#60a5fa">' + m.blueScore + '</span>' +
+              '</span>' +
+              '<span style="font-size:10px;font-weight:800;color:' + resultColor + ';min-width:14px;text-align:center">' + resultLabel + '</span>' +
+            '</div>' +
+          '</div>';
+        }).join('') +
+        '</div>' +
+        (teamMatches.length > 20 ? '<div style="text-align:center;padding:6px;color:var(--text-dim);font-size:11px">Showing 20 of ' + teamMatches.length + ' matches</div>' : '') +
+      '</div>';
+    })()}
+
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
       <a href="https://www.robotevents.com/teams/V5RC/${t.team}" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:11px;padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px">RobotEvents &rarr;</a>
       <a href="https://robotstatistics.com/teams/${t.team}" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;font-size:11px;padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px">RobotStatistics &rarr;</a>
@@ -1387,6 +1527,200 @@ function renderGameOverview() {
 }
 
 
+/* ===== LIVE RESULTS ===== */
+const WORLDS_START_DATE = new Date('2026-04-28T00:00:00Z');
+const WORLDS_END_DATE = new Date('2026-05-04T00:00:00Z');
+const urlParams = new URLSearchParams(window.location.search);
+
+function isLiveActive() {
+  if (urlParams.get('live') === 'true') return true;
+  const now = new Date();
+  return now >= WORLDS_START_DATE && now <= WORLDS_END_DATE;
+}
+
+let liveDivFilter = 'all';
+
+function initLiveTab() {
+  if (!isLiveActive()) return;
+
+  // Add Live tab to nav bar
+  const gameTab = document.querySelector('.nav-tab[data-tab="game"]');
+  if (gameTab && !document.querySelector('.nav-tab[data-tab="live"]')) {
+    const liveTab = document.createElement('div');
+    liveTab.className = 'nav-tab';
+    liveTab.dataset.tab = 'live';
+    liveTab.onclick = () => switchTab('live');
+    liveTab.innerHTML = '<span class="live-pulse"></span> Live';
+    liveTab.style.color = '#f87171';
+    gameTab.parentNode.insertBefore(liveTab, gameTab.nextSibling);
+  }
+
+  // Add Live button to bottom nav (mobile)
+  const gameBtn = document.getElementById('bnav-game');
+  if (gameBtn && !document.getElementById('bnav-live')) {
+    const liveBtn = document.createElement('button');
+    liveBtn.className = 'bnav-btn';
+    liveBtn.id = 'bnav-live';
+    liveBtn.onclick = () => { switchTab('live'); updateBnav('live'); };
+    liveBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 010 8.49"/><path d="M7.76 16.24a6 6 0 010-8.49"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M4.93 19.07a10 10 0 010-14.14"/></svg><span style="color:#f87171">Live</span>';
+    gameBtn.parentNode.insertBefore(liveBtn, gameBtn);
+  }
+}
+
+function renderLiveResults() {
+  const container = document.getElementById('tab-live');
+  if (!LIVE_DATA || !LIVE_DATA.matches || LIVE_DATA.matches.length === 0) {
+    container.innerHTML = `
+      <div style="margin-bottom:10px">
+        <button onclick="switchTab('home')" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">&larr; Home</button>
+      </div>
+      <div class="div-banner" style="border-color:#ef4444">
+        <div>
+          <h2><span class="live-pulse"></span> Live Results - Worlds 2026</h2>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:3px">Waiting for match data. Results will appear here once competition begins.</div>
+        </div>
+      </div>
+      <div style="text-align:center;padding:60px 20px;color:var(--text-dim)">
+        <div style="font-size:48px;margin-bottom:16px">&#9203;</div>
+        <div style="font-size:14px;font-weight:600">Competition hasn't started yet</div>
+        <div style="font-size:12px;margin-top:6px">Live match scores and standings will appear here during Worlds week (April 28 - May 3, 2026).</div>
+        <div style="font-size:11px;margin-top:4px;color:var(--accent2)">Data refreshes every 15 minutes during competition.</div>
+      </div>
+    `;
+    return;
+  }
+
+  const matches = LIVE_DATA.matches;
+  const standings = LIVE_DATA.standings || {};
+  const updatedAt = LIVE_DATA.updatedAt ? new Date(LIVE_DATA.updatedAt) : null;
+  const updatedStr = updatedAt ? updatedAt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) + ' UTC' : 'Unknown';
+
+  // Get available divisions from matches
+  const matchDivs = [...new Set(matches.map(m => m.div).filter(Boolean))].sort();
+
+  // Filter matches by division
+  const filteredMatches = liveDivFilter === 'all' ? matches : matches.filter(m => m.div === liveDivFilter);
+  const displayMatches = filteredMatches.slice(0, 50);
+
+  // Build standings for selected division
+  const standingsDiv = liveDivFilter !== 'all' ? liveDivFilter : (matchDivs[0] || '');
+  const divStandings = standings[standingsDiv] || [];
+
+  container.innerHTML = `
+    <div style="margin-bottom:10px">
+      <button onclick="switchTab('home')" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">&larr; Home</button>
+    </div>
+    <div class="div-banner" style="border-color:#ef4444">
+      <div>
+        <h2><span class="live-pulse"></span> Live Results - Worlds 2026</h2>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:3px">
+          ${matches.length} matches completed &bull; Last updated: ${updatedStr} &bull; Auto-refreshes every 15 min
+        </div>
+      </div>
+    </div>
+
+    <div class="live-div-tabs">
+      <button class="live-div-tab ${liveDivFilter==='all'?'active':''}" onclick="setLiveDivFilter('all')">All Divisions</button>
+      ${matchDivs.map(d => `<button class="live-div-tab ${liveDivFilter===d?'active':''}" onclick="setLiveDivFilter('${d}')">${d}</button>`).join('')}
+    </div>
+
+    <h3 style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Recent Matches</h3>
+    <div class="match-feed">
+      ${displayMatches.map(m => {
+        const redWon = m.redScore > m.blueScore;
+        const blueWon = m.blueScore > m.redScore;
+        return `
+        <div class="match-card">
+          <div class="match-header">
+            <span class="match-label">${m.round} ${m.num}${m.instance > 1 ? '-'+m.instance : ''}</span>
+            <span class="match-div-tag">${m.div}</span>
+          </div>
+          <div class="match-alliances">
+            <div class="match-alliance red">
+              ${(m.red||[]).map(t => '<span class="match-team-chip red" onclick="openDetail(\''+t+'\')" title="View stats">'+t+'</span>').join('')}
+            </div>
+            <div class="match-score">
+              <span class="red-score ${redWon?'winner':''}">${m.redScore}</span>
+              <span class="vs">-</span>
+              <span class="blue-score ${blueWon?'winner':''}">${m.blueScore}</span>
+            </div>
+            <div class="match-alliance blue">
+              ${(m.blue||[]).map(t => '<span class="match-team-chip blue" onclick="openDetail(\''+t+'\')" title="View stats">'+t+'</span>').join('')}
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    ${filteredMatches.length > 50 ? '<div style="text-align:center;padding:12px;color:var(--text-dim);font-size:12px">Showing 50 of '+filteredMatches.length+' matches</div>' : ''}
+
+    ${divStandings.length > 0 ? `
+    <div style="margin-top:24px">
+      <h3 style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">
+        ${standingsDiv} Division Standings
+      </h3>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;overflow-x:auto">
+        <table class="standings-table">
+          <thead>
+            <tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>T</th><th>WP</th><th>AP</th><th>SP</th></tr>
+          </thead>
+          <tbody>
+            ${divStandings.slice(0, 30).map(s => `
+              <tr>
+                <td class="rank-col">${s.rank}</td>
+                <td class="team-col" onclick="openDetail('${s.team}')">${s.team}</td>
+                <td>${s.wins}</td>
+                <td>${s.losses}</td>
+                <td>${s.ties}</td>
+                <td>${s.wp}</td>
+                <td>${s.ap}</td>
+                <td>${s.sp}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        ${divStandings.length > 30 ? '<div style="text-align:center;padding:8px;color:var(--text-dim);font-size:11px">Showing top 30 of '+divStandings.length+' teams</div>' : ''}
+      </div>
+    </div>` : ''}
+
+    <div style="margin-top:16px;font-size:10px;color:var(--text-dim);text-align:center">
+      Match data from <a href="https://www.robotevents.com" target="_blank" style="color:var(--accent2);text-decoration:none">RobotEvents API</a>. Updates every 15 minutes during competition.
+    </div>
+  `;
+}
+
+function setLiveDivFilter(div) {
+  liveDivFilter = div;
+  renderLiveResults();
+}
+
+/* ===== UPDATE NOTIFICATION BANNER ===== */
+let buildTime = LIVE_DATA ? LIVE_DATA.updatedAt : null;
+let updateDismissed = false;
+
+function checkForUpdates() {
+  if (!isLiveActive() || updateDismissed) return;
+
+  fetch('version.json?_=' + Date.now())
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!data || !data.buildTime) return;
+      if (buildTime && data.buildTime !== buildTime) {
+        document.getElementById('updateBanner').classList.add('show');
+      }
+    })
+    .catch(() => {}); // Silently fail — no network or file not found
+}
+
+function dismissUpdate() {
+  document.getElementById('updateBanner').classList.remove('show');
+  updateDismissed = true;
+}
+
+// Check for updates every 2 minutes during live period
+if (isLiveActive()) {
+  setInterval(checkForUpdates, 2 * 60 * 1000);
+}
+
 /* ===== KEYBOARD SHORTCUTS ===== */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
@@ -1398,6 +1732,7 @@ document.addEventListener('keydown', e => {
 });
 
 /* ===== INITIALIZE ===== */
+initLiveTab();
 renderHome();
 </script>
 
