@@ -46,8 +46,8 @@ WORLDS_EVENT_ID = None  # e.g., 54321 — set this once you know it
 
 # Worlds 2026 dates (for smart scheduling detection)
 # Update these to the actual Worlds dates
-WORLDS_START = datetime(2026, 4, 28, tzinfo=timezone.utc)  # Tuesday of Worlds week
-WORLDS_END = datetime(2026, 5, 3, tzinfo=timezone.utc)     # Sunday end of Worlds
+WORLDS_START = datetime(2026, 4, 21, tzinfo=timezone.utc)  # Tuesday - V5RC HS starts
+WORLDS_END = datetime(2026, 4, 24, tzinfo=timezone.utc)     # Friday - V5RC HS ends
 
 # Division name mapping — maps division IDs from the API to display names
 # Update once you see the actual division IDs from the Worlds event
@@ -603,8 +603,112 @@ def process_teams(raw_teams, rankings_by_team, skills_by_team, matches_by_team, 
 # Build HTML
 # ---------------------------------------------------------------------------
 
-def build_html(teams_data):
-    """Inject teams JSON into the HTML template and write index.html."""
+def fetch_live_matches(event_id):
+    """
+    Fetch all matches for Worlds, organized by division with full detail.
+    Returns a list of match objects for LIVE_DATA.
+    """
+    log("Fetching live match results...")
+    raw_matches = api_get(f"/events/{event_id}/matches")
+    log(f"  Got {len(raw_matches)} total matches")
+
+    matches = []
+    for m in raw_matches:
+        alliances = m.get("alliances", [])
+        if len(alliances) < 2:
+            continue
+
+        red = alliances[0]
+        blue = alliances[1]
+
+        red_teams = [te.get("team", {}).get("number", "") for te in red.get("teams", [])]
+        blue_teams = [te.get("team", {}).get("number", "") for te in blue.get("teams", [])]
+        red_score = red.get("score", 0) or 0
+        blue_score = blue.get("score", 0) or 0
+
+        # Only include scored matches
+        if red_score == 0 and blue_score == 0:
+            continue
+
+        div_info = m.get("division", {})
+        div_name = div_info.get("name", "")
+        # Try to map to known division name
+        matched_div = ""
+        for known in DIVISION_NAMES:
+            if known.lower() in div_name.lower():
+                matched_div = known
+                break
+        if not matched_div:
+            matched_div = div_name
+
+        round_type = m.get("round", 0)
+        round_label = "Qual" if round_type <= 2 else "R16" if round_type == 3 else "QF" if round_type == 4 else "SF" if round_type == 5 else "Final" if round_type == 6 else f"R{round_type}"
+        match_num = m.get("matchnum", 0)
+        instance = m.get("instance", 0)
+
+        matches.append({
+            "id": m.get("id", 0),
+            "div": matched_div,
+            "round": round_label,
+            "num": match_num,
+            "instance": instance,
+            "red": red_teams,
+            "blue": blue_teams,
+            "redScore": red_score,
+            "blueScore": blue_score,
+            "scheduled": m.get("scheduled", ""),
+        })
+
+    # Sort by scheduled time (newest first)
+    matches.sort(key=lambda x: x.get("scheduled", ""), reverse=True)
+    return matches
+
+
+def fetch_live_rankings(event_id):
+    """
+    Fetch current division standings for Worlds.
+    Returns a dict of division -> list of {team, wins, losses, ties, wp, ap, sp, rank}.
+    """
+    log("Fetching live division standings...")
+    rankings = api_get(f"/events/{event_id}/rankings")
+    log(f"  Got {len(rankings)} ranking entries")
+
+    by_division = {}
+    for r in rankings:
+        team_num = r.get("team", {}).get("number", "")
+        div_info = r.get("division", {})
+        div_name = div_info.get("name", "")
+        matched_div = ""
+        for known in DIVISION_NAMES:
+            if known.lower() in div_name.lower():
+                matched_div = known
+                break
+        if not matched_div:
+            matched_div = div_name
+
+        if matched_div not in by_division:
+            by_division[matched_div] = []
+
+        by_division[matched_div].append({
+            "team": team_num,
+            "rank": r.get("rank", 0),
+            "wins": r.get("wins", 0) or 0,
+            "losses": r.get("losses", 0) or 0,
+            "ties": r.get("ties", 0) or 0,
+            "wp": r.get("wp", 0) or 0,
+            "ap": r.get("ap", 0) or 0,
+            "sp": r.get("sp", 0) or 0,
+        })
+
+    # Sort each division by rank
+    for div in by_division:
+        by_division[div].sort(key=lambda x: x["rank"])
+
+    return by_division
+
+
+def build_html(teams_data, live_data=None):
+    """Inject teams JSON and live data into the HTML template and write index.html."""
     template_path = os.path.join(SCRIPT_DIR, "vex_visualizer_template.html")
 
     if not os.path.exists(template_path):
@@ -620,6 +724,12 @@ def build_html(teams_data):
 
     html = html.replace("TEAMS_JSON_PLACEHOLDER", json.dumps(teams_data))
 
+    # Inject live data if available
+    if live_data:
+        html = html.replace("LIVE_DATA_PLACEHOLDER", json.dumps(live_data))
+    else:
+        html = html.replace("LIVE_DATA_PLACEHOLDER", "null")
+
     # Update the data timestamp in the HTML
     timestamp = datetime.now(timezone.utc).strftime("%m/%d %H:%M UTC")
     html = html.replace("Live data updates", f"Data updated {timestamp}")
@@ -632,7 +742,18 @@ def build_html(teams_data):
     with open(json_path, "w") as f:
         json.dump(teams_data, f)
 
+    # Write version.json for update notification
+    version_path = os.path.join(SCRIPT_DIR, "version.json")
+    with open(version_path, "w") as f:
+        json.dump({
+            "buildTime": datetime.now(timezone.utc).isoformat(),
+            "teamCount": len(teams_data),
+            "matchCount": len(live_data.get("matches", [])) if live_data else 0,
+        }, f)
+
     log(f"Built index.html ({len(html):,} bytes) with {len(teams_data)} teams")
+    if live_data:
+        log(f"  Live data: {len(live_data.get('matches', []))} matches, {len(live_data.get('standings', {}))} divisions")
     return True
 
 
@@ -767,7 +888,21 @@ def run_worlds_event_mode():
         log("Data quality check failed — keeping existing data.")
         return False
 
-    return build_html(teams_data)
+    # Collect live data during Worlds week
+    live_data = None
+    if is_worlds_week():
+        log("Worlds week — collecting live match data...")
+        live_matches = fetch_live_matches(WORLDS_EVENT_ID)
+        live_standings = fetch_live_rankings(WORLDS_EVENT_ID)
+        if live_matches or live_standings:
+            live_data = {
+                "matches": live_matches,
+                "standings": live_standings,
+                "updatedAt": datetime.now(timezone.utc).isoformat(),
+            }
+            log(f"  Live data ready: {len(live_matches)} matches, {len(live_standings)} divisions")
+
+    return build_html(teams_data, live_data)
 
 
 def run_season_mode():
@@ -812,7 +947,7 @@ def run_season_mode():
         log("Data quality check failed — keeping existing data.")
         return False
 
-    return build_html(teams_data)
+    return build_html(teams_data, None)
 
 
 def main():

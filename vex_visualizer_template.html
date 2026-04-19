@@ -53,7 +53,7 @@
   "about": {
     "@type": "SportsEvent",
     "name": "VEX Worlds 2026",
-    "startDate": "2026-04-28",
+    "startDate": "2026-04-21",
     "endDate": "2026-05-03",
     "location": {
       "@type": "Place",
@@ -1528,8 +1528,8 @@ function renderGameOverview() {
 
 
 /* ===== LIVE RESULTS ===== */
-const WORLDS_START_DATE = new Date('2026-04-28T00:00:00Z');
-const WORLDS_END_DATE = new Date('2026-05-04T00:00:00Z');
+const WORLDS_START_DATE = new Date('2026-04-21T00:00:00Z');
+const WORLDS_END_DATE = new Date('2026-04-25T00:00:00Z');
 const urlParams = new URLSearchParams(window.location.search);
 
 function isLiveActive() {
@@ -1583,7 +1583,7 @@ function renderLiveResults() {
       <div style="text-align:center;padding:60px 20px;color:var(--text-dim)">
         <div style="font-size:48px;margin-bottom:16px">&#9203;</div>
         <div style="font-size:14px;font-weight:600">Competition hasn't started yet</div>
-        <div style="font-size:12px;margin-top:6px">Live match scores and standings will appear here during Worlds week (April 28 - May 3, 2026).</div>
+        <div style="font-size:12px;margin-top:6px">Live match scores and standings will appear here during Worlds week (April 21 - 24, 2026).</div>
         <div style="font-size:11px;margin-top:4px;color:var(--accent2)">Data refreshes every 15 minutes during competition.</div>
       </div>
     `;
