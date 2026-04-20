@@ -160,7 +160,19 @@
     font-size: 12px; font-weight: 500; margin-top: 1px;
     color: var(--text-dim); letter-spacing: 0.3px;
   }
-  .hero-tagline em { font-style: normal; color: var(--highlight); font-weight: 600; }
+  .hero-tagline em {
+    font-style: normal; font-weight: 700;
+    background: linear-gradient(
+      90deg,
+      #818cf8 0%, #c084fc 15%, #f0abfc 30%,
+      #fde68a 45%, #fff 50%,
+      #fde68a 55%, #f0abfc 70%, #c084fc 85%, #818cf8 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: shimmer 3s ease-in-out infinite;
+    display: inline-block;
+  }
   .hero-sub { color: var(--text-dim); font-size: 11px; margin-top: 4px; }
   .hero-sub span { color: var(--accent2); font-weight: 600; }
 
@@ -752,7 +764,7 @@
         </div>
         <div class="hero-titles">
           <h1>VEX Visualizer - Worlds 2026</h1>
-          <div class="hero-tagline">Your Worlds 2026 Command Center</div>
+          <div class="hero-tagline"><em>Arjun &bull; 6121 Conestoga Pioneers</em></div>
         </div>
       </div>
     </div>
