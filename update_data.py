@@ -302,13 +302,37 @@ def fetch_season_events():
 
 
 def find_worlds_event(events):
-    """Find the Worlds event from the event list."""
+    """Find the VEX Worlds Championship event from the event list."""
+    # Priority 1: Look for events with "World" level AND "championship" in name
     for event in events:
         name = (event.get("name", "") or "").lower()
         level = (event.get("level", "") or "").lower()
-        if "world" in level or "world" in name:
+        sku = (event.get("sku", "") or "")
+        # Match the actual VEX Worlds Championship (not regional "World Robot Contest" etc.)
+        if level == "world" and ("championship" in name or "vex worlds" in name):
             log(f"  Found Worlds event: {event.get('name')} (ID: {event.get('id')})")
             return event
+    # Priority 2: Look for known SKU pattern for Worlds
+    for event in events:
+        sku = (event.get("sku", "") or "")
+        if sku.startswith("RE-V5RC") and "World" in (event.get("level", "") or ""):
+            log(f"  Found Worlds event via SKU: {event.get('name')} (ID: {event.get('id')})")
+            return event
+    # Priority 3: Look for events with "World" level and large team count
+    for event in events:
+        level = (event.get("level", "") or "").lower()
+        name = (event.get("name", "") or "").lower()
+        if level == "world" and "high school" in name:
+            log(f"  Found Worlds event (HS): {event.get('name')} (ID: {event.get('id')})")
+            return event
+    # Fallback: any event with level "World" (but NOT regional "world robot contest")
+    for event in events:
+        level = (event.get("level", "") or "").lower()
+        name = (event.get("name", "") or "").lower()
+        if level == "world" and "robot contest" not in name and "regional" not in name:
+            log(f"  Found Worlds event (fallback): {event.get('name')} (ID: {event.get('id')})")
+            return event
+    log("  WARNING: Could not find Worlds event")
     return None
 
 

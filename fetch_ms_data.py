@@ -107,15 +107,31 @@ def find_ms_worlds_event():
     log("Searching for Middle School Worlds event...")
     events = api_get(f"/seasons/{SEASON_ID}/events")
 
+    # Priority 1: World level + "championship" + "middle"
     for event in events:
         name = (event.get("name", "") or "").lower()
         level = (event.get("level", "") or "").lower()
-        # Middle school events have "middle" in level or name
-        if ("world" in level or "world" in name) and "middle" in name.lower():
+        if level == "world" and "middle" in name and ("championship" in name or "vex worlds" in name):
             log(f"  Found: {event.get('name')} (ID: {event.get('id')})")
             return event
 
-    # Fallback: look for the known event code
+    # Priority 2: World level + "middle" (but not regional contests)
+    for event in events:
+        name = (event.get("name", "") or "").lower()
+        level = (event.get("level", "") or "").lower()
+        if level == "world" and "middle" in name and "robot contest" not in name:
+            log(f"  Found: {event.get('name')} (ID: {event.get('id')})")
+            return event
+
+    # Priority 3: Known SKU
+    for event in events:
+        sku = (event.get("sku", "") or "")
+        if sku == "RE-V5RC-26-4026":
+            log(f"  Found via SKU: {event.get('name')} (ID: {event.get('id')})")
+            return event
+
+    # Priority 4: Fallback search via /events endpoint
+    log("  Trying fallback /events endpoint...")
     events_all = api_get("/events", {
         "program[]": PROGRAM_ID,
         "season[]": SEASON_ID,
@@ -124,7 +140,7 @@ def find_ms_worlds_event():
     for event in events_all:
         name = (event.get("name", "") or "").lower()
         sku = (event.get("sku", "") or "")
-        if "middle" in name or sku == "RE-V5RC-26-4026":
+        if ("middle" in name and "championship" in name) or sku == "RE-V5RC-26-4026":
             log(f"  Found via fallback: {event.get('name')} (ID: {event.get('id')})")
             return event
 
