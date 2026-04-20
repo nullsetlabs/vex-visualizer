@@ -577,6 +577,52 @@
   }
   .live-div-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
 
+  /* ===== LEVEL TABS (HS/MS switcher) ===== */
+  .level-tabs-wrap {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .level-tabs {
+    display: flex; gap: 0;
+    background: var(--surface); border-radius: 10px;
+    padding: 3px; border: 1px solid var(--border);
+  }
+  .level-tab {
+    flex: 1; padding: 8px 14px; border-radius: 8px;
+    font-size: 12px; font-weight: 700; font-family: 'Inter', system-ui, sans-serif;
+    text-align: center; cursor: pointer; border: none;
+    background: transparent; color: var(--text-dim);
+    transition: all 0.25s ease; position: relative;
+    letter-spacing: 0.2px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .level-tab.active {
+    background: linear-gradient(90deg,
+      #818cf8 0%, #c084fc 15%, #f0abfc 30%,
+      #fde68a 45%, #fff 50%,
+      #fde68a 55%, #f0abfc 70%, #c084fc 85%, #818cf8 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  .level-tab.active::before {
+    content: ''; position: absolute; inset: 0; border-radius: 8px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15));
+    border: 1px solid rgba(129,140,248,0.3);
+    box-shadow: 0 2px 12px rgba(99,102,241,0.25);
+    z-index: -1;
+  }
+  .level-tab:not(.active):hover {
+    color: var(--text); background: var(--surface2);
+  }
+  .level-tab .tab-teams {
+    font-size: 10px; font-weight: 600; opacity: 0.7;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .level-tab.active .tab-teams {
+    opacity: 0.85; -webkit-text-fill-color: transparent;
+  }
+
   /* Update notification banner */
   .update-banner {
     position: fixed; top: 0; left: 0; right: 0; z-index: 300;
@@ -703,6 +749,8 @@
     .nav-tab { padding: 5px 10px; font-size: 11px; }
     .search-bar { flex-direction: column; gap: 6px; }
     .search-wrapper { width: 100%; min-width: unset; }
+    .level-tab { padding: 7px 8px; font-size: 11px; }
+    .level-tab .tab-teams { font-size: 9px; }
     .filter-chips { justify-content: flex-start; }
     .div-banner { flex-direction: column; gap: 10px; padding: 14px; }
     .div-banner .stat-row { justify-content: flex-start; gap: 14px; }
@@ -722,6 +770,8 @@
     .team-grid { grid-template-columns: 1fr; }
     .card-6121e .mini-stats { grid-template-columns: repeat(2, 1fr); }
     .hero h1 { font-size: 16px; }
+    .level-tab { flex-direction: column; gap: 1px; padding: 6px 6px; font-size: 11px; }
+    .level-tab .tab-teams { font-size: 8px; }
   }
 </style>
 </head>
@@ -795,12 +845,22 @@
         <input type="text" class="search-input" id="searchInput" placeholder="Search team number for stats..." oninput="handleSearchInput()" onfocus="handleSearchInput()" autocomplete="off">
         <div class="autocomplete-list" id="acList"></div>
       </div>
-      <div class="filter-chips" id="filterChips">
-        <div class="chip elite" onclick="toggleTierFilter('Elite')">Elite</div>
-        <div class="chip contender" onclick="toggleTierFilter('Contender')">Contender</div>
-        <div class="chip competitive" onclick="toggleTierFilter('Competitive')">Competitive</div>
-        <div class="chip developing" onclick="toggleTierFilter('Developing')">Developing</div>
-        <div class="chip rising" onclick="toggleTierFilter('Rising')">Rising</div>
+      <div class="level-tabs-wrap">
+        <div class="level-tabs" id="levelTabs">
+          <button class="level-tab active" id="tab-hs" onclick="switchLevel('hs')">
+            High School <span class="tab-teams">Teams: 866</span>
+          </button>
+          <button class="level-tab" id="tab-ms" onclick="switchLevel('ms')">
+            Middle School <span class="tab-teams">Teams: 586</span>
+          </button>
+        </div>
+        <div class="filter-chips" id="filterChips">
+          <div class="chip elite" onclick="toggleTierFilter('Elite')">Elite</div>
+          <div class="chip contender" onclick="toggleTierFilter('Contender')">Contender</div>
+          <div class="chip competitive" onclick="toggleTierFilter('Competitive')">Competitive</div>
+          <div class="chip developing" onclick="toggleTierFilter('Developing')">Developing</div>
+          <div class="chip rising" onclick="toggleTierFilter('Rising')">Rising</div>
+        </div>
       </div>
     </div>
   </div>
@@ -860,8 +920,12 @@
 </div>
 
 <script>
-const TEAMS_DATA = TEAMS_JSON_PLACEHOLDER;
+const HS_TEAMS_DATA = TEAMS_JSON_PLACEHOLDER;
+const MS_TEAMS_DATA = MS_TEAMS_JSON_PLACEHOLDER;
 const LIVE_DATA = LIVE_DATA_PLACEHOLDER;
+
+let currentLevel = 'hs';
+let TEAMS_DATA = HS_TEAMS_DATA;
 
 /* Tab scroll indicator */
 (function() {
@@ -877,7 +941,9 @@ const LIVE_DATA = LIVE_DATA_PLACEHOLDER;
   setTimeout(updateScrollClass, 100);
 })();
 
-const DIVISIONS = ['Arts','Math','Technology','Science','Engineering','Innovate','Spirit','Design','Research','Opportunity'];
+const HS_DIVISIONS = ['Arts','Math','Technology','Science','Engineering','Innovate','Spirit','Design','Research','Opportunity'];
+const MS_DIVISIONS = ['Arts','Engineering','Innovate','Math','Science','Spirit','Technology'];
+let DIVISIONS = HS_DIVISIONS;
 
 // State
 let currentTab = 'home';
@@ -1188,34 +1254,37 @@ function renderHome() {
   const container = document.getElementById('tab-home');
   const allTeams = TEAMS_DATA;
   const totalElite = allTeams.filter(t => t.tier === 'Elite').length;
-  const avgTS = (allTeams.reduce((s,t) => s + t.trueSkill, 0) / allTeams.length).toFixed(1);
-  const topTS = Math.max(...allTeams.map(t => t.trueSkill)).toFixed(1);
+  const avgTS = allTeams.length > 0 ? (allTeams.reduce((s,t) => s + t.trueSkill, 0) / allTeams.length).toFixed(1) : '—';
+  const topTS = allTeams.length > 0 ? Math.max(...allTeams.map(t => t.trueSkill)).toFixed(1) : '—';
 
   let summaryHTML = `
     <div style="margin-bottom:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
       <div>
         <h2 style="font-size:20px;font-weight:800">Worlds 2026 Divisions</h2>
-        <div style="font-size:12px;color:var(--text-dim);margin-top:2px">${allTeams.length} teams across 10 divisions &bull; Top TS: ${topTS} &bull; Avg TS: ${avgTS} &bull; ${totalElite} Elite teams</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-top:2px">${allTeams.length} teams across ${DIVISIONS.length} divisions &bull; Top TS: ${topTS} &bull; Avg TS: ${avgTS} &bull; ${totalElite} Elite teams</div>
       </div>
     </div>`;
 
   let cardsHTML = DIVISIONS.map(div => {
     const divTeams = allTeams.filter(t => t.division === div).sort((a,b) => b.trueSkill - a.trueSkill);
+    if (divTeams.length === 0) return '';
     const dAvg = (divTeams.reduce((s,t) => s + t.trueSkill, 0) / divTeams.length).toFixed(1);
     const dTop = divTeams[0];
     const dElite = divTeams.filter(t => t.tier === 'Elite').length;
+    const topVal = dTop ? dTop.trueSkill.toFixed(1) : '—';
+    const topTeam = dTop ? `<span style="color:var(--elite);font-weight:700">#1</span> ${dTop.team} <span style="opacity:0.6">${dTop.teamName || ''}</span> <span style="color:var(--accent2);font-weight:600">(${topVal})</span>` : `<span style="color:var(--accent2)">${divTeams.length} teams registered</span>`;
     return `
       <div class="div-card" onclick="switchTab('${div}')">
         <div class="div-card-name">${div}</div>
         <div class="div-card-sub">${divTeams.length} teams</div>
         <div class="div-card-stats">
-          <div class="div-card-stat"><div class="val">${dTop.trueSkill.toFixed(1)}</div><div class="lbl">Top True Skill</div></div>
+          <div class="div-card-stat"><div class="val">${topVal}</div><div class="lbl">Top True Skill</div></div>
           <div class="div-card-stat"><div class="val">${dAvg}</div><div class="lbl">Avg True Skill</div></div>
           <div class="div-card-stat"><div class="val" style="color:var(--elite)">${dElite}</div><div class="lbl">Elite Teams</div></div>
           <div class="div-card-stat"><div class="val">${divTeams.length}</div><div class="lbl">Total Teams</div></div>
         </div>
         <div style="margin-top:10px;font-size:11px;color:var(--text-dim);border-top:1px solid var(--border);padding-top:8px">
-          <span style="color:var(--elite);font-weight:700">#1</span> ${dTop.team} <span style="opacity:0.6">${dTop.teamName || ''}</span> <span style="color:var(--accent2);font-weight:600">(${dTop.trueSkill.toFixed(1)})</span>
+          ${topTeam}
         </div>
       </div>`;
   }).join('');
@@ -1231,8 +1300,12 @@ function renderTeams(division) {
   let bannerHTML = '';
   if (division !== 'all') {
     const divTeams = TEAMS_DATA.filter(t => t.division === division);
+    if (divTeams.length === 0) {
+      container.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-dim)"><div style="font-size:16px;font-weight:700;color:var(--text)">No teams found</div><div style="font-size:13px;margin-top:8px">The ' + division + ' Division is not available at this level.</div></div>';
+      return;
+    }
     const avgTS = (divTeams.reduce((s,t) => s + t.trueSkill, 0) / divTeams.length).toFixed(1);
-    const topTS = Math.max(...divTeams.map(t => t.trueSkill)).toFixed(1);
+    const topTS = divTeams.length > 0 ? Math.max(...divTeams.map(t => t.trueSkill)).toFixed(1) : '—';
     const eliteCount = divTeams.filter(t => t.tier === 'Elite').length;
     const divStrR = divTeams[0]?.divStrengthRank || '?';
     bannerHTML = `
@@ -1244,7 +1317,7 @@ function renderTeams(division) {
       <div class="div-banner">
         <div>
           <h2>${division} Division</h2>
-          <div style="font-size:11px;color:var(--text-dim);margin-top:3px">${divTeams.length} teams &bull; Division Strength #${divStrR} of 10</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:3px">${divTeams.length} teams &bull; Division Strength #${divStrR} of ${DIVISIONS.length}</div>
         </div>
         <div class="stat-row">
           <div class="stat-item"><div class="stat-val">${topTS}</div><div class="stat-label">Top True Skill</div></div>
@@ -1341,7 +1414,7 @@ function openDetail(teamId) {
         </div>
       </div>
 
-      ${t.worldsOdds !== 'N/A' ? '<div style="margin-top:10px;position:relative"><span style="font-size:12px;color:var(--highlight);font-weight:600">Worlds Odds: '+t.worldsOdds+'</span> &bull; <span style="font-size:12px;color:var(--text-dim)">Div Rank #'+t.divRank+'/'+divTeams.length+' in '+t.division+' &bull; Division Strength #'+(t.divStrengthRank||'?')+'/10</span></div>' : ''}
+      ${t.worldsOdds !== 'N/A' ? '<div style="margin-top:10px;position:relative"><span style="font-size:12px;color:var(--highlight);font-weight:600">Worlds Odds: '+t.worldsOdds+'</span> &bull; <span style="font-size:12px;color:var(--text-dim)">Div Rank #'+t.divRank+'/'+divTeams.length+' in '+t.division+' &bull; Division Strength #'+(t.divStrengthRank||'?')+'/'+DIVISIONS.length+'</span></div>' : ''}
 
       <div class="stat-tiles" style="margin-top:16px;position:relative">
         <div class="stat-tile highlight"><div class="st-val">${t.trueSkill}</div><div class="st-label">True Skill</div></div>
@@ -1731,6 +1804,50 @@ function dismissUpdate() {
 // Check for updates every 2 minutes during live period
 if (isLiveActive()) {
   setInterval(checkForUpdates, 2 * 60 * 1000);
+}
+
+/* ===== LEVEL TABS (HS/MS) ===== */
+function switchLevel(level) {
+  if (level === currentLevel) return;
+  currentLevel = level;
+  TEAMS_DATA = level === 'ms' ? MS_TEAMS_DATA : HS_TEAMS_DATA;
+  DIVISIONS = level === 'ms' ? MS_DIVISIONS : HS_DIVISIONS;
+
+  // Update tab UI
+  document.getElementById('tab-hs').classList.toggle('active', level === 'hs');
+  document.getElementById('tab-ms').classList.toggle('active', level === 'ms');
+
+  // Update subtitle
+  const teamCount = TEAMS_DATA.length;
+  const levelLabel = level === 'ms' ? 'Middle School' : 'High School';
+  const divCount = new Set(TEAMS_DATA.map(t => t.division).filter(Boolean)).size || '—';
+  document.querySelector('.hero-sub').innerHTML = '<span>' + teamCount + ' ' + levelLabel + ' Teams</span> &bull; ' + divCount + ' Divisions &bull; Push Back Season (2025-2026)';
+
+  // Update division tabs
+  const divTabsWrap = document.getElementById('divTabsWrap');
+  const divisions = [...new Set(TEAMS_DATA.map(t => t.division).filter(Boolean))].sort();
+  let tabsHTML = '<div class="nav-tab active" data-tab="home" onclick="switchTab(\'home\')">Home</div>';
+  tabsHTML += '<div class="nav-tab" data-tab="all" onclick="switchTab(\'all\')">All Teams</div>';
+  divisions.forEach(d => {
+    tabsHTML += '<div class="nav-tab" data-tab="' + d + '" onclick="switchTab(\'' + d + '\')">' + d + '</div>';
+  });
+  tabsHTML += '<div class="nav-tab" data-tab="game" onclick="switchTab(\'game\')">Push Back</div>';
+  divTabsWrap.innerHTML = tabsHTML;
+
+  // Check if MS data has stats
+  if (level === 'ms' && (!MS_TEAMS_DATA || MS_TEAMS_DATA.length === 0)) {
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    document.getElementById('tab-home').classList.add('active');
+    document.getElementById('tab-home').innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-dim)"><div style="font-size:48px;margin-bottom:16px">&#127891;</div><div style="font-size:16px;font-weight:700;color:var(--text)">Middle School - Coming Soon</div><div style="font-size:13px;margin-top:8px;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.6">Middle school team data for VEX Worlds 2026 is being prepared. Check back soon for full stats on all middle school teams.</div><div style="margin-top:16px;font-size:12px;color:var(--accent2)">Middle School competition: April 25-27, 2026</div></div>';
+    return;
+  }
+
+  // Reset filters and refresh
+  searchQuery = '';
+  activeTierFilters.clear();
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.getElementById('searchInput').value = '';
+  switchTab('home');
 }
 
 /* ===== KEYBOARD SHORTCUTS ===== */

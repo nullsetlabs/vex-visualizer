@@ -724,6 +724,16 @@ def build_html(teams_data, live_data=None):
 
     html = html.replace("TEAMS_JSON_PLACEHOLDER", json.dumps(teams_data))
 
+    # Inject middle school data if available
+    ms_json_path = os.path.join(SCRIPT_DIR, "ms_teams_data.json")
+    if os.path.exists(ms_json_path):
+        with open(ms_json_path, "r") as f:
+            ms_data = json.load(f)
+        html = html.replace("MS_TEAMS_JSON_PLACEHOLDER", json.dumps(ms_data))
+        log(f"  Injected {len(ms_data)} middle school teams")
+    else:
+        html = html.replace("MS_TEAMS_JSON_PLACEHOLDER", "[]")
+
     # Inject live data if available
     if live_data:
         html = html.replace("LIVE_DATA_PLACEHOLDER", json.dumps(live_data))
