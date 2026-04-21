@@ -731,7 +731,7 @@ def fetch_live_rankings(event_id):
     return by_division
 
 
-def build_html(teams_data, live_data=None):
+def build_html(teams_data):
     """Inject teams JSON and live data into the HTML template and write index.html."""
     template_path = os.path.join(SCRIPT_DIR, "vex_visualizer_template.html")
 
@@ -758,15 +758,8 @@ def build_html(teams_data, live_data=None):
     else:
         html = html.replace("MS_TEAMS_JSON_PLACEHOLDER", "[]")
 
-    # Inject live data if available
-    if live_data:
-        html = html.replace("LIVE_DATA_PLACEHOLDER", json.dumps(live_data))
-    else:
-        html = html.replace("LIVE_DATA_PLACEHOLDER", "null")
-
     # Update the data timestamp in the HTML
     timestamp = datetime.now(timezone.utc).strftime("%m/%d %H:%M UTC")
-    html = html.replace("Live data updates", f"Data updated {timestamp}")
 
     output_path = os.path.join(SCRIPT_DIR, "index.html")
     with open(output_path, "w") as f:
@@ -782,12 +775,9 @@ def build_html(teams_data, live_data=None):
         json.dump({
             "buildTime": datetime.now(timezone.utc).isoformat(),
             "teamCount": len(teams_data),
-            "matchCount": len(live_data.get("matches", [])) if live_data else 0,
         }, f)
 
-    log(f"Built index.html ({len(html):,} bytes) with {len(teams_data)} teams")
-    if live_data:
-        log(f"  Live data: {len(live_data.get('matches', []))} matches, {len(live_data.get('standings', {}))} divisions")
+    log(f"Built index.html ({len(html):,} bytes) with {len(teams_data)} HS teams")
     return True
 
 
@@ -815,7 +805,6 @@ def is_data_quality_ok(new_data):
     Checks that the new data isn't obviously worse than what we have.
     """
     json_path = os.path.join(SCRIPT_DIR, "teams_data.json")
-    force = os.environ.get("FORCE_REBUILD", "false").lower() == "true"
 
     if not os.path.exists(json_path):
         log("  No existing data — accepting new data.")
@@ -833,9 +822,6 @@ def is_data_quality_ok(new_data):
     # Check 1: Don't replace many teams with very few
     if old_count > 100 and new_count < old_count * 0.5:
         log(f"  SAFEGUARD: New data has {new_count} teams vs {old_count} existing. Too few — skipping.")
-        if force:
-            log("  FORCE_REBUILD is set — overriding safeguard.")
-            return True
         return False
 
     # Check 2: Don't accept data where most teams have 0 trueSkill
@@ -844,9 +830,6 @@ def is_data_quality_ok(new_data):
         zero_pct = zero_ts / new_count * 100
         if zero_pct > 50:
             log(f"  SAFEGUARD: {zero_pct:.0f}% of teams have 0 True Skill — data looks incomplete. Skipping.")
-            if force:
-                log("  FORCE_REBUILD is set — overriding safeguard.")
-                return True
             return False
 
     # Check 3: Don't accept data with no divisions assigned
@@ -855,9 +838,6 @@ def is_data_quality_ok(new_data):
         no_div_pct = no_div / new_count * 100
         if no_div_pct > 80:
             log(f"  SAFEGUARD: {no_div_pct:.0f}% of teams have no division — data looks incomplete. Skipping.")
-            if force:
-                log("  FORCE_REBUILD is set — overriding safeguard.")
-                return True
             return False
 
     log(f"  Data quality OK: {new_count} teams (was {old_count})")
@@ -922,21 +902,7 @@ def run_worlds_event_mode():
         log("Data quality check failed — keeping existing data.")
         return False
 
-    # Collect live data during Worlds week
-    live_data = None
-    if is_worlds_week():
-        log("Worlds week — collecting live match data...")
-        live_matches = fetch_live_matches(WORLDS_EVENT_ID)
-        live_standings = fetch_live_rankings(WORLDS_EVENT_ID)
-        if live_matches or live_standings:
-            live_data = {
-                "matches": live_matches,
-                "standings": live_standings,
-                "updatedAt": datetime.now(timezone.utc).isoformat(),
-            }
-            log(f"  Live data ready: {len(live_matches)} matches, {len(live_standings)} divisions")
-
-    return build_html(teams_data, live_data)
+    return build_html(teams_data)
 
 
 def run_season_mode():
@@ -981,7 +947,7 @@ def run_season_mode():
         log("Data quality check failed — keeping existing data.")
         return False
 
-    return build_html(teams_data, None)
+    return build_html(teams_data)
 
 
 def main():
@@ -1014,6 +980,25 @@ def main():
         success = run_worlds_event_mode()
     else:
         success = run_season_mode()
+
+    # FORCE_REBUILD fallback: If the normal update didn't produce a rebuild
+    # (e.g. HS data failed quality checks) but FORCE_REBUILD is set,
+    # rebuild index.html using EXISTING good HS data + any new MS data.
+    # This is critical for picking up ms_teams_data.json changes without
+    # overwriting good teams_data.json with bad API data.
+    force_rebuild = os.environ.get("FORCE_REBUILD", "false").lower() == "true"
+    if not success and force_rebuild:
+        json_path = os.path.join(SCRIPT_DIR, "teams_data.json")
+        if os.path.exists(json_path):
+            log("")
+            log("FORCE_REBUILD: Normal update skipped, but rebuild requested.")
+            log("  Rebuilding index.html using EXISTING teams_data.json (preserving good HS data).")
+            with open(json_path, "r") as f:
+                existing_hs_data = json.load(f)
+            log(f"  Loaded {len(existing_hs_data)} existing HS teams.")
+            success = build_html(existing_hs_data)
+        else:
+            log("FORCE_REBUILD: No existing teams_data.json to rebuild from.")
 
     if success:
         log("Update complete — new data written.")
