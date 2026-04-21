@@ -1120,9 +1120,9 @@ function getFilteredTeams(division) {
   }
   const lowerBetter = ['dpr', 'trueSkillRank'];
   teams.sort((a, b) => {
-    let va = a[sortField], vb = b[sortField];
+    let va = a[sortField] ?? 0, vb = b[sortField] ?? 0;
     if (sortField === 'team') {
-      return sortDir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
+      return sortDir === 'asc' ? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va));
     }
     if (lowerBetter.includes(sortField)) {
       return sortDir === 'asc' ? vb - va : va - vb;
@@ -1262,8 +1262,8 @@ function renderTeams(division) {
         <span class="tc-ts-val">${t.trueSkill}</span>
         <span class="tc-ts-label">True Skill</span>
       </div>
-      <div style="font-size:10px;color:var(--accent2);font-weight:600;font-family:'JetBrains Mono',monospace;margin-top:2px">Global #${t.trueSkillRank} &bull; Div #${t.divRank}/${t.divTotal || '?'}</div>
-      <div class="tc-region">${t.region}${t.country !== 'United States' ? ', '+t.country : ''}</div>
+      <div style="font-size:10px;color:var(--accent2);font-weight:600;font-family:'JetBrains Mono',monospace;margin-top:2px">Global #${t.trueSkillRank || '?'} &bull; Div #${t.divRank || '?'}/${t.divTotal || '?'}</div>
+      <div class="tc-region">${t.region || ''}${t.country && t.country !== 'United States' ? ', '+t.country : ''}</div>
       <div class="tc-wr"><span class="w">${t.wins}W</span><span class="l">${t.losses}L</span> <span style="color:var(--text-dim)">(${t.winPct}%)</span></div>
     </div>
   `).join('');
@@ -1281,7 +1281,7 @@ function openDetail(teamId) {
 
   if (currentTab !== 'teamdetail') previousTab = currentTab;
 
-  const tsMax = 29.4;
+  const tsMax = TEAMS_DATA.length > 0 ? Math.max(...TEAMS_DATA.map(t => t.trueSkill || 0)) : 30;
   const bar = (val, max, color) => {
     const pct = Math.min((val/max)*100, 100);
     return '<div class="bar-fill" style="width:'+pct+'%;background:'+color+'"><span>'+val+'</span></div>';
@@ -1312,7 +1312,7 @@ function openDetail(teamId) {
         </div>
       </div>
 
-      ${t.worldsOdds !== 'N/A' ? '<div style="margin-top:10px;position:relative"><span style="font-size:12px;color:var(--highlight);font-weight:600">Worlds Odds: '+t.worldsOdds+'</span> &bull; <span style="font-size:12px;color:var(--text-dim)">Div Rank #'+t.divRank+'/'+divTeams.length+' in '+t.division+' &bull; Division Strength #'+(t.divStrengthRank||'?')+'/'+DIVISIONS.length+'</span></div>' : ''}
+      ${t.worldsOdds && t.worldsOdds !== 'N/A' ? '<div style="margin-top:10px;position:relative"><span style="font-size:12px;color:var(--highlight);font-weight:600">Worlds Odds: '+t.worldsOdds+'</span> &bull; <span style="font-size:12px;color:var(--text-dim)">Div Rank #'+(t.divRank||'?')+'/'+divTeams.length+' in '+t.division+' &bull; Division Strength #'+(t.divStrengthRank||'?')+'/'+DIVISIONS.length+'</span></div>' : '<div style="margin-top:10px;position:relative"><span style="font-size:12px;color:var(--text-dim)">Div Rank #'+(t.divRank||'?')+'/'+divTeams.length+' in '+t.division+' &bull; Division Strength #'+(t.divStrengthRank||'?')+'/'+DIVISIONS.length+'</span></div>'}
 
       <div class="stat-tiles" style="margin-top:16px;position:relative">
         <div class="stat-tile highlight"><div class="st-val">${t.trueSkill}</div><div class="st-label">True Skill</div></div>
@@ -1492,7 +1492,7 @@ function switchLevel(level) {
 
   // Update division tabs
   const divTabsWrap = document.getElementById('divTabsWrap');
-  const divisions = [...new Set(TEAMS_DATA.map(t => t.division).filter(Boolean))].sort();
+  const divisions = DIVISIONS;
   let tabsHTML = '<div class="nav-tab active" data-tab="home" onclick="switchTab(\'home\')">Home</div>';
   tabsHTML += '<div class="nav-tab" data-tab="all" onclick="switchTab(\'all\')">All Teams</div>';
   divisions.forEach(d => {
@@ -1514,6 +1514,8 @@ function switchLevel(level) {
   activeTierFilters.clear();
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   document.getElementById('searchInput').value = '';
+  const stickyInput = document.getElementById('stickySearchInput');
+  if (stickyInput) stickyInput.value = '';
   switchTab('home');
 }
 

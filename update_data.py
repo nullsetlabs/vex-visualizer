@@ -746,9 +746,9 @@ def build_html(teams_data):
         log("ERROR: Template missing TEAMS_JSON_PLACEHOLDER")
         sys.exit(1)
 
-    html = html.replace("TEAMS_JSON_PLACEHOLDER", json.dumps(teams_data))
-
-    # Inject middle school data if available
+    # IMPORTANT: Replace MS placeholder FIRST — "TEAMS_JSON_PLACEHOLDER" is a
+    # substring of "MS_TEAMS_JSON_PLACEHOLDER", so replacing HS first would
+    # corrupt the MS placeholder.
     ms_json_path = os.path.join(SCRIPT_DIR, "ms_teams_data.json")
     if os.path.exists(ms_json_path):
         with open(ms_json_path, "r") as f:
@@ -757,6 +757,8 @@ def build_html(teams_data):
         log(f"  Injected {len(ms_data)} middle school teams")
     else:
         html = html.replace("MS_TEAMS_JSON_PLACEHOLDER", "[]")
+
+    html = html.replace("TEAMS_JSON_PLACEHOLDER", json.dumps(teams_data))
 
     # Update the data timestamp in the HTML
     timestamp = datetime.now(timezone.utc).strftime("%m/%d %H:%M UTC")
