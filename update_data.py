@@ -951,59 +951,46 @@ def run_season_mode():
 
 
 def main():
-    if not TOKEN:
-        log("ERROR: ROBOTEVENTS_TOKEN environment variable not set.")
-        log("  1. Go to https://www.robotevents.com/api/v2")
-        log("  2. Log in and go to 'Access Tokens'")
-        log("  3. Create a new token")
-        log("  4. Add it as a GitHub secret named ROBOTEVENTS_TOKEN")
-        sys.exit(1)
+    """
+    REBUILD MODE — No HS API calls.
+    Reads existing teams_data.json (pre-built HS season stats) and
+    ms_teams_data.json (fetched separately by fetch_ms_data.py),
+    then rebuilds index.html from the template.
 
-    worlds_week = is_worlds_week()
-    worlds_month = is_worlds_month()
-
+    HS data comes from the 2145 Division Predictor dataset (866 teams
+    with full season stats and TrueSkill). We do NOT fetch HS data
+    from the Worlds event or any API — only pre-Worlds season stats.
+    """
     log("=" * 60)
-    log("VEX Visualizer Data Update")
-    log(f"  Token: {'set (' + TOKEN[:6] + '...)' if TOKEN else 'NOT SET'}")
-    log(f"  Worlds week: {'YES' if worlds_week else 'no'}")
-    log(f"  Worlds month: {'YES' if worlds_month else 'no'}")
-    log(f"  Worlds event ID: {WORLDS_EVENT_ID or 'not set'}")
+    log("VEX Visualizer — Rebuild index.html")
     log("=" * 60)
 
-    # Verify token before making API calls
-    if not verify_token():
-        log("Token verification failed. Please check your ROBOTEVENTS_TOKEN secret.")
-        log("  Make sure the token is a valid Bearer token from robotevents.com/api/v2")
+    # Load existing HS data (required)
+    hs_path = os.path.join(SCRIPT_DIR, "teams_data.json")
+    if not os.path.exists(hs_path):
+        log("ERROR: teams_data.json not found. Cannot rebuild without HS data.")
         sys.exit(1)
 
-    if WORLDS_EVENT_ID:
-        success = run_worlds_event_mode()
+    with open(hs_path, "r") as f:
+        hs_data = json.load(f)
+    log(f"  Loaded {len(hs_data)} HS teams from teams_data.json")
+
+    # Check MS data exists
+    ms_path = os.path.join(SCRIPT_DIR, "ms_teams_data.json")
+    if os.path.exists(ms_path):
+        with open(ms_path, "r") as f:
+            ms_data = json.load(f)
+        log(f"  Loaded {len(ms_data)} MS teams from ms_teams_data.json")
     else:
-        success = run_season_mode()
+        log("  No ms_teams_data.json found — MS data will be empty")
 
-    # FORCE_REBUILD fallback: If the normal update didn't produce a rebuild
-    # (e.g. HS data failed quality checks) but FORCE_REBUILD is set,
-    # rebuild index.html using EXISTING good HS data + any new MS data.
-    # This is critical for picking up ms_teams_data.json changes without
-    # overwriting good teams_data.json with bad API data.
-    force_rebuild = os.environ.get("FORCE_REBUILD", "false").lower() == "true"
-    if not success and force_rebuild:
-        json_path = os.path.join(SCRIPT_DIR, "teams_data.json")
-        if os.path.exists(json_path):
-            log("")
-            log("FORCE_REBUILD: Normal update skipped, but rebuild requested.")
-            log("  Rebuilding index.html using EXISTING teams_data.json (preserving good HS data).")
-            with open(json_path, "r") as f:
-                existing_hs_data = json.load(f)
-            log(f"  Loaded {len(existing_hs_data)} existing HS teams.")
-            success = build_html(existing_hs_data)
-        else:
-            log("FORCE_REBUILD: No existing teams_data.json to rebuild from.")
+    # Rebuild index.html
+    success = build_html(hs_data)
 
     if success:
-        log("Update complete — new data written.")
+        log("Rebuild complete — index.html updated.")
     else:
-        log("Update complete — no changes to commit.")
+        log("Rebuild failed.")
 
 
 if __name__ == "__main__":
