@@ -1,0 +1,71 @@
+# GitHub Actions Workflow: Generate Google Analytics Report
+# Save as: .github/workflows/analytics-report.yml
+#
+# This workflow is COMPLETELY SEPARATE from the site build pipeline.
+# It does NOT modify index.html, teams_data.json, or any site files.
+# It only creates/updates ANALYTICS_REPORT.md.
+#
+# SETUP:
+#   1. Create a Google Cloud service account with GA4 read access
+#   2. Add the service account email as a viewer in GA4 Admin → Property Access
+#   3. Repo Settings → Secrets → Actions → New secret
+#      Name: GOOGLE_ANALYTICS_CREDENTIALS   Value: the full JSON key file contents
+#
+# SCHEDULE:
+#   - During Worlds (Apr 21-27): daily at midnight UTC
+#   - After Worlds: manual trigger only
+#   - Can always be triggered manually from the Actions tab
+
+name: Analytics Report
+
+on:
+  schedule:
+    # Daily during and after Worlds week
+    - cron: '0 0 21-30 4 *'    # Apr 21-30, daily at midnight UTC
+
+  workflow_dispatch:
+    inputs:
+      date_range:
+        description: 'Custom date range (leave empty for Worlds dates)'
+        required: false
+        default: ''
+
+# Prevent overlapping runs
+concurrency:
+  group: analytics-report
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install google-analytics-data
+
+      - name: Generate analytics report
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_ANALYTICS_CREDENTIALS }}
+        run: python analytics_report.py
+
+      - name: Commit report
+        run: |
+          git diff --quiet ANALYTICS_REPORT.md 2>/dev/null && echo "No changes" && exit 0
+          git config user.name "VEX Visualizer Bot"
+          git config user.email "actions@github.com"
+          git add ANALYTICS_REPORT.md
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
+          git commit -m "[Analytics] Update report — $TIMESTAMP"
+          git push
