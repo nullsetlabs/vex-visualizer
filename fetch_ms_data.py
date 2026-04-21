@@ -253,37 +253,43 @@ def main():
                 skills_by_team[team_num] = []
             skills_by_team[team_num].append(s)
 
-    # If no rankings yet (event hasn't started), try getting season stats from recent events
+    # If no rankings yet (event hasn't started), collect season stats via per-team endpoints
     if not rankings:
-        log("No Worlds rankings yet. Collecting from recent season events...")
-        events = api_get(f"/seasons/{SEASON_ID}/events")
-        events.sort(key=lambda e: e.get("end", ""), reverse=True)
-        now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-        completed = [e for e in events if (e.get("end", "") or "") <= now_str]
+        log("No Worlds rankings yet. Collecting season stats per team...")
         teams_dict = {t.get("number"): t for t in raw_teams}
+        team_numbers = list(teams_dict.keys())
+        total_teams = len(team_numbers)
 
-        for i, event in enumerate(completed[:15]):
-            eid = event.get("id")
-            ename = event.get("name", "")
-            # Skip the worlds event itself
-            if eid == event_id:
+        # Method 1: Per-team rankings and skills (most reliable)
+        for idx, team in enumerate(raw_teams):
+            team_id = team.get("id")
+            team_num = team.get("number", "")
+            if not team_id:
                 continue
-            log(f"  Event {i+1}: {ename}")
-            er = api_get(f"/events/{eid}/rankings")
-            for r in er:
-                tn = r.get("team", {}).get("number", "")
-                if tn and tn in teams_dict:
-                    if tn not in rankings_by_team:
-                        rankings_by_team[tn] = []
-                    rankings_by_team[tn].append(r)
-            es = api_get(f"/events/{eid}/skills")
-            for s in es:
-                tn = s.get("team", {}).get("number", "")
-                if tn and tn in teams_dict:
-                    if tn not in skills_by_team:
-                        skills_by_team[tn] = []
-                    skills_by_team[tn].append(s)
-            time.sleep(0.5)
+
+            if idx % 50 == 0:
+                log(f"  Fetching stats for team {idx+1}/{total_teams}...")
+
+            # Get all rankings for this team across the season
+            tr = api_get(f"/teams/{team_id}/rankings", {"season[]": SEASON_ID})
+            for r in tr:
+                if team_num not in rankings_by_team:
+                    rankings_by_team[team_num] = []
+                rankings_by_team[team_num].append(r)
+
+            # Get all skills for this team across the season
+            ts = api_get(f"/teams/{team_id}/skills", {"season[]": SEASON_ID})
+            for s in ts:
+                if team_num not in skills_by_team:
+                    skills_by_team[team_num] = []
+                skills_by_team[team_num].append(s)
+
+            time.sleep(0.25)  # Rate limit: ~4 requests/sec
+
+        teams_with_rankings = sum(1 for tn in team_numbers if tn in rankings_by_team)
+        teams_with_skills = sum(1 for tn in team_numbers if tn in skills_by_team)
+        log(f"  Collected rankings for {teams_with_rankings}/{total_teams} teams")
+        log(f"  Collected skills for {teams_with_skills}/{total_teams} teams")
 
     # Process teams
     log("Processing teams...")
@@ -423,8 +429,71 @@ def main():
             team["divTotal"] = len(div_teams)
             team["divStrengthRank"] = div_str_rank.get(div_name, 0)
 
-    # Save
+    # Merge with existing data — preserve division assignments from PDFs
     output_path = os.path.join(SCRIPT_DIR, "ms_teams_data.json")
+    existing_data = {}
+    if os.path.exists(output_path):
+        try:
+            with open(output_path) as f:
+                existing = json.load(f)
+            for t in existing:
+                existing_data[t["team"]] = t
+            log(f"Loaded {len(existing_data)} existing teams for merge")
+        except Exception as e:
+            log(f"Could not load existing data: {e}")
+
+    # Merge: keep existing division if API didn't provide one
+    for team in processed:
+        tn = team["team"]
+        if tn in existing_data:
+            old = existing_data[tn]
+            # Preserve division from existing (PDF) data if API didn't find one
+            if not team["division"] and old.get("division"):
+                team["division"] = old["division"]
+            # Preserve stats from existing data if API returned all zeros
+            if team["matchesPlayed"] == 0 and old.get("matchesPlayed", 0) > 0:
+                for key in ["trueSkill", "trueSkillRank", "ccwm", "wins", "losses",
+                            "matchesPlayed", "winPct", "elimWins", "elimLosses",
+                            "elimWinPct", "qualWins", "qualLosses", "qualWinPct",
+                            "awpPerMatch", "wpPerMatch", "opr", "dpr",
+                            "driverMax", "autoMax", "totalMax", "tier",
+                            "divRank", "divTotal", "divStrengthRank"]:
+                    if key in old:
+                        team[key] = old[key]
+
+    # Also add any teams from existing data that weren't in API response
+    api_teams = {t["team"] for t in processed}
+    for tn, old in existing_data.items():
+        if tn not in api_teams:
+            processed.append(old)
+            log(f"  Kept existing team {tn} (not in API response)")
+
+    # Recalculate division ranks if we have divisions
+    divisions = {}
+    for team in processed:
+        div = team.get("division", "")
+        if div:
+            if div not in divisions:
+                divisions[div] = []
+            divisions[div].append(team)
+
+    if divisions:
+        div_strengths = {}
+        for div_name, div_teams in divisions.items():
+            avg_ts = sum(t["trueSkill"] for t in div_teams) / len(div_teams) if div_teams else 0
+            div_strengths[div_name] = avg_ts
+
+        sorted_divs = sorted(div_strengths.items(), key=lambda x: x[1], reverse=True)
+        div_str_rank = {name: rank + 1 for rank, (name, _) in enumerate(sorted_divs)}
+
+        for div_name, div_teams in divisions.items():
+            div_sorted = sorted(div_teams, key=lambda x: x["trueSkill"], reverse=True)
+            for i, team in enumerate(div_sorted):
+                team["divRank"] = i + 1
+                team["divTotal"] = len(div_teams)
+                team["divStrengthRank"] = div_str_rank.get(div_name, 0)
+
+    # Save
     with open(output_path, "w") as f:
         json.dump(processed, f)
 
