@@ -81,20 +81,7 @@ jobs:
           ROBOTEVENTS_TOKEN: ${{ secrets.ROBOTEVENTS_TOKEN }}
         run: python fetch_ms_data.py || echo "MS fetch failed (non-fatal)"
 
-      - name: Check if MS data changed
-        id: ms_check
-        run: |
-          if git diff --quiet ms_teams_data.json 2>/dev/null; then
-            echo "ms_changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "ms_changed=true" >> $GITHUB_OUTPUT
-            echo "MS data changed — will force rebuild"
-          fi
-
-      - name: Run data update (HS + rebuild)
-        env:
-          ROBOTEVENTS_TOKEN: ${{ secrets.ROBOTEVENTS_TOKEN }}
-          FORCE_REBUILD: ${{ steps.ms_check.outputs.ms_changed == 'true' && 'true' || github.event.inputs.force_rebuild || 'false' }}
+      - name: Rebuild index.html
         run: python update_data.py
 
       - name: Check for changes
