@@ -296,6 +296,25 @@
   }
   .nav-tab:hover { background: var(--surface2); color: var(--text); }
   .nav-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .nav-tab.override-tab { border-color: var(--highlight); color: var(--highlight); position: relative; }
+  .nav-tab.override-tab.active { background: var(--highlight); border-color: var(--highlight); color: #fff; }
+  .new-badge {
+    display: inline-block; font-size: 8px; font-weight: 800; letter-spacing: 0.5px;
+    background: var(--highlight); color: #000; padding: 1px 5px; border-radius: 4px;
+    margin-left: 5px; vertical-align: middle; line-height: 14px;
+    animation: badge-pulse 2s ease-in-out infinite;
+  }
+  @keyframes badge-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--highlight); }
+    50% { opacity: 0.7; box-shadow: 0 0 12px var(--highlight), 0 0 20px rgba(251,191,36,0.3); }
+  }
+  .override-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .override-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .override-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .override-grid-6 { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .override-share { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .override-share input { width: 100%; max-width: 400px; }
+  .override-strat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
   /* ===== MAIN CONTENT ===== */
   .main { max-width: 1600px; margin: 0 auto; padding: 20px 24px 40px; }
@@ -682,6 +701,12 @@
     .card-6121e .mini-stat .v { font-size: 13px; }
     .legend { gap: 8px; padding: 8px 10px; }
     .legend-item { font-size: 9px; }
+    .override-grid-2 { grid-template-columns: 1fr; }
+    .override-grid-3 { grid-template-columns: 1fr; }
+    .override-grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .override-strat-grid { grid-template-columns: 1fr; }
+    .override-share { flex-direction: column; align-items: stretch; }
+    .override-share input { max-width: 100%; }
   }
 
   @media (max-width: 400px) {
@@ -738,6 +763,7 @@
     <div class="div-tabs-wrap" id="divTabsWrap">
       <div class="nav-tab active" data-tab="home" onclick="switchTab('home')">Home</div>
       <div class="nav-tab" data-tab="all" onclick="switchTab('all')">All Teams</div>
+      <div class="nav-tab override-tab" data-tab="override" onclick="switchTab('override')">Override <span class="new-badge">NEW</span></div>
       <div class="nav-tab" data-tab="Arts" onclick="switchTab('Arts')">Arts</div>
       <div class="nav-tab" data-tab="Math" onclick="switchTab('Math')">Math</div>
       <div class="nav-tab" data-tab="Technology" onclick="switchTab('Technology')">Technology</div>
@@ -794,6 +820,7 @@
   <div class="tab-content" id="tab-teamdetail"></div>
   <div class="tab-content" id="tab-teams"></div>
   <div class="tab-content" id="tab-game"></div>
+  <div class="tab-content" id="tab-override"></div>
 </div>
 
 <!-- ===== 6121E OVERLAY ===== -->
@@ -898,6 +925,9 @@ function switchTab(tab) {
   } else if (tab === 'game') {
     document.getElementById('tab-game').classList.add('active');
     renderGameOverview();
+  } else if (tab === 'override') {
+    document.getElementById('tab-override').classList.add('active');
+    renderOverride();
   } else {
     document.getElementById('tab-teams').classList.add('active');
     renderTeams(tab);
@@ -1197,7 +1227,17 @@ function renderHome() {
       </div>`;
   }).join('');
 
-  container.innerHTML = summaryHTML + `<div class="division-grid">${cardsHTML}</div>`;
+  const overrideBanner = `
+    <div onclick="switchTab('override')" style="cursor:pointer;background:linear-gradient(135deg, var(--surface) 0%, rgba(251,191,36,0.1) 100%);border:1px solid var(--highlight);border-radius:14px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:transform 0.2s" onmouseover="this.style.transform='scale(1.01)'" onmouseout="this.style.transform='scale(1)'">
+      <div>
+        <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--highlight);text-transform:uppercase;margin-bottom:4px">New Season Revealed</div>
+        <div style="font-size:16px;font-weight:800;color:var(--text)">VRC Override: 2026-2027 Game</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:3px">119 scoring objects &bull; Toggle-based quadrant control &bull; 55W power cap &bull; Opaque/transparent Cup mechanic</div>
+      </div>
+      <div style="background:var(--highlight);color:#000;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0">Explore &rarr;</div>
+    </div>`;
+
+  container.innerHTML = overrideBanner + summaryHTML + `<div class="division-grid">${cardsHTML}</div>`;
 }
 
 /* ===== TEAMS VIEW ===== */
@@ -1481,6 +1521,168 @@ function renderGameOverview() {
 }
 
 
+/* ===== OVERRIDE GAME OVERVIEW (2026-2027) ===== */
+function renderOverride() {
+  const container = document.getElementById('tab-override');
+  // Update URL hash for shareability
+  if (window.location.hash !== '#override') history.replaceState(null, '', '#override');
+  container.innerHTML = `
+    <div style="margin-bottom:10px">
+      <button onclick="switchTab('home')" style="background:var(--surface);border:1px solid var(--border);color:var(--accent2);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">
+        &larr; Home
+      </button>
+    </div>
+
+    <!-- Hero Banner -->
+    <div class="div-banner" style="border-color:var(--highlight);background:linear-gradient(135deg, var(--surface) 0%, rgba(251,191,36,0.08) 100%)">
+      <div>
+        <h2 style="color:var(--highlight)">VEX V5RC OVERRIDE: 2026-2027 Season</h2>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:3px">New game revealed April 24, 2026 &bull; 12'x12' field &bull; 2v2 alliances &bull; 119 scoring objects &bull; 9 Goals &bull; Toggle-based quadrant control</div>
+      </div>
+    </div>
+
+    <!-- Share Link Bar -->
+    <div class="override-share" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:16px">
+      <span style="font-size:11px;color:var(--text-dim)">Share this page:</span>
+      <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:200px">
+        <input type="text" readonly value="https://arjun-mohanan.github.io/vex-visualizer/#override" id="overrideShareUrl" style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:11px;color:var(--text);flex:1;font-family:monospace" onclick="this.select()">
+        <button onclick="navigator.clipboard.writeText('https://arjun-mohanan.github.io/vex-visualizer/#override').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)})" style="background:var(--accent);border:none;color:#fff;padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap">Copy</button>
+      </div>
+    </div>
+
+    <!-- Game Overview Cards -->
+    <div class="override-grid-2">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Game Objective</h3>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.7">
+          Two alliances (Red and Blue), each with two teams, compete on a 12'x12' field. The primary objective is to score points by
+          <strong style="color:var(--text)">strategically stacking Pins and Cups on Goals</strong>,
+          managing field quadrants via <strong style="color:var(--highlight)">Toggles</strong>, and
+          physically controlling the <strong style="color:var(--highlight)">Midfield Boundary</strong> during the Endgame.
+          Override rewards <strong style="color:var(--text)">precision and orientation</strong> over brute-force collection.
+        </p>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Game Elements (119 Objects)</h3>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.7">
+          <strong style="color:var(--text)">56 Cups</strong> . Hollow, hourglass-shaped with one <strong style="color:var(--highlight)">opaque</strong> side and one <strong style="color:var(--highlight)">transparent</strong> side. Orientation controls which colors are visible.<br><br>
+          <strong style="color:var(--text)">63 Pins</strong> . Two-toned pins that fit inside Cups:<br>
+          &nbsp;&bull; 20 Red/Yellow &nbsp;&bull; 20 Blue/Yellow &nbsp;&bull; 19 Yellow/Yellow<br>
+          &nbsp;&bull; <strong style="color:#f87171">Only 4 Red/Blue</strong> (highly contested!)<br><br>
+          <strong style="color:var(--text)">9 Goals</strong> . 5 Neutral (either alliance) + 4 Alliance-specific (2 Red, 2 Blue). All 9 equipped with <strong style="color:#a5b4fc">AprilTags</strong> for vision sensor tracking.
+        </p>
+      </div>
+    </div>
+
+    <!-- Match Flow -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">Match Flow &amp; Setup</h3>
+      <div class="override-grid-4" style="margin-bottom:12px">
+        <div class="stat-tile" style="border-color:var(--accent)"><div class="st-val" style="color:#a5b4fc">15 sec</div><div class="st-label">Autonomous Period</div></div>
+        <div class="stat-tile"><div class="st-val" style="color:var(--text)">1:45</div><div class="st-label">Driver Control</div></div>
+        <div class="stat-tile" style="border-color:var(--highlight)"><div class="st-val" style="color:var(--highlight)">Last 10s</div><div class="st-label">Endgame Window</div></div>
+        <div class="stat-tile"><div class="st-val" style="color:var(--text-dim)">2:00</div><div class="st-label">Total Match Length</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);line-height:1.6;padding:10px;background:var(--surface2);border-radius:8px">
+        <strong style="color:var(--text)">Preloads:</strong> Each robot starts with 1 Red/Yellow or Blue/Yellow Pin (depending on alliance).
+        <strong style="color:var(--text)">Match Loads:</strong> 10 Cups + 11 Pins in the Driver Station, introduced to the field individually or together via a designated loader.
+        <strong style="color:#a5b4fc">AWP</strong> (Autonomous Win Point) is available.
+      </div>
+    </div>
+
+    <!-- Scoring Breakdown -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">Scoring Breakdown</h3>
+      <div class="override-grid-6">
+        <div class="stat-tile" style="border-color:var(--accent)"><div class="st-val" style="color:#a5b4fc">12 pts</div><div class="st-label">Autonomous Bonus</div></div>
+        <div class="stat-tile"><div class="st-val" style="color:#a78bfa">5 pts</div><div class="st-label">Visible Red/Blue Pin</div></div>
+        <div class="stat-tile"><div class="st-val" style="color:var(--text-dim)">0 pts</div><div class="st-label">Yellow Pin (unclaimed)</div></div>
+        <div class="stat-tile" style="border-color:var(--highlight)"><div class="st-val" style="color:var(--highlight)">10 pts</div><div class="st-label">Yellow Pin (Toggled!)</div></div>
+        <div class="stat-tile"><div class="st-val" style="color:var(--competitive)">8 pts</div><div class="st-label">Endgame Position</div></div>
+        <div class="stat-tile" style="border-color:#a78bfa"><div class="st-val" style="color:#a78bfa">Bonus</div><div class="st-label">Center Goal (most robots)</div></div>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:var(--text-dim);line-height:1.6;padding:10px;background:var(--surface2);border-radius:8px">
+        <strong style="color:var(--highlight)">Visibility Rule:</strong> Only a Pin's <strong style="color:var(--text)">visible color</strong> counts for scoring. Because Cups have one opaque side, placing a Pin into the opaque side hides that color and prevents it from scoring. You must orient the Cups to show your color and hide your opponent's.
+        Adding a Cup to a Goal also increases that Goal's capacity to hold more Pins.
+      </div>
+    </div>
+
+    <!-- The Toggle System -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--highlight);border-radius:14px;padding:18px;margin-bottom:16px">
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:8px;color:var(--highlight)">The Toggle System: Override's Signature Mechanic</h3>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7">
+        The field is divided into <strong style="color:var(--text)">four quadrants</strong>, each with a physical <strong style="color:var(--highlight)">Toggle switch</strong> that starts on Neutral/Yellow.
+        When an Alliance flips a quadrant's Toggle to their color (e.g., Red), every visible <strong style="color:var(--highlight)">Yellow Pin on any stack in that quadrant instantly becomes worth 10 points</strong> for that Alliance.
+        Yellow Pins are worth 0 points when unclaimed, but a single Toggle flip can claim multiple Yellow Pins at once.
+      </p>
+      <div class="override-grid-3" style="margin-top:12px">
+        <div class="stat-tile" style="border-color:var(--highlight)"><div class="st-val" style="color:var(--highlight)">19</div><div class="st-label">Yellow/Yellow Pins on Field</div></div>
+        <div class="stat-tile" style="border-color:#f87171"><div class="st-val" style="color:#f87171">20-pt swing</div><div class="st-label">Per Toggle Flip (gain 10 + deny 10)</div></div>
+        <div class="stat-tile"><div class="st-val" style="color:var(--text)">4</div><div class="st-label">Toggle Switches (one per quadrant)</div></div>
+      </div>
+    </div>
+
+    <!-- Robot Constraints -->
+    <div class="override-grid-2">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Robot Constraints</h3>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.8">
+          <strong style="color:#f87171">Possession Limit: 1 Cup + 1 Pin.</strong> Robots can only hold one Cup and one Pin at any time. No hoarding. Fast cycle times are critical.<br><br>
+          <strong style="color:var(--highlight)">50-inch Height Limit.</strong> Standard vertical expansion cap throughout the match.<br><br>
+          <strong style="color:#a78bfa">55W Drivetrain Power Cap.</strong> V5 Smart Motors are 11W each, so this means a <strong style="color:var(--text)">5-motor maximum for your drive base</strong>. You can still use remaining motor capacity elsewhere on the robot.<br><br>
+          <strong style="color:var(--competitive)">18-inch Endgame Height.</strong> Any robot inside the Midfield Boundary during the last 10 seconds must stay under 18 inches. Requires a mechanical transformation.
+        </p>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">The Endgame (Last 10 Seconds)</h3>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.8">
+          <strong style="color:var(--highlight)">Midfield Boundary.</strong> The final 10 seconds revolve around physical control of the midfield.<br><br>
+          <strong style="color:var(--text)">8 pts per robot.</strong> Any robot breaking the plane of the Midfield Boundary when time expires earns positioning points.<br><br>
+          <strong style="color:#a78bfa">Center Goal Bonus.</strong> The Alliance with the <strong style="color:var(--text)">most robots inside the boundary</strong> at the buzzer claims all Yellow Pin points on the Center Goal.<br><br>
+          <strong style="color:#f87171">Expect brawling.</strong> Heavy defense and shoving matches in midfield. Your 55W drive base needs enough traction to hold position.
+        </p>
+      </div>
+    </div>
+
+    <!-- Strategic Takeaways -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">Key Strategic Takeaways</h3>
+      <div class="override-strat-grid">
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
+          <strong style="color:var(--highlight)">1. Drivetrain Power Allocation</strong><br>
+          You can no longer brute-force with an 8-motor drive. Optimize a 4- or 5-motor drivetrain to run efficiently on 55W. The silver lining: ample motor power left over for complex intakes, orienting mechanisms, and fast 50-inch lifts.<br><br>
+          <strong style="color:#a78bfa">2. Orientation is King</strong><br>
+          Because of the opaque/transparent Cup sides, your intake mechanism must rapidly flip and control the orientation of Cups before placing them on a stack. This is a precision challenge, not a power challenge.<br><br>
+          <strong style="color:#a5b4fc">3. Vision Sensors are Mandatory</strong><br>
+          With AprilTags on all 9 Goals and strict 1-Cup/1-Pin possession limits, your robot will make many trips. Vision/AI sensors will be crucial to automate alignment and minimize cycle times.
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
+          <strong style="color:#f87171">4. Toggle Defense</strong><br>
+          A single Toggle flip creates a 20+ point swing. Have a dedicated strategy for defending the Toggles in your highest-scoring quadrants. These will decide matches.<br><br>
+          <strong style="color:var(--competitive)">5. The 4 Red/Blue Pins</strong><br>
+          With only 4 Red/Blue Pins on the entire field, these are the most contested objects. They score 5 points regardless of Toggle state and cannot be neutralized. Control them early.<br><br>
+          <strong style="color:#4ade80">6. Endgame Brawling</strong><br>
+          Robots in midfield must retract under 18 inches. Your lift must retract quickly and reliably, and your 55W drive base needs enough traction to avoid being shoved out of the boundary for the massive Center Goal Bonus.
+        </div>
+      </div>
+    </div>
+
+    <!-- Official Resources -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Official Resources</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;font-size:12px">
+        <a href="https://www.vexrobotics.com/v5/competition/v5rc-current-game" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Override Game Page &rarr;</a>
+        <a href="https://www.vexrobotics.com/override-manual" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">Game Manual &rarr;</a>
+        <a href="https://www.robotevents.com/V5RC" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">RobotEvents &rarr;</a>
+        <a href="https://www.vexforum.com" target="_blank" style="color:var(--accent2);text-decoration:none;font-weight:600;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">VEX Forum &rarr;</a>
+      </div>
+      <div style="margin-top:12px;font-size:10px;color:var(--text-dim);line-height:1.5">
+        Override is the 2026-2027 VEX V5RC competition game. Revealed at VEX Worlds on April 24, 2026.
+      </div>
+    </div>
+  `;
+}
+
 /* Live results section removed — scouting-only mode */
 
 /* ===== LEVEL TABS (HS/MS) ===== */
@@ -1505,6 +1707,7 @@ function switchLevel(level) {
   const divisions = DIVISIONS;
   let tabsHTML = '<div class="nav-tab active" data-tab="home" onclick="switchTab(\'home\')">Home</div>';
   tabsHTML += '<div class="nav-tab" data-tab="all" onclick="switchTab(\'all\')">All Teams</div>';
+  tabsHTML += '<div class="nav-tab override-tab" data-tab="override" onclick="switchTab(\'override\')">Override <span class="new-badge">NEW</span></div>';
   divisions.forEach(d => {
     tabsHTML += '<div class="nav-tab" data-tab="' + d + '" onclick="switchTab(\'' + d + '\')">' + d + '</div>';
   });
@@ -1540,7 +1743,20 @@ document.addEventListener('keydown', e => {
 });
 
 /* ===== INITIALIZE ===== */
-renderHome();
+// Hash-based deep linking (e.g. #override)
+const initHash = window.location.hash.replace('#', '');
+if (initHash === 'override') {
+  switchTab('override');
+} else {
+  renderHome();
+}
+
+// Listen for hash changes (back/forward navigation)
+window.addEventListener('hashchange', () => {
+  const h = window.location.hash.replace('#', '');
+  if (h === 'override' && currentTab !== 'override') switchTab('override');
+  else if (!h && currentTab === 'override') switchTab('home');
+});
 </script>
 
 </body>
