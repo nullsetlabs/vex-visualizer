@@ -825,4 +825,83 @@ def ingest_worlds(client: ApiClient, season_id: int,
             _save_json(pw_meta_path, agg["events_metadata"])
         preworlds_run = True
 
-    # -- Phase C: quality gate ------------------------
+    # -- Phase C: quality gate -----------------------------------------------
+    logger.info("Computing coverage report...")
+    metrics = compute_coverage_report(output_dir, season_label, preworlds_run)
+    logger.info(f"Verdict: {metrics['verdict']}")
+    return metrics
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+def build_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(
+        prog="src.ingest",
+        description="Ingest RobotEvents API data for one season's Worlds "
+                    "into a research-friendly raw JSON drop.",
+    )
+    p.add_argument("--season", type=int, required=True,
+                   help="RobotEvents season ID (e.g. 197 for Push Back).")
+    p.add_argument("--worlds-event-id", type=int, default=None,
+                   help="Worlds event ID. If omitted, auto-detect from season.")
+    p.add_argument("--grade", choices=["high", "middle"], default="high",
+                   help="Grade level for Worlds event (default: high).")
+    p.add_argument("--output", type=Path, required=True,
+                   help="Output directory for raw JSON dump.")
+    p.add_argument("--token-file", type=Path, default=None,
+                   help="Path to file containing the RobotEvents bearer token. "
+                        "If omitted, ROBOTEVENTS_TOKEN env var is used.")
+    p.add_argument("--skip-preworlds", action="store_true",
+                   help="Skip the per-team pre-Worlds event aggregation (faster smoke test).")
+    p.add_argument("--resume", action="store_true",
+                   help="Skip endpoints whose output JSON already exists.")
+    p.add_argument("--rate-limit-sleep", type=float, default=DEFAULT_RATE_LIMIT_SLEEP,
+                   help=f"Seconds between paginated requests (default: {DEFAULT_RATE_LIMIT_SLEEP}).")
+    p.add_argument("--verbose", action="store_true",
+                   help="Verbose (DEBUG) logging.")
+    return p
+
+
+def main(argv: Optional[list[str]] = None) -> int:
+    args = build_parser().parse_args(argv)
+    output_dir: Path = args.output
+    logger = setup_logging(output_dir, verbose=args.verbose)
+
+    try:
+        token = resolve_token(args.token_file)
+    except ValueError as e:
+        logger.error(str(e))
+        return 2
+
+    client = ApiClient(
+        token=token,
+        logger=logger,
+        rate_limit_sleep=args.rate_limit_sleep,
+    )
+
+    try:
+        metrics = ingest_worlds(
+            client=client,
+            season_id=args.season,
+            worlds_event_id=args.worlds_event_id,
+            output_dir=output_dir,
+            grade_level=args.grade,
+            skip_preworlds=args.skip_preworlds,
+            resume=args.resume,
+        )
+    except Exception as e:
+        logger.exception(f"Ingest failed: {e}")
+        return 1
+
+    verdict = metrics["verdict"]
+    if verdict.startswith("INCLUDE"):
+        return 0
+    if verdict.startswith("KEEP") or verdict.startswith("INCOMPLETE"):
+        return 0  # not a failure — analyst decides downstream
+    return 3  # DROP
+
+
+if __name__ == "__main__":
+    sys.exit(main())
