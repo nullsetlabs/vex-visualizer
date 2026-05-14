@@ -1,0 +1,293 @@
+# GitHub Actions Workflow: Research Data Pull (Schedule-Strength Project)
+# Save as: .github/workflows/research-data-pull.yml
+#
+# PURPOSE:
+#   Pull raw RobotEvents API data for one season's Worlds (HS or MS) into a
+#   research-isolated directory of the repo. Used to feed Daniel Berkowitz's
+#   schedule-strength research project (white paper / arXiv preprint).
+#
+# CRITICAL SAFETY GUARANTEES (see research/SAFETY.md for details):
+#   1. Manual trigger only — never runs on a schedule.
+#   2. Writes ONLY to research/data/raw/season_{id}_{grade}/ — no overlap
+#      with visualizer-critical files.
+#   3. Pre-flight + post-flight SHA-256 checksums on protected files. If any
+#      protected file's checksum changes, the workflow aborts BEFORE commit.
+#   4. Quality gate: ingest script exits non-zero if data is incomplete,
+#      and the commit step only runs if the previous steps succeeded.
+#   5. Separate code path: invokes research/src/ingest.py — does NOT touch
+#      update_data.py, fetch_ms_data.py, or vex_visualizer_template.html.
+#
+# The visualizer's existing update-data.yml workflow is unaffected by this file.
+#
+# SETUP REQUIRED (one-time):
+#   - The existing ROBOTEVENTS_TOKEN secret is reused. No new secret needed.
+#   - research/src/ingest.py and research/src/__init__.py must be present on
+#     the main branch (committed via the Push Checklist).
+#
+# USAGE (per run):
+#   1. GitHub repo → Actions tab → "Research Data Pull"
+#   2. Click "Run workflow"
+#   3. Choose season (e.g. 197 for Push Back 2025-26)
+#   4. Choose grade (high or middle)
+#   5. Optionally enable --skip-preworlds for a fast (~5 min) smoke test
+#   6. Click "Run workflow" button
+#   7. Watch the run log; on completion the raw JSON is committed to
+#      research/data/raw/season_{id}_{grade}/
+#
+# RECOVERY IF SOMETHING GOES WRONG:
+#   Even in the worst case, this workflow cannot put the visualizer into a
+#   degraded state — the checksum check ensures protected files are never
+#   modified. If you ever see a problem, simply do not run the workflow
+#   again until the issue is diagnosed.
+
+name: Research Data Pull
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: 'RobotEvents season ID (197 = Push Back 2025-26)'
+        required: true
+        default: '197'
+        type: string
+      grade:
+        description: 'Grade level'
+        required: true
+        default: 'high'
+        type: choice
+        options:
+          - high
+          - middle
+      skip_preworlds:
+        description: 'Skip per-team pre-Worlds aggregation (fast smoke test)'
+        required: false
+        default: false
+        type: boolean
+
+# Prevent two research pulls from running simultaneously
+concurrency:
+  group: research-data-pull
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # required to commit research/data/raw/... back to main
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90   # full pull with pre-Worlds aggregation can take ~50 min
+
+    env:
+      # List every file that the visualizer pipeline reads or writes.
+      # The checksum check (Layer 3) verifies none of these are modified.
+      PROTECTED_FILES: |
+        teams_data.json
+        ms_teams_data.json
+        index.html
+        version.json
+        update_data.py
+        fetch_ms_data.py
+        vex_visualizer_template.html
+        analytics_report.py
+        ANALYTICS_REPORT.md
+
+    steps:
+      # ---------------------------------------------------------------
+      # 1. Checkout main branch
+      # ---------------------------------------------------------------
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      # ---------------------------------------------------------------
+      # 2. Verify research scripts exist on main
+      # ---------------------------------------------------------------
+      - name: Verify research scripts present
+        run: |
+          set -e
+          missing=0
+          for f in research/src/ingest.py research/src/__init__.py; do
+            if [ ! -f "$f" ]; then
+              echo "ERROR: Required file missing: $f"
+              echo "       Did you push research/src/ to main? See PUSH_CHECKLIST.md."
+              missing=1
+            fi
+          done
+          if [ "$missing" = "1" ]; then exit 1; fi
+          echo "OK: research scripts present."
+
+      # ---------------------------------------------------------------
+      # 3. Capture pre-flight checksums of PROTECTED files (Layer 2)
+      # ---------------------------------------------------------------
+      - name: Record SHA-256 of protected files (pre-flight)
+        run: |
+          set -e
+          : > /tmp/protected-before.txt
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            if [ -f "$f" ]; then
+              sum=$(sha256sum "$f" | cut -d' ' -f1)
+              echo "$sum  $f" >> /tmp/protected-before.txt
+            else
+              echo "MISSING  $f" >> /tmp/protected-before.txt
+            fi
+          done <<< "$PROTECTED_FILES"
+          echo "Pre-flight checksums:"
+          cat /tmp/protected-before.txt
+
+      # ---------------------------------------------------------------
+      # 4. Set up Python and install research dependencies
+      # ---------------------------------------------------------------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install research dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pandas pyarrow
+
+      # ---------------------------------------------------------------
+      # 5. Run the research-grade ingest script
+      # ---------------------------------------------------------------
+      - name: Compute output directory
+        id: output_dir
+        run: |
+          season="${{ inputs.season }}"
+          grade="${{ inputs.grade }}"
+          dir="research/data/raw/season_${season}_${grade}"
+          echo "dir=$dir" >> "$GITHUB_OUTPUT"
+          echo "Output will be written to: $dir"
+
+      - name: Run ingest
+        env:
+          ROBOTEVENTS_TOKEN: ${{ secrets.ROBOTEVENTS_TOKEN }}
+          PYTHONUNBUFFERED: '1'
+        working-directory: research
+        run: |
+          set -e
+          args=(--season "${{ inputs.season }}" --grade "${{ inputs.grade }}" \
+                --output "../${{ steps.output_dir.outputs.dir }}")
+          if [ "${{ inputs.skip_preworlds }}" = "true" ]; then
+            args+=(--skip-preworlds)
+          fi
+          echo "Invoking: python -m src.ingest ${args[*]}"
+          python -m src.ingest "${args[@]}"
+
+      # ---------------------------------------------------------------
+      # 6. Post-flight checksum verification (Layer 3)
+      # ---------------------------------------------------------------
+      - name: Verify protected files were NOT modified
+        if: always()
+        run: |
+          set -e
+          : > /tmp/protected-after.txt
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            if [ -f "$f" ]; then
+              sum=$(sha256sum "$f" | cut -d' ' -f1)
+              echo "$sum  $f" >> /tmp/protected-after.txt
+            else
+              echo "MISSING  $f" >> /tmp/protected-after.txt
+            fi
+          done <<< "$PROTECTED_FILES"
+
+          echo "Post-flight checksums:"
+          cat /tmp/protected-after.txt
+          echo ""
+
+          if ! diff -q /tmp/protected-before.txt /tmp/protected-after.txt > /dev/null; then
+            echo "::error::Protected files were modified by the research pipeline! Aborting before commit."
+            echo "DIFF:"
+            diff /tmp/protected-before.txt /tmp/protected-after.txt || true
+            exit 1
+          fi
+          echo "OK: all protected files unchanged."
+
+      # ---------------------------------------------------------------
+      # 7. Display the coverage report (always, for transparency)
+      # ---------------------------------------------------------------
+      - name: Show coverage report
+        if: always()
+        run: |
+          cov="${{ steps.output_dir.outputs.dir }}/coverage.md"
+          if [ -f "$cov" ]; then
+            echo "=== Coverage Report ==="
+            cat "$cov"
+            echo ""
+            echo "::group::Coverage Summary"
+            cat "$cov" >> "$GITHUB_STEP_SUMMARY"
+            echo "::endgroup::"
+          else
+            echo "(no coverage.md produced)"
+          fi
+
+      # ---------------------------------------------------------------
+      # 8. Verify staged changes are ONLY in research/ (defense-in-depth)
+      # ---------------------------------------------------------------
+      - name: Inspect changes — must be confined to research/
+        run: |
+          set -e
+          # List untracked + modified files
+          changed=$(git status --porcelain | awk '{print $2}')
+          if [ -z "$changed" ]; then
+            echo "No files changed. (Possibly nothing to commit.)"
+            exit 0
+          fi
+          echo "Files changed by this run:"
+          echo "$changed"
+          # Every changed path must be under research/
+          out_of_scope=$(echo "$changed" | grep -vE '^research/' || true)
+          if [ -n "$out_of_scope" ]; then
+            echo "::error::Files changed outside research/:"
+            echo "$out_of_scope"
+            exit 1
+          fi
+          echo "OK: changes confined to research/."
+
+      # ---------------------------------------------------------------
+      # 9. Commit and push (only if all preceding checks passed)
+      # ---------------------------------------------------------------
+      - name: Commit research/data changes to main
+        run: |
+          set -e
+          git config user.name "VEX Research Bot"
+          git config user.email "research-bot@users.noreply.github.com"
+
+          # Stage ONLY the research/data subtree
+          git add research/data/
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit (script produced no new files)."
+            exit 0
+          fi
+
+          TS=$(date -u +"%Y-%m-%d %H:%M UTC")
+          SEASON="${{ inputs.season }}"
+          GRADE="${{ inputs.grade }}"
+          SKIP="${{ inputs.skip_preworlds }}"
+          if [ "$SKIP" = "true" ]; then SUFFIX=" (smoke)"; else SUFFIX=""; fi
+
+          git commit -m "[Research] Pull season $SEASON $GRADE$SUFFIX — $TS"
+          git push origin main
+
+      # ---------------------------------------------------------------
+      # 10. Final summary
+      # ---------------------------------------------------------------
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Research Data Pull" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Season: ${{ inputs.season }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Grade: ${{ inputs.grade }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Skip pre-Worlds: ${{ inputs.skip_preworlds }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Output: ${{ steps.output_dir.outputs.dir }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ **Pull completed and committed to main.**" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "❌ **Pull failed or aborted. Visualizer is UNAFFECTED — protected files were not modified.**" >> "$GITHUB_STEP_SUMMARY"
+          fi
