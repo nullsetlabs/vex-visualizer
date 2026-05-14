@@ -108,7 +108,7 @@ jobs:
             exit 1
           fi
           echo "Token length: ${#ROBOTEVENTS_TOKEN} chars"
-          BASE="https://www.robotevents.com/api/v2"
+          BASE="https://events.vex.com/api/v2"
           HDR="Authorization: Bearer $ROBOTEVENTS_TOKEN"
 
           test_url() {
@@ -133,7 +133,7 @@ jobs:
 
           echo "=== Baseline: GET / (no auth) ==="
           curl -sS -o /dev/null -w "  HTTP %{http_code}\n" --max-time 10 \
-            "https://www.robotevents.com/" || true
+            "https://events.vex.com/" || true
           echo ""
 
           test_url "1. List V5RC seasons (program=1)" \

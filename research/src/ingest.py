@@ -80,7 +80,11 @@ import requests
 # Configuration
 # ---------------------------------------------------------------------------
 
-API_BASE = "https://www.robotevents.com/api/v2"
+API_BASE = "https://events.vex.com/api/v2"
+# NOTE (2026-05-14): API relocated from www.robotevents.com to events.vex.com as
+# part of the RECF → Innovation First / VEX transition. The old URL now serves
+# only a transition announcement; all /api/v2/* paths there return 404.
+# See research/results/api_relocation_investigation.md for the full story.
 DEFAULT_PROGRAM_ID = 1  # 1 = V5RC (high school)
 DEFAULT_PER_PAGE = 250
 DEFAULT_RATE_LIMIT_SLEEP = 0.3  # seconds between paginated requests
@@ -337,11 +341,51 @@ def fetch_event_teams(client: ApiClient, event_id: int) -> list[dict]:
     return items
 
 
+def fetch_event_divisions(client: ApiClient, event_id: int) -> list[dict]:
+    """
+    Enumerate divisions for an event. The new events.vex.com API exposes
+    divisions as a nested array on the event detail object (no standalone
+    /divisions endpoint). Returns a list of {id, name, order, ...} dicts.
+    """
+    event_obj = client.get_one(f"/events/{event_id}")
+    divisions = event_obj.get("divisions") or []
+    if not divisions:
+        # Fallback: some events have a single implicit division
+        client.logger.info(f"  No divisions array on event {event_id} — assuming single division (id=1)")
+        return [{"id": 1, "name": "Default"}]
+    client.logger.info(f"  Event {event_id} has {len(divisions)} divisions")
+    return divisions
+
+
 def fetch_event_rankings(client: ApiClient, event_id: int) -> list[dict]:
+    """
+    Fetch rankings across all divisions of an event.
+
+    NEW (events.vex.com) API path: /events/{event_id}/divisions/{div_id}/rankings
+    OLD (robotevents.com)  API path: /events/{event_id}/rankings
+
+    Each ranking row is annotated with its division.id and division.name so
+    the cleaning layer can attribute rows to divisions even though they were
+    fetched per-division.
+    """
     client.logger.info(f"Fetching rankings for event {event_id}...")
-    items = client.get_all(f"/events/{event_id}/rankings")
-    client.logger.info(f"  {len(items)} ranking rows")
-    return items
+    divisions = fetch_event_divisions(client, event_id)
+    all_rows: list[dict] = []
+    for div in divisions:
+        div_id = div.get("id")
+        div_name = div.get("name") or ""
+        if div_id is None:
+            continue
+        client.logger.info(f"  Division {div_id} ({div_name}): fetching rankings...")
+        rows = client.get_all(f"/events/{event_id}/divisions/{div_id}/rankings")
+        for r in rows:
+            # Inject division info if the API doesn't already provide it
+            if not r.get("division"):
+                r["division"] = {"id": div_id, "name": div_name}
+        all_rows.extend(rows)
+        time.sleep(client.rate_limit_sleep)
+    client.logger.info(f"  {len(all_rows)} ranking rows across {len(divisions)} divisions")
+    return all_rows
 
 
 def fetch_event_skills(client: ApiClient, event_id: int) -> list[dict]:
@@ -352,10 +396,33 @@ def fetch_event_skills(client: ApiClient, event_id: int) -> list[dict]:
 
 
 def fetch_event_matches(client: ApiClient, event_id: int) -> list[dict]:
+    """
+    Fetch all matches across all divisions of an event.
+
+    NEW (events.vex.com) API path: /events/{event_id}/divisions/{div_id}/matches
+    OLD (robotevents.com)  API path: /events/{event_id}/matches
+
+    Each match row is annotated with its division.id and division.name so the
+    cleaning layer can identify which division a match belonged to. Critical
+    for schedule-strength analysis (which is computed within-division).
+    """
     client.logger.info(f"Fetching matches for event {event_id}...")
-    items = client.get_all(f"/events/{event_id}/matches")
-    client.logger.info(f"  {len(items)} matches")
-    return items
+    divisions = fetch_event_divisions(client, event_id)
+    all_rows: list[dict] = []
+    for div in divisions:
+        div_id = div.get("id")
+        div_name = div.get("name") or ""
+        if div_id is None:
+            continue
+        client.logger.info(f"  Division {div_id} ({div_name}): fetching matches...")
+        rows = client.get_all(f"/events/{event_id}/divisions/{div_id}/matches")
+        for m in rows:
+            if not m.get("division"):
+                m["division"] = {"id": div_id, "name": div_name}
+        all_rows.extend(rows)
+        time.sleep(client.rate_limit_sleep)
+    client.logger.info(f"  {len(all_rows)} matches across {len(divisions)} divisions")
+    return all_rows
 
 
 def fetch_event_awards(client: ApiClient, event_id: int) -> list[dict]:
@@ -758,83 +825,4 @@ def ingest_worlds(client: ApiClient, season_id: int,
             _save_json(pw_meta_path, agg["events_metadata"])
         preworlds_run = True
 
-    # -- Phase C: quality gate -----------------------------------------------
-    logger.info("Computing coverage report...")
-    metrics = compute_coverage_report(output_dir, season_label, preworlds_run)
-    logger.info(f"Verdict: {metrics['verdict']}")
-    return metrics
-
-
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
-
-def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(
-        prog="src.ingest",
-        description="Ingest RobotEvents API data for one season's Worlds "
-                    "into a research-friendly raw JSON drop.",
-    )
-    p.add_argument("--season", type=int, required=True,
-                   help="RobotEvents season ID (e.g. 197 for Push Back).")
-    p.add_argument("--worlds-event-id", type=int, default=None,
-                   help="Worlds event ID. If omitted, auto-detect from season.")
-    p.add_argument("--grade", choices=["high", "middle"], default="high",
-                   help="Grade level for Worlds event (default: high).")
-    p.add_argument("--output", type=Path, required=True,
-                   help="Output directory for raw JSON dump.")
-    p.add_argument("--token-file", type=Path, default=None,
-                   help="Path to file containing the RobotEvents bearer token. "
-                        "If omitted, ROBOTEVENTS_TOKEN env var is used.")
-    p.add_argument("--skip-preworlds", action="store_true",
-                   help="Skip the per-team pre-Worlds event aggregation (faster smoke test).")
-    p.add_argument("--resume", action="store_true",
-                   help="Skip endpoints whose output JSON already exists.")
-    p.add_argument("--rate-limit-sleep", type=float, default=DEFAULT_RATE_LIMIT_SLEEP,
-                   help=f"Seconds between paginated requests (default: {DEFAULT_RATE_LIMIT_SLEEP}).")
-    p.add_argument("--verbose", action="store_true",
-                   help="Verbose (DEBUG) logging.")
-    return p
-
-
-def main(argv: Optional[list[str]] = None) -> int:
-    args = build_parser().parse_args(argv)
-    output_dir: Path = args.output
-    logger = setup_logging(output_dir, verbose=args.verbose)
-
-    try:
-        token = resolve_token(args.token_file)
-    except ValueError as e:
-        logger.error(str(e))
-        return 2
-
-    client = ApiClient(
-        token=token,
-        logger=logger,
-        rate_limit_sleep=args.rate_limit_sleep,
-    )
-
-    try:
-        metrics = ingest_worlds(
-            client=client,
-            season_id=args.season,
-            worlds_event_id=args.worlds_event_id,
-            output_dir=output_dir,
-            grade_level=args.grade,
-            skip_preworlds=args.skip_preworlds,
-            resume=args.resume,
-        )
-    except Exception as e:
-        logger.exception(f"Ingest failed: {e}")
-        return 1
-
-    verdict = metrics["verdict"]
-    if verdict.startswith("INCLUDE"):
-        return 0
-    if verdict.startswith("KEEP") or verdict.startswith("INCOMPLETE"):
-        return 0  # not a failure — analyst decides downstream
-    return 3  # DROP
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    # -- Phase C: quality gate ------------------------
