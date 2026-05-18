@@ -13,7 +13,7 @@ Usage:
   python update_data.py
 
 Environment variables required:
-  ROBOTEVENTS_TOKEN  — Bearer token from https://www.robotevents.com/api/v2
+  ROBOTEVENTS_TOKEN  — Bearer token from https://events.vex.com/api/v2 (events.vex.com account, requested via accessRequest/create)
 """
 
 import os
@@ -29,18 +29,18 @@ from datetime import datetime, timezone, timedelta
 # Configuration — UPDATE THESE VALUES
 # ---------------------------------------------------------------------------
 
-API_BASE = "https://www.robotevents.com/api/v2"
+API_BASE = "https://events.vex.com/api/v2"
 TOKEN = os.environ.get("ROBOTEVENTS_TOKEN", "")
 
 # VRC program ID
 PROGRAM_ID = 1
 
 # Push Back 2025-2026 season ID
-# Verify at: https://www.robotevents.com/api/v2/seasons?program%5B%5D=1
+# Verify at: https://events.vex.com/api/v2/seasons?program%5B%5D=1
 SEASON_ID = 197  # Push Back 2025-2026
 
 # Worlds 2026 event ID — REQUIRED for Worlds-specific data
-# Find it: https://www.robotevents.com/api/v2/events?program%5B%5D=1&season%5B%5D=197&level%5B%5D=World
+# Find it: https://events.vex.com/api/v2/events?program%5B%5D=1&season%5B%5D=197&level%5B%5D=World
 # Or search RobotEvents for "VEX Worlds 2026"
 WORLDS_EVENT_ID = None  # e.g., 54321 — set this once you know it
 
