@@ -1,15 +1,21 @@
 # GitHub Actions Workflow: Auto-Update VEX Visualizer Data
-# Save as: .github/workflows/update-data.yml
+# Save as: .github/workflows/update-data.yml in the new repo
 #
-# SMART SCHEDULING:
-#   - Worlds week (Apr 21 – Apr 27, 2026): Every 15 minutes
-#   - Worlds month (Apr 1 – Apr 30):       Every 2 hours
-#   - Rest of season:                       Once per day at 6 AM UTC
-#   - Manual trigger:                       Anytime from the Actions tab
+# UPDATED for the new repo structure where visualizer files live in /visualizer/.
+# Key changes from the old workflow:
+#   - Python scripts now run with working-directory: visualizer
+#   - Git diff and git add paths now use visualizer/ prefix
+#   - Summary step reads JSON from visualizer/ folder
+#
+# SMART SCHEDULING (unchanged from original):
+#   - Worlds week (Apr 21 - Apr 27): Every 15 minutes
+#   - Worlds month (Apr 1 - Apr 30): Every 2 hours
+#   - Rest of season: Once per day at 6 AM UTC
+#   - Manual trigger: Anytime from the Actions tab
 #
 # SETUP:
 #   1. Get a RobotEvents API token: https://www.robotevents.com/api/v2
-#   2. Repo Settings → Secrets → Actions → New secret
+#   2. Repo Settings > Secrets > Actions > New secret
 #      Name: ROBOTEVENTS_TOKEN   Value: your-token
 #   3. Push this file to .github/workflows/update-data.yml
 
@@ -17,19 +23,17 @@ name: Update VEX Visualizer Data
 
 on:
   schedule:
-    # ── WORLDS WEEK (Apr 21 – Apr 27): every 15 minutes ──
-    # V5RC HS: Apr 21-24, V5RC MS: Apr 25-27
-    - cron: '*/15 * 21-27 4 *'   # Apr 21-27, every 15 min
+    # WORLDS WEEK (Apr 21 - Apr 27): every 15 minutes
+    - cron: '*/15 * 21-27 4 *'
 
-    # ── WORLDS MONTH (April): every 2 hours ──
-    - cron: '0 */2 1-20 4 *'     # Apr 1-20, every 2 hours
-    - cron: '0 */2 28-30 4 *'    # Apr 28-30, every 2 hours
+    # WORLDS MONTH (April): every 2 hours
+    - cron: '0 */2 1-20 4 *'
+    - cron: '0 */2 28-30 4 *'
 
-    # ── REST OF SEASON: once per day at 6 AM UTC ──
-    - cron: '0 6 * 1-3 *'        # Jan-Mar, daily
-    - cron: '0 6 * 5-12 *'       # May-Dec, daily
+    # REST OF SEASON: once per day at 6 AM UTC
+    - cron: '0 6 * 1-3 *'
+    - cron: '0 6 * 5-12 *'
 
-  # Manual trigger — click "Run workflow" in the Actions tab anytime
   workflow_dispatch:
     inputs:
       force_rebuild:
@@ -41,7 +45,6 @@ on:
           - 'false'
           - 'true'
 
-# Prevent overlapping runs
 concurrency:
   group: data-update
   cancel-in-progress: true
@@ -60,11 +63,8 @@ jobs:
         run: |
           MONTH=$(date -u +%m)
           DAY=$(date -u +%d)
-
-          # Worlds week: Apr 21 – Apr 27
           WORLDS_WEEK="false"
           if [[ "$MONTH" == "04" && "$DAY" -ge 21 && "$DAY" -le 27 ]]; then WORLDS_WEEK="true"; fi
-
           echo "worlds_week=$WORLDS_WEEK" >> $GITHUB_OUTPUT
           echo "Current: $(date -u), Worlds week: $WORLDS_WEEK"
 
@@ -77,26 +77,27 @@ jobs:
           python-version: '3.12'
 
       - name: Fetch Middle School data
+        working-directory: visualizer
         env:
           ROBOTEVENTS_TOKEN: ${{ secrets.ROBOTEVENTS_TOKEN }}
         run: python fetch_ms_data.py || echo "MS fetch failed (non-fatal)"
 
       - name: Rebuild index.html
+        working-directory: visualizer
         run: python update_data.py
 
       - name: Check for changes
         id: changes
         run: |
-          git diff --quiet index.html teams_data.json ms_teams_data.json version.json 2>/dev/null && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+          git diff --quiet visualizer/index.html visualizer/teams_data.json visualizer/ms_teams_data.json visualizer/version.json 2>/dev/null && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Commit and push
         if: steps.changes.outputs.changed == 'true'
         run: |
           git config user.name "VEX Visualizer Bot"
           git config user.email "actions@github.com"
-          git add index.html teams_data.json ms_teams_data.json version.json
+          git add visualizer/index.html visualizer/teams_data.json visualizer/ms_teams_data.json visualizer/version.json
 
-          # Include context in commit message
           if [[ "${{ steps.schedule_check.outputs.worlds_week }}" == "true" ]]; then
             PREFIX="[Worlds Live]"
           else
@@ -104,10 +105,10 @@ jobs:
           fi
 
           TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
-          HS_COUNT=$(python3 -c "import json; print(len(json.load(open('teams_data.json'))))" 2>/dev/null || echo "?")
-          MS_COUNT=$(python3 -c "import json; print(len(json.load(open('ms_teams_data.json'))))" 2>/dev/null || echo "0")
+          HS_COUNT=$(python3 -c "import json; print(len(json.load(open('visualizer/teams_data.json'))))" 2>/dev/null || echo "?")
+          MS_COUNT=$(python3 -c "import json; print(len(json.load(open('visualizer/ms_teams_data.json'))))" 2>/dev/null || echo "0")
 
-          git commit -m "$PREFIX Update data — ${HS_COUNT} HS + ${MS_COUNT} MS teams — $TIMESTAMP"
+          git commit -m "$PREFIX Update data: ${HS_COUNT} HS + ${MS_COUNT} MS teams: $TIMESTAMP"
           git push
 
       - name: Summary
@@ -115,13 +116,13 @@ jobs:
           echo "### VEX Visualizer Update" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [[ "${{ steps.changes.outputs.changed }}" == "true" ]]; then
-            echo "✅ **Data updated and deployed**" >> $GITHUB_STEP_SUMMARY
+            echo "**Data updated and deployed**" >> $GITHUB_STEP_SUMMARY
           else
-            echo "ℹ️ **No changes detected — skipped**" >> $GITHUB_STEP_SUMMARY
+            echo "**No changes detected, skipped**" >> $GITHUB_STEP_SUMMARY
           fi
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- Worlds week mode: ${{ steps.schedule_check.outputs.worlds_week }}" >> $GITHUB_STEP_SUMMARY
           echo "- Time: $(date -u +"%Y-%m-%d %H:%M UTC")" >> $GITHUB_STEP_SUMMARY
-          HS=$(python3 -c "import json; print(len(json.load(open('teams_data.json'))))" 2>/dev/null || echo "?")
-          MS=$(python3 -c "import json; print(len(json.load(open('ms_teams_data.json'))))" 2>/dev/null || echo "0")
+          HS=$(python3 -c "import json; print(len(json.load(open('visualizer/teams_data.json'))))" 2>/dev/null || echo "?")
+          MS=$(python3 -c "import json; print(len(json.load(open('visualizer/ms_teams_data.json'))))" 2>/dev/null || echo "0")
           echo "- HS teams: $HS, MS teams: $MS" >> $GITHUB_STEP_SUMMARY
