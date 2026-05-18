@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 VEX Visualizer — Middle School Data Fetcher
-Pulls middle school team stats from the RobotEvents API v2.
+Pulls middle school team stats from the events.vex.com/api/v2 API (the relocated RobotEvents API).
 
 Usage:
   ROBOTEVENTS_TOKEN=your_token python fetch_ms_data.py
@@ -18,7 +18,7 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
-API_BASE = "https://www.robotevents.com/api/v2"
+API_BASE = "https://events.vex.com/api/v2"
 TOKEN = os.environ.get("ROBOTEVENTS_TOKEN", "")
 PROGRAM_ID = 1  # VRC
 SEASON_ID = 197  # Push Back 2025-2026
@@ -261,6 +261,8 @@ def main():
         total_teams = len(team_numbers)
 
         # Method 1: Per-team rankings and skills (most reliable)
+        # Also collect event IDs to fetch event-level rankings (for OPR/CCWM)
+        event_ids_seen = set()
         for idx, team in enumerate(raw_teams):
             team_id = team.get("id")
             team_num = team.get("number", "")
@@ -272,10 +274,28 @@ def main():
 
             # Get all rankings for this team across the season
             tr = api_get(f"/teams/{team_id}/rankings", {"season[]": SEASON_ID})
+
+            # Diagnostic: log first ranking response to see field structure
+            if idx == 0 and tr:
+                log(f"  [DIAG] First ranking response keys: {list(tr[0].keys())}")
+                opr_val = tr[0].get("opr")
+                ccwm_val = tr[0].get("ccwm")
+                log(f"  [DIAG] opr={opr_val}, ccwm={ccwm_val}, wins={tr[0].get('wins')}")
+
             for r in tr:
                 if team_num not in rankings_by_team:
                     rankings_by_team[team_num] = []
                 rankings_by_team[team_num].append(r)
+                # Track which events we've seen (for event-level OPR/CCWM fetch)
+                evt = r.get("event", {})
+                if isinstance(evt, dict):
+                    eid = evt.get("id")
+                elif isinstance(evt, (int, str)):
+                    eid = evt
+                else:
+                    eid = None
+                if eid:
+                    event_ids_seen.add(eid)
 
             # Get all skills for this team across the season
             ts = api_get(f"/teams/{team_id}/skills", {"season[]": SEASON_ID})
@@ -290,6 +310,62 @@ def main():
         teams_with_skills = sum(1 for tn in team_numbers if tn in skills_by_team)
         log(f"  Collected rankings for {teams_with_rankings}/{total_teams} teams")
         log(f"  Collected skills for {teams_with_skills}/{total_teams} teams")
+
+        # Check if per-team rankings included OPR/CCWM
+        has_opr = False
+        for tn, rlist in rankings_by_team.items():
+            for r in rlist:
+                if r.get("opr") not in (None, 0, 0.0):
+                    has_opr = True
+                    break
+            if has_opr:
+                break
+
+        if not has_opr and event_ids_seen:
+            log(f"  Per-team rankings lack OPR/CCWM — fetching from {len(event_ids_seen)} events...")
+            # Build a map: team_num → list of {opr, dpr, ccwm} from event-level rankings
+            event_opr_map = {}  # team_num → [{opr, dpr, ccwm}, ...]
+            for eidx, eid in enumerate(sorted(event_ids_seen)):
+                if eidx % 10 == 0:
+                    log(f"  Fetching event rankings {eidx+1}/{len(event_ids_seen)}...")
+                evt_rankings = api_get(f"/events/{eid}/rankings")
+                if eidx == 0 and evt_rankings:
+                    log(f"  [DIAG] Event ranking keys: {list(evt_rankings[0].keys())}")
+                    log(f"  [DIAG] Event opr={evt_rankings[0].get('opr')}, ccwm={evt_rankings[0].get('ccwm')}")
+                for er in evt_rankings:
+                    t_obj = er.get("team", {})
+                    if isinstance(t_obj, dict):
+                        tnum = t_obj.get("name", "") or t_obj.get("number", "")
+                    else:
+                        continue
+                    if tnum not in event_opr_map:
+                        event_opr_map[tnum] = []
+                    event_opr_map[tnum].append({
+                        "opr": er.get("opr", 0) or 0,
+                        "dpr": er.get("dpr", 0) or 0,
+                        "ccwm": er.get("ccwm", 0) or 0,
+                    })
+                time.sleep(0.3)
+
+            # Merge event-level OPR/CCWM into rankings_by_team
+            opr_found = sum(1 for v in event_opr_map.values() if any(x["opr"] for x in v))
+            log(f"  Event-level OPR data found for {opr_found} teams")
+            # Store separately so processing can use it
+            for tnum, entries in event_opr_map.items():
+                if tnum not in rankings_by_team:
+                    rankings_by_team[tnum] = []
+                # Append synthetic ranking entries with OPR/CCWM data
+                for e in entries:
+                    rankings_by_team[tnum].append({
+                        "opr": e["opr"],
+                        "dpr": e["dpr"],
+                        "ccwm": e["ccwm"],
+                        "wins": 0,  # Don't double-count wins
+                        "losses": 0,
+                        "ties": 0,
+                        "wp": 0,
+                        "ap": 0,
+                    })
 
     # Process teams
     log("Processing teams...")
