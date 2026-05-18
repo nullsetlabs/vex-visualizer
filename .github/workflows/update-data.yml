@@ -86,6 +86,23 @@ jobs:
         working-directory: visualizer
         run: python update_data.py
 
+      - name: Sanity check rebuilt index.html
+        # Refuse to commit if the rebuild produced an empty or suspiciously small file.
+        # Real index.html is ~950 KB. Threshold of 500 KB catches catastrophic failures
+        # (empty file, half-written file, template-only file with no team data) without
+        # being so tight it flags normal data fluctuations.
+        run: |
+          if [ ! -s visualizer/index.html ]; then
+            echo "ERROR: visualizer/index.html is empty or missing. Refusing to commit; previous version stays live."
+            exit 1
+          fi
+          SIZE=$(stat -c%s visualizer/index.html)
+          if [ "$SIZE" -lt 500000 ]; then
+            echo "ERROR: visualizer/index.html is suspiciously small ($SIZE bytes, expected at least 500000). Refusing to commit; previous version stays live."
+            exit 1
+          fi
+          echo "Sanity check passed: visualizer/index.html is $SIZE bytes"
+
       - name: Check for changes
         id: changes
         run: |
