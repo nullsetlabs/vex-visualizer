@@ -78,6 +78,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
 
   :root {
+    /* NSL_PALETTE_HARMONIZATION */
     --bg: #0a0e1a;
     --surface: #111827;
     --surface2: #1a2235;
@@ -85,8 +86,8 @@
     --border: #2a3550;
     --text: #e2e8f0;
     --text-dim: #8892a8;
-    --accent: #6366f1;
-    --accent2: #818cf8;
+    --accent: #c19a5b;
+    --accent2: #d4b076;
     --elite: #f59e0b;
     --elite-bg: rgba(245,158,11,0.12);
     --contender: #8b5cf6;
@@ -115,7 +116,7 @@
 
   /* ===== HEADER ===== */
   .hero {
-    background: linear-gradient(135deg, #1a1040 0%, #0f172a 50%, #0c1a2e 100%);
+    background: linear-gradient(135deg, #0f172a 0%, #0a0a0f 50%, #0c1a2e 100%);
     border-bottom: 1px solid var(--border);
     padding: 16px 24px 12px;
     position: sticky; top: 0; z-index: 100;
@@ -125,9 +126,9 @@
   .hero-brand { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
   .hero-logo {
     width: 40px; height: 40px; border-radius: 10px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+    background: linear-gradient(135deg, #c19a5b, #d4b076, #c19a5b);
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+    box-shadow: 0 4px 16px rgba(193,154,91,0.3);
     flex-shrink: 0;
   }
   .hero-logo svg { width: 24px; height: 24px; }
@@ -137,9 +138,9 @@
     font-size: 22px; font-weight: 800;
     background: linear-gradient(
       90deg,
-      #818cf8 0%, #c084fc 15%, #f0abfc 30%,
-      #fde68a 45%, #fff 50%,
-      #fde68a 55%, #f0abfc 70%, #c084fc 85%, #818cf8 100%
+      #c19a5b 0%, #d4b076 15%, #ede4cf 30%,
+      #f5e6c8 45%, #ffffff 50%,
+      #f5e6c8 55%, #ede4cf 70%, #d4b076 85%, #c19a5b 100%
     );
     background-size: 200% 100%;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -173,9 +174,9 @@
     font-style: normal; font-weight: 700;
     background: linear-gradient(
       90deg,
-      #818cf8 0%, #c084fc 15%, #f0abfc 30%,
-      #fde68a 45%, #fff 50%,
-      #fde68a 55%, #f0abfc 70%, #c084fc 85%, #818cf8 100%
+      #c19a5b 0%, #d4b076 15%, #ede4cf 30%,
+      #f5e6c8 45%, #ffffff 50%,
+      #f5e6c8 55%, #ede4cf 70%, #d4b076 85%, #c19a5b 100%
     );
     background-size: 200% 100%;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -227,12 +228,12 @@
   }
   .search-wrapper { position: relative; flex: 1; min-width: 200px; }
   .search-input {
-    background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08));
+    background: linear-gradient(135deg, rgba(193,154,91,0.08), rgba(212,176,118,0.06));
     border: 2px solid var(--accent);
     color: var(--text); padding: 9px 14px; border-radius: 10px;
     font-size: 13px; width: 100%; outline: none;
     font-family: 'JetBrains Mono', monospace;
-    box-shadow: 0 0 16px rgba(99,102,241,0.15), inset 0 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 0 16px rgba(193,154,91,0.18), inset 0 1px 2px rgba(0,0,0,0.2);
     transition: all 0.25s;
   }
   .search-input:focus { border-color: var(--highlight); box-shadow: 0 0 20px rgba(251,191,36,0.2), inset 0 1px 2px rgba(0,0,0,0.2); }
@@ -338,7 +339,7 @@
   .div-card:hover {
     transform: translateY(-3px);
     border-color: var(--accent);
-    box-shadow: 0 8px 24px rgba(99,102,241,0.15);
+    box-shadow: 0 8px 24px rgba(193,154,91,0.18);
   }
   .div-card-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
   .div-card-sub { font-size: 11px; color: var(--text-dim); margin-bottom: 14px; }
@@ -393,7 +394,7 @@
   .team-card:hover {
     transform: translateY(-3px);
     border-color: var(--accent);
-    box-shadow: 0 8px 24px rgba(99,102,241,0.15);
+    box-shadow: 0 8px 24px rgba(193,154,91,0.18);
   }
   .team-card.highlighted {
     border-color: var(--highlight) !important;
@@ -458,7 +459,7 @@
     font-size: 9px; color: var(--text-dim);
     text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px;
   }
-  .stat-tile.highlight { border-color: var(--accent); background: rgba(99,102,241,0.08); }
+  .stat-tile.highlight { border-color: var(--accent); background: rgba(193,154,91,0.10); }
   .stat-tile.highlight .st-val { color: var(--accent2); }
 
   /* Bar chart */
@@ -499,7 +500,7 @@
   }
   .card-6121e .mini-stat {
     text-align: center; padding: 8px 4px;
-    background: rgba(99,102,241,0.06); border: 1px solid var(--border); border-radius: 8px;
+    background: rgba(193,154,91,0.08); border: 1px solid var(--border); border-radius: 8px;
   }
   .card-6121e .mini-stat .v {
     font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 800; color: var(--accent2);
@@ -555,9 +556,9 @@
   }
   .level-tab.active {
     background: linear-gradient(90deg,
-      #818cf8 0%, #c084fc 15%, #f0abfc 30%,
-      #fde68a 45%, #fff 50%,
-      #fde68a 55%, #f0abfc 70%, #c084fc 85%, #818cf8 100%
+      #c19a5b 0%, #d4b076 15%, #ede4cf 30%,
+      #f5e6c8 45%, #ffffff 50%,
+      #f5e6c8 55%, #ede4cf 70%, #d4b076 85%, #c19a5b 100%
     );
     background-size: 200% 100%;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -565,9 +566,9 @@
   }
   .level-tab.active::before {
     content: ''; position: absolute; inset: 0; border-radius: 8px;
-    background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(139,92,246,0.2));
-    border: 2px solid rgba(129,140,248,0.65);
-    box-shadow: 0 0 0 1px rgba(99,102,241,0.15), 0 2px 16px rgba(99,102,241,0.35);
+    background: linear-gradient(135deg, rgba(193,154,91,0.22), rgba(212,176,118,0.16));
+    border: 2px solid rgba(193,154,91,0.55);
+    box-shadow: 0 0 0 1px rgba(193,154,91,0.18), 0 2px 16px rgba(193,154,91,0.32);
     z-index: -1;
   }
   .level-tab:not(.active):hover {
@@ -647,7 +648,7 @@
   }
   .bnav-btn svg { width: 22px; height: 22px; }
   .bnav-btn.active { color: var(--accent2); }
-  .bnav-btn:active { background: rgba(99,102,241,0.1); }
+  .bnav-btn:active { background: rgba(193,154,91,0.12); }
 
   /* ===== SCROLLBAR ===== */
   ::-webkit-scrollbar { width: 6px; }
@@ -717,9 +718,123 @@
     .level-tab { flex-direction: column; gap: 1px; padding: 6px 6px; font-size: 11px; }
     .level-tab .tab-teams { font-size: 8px; }
   }
+  /* === Null Set Labs context strip ============================== */
+  /* Thin navigation bar above the visualizer header. Brings the
+     visualizer back into the Null Set Labs surface so visitors can
+     reach the umbrella, the Robotics pillar, and the rest of the lab. */
+  .nsl-strip {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: #0a0a0f;
+    border-bottom: 1px solid #26262f;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #ededeb;
+    height: 44px;
+  }
+  .nsl-strip-inner {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 100%;
+  }
+  .nsl-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #ededeb;
+    font-family: 'Newsreader', 'Inter', serif;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 6px 4px;
+    min-height: 32px;
+    letter-spacing: 0.1px;
+  }
+  .nsl-brand:hover { color: #c19a5b; }
+  .nsl-glyph { width: 18px; height: 18px; flex-shrink: 0; color: #c19a5b; }
+  .nsl-breadcrumb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #8a8a92;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nsl-crumb-active { color: #c19a5b; }
+  .nsl-sep { color: #5e5e66; }
+  .nsl-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: #c19a5b;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    min-height: 32px;
+    border-radius: 999px;
+    background: rgba(193, 154, 91, 0.12);
+    border: 1px solid rgba(193, 154, 91, 0.25);
+    transition: background 0.2s, color 0.2s;
+  }
+  .nsl-link:hover {
+    background: rgba(193, 154, 91, 0.22);
+    color: #d4b076;
+  }
+  .nsl-arrow { font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1; }
+  /* Push the visualizer's own sticky header below the strip */
+  .hero { top: 44px !important; }
+  @media (max-width: 600px) {
+    .nsl-strip-inner { padding: 0 14px; gap: 10px; }
+    .nsl-breadcrumb .nsl-crumb,
+    .nsl-breadcrumb .nsl-sep { display: none; }
+    .nsl-link .nsl-link-label { display: none; }
+    .nsl-brand span { font-size: 13px; }
+  }
+  @media (max-width: 380px) {
+    .nsl-brand span { display: none; }
+  }
+
 </style>
 </head>
 <body>
+<!-- BEGIN Null Set Labs context strip -->
+<div class="nsl-strip" role="navigation" aria-label="Null Set Labs">
+  <div class="nsl-strip-inner">
+    <a href="https://nullsetlabs.org/" class="nsl-brand" aria-label="Null Set Labs home">
+      <svg class="nsl-glyph" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="nslStripSlash" x1="20%" y1="80%" x2="80%" y2="20%">
+            <stop offset="0%" stop-color="#3b82f6"/>
+            <stop offset="100%" stop-color="#c19a5b"/>
+          </linearGradient>
+        </defs>
+        <circle cx="12" cy="12" r="8" fill="none" stroke="#c19a5b" stroke-width="1.6"/>
+        <line x1="5.5" y1="18.5" x2="18.5" y2="5.5" stroke="url(#nslStripSlash)" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <span>Null Set Labs</span>
+    </a>
+    <div class="nsl-breadcrumb" aria-hidden="true">
+      <span class="nsl-crumb">Robotics</span>
+      <span class="nsl-sep">/</span>
+      <span class="nsl-crumb-active">VEX Visualizer</span>
+    </div>
+    <a href="https://robotics.nullsetlabs.org/" class="nsl-link" aria-label="Robotics pillar">
+      <span class="nsl-link-label">Robotics</span>
+      <span class="nsl-arrow" aria-hidden="true">&#8599;</span>
+    </a>
+  </div>
+</div>
+<!-- END Null Set Labs context strip -->
 
 <!-- ===== HEADER ===== -->
 <div class="hero" id="heroBar">
@@ -734,19 +849,19 @@
             <!-- Head -->
             <rect x="4" y="4" width="16" height="12" rx="3" fill="white" opacity="0.9"/>
             <!-- Eyes -->
-            <circle cx="9" cy="10" r="2.2" fill="#6366f1"/>
-            <circle cx="15" cy="10" r="2.2" fill="#6366f1"/>
+            <circle cx="9" cy="10" r="2.2" fill="#c19a5b"/>
+            <circle cx="15" cy="10" r="2.2" fill="#c19a5b"/>
             <circle cx="9.5" cy="9.5" r="0.7" fill="white"/>
             <circle cx="15.5" cy="9.5" r="0.7" fill="white"/>
             <!-- Mouth -->
-            <rect x="9" y="13" width="6" height="1.2" rx="0.6" fill="#6366f1" opacity="0.6"/>
+            <rect x="9" y="13" width="6" height="1.2" rx="0.6" fill="#c19a5b" opacity="0.6"/>
             <!-- Ears -->
             <rect x="1.5" y="7" width="2" height="5" rx="1" fill="white" opacity="0.6"/>
             <rect x="20.5" y="7" width="2" height="5" rx="1" fill="white" opacity="0.6"/>
             <!-- Body -->
             <rect x="7" y="17" width="10" height="5" rx="2" fill="white" opacity="0.7"/>
-            <rect x="9" y="18.5" width="2" height="2" rx="0.5" fill="#6366f1" opacity="0.5"/>
-            <rect x="13" y="18.5" width="2" height="2" rx="0.5" fill="#6366f1" opacity="0.5"/>
+            <rect x="9" y="18.5" width="2" height="2" rx="0.5" fill="#c19a5b" opacity="0.5"/>
+            <rect x="13" y="18.5" width="2" height="2" rx="0.5" fill="#c19a5b" opacity="0.5"/>
           </svg>
         </div>
         <div class="hero-titles">
@@ -832,7 +947,7 @@
 <div class="footer">
   <strong>VEX Visualizer</strong> &bull; Developed by <a href="https://www.worldcubeassociation.org/persons/2022MOHA07" target="_blank" class="dev-name" style="text-decoration:none;cursor:pointer" title="View Arjun's WCA Profile">Arjun Mohanan</a> &bull; VEX Worlds 2026 &bull; Push Back Season (2025-2026)
   <div style="margin-top:6px;font-size:10px;color:#556;line-height:1.5;max-width:700px;margin-left:auto;margin-right:auto">
-    Team statistics and True Skill ratings sourced from the <a href="https://www.chiefdelphi.com" target="_blank" style="color:#6366f1;text-decoration:none">2145 Division Predictor</a> spreadsheet and <a href="https://www.robotevents.com" target="_blank" style="color:#6366f1;text-decoration:none">RobotEvents</a>. Game information from the <a href="https://www.vexrobotics.com/push-back-manual" target="_blank" style="color:#6366f1;text-decoration:none">official VEX Push Back Game Manual</a>.
+    Team statistics and True Skill ratings sourced from the <a href="https://www.chiefdelphi.com" target="_blank" style="color:#c19a5b;text-decoration:none">2145 Division Predictor</a> spreadsheet and <a href="https://www.robotevents.com" target="_blank" style="color:#c19a5b;text-decoration:none">RobotEvents</a>. Game information from the <a href="https://www.vexrobotics.com/push-back-manual" target="_blank" style="color:#c19a5b;text-decoration:none">official VEX Push Back Game Manual</a>.
   </div>
   <div style="margin-top:6px;font-size:10px;color:#445;line-height:1.5;max-width:700px;margin-left:auto;margin-right:auto">
     This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International. VEX and VEX Robotics are trademarks or service marks of Innovation First International.
@@ -973,9 +1088,9 @@ function show6121E() {
       Part of <strong style="color:var(--text)">Conestoga Robotics</strong> (Conestoga High School, PA). Sister teams at Worlds: <strong style="color:var(--text)">6121A</strong> (Technology), <strong style="color:var(--text)">6121B</strong> (Engineering), <strong style="color:var(--text)">6121F</strong> (Math).
     </div>
     <div class="links-row">
-      <a href="https://www.robotevents.com/teams/V5RC/6121E" target="_blank" style="color:var(--accent2);background:rgba(99,102,241,0.08)">RobotEvents</a>
-      <a href="https://robotstatistics.com/teams/6121E" target="_blank" style="color:var(--accent2);background:rgba(99,102,241,0.08)">Stats</a>
-      <a href="https://arnavkaushik.com/stogarobotics/" target="_blank" style="color:var(--accent2);background:rgba(99,102,241,0.08)">Conestoga Robotics</a>
+      <a href="https://www.robotevents.com/teams/V5RC/6121E" target="_blank" style="color:var(--accent2);background:rgba(193,154,91,0.10)">RobotEvents</a>
+      <a href="https://robotstatistics.com/teams/6121E" target="_blank" style="color:var(--accent2);background:rgba(193,154,91,0.10)">Stats</a>
+      <a href="https://arnavkaushik.com/stogarobotics/" target="_blank" style="color:var(--accent2);background:rgba(193,154,91,0.10)">Conestoga Robotics</a>
       <span style="color:var(--highlight);background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.3)" onclick="close6121E();openDetail('6121E')">Full Stats</span>
       <span style="color:var(--highlight);background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.3)" onclick="close6121E();openDetail('6121A')">6121A</span>
       <span style="color:var(--highlight);background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.3)" onclick="close6121E();openDetail('6121B')">6121B</span>
