@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-03T03:34:43+00:00",
+ "generated": "2026-10-03T04:08:19+00:00",
  "hostnames": [
   "vex.nullsetlabs.org",
   "arjun-mohanan.github.io"
@@ -49,9 +49,9 @@
   },
   {
    "month": "2026-10",
-   "users": 2,
-   "sessions": 3,
-   "views": 7,
+   "users": 3,
+   "sessions": 4,
+   "views": 11,
    "engagedSessions": 0
   }
  ],
@@ -65,18 +65,44 @@
    "season": "2025-2026 Push Back",
    "start": "2026-04-01",
    "end": "2026-05-31",
-   "complete": true
+   "complete": true,
+   "channels": {
+    "Direct": 147,
+    "Organic Search": 13,
+    "Referral": 5,
+    "Unassigned": 1
+   },
+   "sources": {
+    "(direct)": 147,
+    "google": 13,
+    "arjun-mohanan.github.io": 5,
+    "(not set)": 1
+   }
   },
   {
-   "users": 23,
+   "users": 24,
    "newUsers": 21,
-   "sessions": 37,
-   "views": 39,
+   "sessions": 38,
+   "views": 43,
    "engagedSessions": 14,
    "season": "2026-2027 Override",
    "start": "2026-06-01",
    "end": "2026-10-03",
-   "complete": false
+   "complete": false,
+   "channels": {
+    "Direct": 14,
+    "Organic Search": 7,
+    "Referral": 3,
+    "Unassigned": 2
+   },
+   "sources": {
+    "(direct)": 14,
+    "bing": 4,
+    "arjun-mohanan.github.io": 3,
+    "(not set)": 2,
+    "cn.bing.com": 2,
+    "duckduckgo": 1
+   }
   }
  ],
  "windows": [
@@ -96,7 +122,7 @@
  "autoEvents": [
   {
    "event": "page_view",
-   "count": 39,
+   "count": 43,
    "users": 23
   },
   {
@@ -106,24 +132,24 @@
   },
   {
    "event": "user_engagement",
-   "count": 23,
+   "count": 28,
    "users": 12
   },
   {
    "event": "scroll",
-   "count": 19,
-   "users": 11
+   "count": 26,
+   "users": 12
   },
   {
    "event": "click",
-   "count": 2,
+   "count": 3,
    "users": 1
   }
  ],
  "countries": [
   {
    "country": "United States",
-   "users": 17
+   "users": 18
   },
   {
    "country": "Singapore",
@@ -153,7 +179,7 @@
   },
   {
    "device": "mobile",
-   "users": 4
+   "users": 5
   }
  ]
 }
