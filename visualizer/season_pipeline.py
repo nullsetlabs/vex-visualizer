@@ -19,7 +19,7 @@ Caching
 
 Usage
   python season_pipeline.py                # full run: event list, new or live events, standings, summaries
-  python season_pipeline.py --live         # only events in progress now; exits quickly if there are none
+  python season_pipeline.py --live         # only signature (and World) events in progress; no API calls if none
   python season_pipeline.py --rebuild      # no network; rebuild the summary files from the cache
   python season_pipeline.py --max-events 40 --budget-min 15
 
@@ -77,9 +77,19 @@ MAX_RATE_LIMITED = 8    # per request, waits after HTTP 429 (too many requests)
 # start 1.0 s apart (60 a minute).
 MIN_INTERVAL = 1.0
 
-# Events longer than this (leagues that run for weeks) are refreshed by the
-# daily full run only, not by the 30-minute live checks.
+# Update plan (see .github/workflows/update-data.yml):
+#   - Live checks every 30 minutes follow only these event levels while they run
+#     (day before to day after). Everything else waits for the full run.
+#   - Full runs twice a week (Monday and Thursday) fetch the event list, every
+#     newly finished event and the skills standings.
+LIVE_LEVELS = ("Signature", "World")
+# Events longer than this (leagues that run for weeks) are never live-tracked.
 LIVE_MAX_DAYS = 7
+# Live checks reuse the saved event list until it is this many days old, so a
+# check with no signature event running makes no API request at all.
+LIST_MAX_AGE_DAYS = 4
+# During live tracking, refresh the skills standings at most this often.
+STANDINGS_EVERY_HOURS = 3
 
 # An event whose awards never get finalized stops being refetched this many
 # days after it ends.
@@ -830,8 +840,11 @@ def main():
             return 2
         client = Client(TOKEN, args.budget_min * 60)
         try:
-            verify_season(client)
-            if not args.live or not event_list or meta.get("listFetched") != today.isoformat():
+            listed_on = meta.get("listFetched")
+            list_age = (today - date.fromisoformat(listed_on)).days if listed_on else 999
+            need_list = not args.live or not event_list or list_age > LIST_MAX_AGE_DAYS
+            if need_list:
+                verify_season(client)
                 event_list = fetch_event_list(client)
                 write_json(list_path, [{k: e.get(k) for k in ("id", "sku", "name", "start", "end", "level", "location", "season",
                                                               "divisions", "ongoing", "awards_finalized", "event_type")}
@@ -840,16 +853,21 @@ def main():
 
             if args.live:
                 todo = [e for e in event_list
-                        if day(e.get("start")) and day(e.get("end"))
+                        if e.get("level") in LIVE_LEVELS
+                        and day(e.get("start")) and day(e.get("end"))
                         and (day(e["end"]) - day(e["start"])).days <= LIVE_MAX_DAYS
                         and day(e["start"]) - timedelta(days=1) <= today <= day(e["end"]) + timedelta(days=1)]
                 if not todo:
-                    # Nothing running: leave the data untouched so the workflow has nothing to commit.
-                    log("No events in progress; nothing to fetch.")
+                    # No signature event running: leave the data untouched so the
+                    # workflow has nothing to commit (and VEX gets no requests).
+                    log("No signature event in progress; nothing to fetch.")
                     if listed_now:
                         meta["listFetched"] = today.isoformat()
                         write_json(meta_path, meta)
                     return 0
+                if not need_list:
+                    verify_season(client)
+                log("Live tracking: " + ", ".join((e.get("name") or "")[:50] for e in todo))
             else:
                 todo = []
                 for e in event_list:
@@ -886,12 +904,17 @@ def main():
                 cached[e["id"]] = detail
                 fetched += 1
 
-            log("Fetching the official skills standings...")
-            try:
-                standings = fetch_standings(client)
-                standings_changed = write_json(standings_path, standings)
-            except RuntimeError as err:
-                log(f"  kept the previous skills standings: {err}")
+            last = meta.get("standingsFetched")
+            due = (not args.live or not last or
+                   datetime.now(timezone.utc) - datetime.fromisoformat(last) >= timedelta(hours=STANDINGS_EVERY_HOURS))
+            if due:
+                log("Fetching the official skills standings...")
+                try:
+                    standings = fetch_standings(client)
+                    standings_changed = write_json(standings_path, standings)
+                    meta["standingsFetched"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+                except RuntimeError as err:
+                    log(f"  kept the previous skills standings: {err}")
             if failed:
                 log(f"{failed} events failed and will be retried next run")
             log(f"Fetched {fetched} events with {client.calls} requests")

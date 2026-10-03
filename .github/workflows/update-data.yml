@@ -5,13 +5,15 @@
 # there is no HTML rebuild step. The Worlds 2026 archive in
 # visualizer/worlds-2026/ is frozen and never touched by this workflow.
 #
-# Schedule
-#   - Every 30 minutes, "live" mode: fetches only events in progress (start-1
-#     day to end+1 day). When nothing is running it exits in seconds and
-#     writes nothing. Runs every day because some signature events (Asia)
-#     are held midweek.
-#   - Once a day at 06:17 UTC, "full" mode: refreshes the season event list,
-#     fetches newly finished events and the official skills standings.
+# Update plan (light on the VEX Events API)
+#   - Every 30 minutes, "live" mode: follows only signature events (and the
+#     World Championship once listed) from the day before to the day after
+#     they run; skills standings at most every 3 hours. With no signature event
+#     running it exits in seconds without a single API request. Runs every day
+#     because some signature events (often in Asia) are held midweek.
+#   - Monday and Thursday at 06:17 UTC, "full" mode: refreshes the season event
+#     list, fetches every newly finished event and the skills standings.
+#     Ordinary tournament results therefore appear within three to four days.
 #   - Manual: Actions tab > Update VEX Visualizer Data > Run workflow.
 #
 # Secret: ROBOTEVENTS_TOKEN = an events.vex.com API v2 token.
@@ -21,7 +23,7 @@ name: Update VEX Visualizer Data
 on:
   schedule:
     - cron: '*/30 * * * *'
-    - cron: '17 6 * * *'
+    - cron: '17 6 * * 1,4'
   workflow_dispatch:
     inputs:
       mode:
@@ -60,7 +62,7 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             MODE="${{ inputs.mode }}"
-          elif [ "${{ github.event.schedule }}" = "17 6 * * *" ]; then
+          elif [ "${{ github.event.schedule }}" = "17 6 * * 1,4" ]; then
             MODE="full"
           else
             MODE="live"
