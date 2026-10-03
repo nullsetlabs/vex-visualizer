@@ -1,0 +1,159 @@
+{
+ "generated": "2026-10-03T03:34:43+00:00",
+ "hostnames": [
+  "vex.nullsetlabs.org",
+  "arjun-mohanan.github.io"
+ ],
+ "monthly": [
+  {
+   "month": "2026-04",
+   "users": 119,
+   "sessions": 324,
+   "views": 434,
+   "engagedSessions": 136
+  },
+  {
+   "month": "2026-05",
+   "users": 50,
+   "sessions": 70,
+   "views": 153,
+   "engagedSessions": 31
+  },
+  {
+   "month": "2026-06",
+   "users": 3,
+   "sessions": 8,
+   "views": 6,
+   "engagedSessions": 3
+  },
+  {
+   "month": "2026-07",
+   "users": 9,
+   "sessions": 13,
+   "views": 13,
+   "engagedSessions": 5
+  },
+  {
+   "month": "2026-08",
+   "users": 7,
+   "sessions": 8,
+   "views": 8,
+   "engagedSessions": 2
+  },
+  {
+   "month": "2026-09",
+   "users": 5,
+   "sessions": 5,
+   "views": 5,
+   "engagedSessions": 4
+  },
+  {
+   "month": "2026-10",
+   "users": 2,
+   "sessions": 3,
+   "views": 7,
+   "engagedSessions": 0
+  }
+ ],
+ "seasons": [
+  {
+   "users": 162,
+   "newUsers": 161,
+   "sessions": 395,
+   "views": 587,
+   "engagedSessions": 167,
+   "season": "2025-2026 Push Back",
+   "start": "2026-04-01",
+   "end": "2026-05-31",
+   "complete": true
+  },
+  {
+   "users": 23,
+   "newUsers": 21,
+   "sessions": 37,
+   "views": 39,
+   "engagedSessions": 14,
+   "season": "2026-2027 Override",
+   "start": "2026-06-01",
+   "end": "2026-10-03",
+   "complete": false
+  }
+ ],
+ "windows": [
+  {
+   "users": 116,
+   "newUsers": 114,
+   "sessions": 308,
+   "views": 390,
+   "engagedSessions": 131,
+   "window": "Worlds 2026 week",
+   "start": "2026-04-21",
+   "end": "2026-04-27"
+  }
+ ],
+ "sections": [],
+ "clicks": [],
+ "autoEvents": [
+  {
+   "event": "page_view",
+   "count": 39,
+   "users": 23
+  },
+  {
+   "event": "session_start",
+   "count": 33,
+   "users": 22
+  },
+  {
+   "event": "user_engagement",
+   "count": 23,
+   "users": 12
+  },
+  {
+   "event": "scroll",
+   "count": 19,
+   "users": 11
+  },
+  {
+   "event": "click",
+   "count": 2,
+   "users": 1
+  }
+ ],
+ "countries": [
+  {
+   "country": "United States",
+   "users": 17
+  },
+  {
+   "country": "Singapore",
+   "users": 3
+  },
+  {
+   "country": "China",
+   "users": 2
+  },
+  {
+   "country": "Brazil",
+   "users": 1
+  },
+  {
+   "country": "Israel",
+   "users": 1
+  },
+  {
+   "country": "Japan",
+   "users": 1
+  }
+ ],
+ "devices": [
+  {
+   "device": "desktop",
+   "users": 19
+  },
+  {
+   "device": "mobile",
+   "users": 4
+  }
+ ]
+}
