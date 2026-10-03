@@ -1,36 +1,24 @@
-# GitHub Actions Workflow: Generate Google Analytics Report
-# Save as: .github/workflows/analytics-report.yml
+# GitHub Actions workflow: VEX Visualizer usage report (Google Analytics 4)
 #
-# This workflow is COMPLETELY SEPARATE from the site build pipeline.
-# It does NOT modify index.html, teams_data.json, or any site files.
-# It only creates/updates ANALYTICS_REPORT.md.
+# Runs visualizer/usage_report.py and commits analytics/USAGE_REPORT.md and
+# analytics/usage.json: month-by-month visitors, this season vs last season
+# (the growth multiple), sections opened and clicks, countries and devices.
+# It never touches the site files.
 #
-# SETUP:
-#   1. Create a Google Cloud service account with GA4 read access
-#   2. Add the service account email as a viewer in GA4 Admin → Property Access
-#   3. Repo Settings → Secrets → Actions → New secret
-#      Name: GOOGLE_ANALYTICS_CREDENTIALS   Value: the full JSON key file contents
+# Schedule: the 1st of every month at 07:00 UTC, plus manual runs from the
+# Actions tab (for example after Worlds or a big signature weekend).
 #
-# SCHEDULE:
-#   - During Worlds (Apr 21-27): daily at midnight UTC
-#   - After Worlds: manual trigger only
-#   - Can always be triggered manually from the Actions tab
+# Secret: GOOGLE_ANALYTICS_CREDENTIALS = the JSON key of a Google Cloud service
+# account that has Viewer access to the GA4 property (GA4 Admin > Property
+# access management).
 
 name: Analytics Report
 
 on:
   schedule:
-    # Daily during and after Worlds week
-    - cron: '0 0 21-30 4 *'    # Apr 21-30, daily at midnight UTC
-
+    - cron: '0 7 1 * *'
   workflow_dispatch:
-    inputs:
-      date_range:
-        description: 'Custom date range (leave empty for Worlds dates)'
-        required: false
-        default: ''
 
-# Prevent overlapping runs
 concurrency:
   group: analytics-report
   cancel-in-progress: true
@@ -41,7 +29,7 @@ permissions:
 jobs:
   report:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -52,20 +40,23 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
-        run: pip install google-analytics-data
+      - name: Install the GA4 client
+        run: pip install --quiet google-analytics-data
 
-      - name: Generate analytics report
+      - name: Build the usage report
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_ANALYTICS_CREDENTIALS }}
-        run: python analytics_report.py
+        run: python -u visualizer/usage_report.py
 
-      - name: Commit report
+      - name: Commit the report
         run: |
-          git diff --quiet ANALYTICS_REPORT.md 2>/dev/null && echo "No changes" && exit 0
+          git add analytics
+          if git diff --cached --quiet; then
+            echo "No changes to the report."
+            exit 0
+          fi
           git config user.name "VEX Visualizer Bot"
           git config user.email "actions@github.com"
-          git add ANALYTICS_REPORT.md
-          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
-          git commit -m "[Analytics] Update report — $TIMESTAMP"
+          git commit -m "[Analytics] Usage report: $(date -u +'%Y-%m-%d')"
+          git pull --rebase --quiet origin main
           git push
