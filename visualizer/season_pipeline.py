@@ -933,6 +933,18 @@ def main():
     changed = [name for name, data in outputs if write_json(os.path.join(DATA_DIR, name), data)]
     if standings_changed:
         changed.append("skills.json")
+
+    # Standalone pages for search engines (team, signature event, leaderboards).
+    # A failure here is logged but never blocks the data update.
+    try:
+        import static_pages
+        last = read_json(os.path.join(DATA_DIR, "pushback_2026.json"), {}) or {}
+        cols = last.get("cols") or []
+        last_season = {n: dict(zip(cols, row)) for n, row in (last.get("teams") or {}).items()}
+        written, removed = static_pages.build(SCRIPT_DIR, index, buckets, standings, cached, last_season)
+        log(f"Static pages: {written} written or changed, {removed} removed")
+    except Exception as err:
+        log(f"WARNING: static pages were not built: {err!r}")
     if changed or "builtAt" not in meta:
         meta["builtAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     if listed_now:

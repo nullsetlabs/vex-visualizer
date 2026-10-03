@@ -1,0 +1,57 @@
+/* Shared styles for the standalone pages written by static_pages.py
+   (team, signature event, skills leaderboard, signature list, Worlds qualifiers).
+   Same palette as the VEX Visualizer. */
+:root {
+  --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #2a3550; --grid: #222d42;
+  --text: #e2e8f0; --text-dim: #8892a8; --accent: #c19a5b; --accent2: #d4b076; --gold: #fbbf24;
+  --hs: #60a5fa; --ms: #c084fc; --mix: #2dd4bf;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+a { color: var(--accent2); }
+.strip { background: #0a0a0f; border-bottom: 1px solid #26262f; }
+.strip-inner { max-width: 1100px; margin: 0 auto; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; }
+.strip a { text-decoration: none; }
+.strip .crumbs { color: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.strip .crumbs a { color: var(--text-dim); }
+.strip .crumbs a:hover { color: var(--accent2); }
+.home { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(193,154,91,0.35); background: rgba(193,154,91,0.12); color: var(--accent2); font-weight: 600; }
+main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
+.brand { font-size: 13px; color: var(--text-dim); margin-bottom: 6px; }
+.brand a { color: var(--accent2); font-weight: 700; text-decoration: none; }
+h1 { font-size: 26px; font-weight: 800; line-height: 1.25; letter-spacing: -0.3px; }
+h1 .num { font-family: 'JetBrains Mono', monospace; color: var(--accent2); }
+h2 { font-size: 17px; font-weight: 800; margin: 26px 0 10px; }
+.lead { color: var(--text-dim); font-size: 14px; margin-top: 6px; max-width: 820px; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; vertical-align: middle; background: var(--surface2); color: var(--text-dim); }
+.badge.hs { background: rgba(59,130,246,0.15); color: var(--hs); }
+.badge.ms { background: rgba(168,85,247,0.16); color: var(--ms); }
+.badge.mix { background: rgba(20,184,166,0.15); color: var(--mix); }
+.badge.gold { background: rgba(251,191,36,0.13); color: var(--gold); border: 1px solid rgba(251,191,36,0.4); }
+.cta { display: inline-flex; align-items: center; gap: 8px; margin: 16px 8px 0 0; padding: 10px 18px; border-radius: 999px; background: var(--accent); color: #0a0e1a; font-weight: 700; text-decoration: none; font-size: 14px; }
+.cta.alt { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 18px; }
+.fact { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; }
+.fact .v { font-size: 20px; font-weight: 800; }
+.fact .k { font-size: 12px; color: var(--text-dim); }
+.fact .n { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; font-weight: 600; color: var(--text-dim); background: var(--surface2); padding: 8px 10px; white-space: nowrap; }
+td { padding: 7px 10px; border-top: 1px solid var(--grid); white-space: nowrap; }
+td.w { white-space: normal; min-width: 180px; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+.tm { font-family: 'JetBrains Mono', monospace; font-weight: 700; text-decoration: none; }
+.dim { color: var(--text-dim); }
+.awards { display: flex; flex-wrap: wrap; gap: 8px; }
+.award { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 8px 12px; font-size: 13px; }
+.award b { display: block; }
+.note { font-size: 12px; color: var(--text-dim); margin-top: 10px; }
+footer { border-top: 1px solid var(--border); margin-top: 30px; padding: 18px 16px 28px; text-align: center; font-size: 12px; color: var(--text-dim); }
+footer .links { margin-top: 8px; line-height: 2; }
+footer .fine { margin-top: 8px; font-size: 11px; color: #667; max-width: 760px; margin-left: auto; margin-right: auto; }
+@media (max-width: 600px) {
+  h1 { font-size: 22px; }
+  .strip .crumbs { display: none; }
+  .facts { grid-template-columns: repeat(2, 1fr); }
+}

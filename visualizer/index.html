@@ -681,6 +681,7 @@
     This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International. VEX and VEX Robotics are trademarks or service marks of Innovation First International.
   </div>
   <div class="about-line">VEX Visualizer is built by Arjun, a high school student on VEX team 6121 Conestoga Pioneers, and published by <a href="https://nullsetlabs.org/">Null Set Labs</a>.</div>
+  <div class="footer-nav"><a href="skills/">Skills standings</a> &bull; <a href="signature/">Signature events</a> &bull; <a href="worlds-qualifiers/">Worlds qualifiers</a></div>
   <div class="footer-nav"><a href="https://nullsetlabs.org/">Null Set Labs home</a> &bull; <a href="https://robotics.nullsetlabs.org/">Robotics</a> &bull; <a href="https://vex.nullsetlabs.org/">VEX at Null Set Labs</a> &bull; <a href="worlds-2026/">Worlds 2026 archive</a></div>
   <div class="fine">&copy; 2026 Arjun_6121_Conestoga &bull; All rights reserved</div>
 </footer>
@@ -1470,7 +1471,7 @@ async function renderEvent(id, tok) {
   let h = `${back}
     <div class="detail-head"><div><h2>${esc(e.name)}</h2>
       <div class="meta">${esc(fmtRange(e.start, e.end))} &bull; ${esc(place(e) || e.country)} ${e.grade ? `&bull; ${esc(e.grade)}` : ''} &bull; ${esc(e.sku)} ${sigBadge(e)} ${statusBadge(base || e)}</div></div>
-      <div class="ext-links"><a href="${officialEvent(e.sku)}" target="_blank" rel="noopener">Official event page &#8599;</a>${((S.webcasts && S.webcasts[e.sku]) || []).map(w => `<a href="${esc(w.url)}" target="_blank" rel="noopener">${icon('play')} ${esc(w.label || 'Watch webcast')}</a>`).join('')}<a href="${officialEvent(e.sku)}#webcast" target="_blank" rel="noopener">${icon('play')} Webcast</a><a href="https://www.youtube.com/results?search_query=${encodeURIComponent(shortEventName(e.name) + ' VEX')}" target="_blank" rel="noopener">${icon('youtube')} YouTube</a></div></div>`;
+      <div class="ext-links">${e.level === 'Signature' ? `<a href="event/${encodeURIComponent(e.sku)}/" data-track="click_share_event">Share page</a>` : ''}<a href="${officialEvent(e.sku)}" target="_blank" rel="noopener">Official event page &#8599;</a>${((S.webcasts && S.webcasts[e.sku]) || []).map(w => `<a href="${esc(w.url)}" target="_blank" rel="noopener">${icon('play')} ${esc(w.label || 'Watch webcast')}</a>`).join('')}<a href="${officialEvent(e.sku)}#webcast" target="_blank" rel="noopener">${icon('play')} Webcast</a><a href="https://www.youtube.com/results?search_query=${encodeURIComponent(shortEventName(e.name) + ' VEX')}" target="_blank" rel="noopener">${icon('youtube')} YouTube</a></div></div>`;
   if (!ev || (!ev.matches.length && !ev.awards.length && !ev.skills.length)) {
     h += `<div class="notice">${base && base.status === 'upcoming' ? 'This event has not started yet. Results appear here once matches are played.' : 'No results have been published for this event yet.'}</div>`;
     el.innerHTML = h; return;
@@ -1597,7 +1598,7 @@ async function renderTeam(num, tok) {
       <div class="nm">${esc(t.name)}</div>
       <div class="meta">${esc(t.org)} ${place(t) ? '&bull; ' + esc(place(t)) : ''} ${gradeBadge(t)}
       ${t.worlds ? `<span class="badge b-world">${icon('globe')}Qualified for Worlds</span>` : ''}</div></div>
-      <div class="ext-links"><a href="${officialTeam(t.team)}" target="_blank" rel="noopener">Official team page &#8599;</a><a href="https://www.youtube.com/results?search_query=${encodeURIComponent('VEX ' + t.team + ' Override')}" target="_blank" rel="noopener" title="Search YouTube for this team" data-track="click_team_videos">${icon('youtube')} Find videos</a></div></div>`;
+      <div class="ext-links"><a href="team/${encodeURIComponent(t.team)}/" data-track="click_share_team">Share page</a><a href="${officialTeam(t.team)}" target="_blank" rel="noopener">Official team page &#8599;</a><a href="https://www.youtube.com/results?search_query=${encodeURIComponent('VEX ' + t.team + ' Override')}" target="_blank" rel="noopener" title="Search YouTube for this team" data-track="click_team_videos">${icon('youtube')} Find videos</a></div></div>`;
   h += tiles([
     { v: t.events.length, k: 'Events', i: 'calendar', c: 'c-events' },
     { v: record(t), k: 'Qualification record', n: t.winPct != null ? `${dec1(t.winPct)}% wins` : '', i: 'target', c: 'c-teams' },

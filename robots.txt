@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://vex.nullsetlabs.org/sitemap.xml
+Sitemap: https://vex.nullsetlabs.org/visualizer/sitemap-pages.xml

@@ -31,6 +31,12 @@ end of each transition with anything that changed.
 - `visualizer/data/pushback_2026.json`: last season's Worlds teams, shown as
   "Last season" on team pages and in search.
 - `visualizer/data/webcasts.json`: hand-kept direct webcast links by event code.
+- `visualizer/static_pages.py` (called by the pipeline) writes standalone pages
+  for search engines: `/visualizer/team/<number>/`, `/visualizer/event/<code>/`
+  (signature events), `/visualizer/skills/`, `/visualizer/signature/`,
+  `/visualizer/worlds-qualifiers/` and `/visualizer/sitemap-pages.xml`
+  (listed in robots.txt). Styles in `visualizer/pages.css`. The workflow
+  commits those folders with the data.
 - `visualizer/usage_report.py` and `.github/workflows/analytics-report-workflow.yml`:
   monthly GA4 usage report in `analytics/` (season over season, sections, clicks).
 - Tools: `visualizer/dev/test_season_pipeline.py` (tests, no network) and
@@ -78,7 +84,11 @@ end of each transition with anything that changed.
 
 5. **Reset the pipeline.** In `season_pipeline.py` set `SEASON_ID`,
    `SEASON_NAME`, `SEASON_LABEL`, `SEASON_YEARS` and `SEASON_FIRST_DAY` (the day
-   after the game reveal). Empty `visualizer/data/` except the last-season file
+   after the game reveal), and the last-season file name it passes to
+   `static_pages.build`. In `static_pages.py` update `SEASON_TITLE`, the "Last
+   season" wording and the 2027 Worlds wording. Delete the generated folders
+   (`visualizer/team`, `event`, `skills`, `signature`, `worlds-qualifiers`)
+   after copying them into the archive in step 3, so old pages do not linger. Empty `visualizer/data/` except the last-season file
    and `webcasts.json` (reset to `{}`). Run
    `python visualizer/dev/test_season_pipeline.py`.
 
