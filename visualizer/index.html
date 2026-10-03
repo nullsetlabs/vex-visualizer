@@ -73,6 +73,13 @@
     --series-2: #d95926;
     --grid: #222d42;
     --bottom-nav-h: 0px;
+    /* Meaning colors, used the same way everywhere (always with a label or icon) */
+    --gold: #fbbf24; --gold-bg: rgba(251,191,36,0.13);
+    --hs: #60a5fa; --hs-bg: rgba(59,130,246,0.15);
+    --ms: #c084fc; --ms-bg: rgba(168,85,247,0.16);
+    --mix: #2dd4bf; --mix-bg: rgba(20,184,166,0.15);
+    /* Section colors for navigation */
+    --c-teams: #60a5fa; --c-events: #2dd4bf; --c-sig: #fbbf24; --c-skills: #fb923c; --c-worlds: #f472b6; --c-game: #a78bfa;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
@@ -111,11 +118,13 @@
   .nav-row { margin-top: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; padding-bottom: 2px; }
   .tabs::-webkit-scrollbar { display: none; }
-  .nav-tab { padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; background: var(--surface); border: 1px solid var(--border); color: var(--text-dim); cursor: pointer; white-space: nowrap; flex-shrink: 0; text-decoration: none; }
+  .nav-tab { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 9px; font-size: 13px; font-weight: 600; background: var(--surface); border: 1px solid var(--border); color: var(--text-dim); cursor: pointer; white-space: nowrap; flex-shrink: 0; text-decoration: none; }
   .nav-tab:hover { background: var(--surface2); color: var(--text); }
   .nav-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .nav-tab .ic { width: 15px; height: 15px; color: var(--tab-c, var(--text-dim)); }
+  .nav-tab.active .ic { color: #fff; }
   .search-wrapper { position: relative; width: 300px; max-width: 100%; }
-  .nav-row .tabs { flex: 1 1 100%; }
+  .nav-row .tabs { flex: 1 1 100%; flex-wrap: wrap; }
   .search-input { background: rgba(193,154,91,0.08); border: 2px solid var(--accent); color: var(--text); padding: 8px 12px; border-radius: 10px; font-size: 13px; width: 100%; outline: none; font-family: 'JetBrains Mono', monospace; }
   .search-input:focus { border-color: var(--highlight); }
   .search-input::placeholder { color: #7c85a0; }
@@ -130,11 +139,11 @@
   .main { max-width: 1600px; margin: 0 auto; padding: 20px 24px 40px; }
   .view { display: none; }
   .view.active { display: block; }
-  .intro { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px; max-width: 900px; }
+  .intro { font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px; max-width: 900px; }
   .updated { font-size: 11px; color: var(--text-dim); margin-bottom: 14px; }
   .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; margin-bottom: 16px; }
   .panel h2 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-  .panel .sub { font-size: 11px; color: var(--text-dim); margin-bottom: 12px; line-height: 1.5; }
+  .panel .sub { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; line-height: 1.5; }
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .grid-2 > .panel { margin-bottom: 0; }
   .grid-2 + .panel, .grid-2 + .grid-2 { margin-top: 16px; }
@@ -161,7 +170,7 @@
 
   /* Tables */
   .tbl-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
-  table.tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
   .tbl th { text-align: left; font-weight: 600; color: var(--text-dim); background: var(--surface2); padding: 8px 10px; white-space: nowrap; border-bottom: 1px solid var(--border); }
   .tbl th.sortable { cursor: pointer; user-select: none; }
   .tbl th.sortable:hover { color: var(--text); }
@@ -181,13 +190,17 @@
   .computed { color: var(--text-dim); font-size: 10px; font-weight: 500; }
 
   /* Badges */
-  .badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; vertical-align: middle; white-space: nowrap; }
-  .b-sig { background: rgba(193,154,91,0.16); color: var(--accent2); border: 1px solid rgba(193,154,91,0.35); }
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 999px; vertical-align: middle; white-space: nowrap; }
+  .b-sig { background: var(--gold-bg); color: var(--gold); border: 1px solid rgba(251,191,36,0.4); }
+  .b-sig .ic { width: 11px; height: 11px; }
   .b-live { background: rgba(12,163,12,0.14); color: #4ade80; border: 1px solid rgba(12,163,12,0.4); }
   .b-live::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--live); margin-right: 5px; vertical-align: 1px; }
   .b-up { background: var(--surface3); color: var(--text-dim); border: 1px solid var(--border); }
   .b-world { background: rgba(251,191,36,0.12); color: var(--highlight); border: 1px solid rgba(251,191,36,0.35); }
   .b-grade { background: var(--surface3); color: var(--text-dim); }
+  .g-hs { background: var(--hs-bg); color: var(--hs); }
+  .g-ms { background: var(--ms-bg); color: var(--ms); }
+  .g-mix { background: var(--mix-bg); color: var(--mix); }
 
   /* Event and team detail */
   .detail-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 14px; }
@@ -216,7 +229,7 @@
   .dot.blue { background: var(--blue); }
 
   /* Event rows */
-  .ev-row { display: grid; grid-template-columns: 110px 1fr auto; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--grid); font-size: 12px; }
+  .ev-row { display: grid; grid-template-columns: 112px 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--grid); font-size: 13px; }
   .ev-row:last-child { border-bottom: none; }
   .ev-row .when { color: var(--text-dim); font-variant-numeric: tabular-nums; }
   .ev-row .where { color: var(--text-dim); font-size: 11px; margin-top: 2px; }
@@ -261,6 +274,100 @@
   .grid-2 > *, .grid-3 > * { min-width: 0; }
   @media (max-width: 1100px) { .grid-3 { grid-template-columns: 1fr; } }
 
+
+  /* ===== Design pass: icons, season banner, start cards, awards, team header, help ===== */
+  .ic { width: 16px; height: 16px; flex-shrink: 0; vertical-align: -3px; }
+  .season-banner { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center;
+    padding: 22px 24px; margin-bottom: 18px; border-radius: 18px; border: 1px solid rgba(251,191,36,0.28);
+    background: radial-gradient(120% 140% at 0% 0%, rgba(193,154,91,0.28) 0%, transparent 55%),
+                radial-gradient(120% 140% at 100% 100%, rgba(59,130,246,0.22) 0%, transparent 55%),
+                linear-gradient(135deg, #131b2e 0%, #0f1626 100%); }
+  .sb-kicker { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent2); }
+  .sb-title { font-size: 28px; font-weight: 900; letter-spacing: -0.6px; margin-top: 4px; line-height: 1.15;
+    background: linear-gradient(90deg, #fde68a 0%, #fbbf24 35%, #f5e6c8 70%, #93c5fd 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .sb-sub { font-size: 12px; color: var(--text-dim); margin-top: 6px; line-height: 1.5; }
+  .sb-sub a { color: var(--accent2); }
+  .sb-progress { background: rgba(10,14,26,0.55); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
+  .sb-label { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--text-dim); }
+  .sb-label strong { font-size: 18px; color: var(--text); }
+  .meter { height: 10px; border-radius: 999px; background: rgba(251,191,36,0.16); margin: 8px 0 10px; overflow: hidden; }
+  .meter span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #c19a5b, #fbbf24); }
+  .sb-next { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .sb-next a { color: var(--text); font-weight: 700; text-decoration: none; }
+  .sb-next a:hover { color: var(--gold); text-decoration: underline; }
+  .sb-next .soon { color: var(--gold); font-weight: 700; }
+
+  .start-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 18px; }
+  .start-card { --c: var(--accent2); position: relative; display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 14px; text-decoration: none; color: var(--text);
+    background: linear-gradient(160deg, color-mix(in srgb, var(--c) 20%, transparent) 0%, var(--surface) 70%);
+    border: 1px solid color-mix(in srgb, var(--c) 38%, transparent); transition: transform 0.15s, box-shadow 0.15s; }
+  .start-card:hover, .start-card:focus-visible { transform: translateY(-2px); box-shadow: 0 8px 24px color-mix(in srgb, var(--c) 22%, transparent); outline: none; }
+  .start-card .sc-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--c) 22%, transparent); color: var(--c); }
+  .start-card .sc-icon .ic { width: 20px; height: 20px; }
+  .start-card .sc-title { font-size: 14px; font-weight: 800; }
+  .start-card .sc-desc { font-size: 11.5px; color: var(--text-dim); line-height: 1.45; }
+  .c-teams { --c: var(--c-teams); } .c-events { --c: var(--c-events); } .c-sig { --c: var(--c-sig); }
+  .c-skills { --c: var(--c-skills); } .c-worlds { --c: var(--c-worlds); } .c-game { --c: var(--c-game); }
+
+  .stat-tile { position: relative; border-top: 3px solid var(--c, var(--border)); }
+  .stat-tile .st-head { display: flex; align-items: center; gap: 6px; }
+  .stat-tile .st-head .ic { color: var(--c, var(--text-dim)); width: 15px; height: 15px; }
+  .stat-tile .st-label { font-size: 12px; }
+
+  .panel h2 { display: flex; align-items: center; gap: 8px; }
+  .panel h2 .ic { color: var(--c, var(--accent2)); width: 18px; height: 18px; }
+  .champ { display: inline-flex; align-items: center; gap: 5px; color: var(--text-dim); }
+  .champ .ic { color: var(--gold); width: 14px; height: 14px; }
+
+  .sig-card { border-top: 3px solid var(--gold); background: linear-gradient(180deg, rgba(251,191,36,0.07) 0%, var(--surface) 38%); }
+  .sig-card.live { border-top-color: var(--live); box-shadow: 0 0 0 1px rgba(12,163,12,0.35); }
+  .sig-card.upcoming { border-top-color: var(--border); background: var(--surface); }
+  .sig-res > div { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .sig-res .k { display: inline-flex; align-items: center; gap: 6px; min-width: 128px; }
+  .sig-res .k .ic { width: 14px; height: 14px; }
+
+  .aw-gold { color: var(--gold); } .aw-silver { color: #cbd5e1; } .aw-amber { color: #f59e0b; }
+  .aw-cyan { color: #22d3ee; } .aw-orange { color: var(--c-skills); } .aw-dim { color: var(--text-dim); }
+  .award .t { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .award { border-left: 3px solid var(--aw, var(--border)); }
+
+  .team-hero { --g: var(--accent2); position: relative; border-radius: 18px; padding: 20px 22px; margin-bottom: 16px; border: 1px solid color-mix(in srgb, var(--g) 40%, transparent);
+    background: radial-gradient(120% 160% at 0% 0%, color-mix(in srgb, var(--g) 26%, transparent) 0%, transparent 60%), var(--surface);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+  .team-hero.g-hs { --g: var(--hs); } .team-hero.g-ms { --g: var(--ms); }
+  .team-hero .num { font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 800; color: var(--g); line-height: 1; }
+  .team-hero .nm { font-size: 18px; font-weight: 800; margin-top: 6px; }
+  .team-hero .meta { font-size: 12px; color: var(--text-dim); margin-top: 6px; line-height: 1.6; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .shelf { display: flex; flex-wrap: wrap; gap: 8px; }
+  .shelf .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 10px; background: var(--surface2); border: 1px solid var(--border); font-size: 12px; }
+  .shelf .chip a { color: var(--text-dim); text-decoration: none; }
+  .shelf .chip a:hover { color: var(--accent2); text-decoration: underline; }
+
+  .help-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(96,165,250,0.45); background: rgba(59,130,246,0.14); color: #93c5fd; cursor: pointer; font-family: inherit; white-space: nowrap; }
+  .help-btn:hover { background: rgba(59,130,246,0.24); }
+  .help-link { background: none; border: none; color: #93c5fd; cursor: pointer; font: inherit; padding: 0; text-decoration: underline; }
+  dialog.help { margin: auto; width: min(720px, calc(100vw - 32px)); max-height: calc(100vh - 64px); border: 1px solid var(--border); border-radius: 16px; background: var(--surface); color: var(--text); padding: 0; }
+  dialog.help::backdrop { background: rgba(5,8,15,0.7); }
+  .help-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--surface); }
+  .help-head h2 { font-size: 17px; }
+  .help-close { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 12px; cursor: pointer; font: inherit; font-size: 12px; }
+  .help-body { padding: 8px 20px 20px; overflow-y: auto; }
+  .help-body h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent2); margin: 16px 0 6px; }
+  .help-body dl { display: grid; grid-template-columns: 170px 1fr; gap: 8px 14px; font-size: 13px; line-height: 1.55; }
+  .help-body dt { font-weight: 700; }
+  .help-body dd { color: var(--text-dim); }
+  .help-body .tip { font-size: 12px; color: var(--text-dim); margin-top: 14px; }
+
+  @media (max-width: 1200px) { .start-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 768px) {
+    .season-banner { grid-template-columns: 1fr; padding: 18px; gap: 14px; }
+    .sb-title { font-size: 22px; }
+    .start-grid { grid-template-columns: repeat(2, 1fr); }
+    .team-hero .num { font-size: 28px; }
+    .help-body dl { grid-template-columns: 1fr; gap: 2px; }
+    .help-body dd { margin-bottom: 8px; }
+  }
+
   /* ===== Override game content (from the original page) ===== */
   .div-banner { background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
   .div-banner h2 { font-size: 18px; font-weight: 700; }
@@ -304,6 +411,9 @@
     .hero-logo svg { width: 20px; height: 20px; }
     .archive-link { font-size: 11px; padding: 6px 10px; }
     .search-wrapper { width: 100%; order: 3; }
+    .nav-row .tabs { flex-wrap: nowrap; }
+    .hero-brand { flex: 1 1 100%; }
+    .help-btn { padding: 6px 10px; font-size: 11px; }
     .main { padding: 14px 16px 30px; }
     .ev-row { grid-template-columns: 1fr; gap: 4px; }
     .ev-row .res { text-align: left; }
@@ -360,17 +470,18 @@
         <input type="text" class="search-input" id="searchInput" placeholder="Find a team, e.g. 6121E" autocomplete="off" aria-label="Find a team by number or name">
         <div class="autocomplete-list" id="acList" role="listbox"></div>
       </div>
+      <button class="help-btn" type="button" onclick="openHelp()" aria-haspopup="dialog">? Help</button>
       <a class="archive-link" href="worlds-2026/">Worlds 2026 archive &rarr;</a>
     </div>
     <div class="nav-row">
       <nav class="tabs" aria-label="Sections">
-        <a class="nav-tab" data-view="home" href="#home">Overview</a>
-        <a class="nav-tab" data-view="signature" href="#signature">Signature events</a>
-        <a class="nav-tab" data-view="events" href="#events">Events by month</a>
-        <a class="nav-tab" data-view="teams" href="#teams">Teams</a>
-        <a class="nav-tab" data-view="skills" href="#skills">Skills standings</a>
-        <a class="nav-tab" data-view="worlds" href="#worlds">Worlds qualifiers</a>
-        <a class="nav-tab" data-view="override" href="#override">Override game</a>
+        <a class="nav-tab" data-view="home" data-icon="home" href="#home">Overview</a>
+        <a class="nav-tab" data-view="signature" data-icon="star" style="--tab-c:var(--c-sig)" href="#signature">Signature events</a>
+        <a class="nav-tab" data-view="events" data-icon="calendar" style="--tab-c:var(--c-events)" href="#events">Events</a>
+        <a class="nav-tab" data-view="teams" data-icon="users" style="--tab-c:var(--c-teams)" href="#teams">Teams</a>
+        <a class="nav-tab" data-view="skills" data-icon="bolt" style="--tab-c:var(--c-skills)" href="#skills">Skills</a>
+        <a class="nav-tab" data-view="worlds" data-icon="globe" style="--tab-c:var(--c-worlds)" href="#worlds">Road to Worlds</a>
+        <a class="nav-tab" data-view="override" data-icon="game" style="--tab-c:var(--c-game)" href="#override">Override game</a>
       </nav>
     </div>
   </div>
@@ -409,6 +520,45 @@
     <a class="bnav-btn" data-view="skills" href="#skills"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Skills</span></a>
   </div>
 </nav>
+
+<dialog class="help" id="helpDialog" aria-labelledby="helpTitle">
+  <div class="help-head"><h2 id="helpTitle">What the words on this page mean</h2><button class="help-close" type="button" onclick="document.getElementById('helpDialog').close()">Close</button></div>
+  <div class="help-body">
+    <h3>The season</h3>
+    <dl>
+      <dt>Override</dt><dd>The VEX V5 Robotics Competition game for the 2026-2027 season. Two alliances score Pins and Cups on Goals. See the Override game tab.</dd>
+      <dt>Event</dt><dd>One competition (a tournament). Most last one or two days.</dd>
+      <dt>League</dt><dd>An event that runs over several weeks, with matches on different days.</dd>
+      <dt>Signature event</dt><dd>The top tier of events in the season. Large, strong fields, and awards there can qualify teams for the World Championship.</dd>
+      <dt>Worlds</dt><dd>The VEX Robotics World Championship at the end of the season. A <strong>Worlds qualifier</strong> is a team that has earned a spot.</dd>
+      <dt>HS, MS, HS + MS</dt><dd>High school, middle school, and events where both compete together. Blue marks high school, purple marks middle school, teal marks both.</dd>
+    </dl>
+    <h3>Matches and results</h3>
+    <dl>
+      <dt>Alliance</dt><dd>Two teams that play together in a match, red or blue.</dd>
+      <dt>Qualification matches</dt><dd>The regular matches every team plays. They decide the rankings.</dd>
+      <dt>Elimination matches</dt><dd>The playoff rounds after qualifications: round of 16, quarterfinals, semifinals and finals.</dd>
+      <dt>Record</dt><dd>Wins, losses and ties in qualification matches, written as W-L-T.</dd>
+      <dt>Tournament Champions</dt><dd>The alliance that wins the finals. Shown with a trophy.</dd>
+      <dt>Excellence Award</dt><dd>The top award at an event, for a team that is strong all round. Shown with a star.</dd>
+      <dt>Design Award</dt><dd>For an excellent engineering design process and notebook. Shown with a pen.</dd>
+    </dl>
+    <h3>Skills</h3>
+    <dl>
+      <dt>Robot skills</dt><dd>A one-minute solo run. <strong>Driver</strong> skills are driven by a student; <strong>autonomous</strong> skills run on the robot's own program. The skills score adds the best of each.</dd>
+      <dt>Skills standings</dt><dd>Every team's best skills score this season, ranked worldwide by VEX.</dd>
+    </dl>
+    <h3>Numbers in the rankings</h3>
+    <dl>
+      <dt>Win points</dt><dd>Official ranking points from winning (or tying) qualification matches.</dd>
+      <dt>Auton points</dt><dd>Official points from the autonomous part of matches, used to break ties in the rankings.</dd>
+      <dt>Schedule points</dt><dd>Official tie-breaker based on how strong a team's opponents were.</dd>
+      <dt>OPR</dt><dd>Offensive power rating: an estimate of how many points a team adds to its alliance's score. Computed by this site from qualification match scores, so it is a guide, not an official number.</dd>
+      <dt>CCWM</dt><dd>An estimate of how much a team adds to its alliance's winning margin. Also computed by this site.</dd>
+    </dl>
+    <div class="tip">Reading in another language? Your browser's translate feature works on this page. Team numbers stay as they are.</div>
+  </div>
+</dialog>
 
 <template id="override-content">
     <!-- Hero Banner -->
@@ -632,7 +782,7 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
 const addDays = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);
 const place = o => [o.city, o.region, o.country === 'United States' ? '' : o.country].filter(Boolean).join(', ');
 const gradeShort = g => g === 'High School' ? 'HS' : g === 'Middle School' ? 'MS' : g === 'Blended' ? 'HS + MS' : '';
-const teamLink = n => `<a class="team-link" href="#team/${encodeURIComponent(n)}">${esc(n)}</a>`;
+const teamLink = n => `<a class="team-link" translate="no" href="#team/${encodeURIComponent(n)}">${esc(n)}</a>`;
 const teamLinks = list => (list || []).map(teamLink).join(' ') || '<span class="dim">-</span>';
 const eventLink = e => `<a class="ev-link" href="#event/${e.id}">${esc(e.name)}</a>`;
 const officialEvent = sku => `https://events.vex.com/robot-competitions/vex-robotics-competition/${encodeURIComponent(sku)}.html`;
@@ -645,8 +795,36 @@ function statusBadge(e) {
   if (e.status === 'upcoming') return '<span class="badge b-up">Upcoming</span>';
   return '';
 }
-const sigBadge = e => e.level === 'Signature' ? '<span class="badge b-sig">Signature event</span>' : '';
-const gradeBadge = e => e.grade ? `<span class="badge b-grade">${esc(gradeShort(e.grade))}</span>` : '';
+const ICON = {
+  home: '<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+  star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  users: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
+  bolt: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  globe: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>',
+  game: '<rect x="2" y="6" width="20" height="12" rx="4"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15.5" cy="11" r="1"/><circle cx="18" cy="13.5" r="1"/>',
+  search: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+  trophy: '<path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 01-10 0V4z"/><path d="M17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/>',
+  medal: '<circle cx="12" cy="9" r="6"/><path d="M15.5 14L17 22l-5-3-5 3 1.5-8"/>',
+  pen: '<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/>',
+  chart: '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+  flag: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
+  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  target: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+};
+const icon = (name, cls = '') => `<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name] || ''}</svg>`;
+function awardInfo(title) {
+  const t = (title || '').toLowerCase();
+  if (t.startsWith('tournament champions') || t.includes('division champions')) return ['trophy', 'aw-gold', 'var(--gold)'];
+  if (t.includes('finalist')) return ['medal', 'aw-silver', '#cbd5e1'];
+  if (t.startsWith('excellence')) return ['star', 'aw-amber', '#f59e0b'];
+  if (t.startsWith('design')) return ['pen', 'aw-cyan', '#22d3ee'];
+  if (t.includes('skills')) return ['bolt', 'aw-orange', 'var(--c-skills)'];
+  return ['medal', 'aw-dim', 'var(--border)'];
+}
+const sigBadge = e => e.level === 'Signature' ? `<span class="badge b-sig">${icon('star')}Signature event</span>` : '';
+const GRADE_CLASS = { 'High School': 'g-hs', 'Middle School': 'g-ms', 'Blended': 'g-mix' };
+const gradeBadge = e => e.grade ? `<span class="badge ${GRADE_CLASS[e.grade] || 'b-grade'}" title="${esc(e.grade === 'Blended' ? 'High school and middle school' : e.grade)}">${esc(gradeShort(e.grade))}</span>` : '';
 const noData = what => `<div class="notice">${what} will appear after the first season data update.</div>`;
 const loading = () => '<div class="empty">Loading...</div>';
 function updatedLine() {
@@ -655,8 +833,10 @@ function updatedLine() {
   return `<div class="updated">Data updated ${t.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}</div>`;
 }
 function tiles(list) {
-  return `<div class="stat-tiles">${list.map(t => `<div class="stat-tile"><div class="st-val">${t.v}</div><div class="st-label">${esc(t.k)}</div>${t.n ? `<div class="st-note">${t.n}</div>` : ''}</div>`).join('')}</div>`;
+  return `<div class="stat-tiles">${list.map(t => `<div class="stat-tile ${t.c || ''}" style="${t.c ? '--c:var(--' + t.c + ')' : ''}"><div class="st-val">${t.v}</div><div class="st-head">${t.i ? icon(t.i) : ''}<div class="st-label">${esc(t.k)}</div></div>${t.n ? `<div class="st-note">${t.n}</div>` : ''}</div>`).join('')}</div>`;
 }
+function openHelp() { const d = $('helpDialog'); if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
+const helpLink = (txt = 'What do these words mean?') => `<button type="button" class="help-link" onclick="openHelp()">${txt}</button>`;
 const countries = rows => [...new Set(rows.map(r => r.country).filter(Boolean))].sort();
 function keepFocus(id, fn) {
   const pos = $(id).selectionStart; fn();
@@ -761,7 +941,7 @@ function eventRows(list, opts = {}) {
   if (!list.length) return `<div class="empty">${opts.empty || 'None right now.'}</div>`;
   return list.map(e => {
     let res = '';
-    if (e.champions && e.champions.length) res = `Champions ${teamLinks(e.champions)}`;
+    if (e.champions && e.champions.length) res = `<span class="champ">${icon('trophy')}Champions</span> ${teamLinks(e.champions)}`;
     else if (e.status === 'live' || opts.badge) res = statusBadge(e);
     return `<div class="ev-row"><div class="when">${esc(fmtRange(e.start, e.end))}</div>
       <div>${eventLink(e)} ${opts.noSig ? '' : sigBadge(e)} ${gradeBadge(e)}<div class="where">${esc(place(e))}</div></div>
@@ -778,39 +958,66 @@ function renderOverview() {
   }
   const c = S.season.counts, L = S.season.leaders, rec = S.season.records;
   const week = S.season.upcoming.filter(e => e.status === 'live' || e.start <= addDays(7));
-  h += updatedLine();
+  const today = todayISO();
+  const nextSig = S.season.signature.filter(e => e.status === 'live' || e.start >= today).sort((a, b) => a.start.localeCompare(b.start))[0];
+  const daysTo = e => Math.round((utc(e.start) - utc(today)) / 864e5);
+  const built = S.meta && S.meta.builtAt ? new Date(S.meta.builtAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+  const pct = c.signature ? Math.round(100 * c.signatureDone / c.signature) : 0;
+  h = `<section class="season-banner">
+    <div>
+      <div class="sb-kicker">VEX V5 Robotics Competition</div>
+      <div class="sb-title">Override 2026-2027 season</div>
+      <div class="sb-sub">Results from official VEX Events data${built ? `, updated ${esc(built)}` : ''}. New to VEX? ${helpLink('Start with the word guide')}. Last season is in the <a href="worlds-2026/">Worlds 2026 archive</a>.</div>
+    </div>
+    <div class="sb-progress">
+      <div class="sb-label"><span>Signature events held</span><strong>${c.signatureDone} of ${c.signature}</strong></div>
+      <div class="meter" role="img" aria-label="${c.signatureDone} of ${c.signature} signature events held"><span style="width:${pct}%"></span></div>
+      <div class="sb-next">${nextSig ? (nextSig.status === 'live'
+        ? `<span class="soon">Happening now:</span> <a href="#event/${nextSig.id}">${esc(nextSig.name)}</a>`
+        : `Next: <a href="#event/${nextSig.id}">${esc(nextSig.name)}</a> &bull; ${esc(fmtDate(nextSig.start))} &bull; <span class="soon">${daysTo(nextSig) === 0 ? 'today' : daysTo(nextSig) === 1 ? 'tomorrow' : `in ${daysTo(nextSig)} days`}</span>`) : 'All signature events for the season are done.'}</div>
+    </div>
+  </section>`;
+  const START = [
+    { c: 'c-teams', i: 'search', t: 'Find your team', d: 'Record, awards and skills for any team', act: 'search', href: '#teams' },
+    { c: 'c-events', i: 'calendar', t: 'This week', d: `${plural(week.length, 'event')} in progress or coming up`, act: 'week', href: '#events' },
+    { c: 'c-sig', i: 'star', t: 'Signature events', d: `${c.signatureDone} of ${c.signature} held, with results`, href: '#signature' },
+    { c: 'c-skills', i: 'bolt', t: 'Skills leaderboard', d: 'Best robot skills scores worldwide', href: '#skills' },
+    { c: 'c-worlds', i: 'globe', t: 'Road to Worlds', d: `${plural(c.worldsQualified, 'team')} qualified so far`, href: '#worlds' },
+    { c: 'c-game', i: 'game', t: 'Learn the game', d: 'How Override is played and scored', href: '#override' },
+  ];
+  h += `<nav class="start-grid" aria-label="Start here">${START.map(x => `<a class="start-card ${x.c}" href="${x.href}"${x.act ? ` data-act="${x.act}"` : ''}><span class="sc-icon">${icon(x.i)}</span><span class="sc-title">${esc(x.t)}</span><span class="sc-desc">${esc(x.d)}</span></a>`).join('')}</nav>`;
   h += tiles([
-    { v: fmtInt(c.eventsHeld), k: 'Events held so far', n: `${fmtInt(c.eventsListed)} listed for the season` },
-    { v: `${c.signatureDone} of ${c.signature}`, k: 'Signature events held' },
-    { v: fmtInt(c.teams), k: 'Teams with results', n: `${fmtInt(c.teamsHS)} HS, ${fmtInt(c.teamsMS)} MS` },
-    { v: fmtInt(c.matches), k: 'Matches played' },
-    { v: fmtInt(c.worldsQualified), k: 'Worlds qualifiers so far', n: 'from qualifying awards' },
-    { v: rec.match ? fmtInt(rec.match.score) : '-', k: 'Highest alliance score' },
+    { v: fmtInt(c.eventsHeld), k: 'Events held so far', n: `${fmtInt(c.eventsListed)} listed for the season`, i: 'calendar', c: 'c-events' },
+    { v: `${c.signatureDone} of ${c.signature}`, k: 'Signature events held', i: 'star', c: 'c-sig' },
+    { v: fmtInt(c.teams), k: 'Teams with results', n: `<span style="color:var(--hs)">${fmtInt(c.teamsHS)} HS</span> &bull; <span style="color:var(--ms)">${fmtInt(c.teamsMS)} MS</span>`, i: 'users', c: 'c-teams' },
+    { v: fmtInt(c.matches), k: 'Matches played', i: 'target', c: 'c-game' },
+    { v: fmtInt(c.worldsQualified), k: 'Worlds qualifiers so far', n: 'from qualifying awards', i: 'globe', c: 'c-worlds' },
+    { v: rec.match ? fmtInt(rec.match.score) : '-', k: 'Highest alliance score', i: 'trophy', c: 'c-skills' },
   ]);
 
   h += `<div class="grid-2">
-    <div class="panel"><h2>In progress and next 7 days</h2><div class="sub">${plural(week.length, 'event')}${S.season.leaguesRunning ? ` &bull; ${plural(S.season.leaguesRunning, 'league')} also running (see <a href="#events">Events by month</a>)` : ''}</div>${eventRows(week.slice(0, 12))}${week.length > 12 ? `<a class="back" style="margin:10px 0 0" href="#events">All events &rarr;</a>` : ''}</div>
-    <div class="panel"><h2>Latest results</h2><div class="sub">Tournament champions of the most recently finished events</div>${eventRows(S.season.recent, { empty: 'No finished events yet.' })}</div>
+    <div class="panel" id="week-panel" style="--c:var(--c-events)"><h2>${icon('calendar')}In progress and next 7 days</h2><div class="sub">${plural(week.length, 'event')}${S.season.leaguesRunning ? ` &bull; ${plural(S.season.leaguesRunning, 'league')} also running (see <a href="#events">Events</a>)` : ''}</div>${eventRows(week.slice(0, 12))}${week.length > 12 ? `<a class="back" style="margin:10px 0 0" href="#events">All events &rarr;</a>` : ''}</div>
+    <div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Latest results</h2><div class="sub">Tournament champions of the most recently finished events</div>${eventRows(S.season.recent, { empty: 'No finished events yet.' })}</div>
   </div>`;
 
   const months = S.season.monthly;
-  h += `<div class="panel" style="margin-top:16px"><h2>Season by month</h2><div class="sub">One row per month: events with results, matches played, alliance scores, the top skills score and new Worlds qualifiers. Select a month to see its events.</div>
+  h += `<div class="panel" style="margin-top:16px;--c:var(--c-events)"><h2>${icon('calendar')}Season by month</h2><div class="sub">One row per month: events with results, matches played, alliance scores, the top skills score and new Worlds qualifiers. Select a month to see its events.</div>
     ${months.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Month</th><th class="num">Events</th><th class="num">Signature</th><th class="num">Matches</th><th class="num">Highest score</th><th class="num">Median score</th><th class="num">Top skills</th><th class="num">Worlds qualifiers</th></tr></thead><tbody>
     ${months.slice().reverse().map(m => `<tr><td><a class="ev-link" href="#events/${m.month}">${esc(fmtMonth(m.month))}</a></td><td class="num">${fmtInt(m.events)}</td><td class="num">${m.signature || ''}</td><td class="num">${fmtInt(m.matches)}</td><td class="num">${m.max ?? '-'}</td><td class="num">${m.median ?? '-'}</td><td class="num">${m.skillsMax ?? '-'}</td><td class="num">${m.worlds || ''}</td></tr>`).join('')}
     </tbody></table></div>` : '<div class="empty">No results yet.</div>'}</div>`;
 
   h += `<div class="grid-2">
-    <div class="panel"><h2>Alliance scores by week</h2><div class="sub">Highest and median alliance score across all played matches each week. Shows how scoring develops as teams learn the game.</div><div id="chart-scores">${S.season.weekly.some(w => w.matches) ? '' : '<div class="empty">No match data yet.</div>'}</div></div>
-    <div class="panel"><h2>Top skills score by week</h2><div class="sub">Best combined driver + autonomous skills score at any event held that week</div><div id="chart-skills">${S.season.weekly.some(w => w.skillsMax) ? '' : '<div class="empty">No skills data yet.</div>'}</div></div>
+    <div class="panel" style="--c:var(--series-1)"><h2>${icon('chart')}Alliance scores by week</h2><div class="sub">Highest and median alliance score across all played matches each week. Shows how scoring develops as teams learn the game.</div><div id="chart-scores">${S.season.weekly.some(w => w.matches) ? '' : '<div class="empty">No match data yet.</div>'}</div></div>
+    <div class="panel" style="--c:var(--c-skills)"><h2>${icon('bolt')}Top skills score by week</h2><div class="sub">Best combined driver + autonomous skills score at any event held that week</div><div id="chart-skills">${S.season.weekly.some(w => w.skillsMax) ? '' : '<div class="empty">No skills data yet.</div>'}</div></div>
   </div>`;
 
   const leaderTable = (rows, cols) => rows.length ? `<div class="tbl-wrap"><table class="tbl"><tbody>${rows.map(cols).join('')}</tbody></table></div>` : '<div class="empty">None yet.</div>';
   h += `<div class="grid-3">
-    <div class="panel"><h2>Most tournament titles</h2><div class="sub">Tournament Champions wins this season. <a href="#teams">Full team table</a></div>
+    <div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Most tournament titles</h2><div class="sub">Tournament Champions wins this season. <a href="#teams">Full team table</a></div>
       ${leaderTable(L.titles, t => `<tr><td>${teamLink(t.team)}</td><td class="dim">${esc(t.name)}</td><td class="num"><strong>${t.titles}</strong></td><td class="dim">${t.excellence ? plural(t.excellence, 'Excellence award') : ''}</td></tr>`)}</div>
-    <div class="panel"><h2>Top skills, high school</h2><div class="sub">Official World Skills Standings. <a href="#skills">All standings</a></div>
+    <div class="panel" style="--c:var(--hs)"><h2>${icon('bolt')}Top skills, high school</h2><div class="sub">Official World Skills Standings. <a href="#skills">All standings</a></div>
       ${leaderTable(L.skillsHS, r => `<tr><td class="num">${r.rank}</td><td>${teamLink(r.team)}</td><td class="dim">${esc(r.name)}</td><td class="num"><strong>${r.score}</strong></td></tr>`)}</div>
-    <div class="panel"><h2>Top skills, middle school</h2><div class="sub">Official World Skills Standings</div>
+    <div class="panel" style="--c:var(--ms)"><h2>${icon('bolt')}Top skills, middle school</h2><div class="sub">Official World Skills Standings</div>
       ${leaderTable(L.skillsMS, r => `<tr><td class="num">${r.rank}</td><td>${teamLink(r.team)}</td><td class="dim">${esc(r.name)}</td><td class="num"><strong>${r.score}</strong></td></tr>`)}</div>
   </div>`;
 
@@ -819,6 +1026,11 @@ function renderOverview() {
     h += `<div class="panel" style="margin-top:16px"><h2>Highest alliance score this season</h2><div class="sub"><strong style="color:var(--text);font-size:15px">${fmtInt(rec.match.score)}</strong> by ${teamLinks(rec.match.teams)} in ${esc(rec.match.match)}${ev ? ` at ${eventLink(ev)}` : ` (<a href="#event/${rec.match.event}">event</a>)`}</div></div>`;
   }
   el.innerHTML = h;
+  el.querySelectorAll('[data-act]').forEach(a => a.onclick = ev => {
+    ev.preventDefault();
+    if (a.dataset.act === 'search') { window.scrollTo(0, 0); $('searchInput').focus(); }
+    else if (a.dataset.act === 'week') $('week-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 
   const wk = S.season.weekly.filter(w => w.matches > 0);
   if (wk.length) lineChart($('chart-scores'), {
@@ -852,15 +1064,15 @@ function renderSignature() {
     h += `<h2 class="month-head">${esc(fmtMonth(m))} <span class="dim">${plural(evs.length, 'event')}</span></h2><div class="sig-grid">`;
     for (const e of evs) {
       const res = e.results && e.status !== 'upcoming';
-      h += `<div class="sig-card${e.status === 'live' ? ' live' : ''}">
+      h += `<div class="sig-card ${e.status}">
         <div class="sig-top"><span class="when">${esc(fmtRange(e.start, e.end))}</span>${statusBadge(e)}</div>
         <a class="sig-name" href="#event/${e.id}">${esc(e.name)}</a>
         <div class="where">${esc(place(e) || e.country)} ${gradeBadge(e)}</div>
         ${res ? `<div class="sig-res">
-          <div><span class="k">Champions</span>${teamLinks(e.champions)}</div>
-          <div><span class="k">Excellence</span>${teamLinks(e.excellence)}</div>
-          <div><span class="k">Skills champion</span>${teamLinks(e.skillsChampion)}</div>
-          <div><span class="k">Top score</span>${e.topScore ? fmtInt(e.topScore) : '-'} <span class="dim">&bull; ${plural(e.teams || 0, 'team')}</span></div>
+          <div><span class="k">${icon('trophy', 'aw-gold')}Champions</span>${teamLinks(e.champions)}</div>
+          <div><span class="k">${icon('star', 'aw-amber')}Excellence</span>${teamLinks(e.excellence)}</div>
+          <div><span class="k">${icon('bolt', 'aw-orange')}Skills champion</span>${teamLinks(e.skillsChampion)}</div>
+          <div><span class="k">${icon('target', 'aw-dim')}Top score</span>${e.topScore ? fmtInt(e.topScore) : '-'} <span class="dim">&bull; ${plural(e.teams || 0, 'team')}</span></div>
         </div>` : `<div class="sig-res dim">${e.status === 'live' ? 'In progress. Results update during the event.' : 'Results appear here after the event.'}</div>`}
       </div>`;
     }
@@ -945,11 +1157,11 @@ async function renderEvent(id, tok) {
     { v: ev.skills[0] ? fmtInt(ev.skills[0].driver + ev.skills[0].prog) : '-', k: 'Top skills score', n: ev.skills[0] ? esc(ev.skills[0].team) : '' },
   ]);
   if (champs.length) {
-    h += `<div class="panel"><h2>Winning alliance</h2><div class="sub">${champs.map(a => esc(a.title)).join(', ')}</div><div class="alliance-win">${champs.flatMap(a => a.teams).map(n => `<div class="tm"><div class="n">${teamLink(n)}</div><div class="nm">${esc((info[n] || {}).name || '')}${(info[n] || {}).org ? ' &bull; ' + esc(info[n].org) : ''}</div></div>`).join('')}</div></div>`;
+    h += `<div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Winning alliance</h2><div class="sub">${champs.map(a => esc(a.title)).join(', ')}</div><div class="alliance-win">${champs.flatMap(a => a.teams).map(n => `<div class="tm"><div class="n">${teamLink(n)}</div><div class="nm">${esc((info[n] || {}).name || '')}${(info[n] || {}).org ? ' &bull; ' + esc(info[n].org) : ''}</div></div>`).join('')}</div></div>`;
   }
   if (ev.awards.length) {
-    h += `<div class="panel"><h2>Awards</h2><div class="sub">${ev.awardsFinalized ? 'Final' : 'Not final yet'}. Awards marked "Qualifies for Worlds" earn a spot at the 2027 World Championship.</div><div class="award-list">
-      ${ev.awards.map(a => `<div class="award"><div class="t">${esc(a.title)} ${a.quals.includes('World Championship') ? '<span class="badge b-world">Qualifies for Worlds</span>' : ''}</div><div class="w">${a.teams.length ? teamLinks(a.teams) : esc(a.people.join(', ')) || '<span class="dim">Not awarded</span>'}</div></div>`).join('')}
+    h += `<div class="panel" style="--c:var(--accent2)"><h2>${icon('medal')}Awards</h2><div class="sub">${ev.awardsFinalized ? 'Final' : 'Not final yet'}. Awards marked "Qualifies for Worlds" earn a spot at the 2027 World Championship.</div><div class="award-list">
+      ${ev.awards.map(a => { const [ai, ac, aw] = awardInfo(a.title); return `<div class="award" style="--aw:${aw}"><div class="t">${icon(ai, ac)}${esc(a.title)} ${a.quals.includes('World Championship') ? '<span class="badge b-world">Qualifies for Worlds</span>' : ''}</div><div class="w">${a.teams.length ? teamLinks(a.teams) : esc(a.people.join(', ')) || '<span class="dim">Not awarded</span>'}</div></div>`; }).join('')}
     </div></div>`;
   }
   const divs = ev.divisions.length > 1;
@@ -970,7 +1182,7 @@ async function renderEvent(id, tok) {
     h += `</div>`;
   }
   if (ev.rankings.length) {
-    h += `<div class="panel"><h2>Qualification rankings</h2><div class="sub">Official rankings. Offensive rating (OPR) and win margin (CCWM) are <span class="computed">computed</span> by this site from qualification match scores.</div>
+    h += `<div class="panel"><h2>Qualification rankings</h2><div class="sub">Official rankings. Offensive rating (OPR) and win margin (CCWM) are <span class="computed">computed</span> by this site from qualification match scores. ${helpLink()}</div>
       <div class="tbl-wrap"><table class="tbl"><thead><tr>${divs ? '<th>Division</th>' : ''}<th class="num">Rank</th><th>Team</th><th>Name</th><th>Record</th><th class="num">Win points</th><th class="num">Auton points</th><th class="num">Schedule points</th><th class="num">Average score</th><th class="num">High score</th><th class="num">OPR</th><th class="num">CCWM</th></tr></thead><tbody>
       ${ev.rankings.map(r => { const o = ev.opr[r.team]; return `<tr>${divs ? `<td>${esc(divName(r.div))}</td>` : ''}<td class="num">${r.rank}</td><td>${teamLink(r.team)}</td><td class="dim">${esc((info[r.team] || {}).name || '')}</td><td>${record(r)}</td><td class="num">${r.wp}</td><td class="num">${r.ap}</td><td class="num">${r.sp}</td><td class="num">${r.avg}</td><td class="num">${r.high}</td><td class="num">${o ? dec1(o[0]) : '-'}</td><td class="num">${o ? dec1(o[2]) : '-'}</td></tr>`; }).join('')}
       </tbody></table></div></div>`;
@@ -1048,19 +1260,27 @@ async function renderTeam(num, tok) {
   }
   const sk = t.skills;
   let h = `${back}
-    <div class="detail-head"><div><h2><span style="font-family:'JetBrains Mono',monospace">${esc(t.team)}</span> ${esc(t.name)}</h2>
-      <div class="meta">${esc(t.org)} ${place(t) ? '&bull; ' + esc(place(t)) : ''} ${t.grade ? '&bull; ' + esc(t.grade) : ''}
-      ${t.worlds ? `<span class="badge b-world">Qualified for Worlds</span>` : ''}</div></div>
+    <div class="team-hero ${GRADE_CLASS[t.grade] || ''}"><div>
+      <div class="num" translate="no">${esc(t.team)}</div>
+      <div class="nm">${esc(t.name)}</div>
+      <div class="meta">${esc(t.org)} ${place(t) ? '&bull; ' + esc(place(t)) : ''} ${gradeBadge(t)}
+      ${t.worlds ? `<span class="badge b-world">${icon('globe')}Qualified for Worlds</span>` : ''}</div></div>
       <div class="ext-links"><a href="${officialTeam(t.team)}" target="_blank" rel="noopener">Official team page &#8599;</a></div></div>`;
   h += tiles([
-    { v: t.events.length, k: 'Events' },
-    { v: record(t), k: 'Qualification record', n: t.winPct != null ? `${dec1(t.winPct)}% wins` : '' },
-    { v: `${t.ew}-${t.el}`, k: 'Elimination record' },
-    { v: t.titles, k: 'Tournament titles' },
-    { v: t.awards.length, k: 'Awards' },
-    { v: sk ? sk.score : '-', k: 'Season skills score', n: sk ? `Rank ${sk.rank} ${t.grade === 'Middle School' ? 'MS' : 'HS'} &bull; driver ${sk.driver}, autonomous ${sk.prog}` : '' },
-    { v: t.opr != null ? dec1(t.opr) : '-', k: 'Best OPR (computed)', n: t.lastOpr != null ? `Latest event ${dec1(t.lastOpr)}` : '' },
+    { v: t.events.length, k: 'Events', i: 'calendar', c: 'c-events' },
+    { v: record(t), k: 'Qualification record', n: t.winPct != null ? `${dec1(t.winPct)}% wins` : '', i: 'target', c: 'c-teams' },
+    { v: `${t.ew}-${t.el}`, k: 'Elimination record', i: 'flag', c: 'c-game' },
+    { v: t.titles, k: 'Tournament titles', i: 'trophy', c: 'c-sig' },
+    { v: t.awards.length, k: 'Awards', i: 'medal', c: 'c-worlds' },
+    { v: sk ? sk.score : '-', k: 'Season skills score', n: sk ? `Rank ${sk.rank} ${t.grade === 'Middle School' ? 'MS' : 'HS'} &bull; driver ${sk.driver}, autonomous ${sk.prog}` : '', i: 'bolt', c: 'c-skills' },
+    { v: t.opr != null ? dec1(t.opr) : '-', k: 'Best OPR (computed)', n: t.lastOpr != null ? `Latest event ${dec1(t.lastOpr)}` : '', i: 'chart', c: 'c-teams' },
   ]);
+  if (t.awards.length) {
+    h += `<div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Awards this season</h2><div class="shelf">${t.awards.map(([title, id]) => {
+      const [ai, ac] = awardInfo(title); const e = S.eventsById[id];
+      return `<span class="chip">${icon(ai, ac)}<strong>${esc(title)}</strong>${e ? ` <a href="#event/${id}">${esc(e.name.length > 38 ? e.name.slice(0, 36) + '...' : e.name)}</a>` : ''}</span>`;
+    }).join('')}</div></div>`;
+  }
   if (t.worlds) {
     const we = S.eventsById[t.worlds[1]];
     h += `<div class="notice" style="margin-bottom:16px">Qualified for the 2027 World Championship through the <strong>${esc(t.worlds[0])}</strong> award at ${we ? eventLink(we) : 'an event'}${we ? ` (${esc(fmtDate(we.start))})` : ''}.</div>`;
@@ -1197,6 +1417,7 @@ function route() {
 }
 
 (async function init() {
+  document.querySelectorAll('.nav-tab[data-icon]').forEach(a => a.insertAdjacentHTML('afterbegin', icon(a.dataset.icon)));
   setupSearch();
   [S.season, S.meta] = await Promise.all([loadJSON('data/season.json'), loadJSON('data/meta.json')]);
   window.addEventListener('hashchange', () => { route(); window.scrollTo(0, 0); });
