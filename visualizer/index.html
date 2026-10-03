@@ -133,6 +133,7 @@
   .ac-item { padding: 8px 12px; cursor: pointer; display: flex; justify-content: space-between; gap: 10px; align-items: center; font-size: 13px; border-bottom: 1px solid var(--border); }
   .ac-item:hover, .ac-item.selected { background: var(--surface3); }
   .ac-item .ac-team { font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+  .ac-item.none .ac-name { font-style: italic; }
   .ac-item .ac-name { color: var(--text-dim); font-size: 11px; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
   /* ===== Layout ===== */
@@ -1436,7 +1437,10 @@ async function renderTeam(num, tok) {
   if (tok !== routeTok) return;
   const back = `<a class="back" href="#teams">&larr; All teams</a>`;
   if (!t) {
-    el.innerHTML = `${back}<div class="notice">No Override results for team ${esc(num)} yet. <a href="${officialTeam(num)}" target="_blank" rel="noopener">Check the official team page &#8599;</a></div>`;
+    el.innerHTML = `${back}<div class="team-hero"><div><div class="num" translate="no">${esc(num.toUpperCase())}</div>
+      <div class="nm">No results yet this season</div>
+      <div class="meta">This team has not played a match, run skills or won an award in the 2026-2027 season so far, or is not registered for it. Results appear here after its first event: within 30 minutes at a signature event, otherwise within three or four days.</div></div>
+      <div class="ext-links"><a href="${officialTeam(num.toUpperCase())}" target="_blank" rel="noopener">Official team page &#8599;</a></div></div>`;
     return;
   }
   const sk = t.skills;
@@ -1570,13 +1574,16 @@ function searchTeams(q) {
     const score = n === q ? 0 : n.startsWith(q) ? 1 : `${t.name} ${t.org}`.toLowerCase().includes(q) ? 2 : -1;
     if (score >= 0) out.push({ ...t, score });
   }
-  return out.sort((a, b) => a.score - b.score || a.team.length - b.team.length || a.team.localeCompare(b.team)).slice(0, 12);
+  out.sort((a, b) => a.score - b.score || a.team.length - b.team.length || a.team.localeCompare(b.team));
+  // A full team number with no results yet: say so instead of showing nothing.
+  if (!out.some(t => t.score === 0) && /^\d{1,6}[a-z]$/i.test(q)) out.unshift({ team: q.toUpperCase(), name: 'No results yet this season', none: true });
+  return out.slice(0, 12);
 }
 function setupSearch() {
   const inp = $('searchInput'), list = $('acList');
   let items = [], sel = -1;
   const draw = () => {
-    list.innerHTML = items.map((t, i) => `<div class="ac-item${i === sel ? ' selected' : ''}" role="option" data-i="${i}"><span class="ac-team">${esc(t.team)}</span><span class="ac-name">${esc(t.name)}</span></div>`).join('');
+    list.innerHTML = items.map((t, i) => `<div class="ac-item${i === sel ? ' selected' : ''}${t.none ? ' none' : ''}" role="option" data-i="${i}"><span class="ac-team" translate="no">${esc(t.team)}</span><span class="ac-name">${esc(t.name)}</span></div>`).join('');
     list.classList.toggle('show', items.length > 0);
   };
   const pick = t => { list.classList.remove('show'); inp.value = ''; inp.blur(); location.hash = '#team/' + encodeURIComponent(t.team); };
