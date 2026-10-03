@@ -13,8 +13,8 @@ end of each transition with anything that changed.
 ## How the site is built (October 2026)
 
 - Repo `nullsetlabs/vex-visualizer` (public), served by GitHub Pages at
-  vex.nullsetlabs.org (DNS on Cloudflare). Commit as Arjun Mohanan with his
-  GitHub no-reply email; end commit messages with the Co-Authored-By line.
+  vex.nullsetlabs.org (DNS on Cloudflare). Commit as Arjun (repo-local git
+  config with his GitHub no-reply email); end commit messages with the Co-Authored-By line.
 - `/` is the VEX hub page (`index.html` at the repo root).
 - `/visualizer/` is the season tracker: `visualizer/index.html` is one static
   page (no build step) that loads JSON from `visualizer/data/` on demand.
@@ -86,8 +86,8 @@ end of each transition with anything that changed.
    `grep -n "Override\|2026-2027\|2026-27" visualizer/index.html`. Replace the
    game guide in `<template id="override-content">`, rename the tab and its
    hash route (keep the old hash working), update the title, meta, Open Graph,
-   JSON-LD, banner text, Help guide and footer. Keep "by Arjun Mohanan" in the
-   title and header.
+   JSON-LD, banner text, Help guide and footer. Keep "by Arjun" (first name
+   only) in the title and header.
 
 7. **First data pull.** Run the workflow with `mode=full`. In the log, check
    "Season check OK" with the new name, the event count, and that no 429 error
@@ -142,4 +142,5 @@ end of each transition with anything that changed.
 - Colorful, phone-first layout for high school students: cards, icons,
   meaning colors with labels, a plain-language Help guide.
 - Official data first; anything computed is labeled as computed.
-- Credit "by Arjun Mohanan" next to the title.
+- Credit "by Arjun" next to the title. First name only on the sites, for
+  privacy (decided 2026-10-03); never add his last name to pages or metadata.
