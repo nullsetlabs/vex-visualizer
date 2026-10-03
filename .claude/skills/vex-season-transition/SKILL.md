@@ -152,7 +152,13 @@ end of each transition with anything that changed.
   scope (`gh auth refresh -h github.com -s workflow`, run in the same Windows
   user session as Claude, not an Administrator window).
 - GitHub disables scheduled workflows after 60 days without repository
-  activity; re-enable with `gh workflow enable`.
+  activity; re-enable with `gh workflow enable`. In 2026 the last commit was
+  May 18, scheduled runs stopped July 19, and nothing ran on schedule again
+  even after re-enabling, an off-hour cron (7,37) and a disable/enable cycle
+  on October 3. Check with `gh run list -R nullsetlabs/vex-visualizer
+  --event schedule -L 3`; manual runs (`gh workflow run update-data.yml -f
+  mode=live`) still work. Before a quiet stretch (May to September), keep the
+  repository active, for example a small commit each month.
 - Keep unpublished research out of public repos and pages until it is
   published.
 
