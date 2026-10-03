@@ -11,6 +11,7 @@ interactive tracker:
   /visualizer/skills/                  official skills standings (HS and MS)
   /visualizer/signature/               signature events by month
   /visualizer/worlds-qualifiers/       teams qualified through awards
+  /visualizer/trueskill/               TrueSkill rankings (HS and MS) and how they are calculated
   /visualizer/sitemap-pages.xml        sitemap of all of the above
 
 Called by season_pipeline.py after the summaries are built. Files are only
@@ -29,7 +30,7 @@ BASE = "/visualizer"
 GA_ID = "G-R1S9F2Z4HS"
 CF_BEACON = '{"token": "ead9ddf5a1cf4549be8975e34994ea70"}'
 SEASON_TITLE = "VEX V5RC Override 2026-2027"
-GENERATED_DIRS = ("team", "event", "skills", "signature", "worlds-qualifiers")
+GENERATED_DIRS = ("team", "event", "skills", "signature", "worlds-qualifiers", "trueskill")
 
 e = lambda s: html.escape(str(s if s is not None else ""), quote=True)
 
@@ -63,6 +64,21 @@ def grade_badge(g):
 
 def team_url(n):
     return f"{BASE}/team/{n}/"
+
+
+GRADE_SHORT = {"High School": "high school", "Middle School": "middle school"}
+
+# How TrueSkill is calculated, in plain words (the tracker's TrueSkill tab says the same).
+TRUESKILL_HOW = """<ul class="how">
+<li><b>What it is.</b> TrueSkill is a rating method from Microsoft Research, first used to match Xbox players. The VEX community uses it to compare teams that never played each other.</li>
+<li><b>Start.</b> Every team starts with the same estimate: skill 25, with a large uncertainty (8.3).</li>
+<li><b>After each match.</b> Teams on the winning alliance go up and teams on the losing alliance go down. A surprising result moves ratings more: beating a much stronger alliance counts for a lot, beating a weaker one for little. A tie moves the two alliances toward each other. Both partners get the same credit, and only the result counts, not the score margin.</li>
+<li><b>Uncertainty shrinks.</b> Every match makes the estimate more certain, so ratings settle as teams play more.</li>
+<li><b>The number shown</b> is skill minus three times the uncertainty (written &mu; &minus; 3&sigma;). This cautious estimate starts at 0 and rises as a team plays more matches, so a team with one event can rank below a team with a similar record over three events.</li>
+<li><b>What counts.</b> Every qualification and elimination match with a result this season, in date order. Practice matches do not count.</li>
+<li><b>Settings.</b> The standard TrueSkill settings: &beta; 4.17, &tau; 0.083, draw probability 10%. This is the same scale as the high school TrueSkill numbers in the Worlds 2026 dashboard. Other sites can show slightly different numbers if they use other settings or a different set of matches.</li>
+<li><b>Not official.</b> TrueSkill is computed by this site from official VEX match results. VEX does not publish it, and it plays no part in official rankings or Worlds qualification.</li>
+</ul>"""
 
 
 def page(path_url, title, description, crumbs, body, jsonld=None):
@@ -101,8 +117,8 @@ def page(path_url, title, description, crumbs, body, jsonld=None):
 </main>
 <footer>
   VEX Visualizer by Arjun, VEX team 6121 Conestoga Pioneers &bull; published by <a href="https://nullsetlabs.org/">Null Set Labs</a>
-  <div class="links"><a href="{BASE}/">Season tracker</a> &bull; <a href="{BASE}/skills/">Skills standings</a> &bull; <a href="{BASE}/signature/">Signature events</a> &bull; <a href="{BASE}/worlds-qualifiers/">Worlds qualifiers</a> &bull; <a href="{BASE}/worlds-2026/">Worlds 2026 archive</a></div>
-  <div class="fine">Event, team, match, skills and award data come from VEX Events (events.vex.com). OPR is computed by this site from qualification match scores and is an estimate. This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International.</div>
+  <div class="links"><a href="{BASE}/">Season tracker</a> &bull; <a href="{BASE}/skills/">Skills standings</a> &bull; <a href="{BASE}/signature/">Signature events</a> &bull; <a href="{BASE}/trueskill/">TrueSkill rankings</a> &bull; <a href="{BASE}/worlds-qualifiers/">Worlds qualifiers</a> &bull; <a href="{BASE}/worlds-2026/">Worlds 2026 archive</a></div>
+  <div class="fine">Event, team, match, skills and award data come from VEX Events (events.vex.com). OPR and TrueSkill are computed by this site from match results and are estimates. This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International.</div>
 </footer>
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{CF_BEACON}'></script>
 </body>
@@ -128,6 +144,9 @@ def team_page(t, by_id, sig_pages, last_season):
         desc += f", {t['titles']} tournament title{'s' if t['titles'] != 1 else ''}"
     if sk:
         desc += f", skills score {sk['score']} (world rank {sk['rank']})"
+    ts = t.get("trueskill")
+    if ts:
+        desc += f", TrueSkill {ts['rating']:.1f} (rank {ts['rank']} of {ts['of']} {GRADE_SHORT.get(t.get('grade'), 'teams')})"
     desc += "."
     facts = [
         (len(t["events"]), "Events", ""),
@@ -137,12 +156,15 @@ def team_page(t, by_id, sig_pages, last_season):
         (len(t["awards"]), "Awards", ""),
         (sk["score"] if sk else "-", "Season skills score", f'World rank {sk["rank"]}: driver {sk["driver"]}, autonomous {sk["prog"]}' if sk else ""),
         (f'{t["opr"]:.1f}' if t.get("opr") is not None else "-", "Best OPR (computed)", ""),
+        (f'{ts["rating"]:.1f}' if ts else "-", "TrueSkill (computed)",
+         f'Rank {ts["rank"]} of {ts["of"]} {GRADE_SHORT.get(t.get("grade"), "teams")}, {ts["matches"]} matches' if ts else ""),
     ]
     body = f"""<h1><span class="num">{e(n)}</span> {e(t["name"])}</h1>
 <p class="lead">{e(t.get("org"))}{" &bull; " + e(place(t)) if place(t) else ""} {grade_badge(t.get("grade"))}
 {'<span class="badge gold">Qualified for the 2027 World Championship</span>' if t.get("worlds") else ""}</p>
 <a class="cta" href="{BASE}/#team/{e(n)}">Open in the VEX Visualizer</a><a class="cta alt" href="https://events.vex.com/teams/V5RC/{e(n)}">Official team page</a>
 <div class="facts">{"".join(f'<div class="fact"><div class="v">{e(v)}</div><div class="k">{e(k)}</div>{f"<div class=n>{e(x)}</div>" if x else ""}</div>' for v, k, x in facts)}</div>
+<p class="note">TrueSkill is a match rating computed by this site from every match this season. <a href="{BASE}/trueskill/#how">How TrueSkill is calculated</a> &bull; <a href="{BASE}/trueskill/">TrueSkill rankings</a></p>
 """
     if t.get("worlds"):
         we = by_id.get(t["worlds"][1], {})
@@ -251,6 +273,40 @@ def skills_page(standings, team_names):
     return url, page(url, title, desc, [("Visualizer", f"{BASE}/"), ("Skills standings", None)], body)
 
 
+def trueskill_page(teams):
+    url = f"{BASE}/trueskill/"
+    groups = []
+    for grade, label in (("High School", "High school"), ("Middle School", "Middle school")):
+        rows = sorted((t for t in teams.values() if t.get("trueskill") and t.get("grade") == grade),
+                      key=lambda t: t["trueskill"]["rank"])
+        groups.append((label, rows))
+    title = f"{SEASON_TITLE} TrueSkill rankings | True Skill ratings for every team"
+    desc = (f"TrueSkill (True Skill) ratings for every high school and middle school team in the {SEASON_TITLE} season, "
+            f"computed from official VEX match results, with how TrueSkill is calculated.")
+    hs = groups[0][1]
+    if hs:
+        desc += f" High school leader: {hs[0]['team']} {hs[0]['name']} with {hs[0]['trueskill']['rating']:.1f}."
+    body = f"""<h1>TrueSkill rankings: {e(SEASON_TITLE)}</h1>
+<p class="lead">TrueSkill rates every team from the results of its matches this season, taking into account how strong its partners and opponents were. Computed by this site from official VEX match results. Higher is better.</p>
+<a class="cta" href="{BASE}/#trueskill">Open the interactive rankings</a><a class="cta alt" href="#how">How TrueSkill is calculated</a>
+<p class="note">Jump to: <a href="#high-school">High school ({len(groups[0][1])} teams)</a> &bull; <a href="#middle-school">Middle school ({len(groups[1][1])} teams)</a> &bull; <a href="#how">How it is calculated</a></p>"""
+    for label, rows in groups:
+        body += (f'<h2 id="{label.lower().replace(" ", "-")}">{label} ({len(rows)} teams)</h2>'
+                 '<div class="wrap"><table><thead><tr><th class="n">Rank</th><th>Team</th>'
+                 '<th class="n">TrueSkill</th><th class="n">Matches</th><th>Qualification record</th><th>Name</th><th>Location</th></tr></thead><tbody>'
+                 + "".join(f'<tr><td class="n">{t["trueskill"]["rank"]}</td><td><a class="tm" href="{team_url(t["team"])}">{e(t["team"])}</a></td>'
+                           f'<td class="n"><b>{t["trueskill"]["rating"]:.1f}</b></td><td class="n">{t["trueskill"]["matches"]}</td>'
+                           f'<td>{t["w"]}-{t["l"]}-{t["t"]}</td><td class="dim">{e(t["name"])}</td><td class="dim">{e(place(t))}</td></tr>'
+                           for t in rows) + "</tbody></table></div>")
+        if not rows:
+            body += '<p class="note">No rated teams yet.</p>'
+    body += f'<h2 id="how">How TrueSkill is calculated</h2>{TRUESKILL_HOW}'
+    ld = {"@context": "https://schema.org", "@type": "Dataset", "name": f"{SEASON_TITLE} TrueSkill rankings",
+          "description": desc, "url": f"{SITE}{url}", "creator": {"@type": "Person", "name": "Arjun"},
+          "isBasedOn": "https://events.vex.com/"}
+    return url, page(url, title, desc, [("Visualizer", f"{BASE}/"), ("TrueSkill rankings", None)], body, ld)
+
+
 def signature_list_page(index, sig_pages):
     url = f"{BASE}/signature/"
     sig = [r for r in index if r.get("level") == "Signature"]
@@ -326,6 +382,7 @@ def build(vis_dir, index, buckets, standings, cached, last_season=None):
     pages.append(skills_page(standings, set(teams)) + (latest,))
     pages.append(signature_list_page(index, sig_pages) + (latest,))
     pages.append(worlds_page(teams, by_id) + (latest,))
+    pages.append(trueskill_page(teams) + (latest,))
 
     written = 0
     keep = set()

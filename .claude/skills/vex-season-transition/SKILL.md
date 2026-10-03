@@ -34,7 +34,7 @@ end of each transition with anything that changed.
 - `visualizer/static_pages.py` (called by the pipeline) writes standalone pages
   for search engines: `/visualizer/team/<number>/`, `/visualizer/event/<code>/`
   (signature events), `/visualizer/skills/`, `/visualizer/signature/`,
-  `/visualizer/worlds-qualifiers/` and `/visualizer/sitemap-pages.xml`
+  `/visualizer/worlds-qualifiers/`, `/visualizer/trueskill/` and `/visualizer/sitemap-pages.xml`
   (listed in robots.txt). Styles in `visualizer/pages.css`. The workflow
   commits those folders with the data.
 - `visualizer/usage_report.py` and `.github/workflows/analytics-report-workflow.yml`:
@@ -87,7 +87,7 @@ end of each transition with anything that changed.
    after the game reveal), and the last-season file name it passes to
    `static_pages.build`. In `static_pages.py` update `SEASON_TITLE`, the "Last
    season" wording and the 2027 Worlds wording. Delete the generated folders
-   (`visualizer/team`, `event`, `skills`, `signature`, `worlds-qualifiers`)
+   (`visualizer/team`, `event`, `skills`, `signature`, `worlds-qualifiers`, `trueskill`)
    after copying them into the archive in step 3, so old pages do not linger. Empty `visualizer/data/` except the last-season file
    and `webcasts.json` (reset to `{}`). Run
    `python visualizer/dev/test_season_pipeline.py`.
@@ -127,6 +127,16 @@ end of each transition with anything that changed.
   5 final, 6 round of 16 (7 and 8 assumed round of 32 and 64).
 - The API has no OPR; the pipeline computes OPR, DPR and CCWM and the page
   labels them as computed.
+- TrueSkill is the most searched term that brought people to the site
+  (Search Console, Worlds 2026: "vex true skill", "vex trueskill ranking").
+  The pipeline computes standard TrueSkill (mu 25, sigma 25/3, beta sigma/2,
+  tau sigma/100, 10% draws; shown as mu - 3 sigma) from every played
+  qualification and elimination match of the season, ranked by grade. It
+  starts fresh each season. Note: the Worlds 2026 dashboard's high school
+  "True Skill" came from the 2145 Division Predictor spreadsheet (standard
+  TrueSkill); its middle school numbers were a stand-in blend of skills, win
+  rate, OPR and CCWM, not TrueSkill. Keep the explanation on the TrueSkill tab
+  (`TS_HOW` in index.html) and page (`TRUESKILL_HOW` in static_pages.py) in step.
 - Rate limit: the API reports `x-ratelimit-limit: 100` but answered HTTP 429
   after about four minutes at 85 requests a minute. Requests start 1.0 s apart
   and 429s are waited out; one failed event is skipped, never the whole run.

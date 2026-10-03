@@ -95,7 +95,7 @@ jobs:
 
       - name: Commit and push
         run: |
-          git add -A visualizer/data visualizer/team visualizer/event visualizer/skills visualizer/signature visualizer/worlds-qualifiers visualizer/sitemap-pages.xml
+          git add -A visualizer/data visualizer/team visualizer/event visualizer/skills visualizer/signature visualizer/worlds-qualifiers visualizer/trueskill visualizer/sitemap-pages.xml
           if git diff --cached --quiet; then
             echo "No data changes; nothing to commit."
             exit 0

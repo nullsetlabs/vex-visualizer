@@ -47,6 +47,9 @@ td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
 .award { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 8px 12px; font-size: 13px; }
 .award b { display: block; }
 .note { font-size: 12px; color: var(--text-dim); margin-top: 10px; }
+ul.how { margin: 8px 0 0 20px; max-width: 820px; font-size: 14px; color: var(--text-dim); }
+ul.how li { margin: 7px 0; }
+ul.how b { color: var(--text); }
 footer { border-top: 1px solid var(--border); margin-top: 30px; padding: 18px 16px 28px; text-align: center; font-size: 12px; color: var(--text-dim); }
 footer .links { margin-top: 8px; line-height: 2; }
 footer .fine { margin-top: 8px; font-size: 11px; color: #667; max-width: 760px; margin-left: auto; margin-right: auto; }

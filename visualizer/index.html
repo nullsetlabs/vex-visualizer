@@ -18,17 +18,17 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vex.nullsetlabs.org/visualizer/">
 <meta property="og:title" content="VEX Visualizer by Arjun | Override 2026-2027 Season Tracker">
-<meta property="og:description" content="Season tracker for VEX V5 Robotics Competition Override: event results, team records, skills standings and Worlds qualifiers from official VEX Events data.">
+<meta property="og:description" content="Season tracker for VEX V5 Robotics Competition Override: event results, team records, TrueSkill rankings, skills standings and Worlds qualifiers from official VEX Events data.">
 <meta property="og:image" content="https://vex.nullsetlabs.org/visualizer/og-preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="VEX Visualizer">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="VEX Visualizer by Arjun | Override 2026-2027 Season Tracker">
-<meta name="twitter:description" content="Season tracker for VEX V5 Robotics Competition Override: event results, team records, skills standings and Worlds qualifiers.">
+<meta name="twitter:description" content="Season tracker for VEX V5 Robotics Competition Override: event results, team records, TrueSkill rankings, skills standings and Worlds qualifiers.">
 <meta name="twitter:image" content="https://vex.nullsetlabs.org/visualizer/og-preview.png">
 
-<meta name="description" content="VEX Visualizer by Arjun (VEX team 6121 Conestoga Pioneers): a season tracker for the VEX V5 Robotics Competition 2026-2027 game Override with event results, team records, signature events, official skills standings and World Championship qualifiers.">
+<meta name="description" content="VEX Visualizer by Arjun (VEX team 6121 Conestoga Pioneers): a season tracker for the VEX V5 Robotics Competition 2026-2027 game Override with event results, team records, signature events, TrueSkill rankings, official skills standings and World Championship qualifiers.">
 <meta name="author" content="Arjun, VEX team 6121 Conestoga Pioneers">
 <link rel="canonical" href="https://vex.nullsetlabs.org/visualizer/">
 <meta name="robots" content="index, follow">
@@ -85,7 +85,7 @@
     --ms: #c084fc; --ms-bg: rgba(168,85,247,0.16);
     --mix: #2dd4bf; --mix-bg: rgba(20,184,166,0.15);
     /* Section colors for navigation */
-    --c-teams: #60a5fa; --c-events: #2dd4bf; --c-sig: #fbbf24; --c-skills: #fb923c; --c-worlds: #f472b6; --c-game: #a78bfa;
+    --c-teams: #60a5fa; --c-events: #2dd4bf; --c-sig: #fbbf24; --c-skills: #fb923c; --c-worlds: #f472b6; --c-game: #a78bfa; --c-ts: #a3e635;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
@@ -319,7 +319,7 @@
   .start-card .sc-title { font-size: 14px; font-weight: 800; }
   .start-card .sc-desc { font-size: 11.5px; color: var(--text-dim); line-height: 1.45; }
   .c-teams { --c: var(--c-teams); } .c-events { --c: var(--c-events); } .c-sig { --c: var(--c-sig); }
-  .c-skills { --c: var(--c-skills); } .c-worlds { --c: var(--c-worlds); } .c-game { --c: var(--c-game); }
+  .c-skills { --c: var(--c-skills); } .c-ts { --c: var(--c-ts); } .c-worlds { --c: var(--c-worlds); } .c-game { --c: var(--c-game); }
 
   .stat-tile { position: relative; border-top: 3px solid var(--c, var(--border)); }
   .stat-tile .st-head { display: flex; align-items: center; gap: 6px; }
@@ -583,20 +583,28 @@
     .leader-tabs button { padding: 7px 12px; font-size: 12.5px; }
   }
 
-  /* Skills tab on phones: one-line intro, filters in two rows */
+  /* TrueSkill: how it is calculated (folds open) */
+  .ts-how { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--c-ts); border-radius: 12px; padding: 10px 14px; margin: 0 0 14px; font-size: 13px; color: var(--text-dim); }
+  .ts-how summary { cursor: pointer; color: var(--text); font-weight: 700; }
+  .ts-how ul { margin: 8px 0 2px 18px; max-width: 900px; }
+  .ts-how li { margin: 6px 0; line-height: 1.5; }
+  .ts-how b { color: var(--text); }
+
+  /* Skills and TrueSkill tabs on phones: one-line intro, filters in two rows */
   .intro-short { display: none; }
   @media (max-width: 768px) {
-    #view-skills .intro-long { display: none; }
-    #view-skills .intro-short { display: block; font-size: 12.5px; margin-bottom: 8px; }
+    #view-skills .intro-long, #view-trueskill .intro-long { display: none; }
+    #view-skills .intro-short, #view-trueskill .intro-short { display: block; font-size: 12.5px; margin-bottom: 8px; }
     .sk-filters { display: grid; grid-template-columns: minmax(0, 1fr) 128px; gap: 6px; align-items: center; margin-bottom: 10px; }
-    .sk-filters #skGrade { display: flex; }
-    .sk-filters #skGrade button { flex: 1; white-space: nowrap; padding: 8px 6px; font-size: 12.5px; }
-    .sk-filters #skView { justify-self: stretch; display: flex; }
-    .sk-filters #skView button { flex: 1; padding: 8px 6px; }
-    .sk-filters #skView .lbl { display: none; }
-    .sk-filters #skView .ic { width: 16px; height: 16px; }
-    .sk-filters #skQ, .sk-filters #skCountry { min-width: 0; width: 100%; }
+    .sk-filters #skGrade, .sk-filters #tsGrade { display: flex; }
+    .sk-filters #skGrade button, .sk-filters #tsGrade button { flex: 1; white-space: nowrap; padding: 8px 6px; font-size: 12.5px; }
+    .sk-filters #skView, .sk-filters #tsView { justify-self: stretch; display: flex; }
+    .sk-filters #skView button, .sk-filters #tsView button { flex: 1; padding: 8px 6px; }
+    .sk-filters #skView .lbl, .sk-filters #tsView .lbl { display: none; }
+    .sk-filters #skView .ic, .sk-filters #tsView .ic { width: 16px; height: 16px; }
+    .sk-filters #skQ, .sk-filters #skCountry, .sk-filters #tsQ, .sk-filters #tsCountry { min-width: 0; width: 100%; }
     .sk-filters .count { display: none; }
+    .ts-how { padding: 8px 12px; font-size: 12.5px; margin-bottom: 10px; }
   }
 </style>
 </head>
@@ -655,6 +663,7 @@
         <a class="nav-tab" data-view="events" data-icon="calendar" style="--tab-c:var(--c-events)" href="#events">Events</a>
         <a class="nav-tab" data-view="teams" data-icon="users" style="--tab-c:var(--c-teams)" href="#teams">Teams</a>
         <a class="nav-tab" data-view="skills" data-icon="bolt" style="--tab-c:var(--c-skills)" href="#skills">Skills</a>
+        <a class="nav-tab" data-view="trueskill" data-icon="trend" style="--tab-c:var(--c-ts)" href="#trueskill">TrueSkill</a>
         <a class="nav-tab" data-view="worlds" data-icon="globe" style="--tab-c:var(--c-worlds)" href="#worlds">Road to Worlds</a>
         <a class="nav-tab" data-view="override" data-icon="game" style="--tab-c:var(--c-game)" href="#override">Override game</a>
       </nav>
@@ -670,6 +679,7 @@
   <section class="view" id="view-teams"></section>
   <section class="view" id="view-team"></section>
   <section class="view" id="view-skills"></section>
+  <section class="view" id="view-trueskill"></section>
   <section class="view" id="view-worlds"></section>
   <section class="view" id="view-override"></section>
 </main>
@@ -684,7 +694,7 @@
     This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International. VEX and VEX Robotics are trademarks or service marks of Innovation First International.
   </div>
   <div class="about-line">VEX Visualizer is built by Arjun, a high school student on VEX team 6121 Conestoga Pioneers, and published by <a href="https://nullsetlabs.org/">Null Set Labs</a>.</div>
-  <div class="footer-nav"><a href="skills/">Skills standings</a> &bull; <a href="signature/">Signature events</a> &bull; <a href="worlds-qualifiers/">Worlds qualifiers</a></div>
+  <div class="footer-nav"><a href="skills/">Skills standings</a> &bull; <a href="trueskill/">TrueSkill rankings</a> &bull; <a href="signature/">Signature events</a> &bull; <a href="worlds-qualifiers/">Worlds qualifiers</a></div>
   <div class="footer-nav"><a href="https://nullsetlabs.org/">Null Set Labs home</a> &bull; <a href="https://robotics.nullsetlabs.org/">Robotics</a> &bull; <a href="https://vex.nullsetlabs.org/">VEX at Null Set Labs</a> &bull; <a href="worlds-2026/">Worlds 2026 archive</a></div>
   <div class="fine">&copy; 2026 Arjun_6121_Conestoga &bull; All rights reserved</div>
 </footer>
@@ -733,6 +743,7 @@
       <dt>Schedule points</dt><dd>Official tie-breaker based on how strong a team's opponents were.</dd>
       <dt>OPR</dt><dd>Offensive power rating: an estimate of how many points a team adds to its alliance's score. Computed by this site from qualification match scores, so it is a guide, not an official number.</dd>
       <dt>CCWM</dt><dd>An estimate of how much a team adds to its alliance's winning margin. Also computed by this site.</dd>
+      <dt>TrueSkill</dt><dd>A rating from every match a team has played this season. Winning moves a team up and losing moves it down, by more when the result is a surprise, so beating strong alliances counts most. Computed by this site with the standard TrueSkill method; not an official VEX ranking. See the TrueSkill tab for the full explanation.</dd>
     </dl>
     <h3>How often the data updates</h3>
     <dl>
@@ -909,6 +920,7 @@ const UI = {
   events: { month: '', q: '', status: 'all', sig: false, grade: 'all', country: '' },
   teams: { q: '', grade: 'all', country: '', sort: 'titles', dir: -1, limit: 100 },
   skills: { grade: 'hs', q: '', country: '', limit: 24, view: 'cards' },
+  trueskill: { grade: 'High School', q: '', country: '', limit: 24, view: 'cards' },
   worlds: { grade: 'all' },
   cmp: { a: '', b: '', grade: 'all' },
   leaders: { tab: 'skillsHS' },
@@ -981,13 +993,14 @@ const officialEvent = sku => `https://events.vex.com/robot-competitions/vex-robo
 const officialTeam = n => `https://events.vex.com/teams/V5RC/${encodeURIComponent(n)}`;
 const record = o => `${o.w ?? 0}-${o.l ?? 0}-${o.t ?? 0}`;
 const opt = (v, txt, sel) => `<option value="${esc(v)}"${v === sel ? ' selected' : ''}>${esc(txt)}</option>`;
-const plural = (n, word) => `${fmtInt(n)} ${word}${n === 1 ? '' : 's'}`;
+const plural = (n, word) => `${fmtInt(n)} ${word}${n === 1 ? '' : /(ch|sh|s|x)$/.test(word) ? 'es' : 's'}`;
 function statusBadge(e) {
   if (e.status === 'live') return '<span class="badge b-live">In progress</span>';
   if (e.status === 'upcoming') return '<span class="badge b-up">Upcoming</span>';
   return '';
 }
 const ICON = {
+  trend: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
   home: '<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
   star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
   calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
@@ -1536,6 +1549,7 @@ const TEAM_COLS = [
   { k: 'excellence', t: 'Excellence awards', sort: t => t.excellence * 1e3 + t.titles, num: true },
   { k: 'record', t: 'Record', sort: t => t.w - t.l, num: true },
   { k: 'winPct', t: 'Win %', sort: t => t.winPct ?? -1, num: true },
+  { k: 'ts', t: 'TrueSkill', sort: t => t.ts ?? -999, num: true },
   { k: 'skills', t: 'Skills score', sort: t => t.skills ?? -1, num: true },
   { k: 'opr', t: 'Best OPR', sort: t => t.opr ?? -999, num: true },
   { k: 'events', t: 'Events', sort: t => t.events, num: true },
@@ -1555,7 +1569,7 @@ async function renderTeams(tok) {
   const rows = S.teamRows.filter(t => (f.grade === 'all' || t.grade === f.grade) && (!f.country || t.country === f.country) &&
       (!q || `${t.team} ${t.name} ${t.org} ${t.city} ${t.region}`.toLowerCase().includes(q)))
     .sort((a, b) => { const x = col.sort(a), y = col.sort(b); return (x < y ? -1 : x > y ? 1 : 0) * f.dir || a.team.localeCompare(b.team); });
-  el.innerHTML = `<p class="intro">Every team with results this season, built from official event results. Win % counts qualification matches. Best OPR is the highest offensive rating at any one event (<span class="computed">computed</span>). Skills score is the team's official World Skills Standings score. Select a column heading to sort.</p>
+  el.innerHTML = `<p class="intro">Every team with results this season, built from official event results. Win % counts qualification matches. TrueSkill is a rating from every match this season and best OPR is the highest offensive rating at any one event (both <span class="computed">computed</span>; <a href="#trueskill">how TrueSkill works</a>). Skills score is the team's official World Skills Standings score. Select a column heading to sort.</p>
     <div class="filters">
       <input type="text" id="tmQ" placeholder="Search team number, name, school or city" value="${esc(f.q)}">
       ${segButtons('tmGrade', [['all', 'All'], ['High School', 'High school'], ['Middle School', 'Middle school']], f.grade)}
@@ -1563,7 +1577,7 @@ async function renderTeams(tok) {
       <span class="count">${plural(rows.length, 'team')}</span>
     </div>
     <div class="tbl-wrap"><table class="tbl"><thead><tr>${TEAM_COLS.map(c => `<th class="${c.num ? 'num ' : ''}${c.sort ? 'sortable' : ''}" data-k="${c.k}"${c.k === f.sort ? ` aria-sort="${f.dir < 0 ? 'descending' : 'ascending'}"` : ''}>${c.t}</th>`).join('')}</tr></thead><tbody>
-    ${rows.slice(0, f.limit).map(t => `<tr><td>${teamLink(t.team)}</td><td class="num">${t.titles || ''}</td><td class="num">${t.excellence || ''}</td><td class="num">${record(t)}</td><td class="num">${dec1(t.winPct)}</td>
+    ${rows.slice(0, f.limit).map(t => `<tr><td>${teamLink(t.team)}</td><td class="num">${t.titles || ''}</td><td class="num">${t.excellence || ''}</td><td class="num">${record(t)}</td><td class="num">${dec1(t.winPct)}</td><td class="num">${t.ts == null ? '' : dec1(t.ts)}</td>
       <td class="num">${t.skills ?? ''}</td><td class="num">${t.opr == null ? '' : dec1(t.opr)}</td><td class="num">${t.events}</td><td>${t.worlds ? '<span class="badge b-world">Qualified</span>' : ''}</td>
       <td class="dim">${esc(t.name)}</td><td class="dim">${esc(place(t))}</td><td>${esc(gradeShort(t.grade))}</td></tr>`).join('')}
     </tbody></table></div>
@@ -1610,6 +1624,7 @@ async function renderTeam(num, tok) {
     { v: t.awards.length, k: 'Awards', i: 'medal', c: 'c-worlds' },
     { v: sk ? sk.score : '-', k: 'Season skills score', n: sk ? `Rank ${sk.rank} ${t.grade === 'Middle School' ? 'MS' : 'HS'} &bull; driver ${sk.driver}, autonomous ${sk.prog}` : '', i: 'bolt', c: 'c-skills' },
     { v: t.opr != null ? dec1(t.opr) : '-', k: 'Best OPR (computed)', n: t.lastOpr != null ? `Latest event ${dec1(t.lastOpr)}` : '', i: 'chart', c: 'c-teams' },
+    { v: t.trueskill ? dec1(t.trueskill.rating) : '-', k: 'TrueSkill (computed)', n: t.trueskill ? `Rank ${t.trueskill.rank} of ${fmtInt(t.trueskill.of)} ${t.grade === 'Middle School' ? 'MS' : 'HS'} &bull; <a href="#trueskill">how it works</a>` : '', i: 'trend', c: 'c-ts' },
   ]);
   if (t.awards.length) {
     h += `<div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Awards this season</h2><div class="shelf">${t.awards.map(([title, id]) => {
@@ -1697,6 +1712,63 @@ async function renderSkills(tok) {
 }
 
 // ---------------------------------------------------------------------------
+// TrueSkill rankings (computed by season_pipeline.py from every played match)
+// ---------------------------------------------------------------------------
+// Same explanation as TRUESKILL_HOW in static_pages.py.
+const TS_HOW = `<ul>
+  <li><b>What it is.</b> TrueSkill is a rating method from Microsoft Research, first used to match Xbox players. The VEX community uses it to compare teams that never played each other.</li>
+  <li><b>Start.</b> Every team starts with the same estimate: skill 25, with a large uncertainty (8.3).</li>
+  <li><b>After each match.</b> Teams on the winning alliance go up and teams on the losing alliance go down. A surprising result moves ratings more: beating a much stronger alliance counts for a lot, beating a weaker one for little. A tie moves the two alliances toward each other. Both partners get the same credit, and only the result counts, not the score margin.</li>
+  <li><b>Uncertainty shrinks.</b> Every match makes the estimate more certain, so ratings settle as teams play more.</li>
+  <li><b>The number shown</b> is skill minus three times the uncertainty (written &mu; &minus; 3&sigma;). This cautious estimate starts at 0 and rises as a team plays more matches, so a team with one event can rank below a team with a similar record over three events.</li>
+  <li><b>What counts.</b> Every qualification and elimination match with a result this season, in date order. Practice matches do not count.</li>
+  <li><b>Settings.</b> The standard TrueSkill settings: &beta; 4.17, &tau; 0.083, draw probability 10%. This is the same scale as the high school TrueSkill numbers in the <a href="worlds-2026/">Worlds 2026 dashboard</a>. Other sites can show slightly different numbers if they use other settings or a different set of matches.</li>
+  <li><b>Not official.</b> TrueSkill is computed by this site from official VEX match results. VEX does not publish it, and it plays no part in official rankings or Worlds qualification.</li>
+</ul>`;
+function tsCard(t) {
+  const where = [t.region, t.country === 'United States' ? '' : t.country].filter(Boolean).join(', ');
+  return `<a class="sk-card${t.tsRank <= 3 ? ' medal' + t.tsRank : ''}" href="#team/${encodeURIComponent(t.team)}" data-track="click_trueskill_card">
+    <div class="sk-top"><span class="sk-rank">#${t.tsRank}</span>${gradeBadge(t)}</div>
+    <div class="sk-team ${GRADE_CLASS[t.grade] || ''}" translate="no">${esc(t.team)}</div>
+    <div class="sk-name">${esc(t.name)}</div>
+    <div class="sk-where">${esc(where)}</div>
+    <div class="sk-score"><strong>${dec1(t.ts)}</strong><span>TrueSkill</span></div>
+    <div class="sk-legend"><span>${plural(t.tsMatches || 0, 'match')}</span><span>Record ${record(t)}</span></div>
+  </a>`;
+}
+async function renderTrueSkill(tok) {
+  const el = $('view-trueskill'), f = UI.trueskill;
+  if (!S.teamRows.length) el.innerHTML = loading();
+  await needTeams(); if (tok !== routeTok) return;
+  const all = S.teamRows.filter(t => t.ts != null && t.grade === f.grade).sort((a, b) => a.tsRank - b.tsRank);
+  const q = f.q.trim().toLowerCase();
+  const rows = all.filter(t => (!f.country || t.country === f.country) && (!q || `${t.team} ${t.name} ${t.org} ${t.city} ${t.region}`.toLowerCase().includes(q)));
+  const step = f.view === 'cards' ? 24 : 100;
+  el.innerHTML = `<p class="intro intro-long">TrueSkill rates every team from its match results this season, taking into account how strong its partners and opponents were. Higher is better. <span class="computed">Computed</span> by this site from official match results; not an official VEX ranking. <a href="trueskill/" data-track="click_trueskill_page">Shareable rankings page</a></p>
+    <p class="intro intro-short">A rating from every match this season. Higher is better (<span class="computed">computed</span>).</p>
+    <details class="ts-how"><summary data-track="click_trueskill_how">How TrueSkill is calculated</summary>${TS_HOW}</details>
+    <div class="filters sk-filters">
+      ${segButtons('tsGrade', [['High School', 'High school'], ['Middle School', 'Middle school']], f.grade)}
+      <div class="seg" id="tsView"><button data-v="cards" class="${f.view === 'cards' ? 'on' : ''}" aria-label="Show as cards">${icon('grid')}<span class="lbl"> Cards</span></button><button data-v="table" class="${f.view === 'table' ? 'on' : ''}" aria-label="Show as table">${icon('list')}<span class="lbl"> Table</span></button></div>
+      <input type="text" id="tsQ" placeholder="Search team, name, school or region" value="${esc(f.q)}">
+      <select id="tsCountry">${opt('', 'All countries', f.country)}${countries(all).map(c => opt(c, c, f.country)).join('')}</select>
+      <span class="count">${plural(rows.length, 'team')}</span>
+    </div>
+    ${!all.length ? noData('TrueSkill rankings') : f.view === 'cards'
+      ? `<div class="sk-grid">${rows.slice(0, f.limit).map(tsCard).join('')}</div>`
+      : `<div class="tbl-wrap"><table class="tbl"><thead><tr><th class="num">Rank</th><th>Team</th><th class="num">TrueSkill</th><th class="num">Matches</th><th>Record</th><th class="num">Win %</th><th class="num">Events</th><th>Name</th><th>Location</th></tr></thead><tbody>
+      ${rows.slice(0, f.limit).map(t => `<tr><td class="num">${t.tsRank}</td><td>${teamLink(t.team)}</td><td class="num"><strong>${dec1(t.ts)}</strong></td><td class="num">${t.tsMatches ?? ''}</td><td>${record(t)}</td><td class="num">${dec1(t.winPct)}</td><td class="num">${t.events}</td>
+        <td class="dim">${esc(t.name)}</td><td class="dim">${esc(place(t))}</td></tr>`).join('')}
+    </tbody></table></div>`}
+    ${rows.length > f.limit ? `<button class="more" id="tsMore">Show ${Math.min(step, rows.length - f.limit)} more</button>` : ''}`;
+  el.querySelectorAll('#tsGrade button').forEach(b => b.onclick = () => { f.grade = b.dataset.v; f.country = ''; f.limit = step; renderTrueSkill(routeTok); });
+  el.querySelectorAll('#tsView button').forEach(b => b.onclick = () => { track('click_trueskill_view_' + b.dataset.v); f.view = b.dataset.v; f.limit = f.view === 'cards' ? 24 : 100; renderTrueSkill(routeTok); });
+  $('tsQ').oninput = ev => { f.q = ev.target.value; f.limit = step; keepFocus('tsQ', () => renderTrueSkill(routeTok)); };
+  $('tsCountry').onchange = ev => { f.country = ev.target.value; f.limit = step; renderTrueSkill(routeTok); };
+  if ($('tsMore')) $('tsMore').onclick = () => { f.limit += step; renderTrueSkill(routeTok); };
+}
+
+// ---------------------------------------------------------------------------
 // Worlds qualifiers, grouped by the month they qualified
 // ---------------------------------------------------------------------------
 async function renderWorlds(tok) {
@@ -1776,7 +1848,7 @@ function setupSearch() {
 // ---------------------------------------------------------------------------
 // Router
 // ---------------------------------------------------------------------------
-const TAB_FOR = { home: 'home', signature: 'signature', events: 'events', event: 'events', teams: 'teams', team: 'teams', skills: 'skills', worlds: 'worlds', override: 'override' };
+const TAB_FOR = { home: 'home', signature: 'signature', events: 'events', event: 'events', teams: 'teams', team: 'teams', skills: 'skills', trueskill: 'trueskill', worlds: 'worlds', override: 'override' };
 let routeTok = 0;
 function route() {
   const raw = decodeURIComponent(location.hash.replace(/^#/, ''));
@@ -1799,6 +1871,7 @@ function route() {
   else if (view === 'teams') renderTeams(tok);
   else if (view === 'team') renderTeam(arg, tok);
   else if (view === 'skills') renderSkills(tok);
+  else if (view === 'trueskill') renderTrueSkill(tok);
   else if (view === 'worlds') renderWorlds(tok);
   else if (view === 'override') renderOverride();
   track('view_' + view, { section: view });

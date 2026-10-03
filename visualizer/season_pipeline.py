@@ -24,7 +24,9 @@ Usage
   python season_pipeline.py --max-events 40 --budget-min 15
 
 Computed values (OPR, DPR, CCWM) are least-squares estimates from qualification
-match scores. They are labeled as computed on the page.
+match scores. TrueSkill is a match rating built from every played match of the
+season (standard TrueSkill settings, shown as mu - 3 sigma). Both are labeled
+as computed on the page.
 
 Webcasts
   VEX's event pages block automated requests, so webcast links are not pulled.
@@ -527,6 +529,100 @@ def compute_opr(matches, ridge=0.01, min_matches=3):
 
 
 # ---------------------------------------------------------------------------
+# TrueSkill (Herbrich, Minka and Graepel, Microsoft Research, 2007): the match
+# rating the VEX community calls TrueSkill, and the scale the Worlds 2026
+# dashboard showed for high school teams. Standard settings: every team starts
+# at mu 25, sigma 25/3; beta = sigma/2, tau = sigma/100, 10% draw probability.
+# A VEX match has two alliances, so each update is exact (no iteration). The
+# published rating is the conservative estimate mu - 3 sigma.
+# ---------------------------------------------------------------------------
+
+TS_MU = 25.0
+TS_SIGMA = TS_MU / 3
+TS_BETA = TS_SIGMA / 2
+TS_TAU = TS_SIGMA / 100
+TS_DRAW_PROBABILITY = 0.10
+_NORMAL = statistics.NormalDist()
+
+
+def _ts_v_win(t, eps):
+    x = t - eps
+    p = _NORMAL.cdf(x)
+    return _NORMAL.pdf(x) / p if p > 1e-300 else -x
+
+
+def _ts_w_win(t, eps):
+    v = _ts_v_win(t, eps)
+    return v * (v + t - eps)
+
+
+def _ts_v_draw(t, eps):
+    a, b = eps - abs(t), -eps - abs(t)
+    p = _NORMAL.cdf(a) - _NORMAL.cdf(b)
+    v = (_NORMAL.pdf(b) - _NORMAL.pdf(a)) / p if p > 1e-300 else a
+    return -v if t < 0 else v
+
+
+def _ts_w_draw(t, eps):
+    a, b = eps - abs(t), -eps - abs(t)
+    p = _NORMAL.cdf(a) - _NORMAL.cdf(b)
+    v = _ts_v_draw(abs(t), eps)
+    return v * v + (a * _NORMAL.pdf(a) - b * _NORMAL.pdf(b)) / p if p > 1e-300 else 1.0
+
+
+def trueskill_update(ratings, red, blue, red_score, blue_score):
+    """Rate one match. ratings is {team: [mu, sigma]} and is updated in place."""
+    red, blue = sorted(set(red)), sorted(set(blue))
+    if not red or not blue or set(red) & set(blue):
+        return False
+    for n in red + blue:
+        r = ratings.setdefault(n, [TS_MU, TS_SIGMA])
+        r[1] = (r[1] ** 2 + TS_TAU ** 2) ** 0.5
+    win, lose = (red, blue) if red_score >= blue_score else (blue, red)
+    players = len(win) + len(lose)
+    c2 = sum(ratings[n][1] ** 2 for n in win + lose) + players * TS_BETA ** 2
+    c = c2 ** 0.5
+    t = (sum(ratings[n][0] for n in win) - sum(ratings[n][0] for n in lose)) / c
+    eps = _NORMAL.inv_cdf((TS_DRAW_PROBABILITY + 1) / 2) * players ** 0.5 * TS_BETA / c
+    if red_score == blue_score:
+        v, w = _ts_v_draw(t, eps), _ts_w_draw(t, eps)
+    else:
+        v, w = _ts_v_win(t, eps), _ts_w_win(t, eps)
+    w = min(max(w, 0.0), 1.0 - 1e-9)
+    for sign, side in ((1, win), (-1, lose)):
+        for n in side:
+            mu, sigma = ratings[n]
+            s2 = sigma * sigma
+            ratings[n] = [mu + sign * s2 / c * v, (s2 * (1 - s2 / c2 * w)) ** 0.5]
+    return True
+
+
+# Within a day, qualification matches come before elimination rounds, which run
+# round of 64, 32, 16, quarterfinal, semifinal, final.
+TS_PHASE = {2: 0, 8: 1, 7: 2, 6: 3, 3: 4, 4: 5, 5: 6}
+
+
+def season_trueskill(events):
+    """Rate every played match of the season in date order.
+    Returns {team: {"mu", "sigma", "rating", "matches"}}."""
+    played = []
+    for ev in events:
+        for m in ev["matches"]:
+            if m["played"] and m["round"] in TS_PHASE and m["red"] and m["blue"]:
+                when = (m.get("time") or ev["start"] or "")[:10]
+                played.append(((when, ev["start"] or "", ev["id"], TS_PHASE[m["round"]], m["inst"] or 0,
+                                m["num"] or 0, m["div"] or 0), m))
+    played.sort(key=lambda x: x[0])
+    ratings, counts = {}, {}
+    for _, m in played:
+        if trueskill_update(ratings, m["red"], m["blue"], m["rs"], m["bs"]):
+            for n in set(m["red"] + m["blue"]):
+                counts[n] = counts.get(n, 0) + 1
+    return {n: {"mu": round(mu, 2), "sigma": round(sigma, 2), "rating": round(mu - 3 * sigma, 1), "matches": counts[n]}
+            for n, (mu, sigma) in ratings.items()}
+
+
+# ---------------------------------------------------------------------------
 # Official World Skills Standings (public feed)
 # ---------------------------------------------------------------------------
 
@@ -635,7 +731,8 @@ def event_row(base, ev, today):
 
 
 TEAM_INDEX_COLS = ["team", "name", "org", "grade", "city", "region", "country", "events", "w", "l", "t",
-                   "winPct", "titles", "excellence", "awards", "worlds", "worldsAward", "skills", "skillsRank", "opr", "last"]
+                   "winPct", "titles", "excellence", "awards", "worlds", "worldsAward", "skills", "skillsRank", "opr", "last",
+                   "ts", "tsRank", "tsMatches"]
 
 
 def build_summaries(event_list, cached, standings):
@@ -706,6 +803,23 @@ def build_summaries(event_list, cached, standings):
         t["skills"] = {"rank": s["rank"], "score": s["score"], "driver": s["driver"], "prog": s["prog"]} if s else None
         total = t["w"] + t["l"] + t["t"]
         t["winPct"] = round(100 * t["w"] / total, 1) if total else None
+
+    # TrueSkill from every played match, ranked within each grade.
+    ratings = season_trueskill(by_date)
+    by_grade = {}
+    for n, t in teams.items():
+        t["trueskill"] = ratings.get(n)
+        if t["trueskill"]:
+            by_grade.setdefault(t["grade"], []).append(t)
+    ts_leaders = {}
+    for grade, group in by_grade.items():
+        group.sort(key=lambda t: (-t["trueskill"]["rating"], -t["trueskill"]["matches"], t["team"]))
+        for i, t in enumerate(group, 1):
+            t["trueskill"].update({"rank": i, "of": len(group)})
+        ts_leaders[grade] = [{"team": t["team"], "name": t["name"], "grade": t["grade"], "region": t["region"],
+                              "country": t["country"], "rating": t["trueskill"]["rating"], "rank": t["trueskill"]["rank"],
+                              "matches": t["trueskill"]["matches"], "w": t["w"], "l": t["l"], "t": t["t"],
+                              "winPct": t["winPct"]} for t in group[:8]]
 
     # Week-by-week and month-by-month progression.
     week_of = lambda d: (d - timedelta(days=d.weekday())).isoformat()
@@ -784,6 +898,8 @@ def build_summaries(event_list, cached, standings):
                        for t in title_leaders],
             "skillsHS": standings.get("hs", [])[:8],
             "skillsMS": standings.get("ms", [])[:8],
+            "trueSkillHS": ts_leaders.get("High School", []),
+            "trueSkillMS": ts_leaders.get("Middle School", []),
             "signatureWinners": winners[:16],
         },
         "signature": [r for r in index if r["level"] == "Signature"],
@@ -801,6 +917,8 @@ def build_summaries(event_list, cached, standings):
         t["worlds"][1] if t["worlds"] else 0, t["worlds"][0] if t["worlds"] else "",
         t["skills"]["score"] if t["skills"] else None, t["skills"]["rank"] if t["skills"] else None,
         t["opr"], by_id.get(t["events"][-1]["id"], {}).get("start", "") if t["events"] else "",
+        t["trueskill"]["rating"] if t["trueskill"] else None, t["trueskill"]["rank"] if t["trueskill"] else None,
+        t["trueskill"]["matches"] if t["trueskill"] else None,
     ] for t in sorted(teams.values(), key=lambda t: t["team"])]}
     buckets = {b: {} for b in range(TEAM_BUCKETS)}
     for n in sorted(teams):
