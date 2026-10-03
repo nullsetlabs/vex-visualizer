@@ -8,8 +8,14 @@
   </url>
   <url>
     <loc>https://vex.nullsetlabs.org/visualizer/</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://vex.nullsetlabs.org/visualizer/worlds-2026/</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>
