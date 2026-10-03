@@ -485,6 +485,7 @@
     .start-card .sc-title { font-size: 12px; line-height: 1.25; }
   }
 
+
   /* ===== Override game content (from the original page) ===== */
   .div-banner { background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
   .div-banner h2 { font-size: 18px; font-weight: 700; }
@@ -542,6 +543,43 @@
     .count { margin-left: 0; }
   }
   @media (max-width: 380px) { .nsl-brand span { display: none; } }
+  /* ===== Phone: flatten the top so the leader cards show on the first screen ===== */
+  .sb-updated { display: none; }
+  @media (max-width: 768px) {
+    .hero { padding: 8px 14px 8px; }
+    .hero-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+    .hero-brand { grid-column: 1 / -1; justify-content: flex-start; }
+    .hero-logo { width: 34px; height: 34px; }
+    .hero-titles, .hero-brand > div { text-align: left; }
+    .hero h1 { font-size: 19px; }
+    .hero h1 .by { display: inline; margin-left: 6px; font-size: 15px; }
+    .hero-tagline { font-size: 12px; margin-top: 1px; }
+    .archive-link { display: none; }
+    .search-wrapper { order: 3; width: auto; }
+    .help-btn { order: 4; padding: 9px 12px; }
+    .nav-row { display: none; }
+    .main { padding-top: 10px; }
+    .season-banner { padding: 12px 14px; gap: 0; margin-bottom: 10px; border-radius: 14px; }
+    .season-banner > div:first-child { display: flex; align-items: baseline; gap: 8px; }
+    .sb-kicker, .sb-sub { display: none; }
+    .sb-title { font-size: 18px; margin: 0 0 8px; }
+    .sb-progress { padding: 0; background: none; border: none; }
+    .sb-label strong { font-size: 15px; }
+    .meter { margin: 6px 0 6px; height: 8px; }
+    .sb-next { font-size: 11.5px; }
+    .sb-updated { display: block; font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+    .start-grid { display: flex; overflow-x: auto; scrollbar-width: none; gap: 8px; margin: 0 -14px 12px; padding: 0 14px 2px; }
+    .start-grid::-webkit-scrollbar { display: none; }
+    .start-card { flex: 0 0 auto; flex-direction: row; align-items: center; gap: 8px; padding: 7px 12px 7px 8px; border-radius: 999px; text-align: left; }
+    .start-card .sc-icon { width: 26px; height: 26px; border-radius: 999px; }
+    .start-card .sc-icon .ic { width: 15px; height: 15px; }
+    .start-card .sc-title { font-size: 12.5px; white-space: nowrap; }
+    #leaders-box .block-head { font-size: 16px; }
+    #leaders-box .block-sub { display: none; }
+    .leader-tabs { margin: 6px -14px 10px; padding: 0 14px 2px; }
+    .leader-tabs button { padding: 7px 12px; font-size: 12.5px; }
+  }
+
 </style>
 </head>
 <body>
@@ -1136,6 +1174,7 @@ function renderOverview() {
       <div class="sb-next">${nextSig ? (nextSig.status === 'live'
         ? `<span class="soon">Happening now:</span> <a href="#event/${nextSig.id}">${esc(nextSig.name)}</a>`
         : `Next: <a href="#event/${nextSig.id}">${esc(nextSig.name)}</a> &bull; ${esc(fmtDate(nextSig.start))} &bull; <span class="soon">${daysTo(nextSig) === 0 ? 'today' : daysTo(nextSig) === 1 ? 'tomorrow' : `in ${daysTo(nextSig)} days`}</span>`) : 'All signature events for the season are done.'}</div>
+      ${built ? `<div class="sb-updated">Updated ${esc(built)} &bull; ${helpLink('Word guide')}</div>` : ''}
     </div>
   </section>`;
   const START = [
