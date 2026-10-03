@@ -65,8 +65,12 @@ WORLDS_EVENT_ID = None
 
 USER_AGENT = "VEX-Visualizer/2.0 (+https://vex.nullsetlabs.org/visualizer/)"
 REQUEST_TIMEOUT = 30    # seconds per request
-MAX_ATTEMPTS = 4        # per request, for 429 / 5xx / network errors
-PACE = 0.25             # seconds between requests
+MAX_ATTEMPTS = 4        # per request, for 5xx / network errors
+MAX_RATE_LIMITED = 8    # per request, waits after HTTP 429 (too many requests)
+# The VEX Events API allows roughly 100 requests a minute (seen Oct 2026:
+# HTTP 429 about once a minute at ~2.7 requests/second). 0.7 s between
+# request starts keeps a run near 85 a minute.
+MIN_INTERVAL = 0.7
 
 # An event whose awards never get finalized stops being refetched this many
 # days after it ends.
@@ -108,50 +112,74 @@ class Client:
         self.token = token
         self.deadline = time.monotonic() + budget_seconds
         self.calls = 0
+        self.next_at = 0.0
+        self.limits_logged = False
 
     def remaining(self):
         return self.deadline - time.monotonic()
+
+    def _throttle(self):
+        """Space request starts MIN_INTERVAL apart to stay under the API's rate limit."""
+        wait = self.next_at - time.monotonic()
+        if wait > 0:
+            time.sleep(wait)
+        self.next_at = time.monotonic() + MIN_INTERVAL
 
     def get_json(self, url, auth=True):
         """GET a JSON document. Returns None on 404."""
         headers = {"Accept": "application/json", "User-Agent": USER_AGENT}
         if auth:
             headers["Authorization"] = f"Bearer {self.token}"
-        last_err = None
-        for attempt in range(1, MAX_ATTEMPTS + 1):
+        errors = limited = 0
+        while True:
             if self.remaining() <= 0:
                 raise BudgetExceeded()
+            self._throttle()
             self.calls += 1
             try:
                 req = urllib.request.Request(url, headers=headers)
                 with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
                     final_url = resp.geturl()
                     ctype = resp.headers.get("Content-Type", "")
+                    limits = {k: v for k, v in resp.headers.items() if k.lower().startswith("x-ratelimit")}
                     body = resp.read()
                 if "/auth/login" in final_url or "json" not in ctype.lower():
                     raise AuthError(f"expected JSON from {url} but got {ctype or 'no content type'} "
                                     f"at {final_url}; the token is missing, expired or not valid for events.vex.com")
-                time.sleep(PACE)
+                if auth and limits and not self.limits_logged:
+                    log(f"  API rate limit headers: {limits}")
+                    self.limits_logged = True
                 return json.loads(body)
             except urllib.error.HTTPError as e:
                 if e.code in (401, 403):
-                    raise AuthError(f"HTTP {e.code} from {url}; check ROBOTEVENTS_TOKEN") from e
+                    raise AuthError(f"HTTP {e.code} from {url}; check VEX_API_TOKEN") from e
                 if e.code == 404:
                     return None
-                if e.code == 429 or e.code >= 500:
+                if e.code == 429:
+                    # Rate limited: wait for the window to reset rather than give up.
+                    limited += 1
+                    if limited > MAX_RATE_LIMITED:
+                        raise RuntimeError(f"still rate limited on {short(url)} after {MAX_RATE_LIMITED} waits")
                     retry_after = e.headers.get("Retry-After") if e.headers else None
-                    wait = int(retry_after) if retry_after and retry_after.isdigit() else 5 * attempt * attempt
-                    last_err = f"HTTP {e.code}"
-                else:
+                    wait = max(int(retry_after) if retry_after and retry_after.isdigit() else 0, 10 * limited)
+                    wait = min(wait, 90)
+                    if wait >= self.remaining():
+                        raise BudgetExceeded()
+                    log(f"  rate limited on {short(url)}; waiting {wait}s ({limited}/{MAX_RATE_LIMITED})")
+                    time.sleep(wait)
+                    continue
+                if e.code < 500:
                     raise
+                errors += 1
+                last_err = f"HTTP {e.code}"
             except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
-                wait = 5 * attempt
+                errors += 1
                 last_err = str(e)
-            if attempt < MAX_ATTEMPTS:
-                wait = min(wait, 120, max(0, self.remaining()))
-                log(f"  {last_err} on {short(url)}; retry {attempt}/{MAX_ATTEMPTS - 1} in {wait:.0f}s")
-                time.sleep(wait)
-        raise RuntimeError(f"giving up on {short(url)} after {MAX_ATTEMPTS} attempts ({last_err})")
+            if errors >= MAX_ATTEMPTS:
+                raise RuntimeError(f"giving up on {short(url)} after {errors} errors ({last_err})")
+            wait = min(5 * errors, max(0, self.remaining()))
+            log(f"  {last_err} on {short(url)}; retry {errors}/{MAX_ATTEMPTS - 1} in {wait:.0f}s")
+            time.sleep(wait)
 
     def pages(self, path, params=None, max_pages=60):
         """GET every page of a paginated v2 endpoint and return the combined data list."""
@@ -241,12 +269,20 @@ def in_season(e):
     return (sid in (None, SEASON_ID)) and (start is None or start >= SEASON_FIRST_DAY)
 
 
+CANCELED = re.compile(r"^\s*CANCEL+ED\b", re.I)
+
+
+def is_canceled(e):
+    """VEX marks canceled events by starting the name with 'CANCELED:'."""
+    return bool(CANCELED.match(e.get("name") or ""))
+
+
 def fetch_event_list(client):
     log(f"Fetching the season {SEASON_ID} event list...")
     events = client.pages("/events", {"season[]": SEASON_ID})
-    kept = [e for e in events if in_season(e)]
+    kept = [e for e in events if in_season(e) and not is_canceled(e)]
     if len(kept) != len(events):
-        log(f"  dropped {len(events) - len(kept)} events from another season or before {SEASON_FIRST_DAY}")
+        log(f"  left out {len(events) - len(kept)} canceled events or events from another season")
     log(f"  {len(kept)} events")
     return kept
 
@@ -511,7 +547,7 @@ def load_cached_events():
         for fn in os.listdir(EVENTS_DIR):
             if fn.endswith(".json"):
                 ev = read_json(os.path.join(EVENTS_DIR, fn))
-                if ev and "id" in ev and ev.get("season", SEASON_ID) == SEASON_ID and in_season(ev):
+                if ev and "id" in ev and ev.get("season", SEASON_ID) == SEASON_ID and in_season(ev) and not is_canceled(ev):
                     out[ev["id"]] = ev
     return out
 
@@ -802,20 +838,35 @@ def main():
             todo = (live + rest)[:args.max_events]
             log(f"Fetching {len(todo)} events ({len(live)} in progress)")
 
-            fetched = 0
+            fetched = failed = in_a_row = 0
             for i, e in enumerate(todo, 1):
-                if client.remaining() < 60:
+                if client.remaining() < 90:
                     log("Time budget nearly used; stopping here, the rest continue next run.")
                     break
                 log(f"  [{i}/{len(todo)}] {e.get('sku')} {(e.get('name') or '')[:60]}")
-                detail = fetch_event(client, e)
+                try:
+                    detail = fetch_event(client, e)
+                except RuntimeError as err:
+                    failed += 1
+                    in_a_row += 1
+                    log(f"    skipped this event for now: {err}")
+                    if in_a_row >= 3:
+                        log("Three events in a row failed; stopping here, the rest continue next run.")
+                        break
+                    continue
+                in_a_row = 0
                 write_json(os.path.join(EVENTS_DIR, f"{e['id']}.json"), detail)
                 cached[e["id"]] = detail
                 fetched += 1
 
             log("Fetching the official skills standings...")
-            standings = fetch_standings(client)
-            standings_changed = write_json(standings_path, standings)
+            try:
+                standings = fetch_standings(client)
+                standings_changed = write_json(standings_path, standings)
+            except RuntimeError as err:
+                log(f"  kept the previous skills standings: {err}")
+            if failed:
+                log(f"{failed} events failed and will be retried next run")
             log(f"Fetched {fetched} events with {client.calls} requests")
         except AuthError as e:
             log(f"ERROR: {e}")
