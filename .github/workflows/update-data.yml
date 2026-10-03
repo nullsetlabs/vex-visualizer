@@ -15,6 +15,9 @@
 #     list, fetches every newly finished event and the skills standings.
 #     Ordinary tournament results therefore appear within three to four days.
 #   - Manual: Actions tab > Update VEX Visualizer Data > Run workflow.
+#   - GitHub stopped running this schedule in July 2026 (60 days without
+#     commits) and did not resume it, so a Cloudflare Worker starts the same
+#     runs at the same times: tools/cloudflare-timer/.
 #
 # Secret: ROBOTEVENTS_TOKEN = an events.vex.com API v2 token.
 

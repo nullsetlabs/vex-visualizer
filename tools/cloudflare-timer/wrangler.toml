@@ -1,0 +1,10 @@
+# Only needed if the Worker is deployed with the wrangler command line
+# (npx wrangler deploy, run in this folder). The dashboard steps in README.md
+# set the same things by hand.
+name = "vex-visualizer-timer"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+
+[triggers]
+crons = ["7,37 * * * *", "17 6 * * 1,4"]
