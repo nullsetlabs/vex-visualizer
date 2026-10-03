@@ -577,6 +577,11 @@ def team_bucket(n):
     return sum((i + 1) * ord(c) for i, c in enumerate(n.upper())) % TEAM_BUCKETS
 
 
+def is_long(r):
+    """Leagues and other events that run for weeks."""
+    return bool(r.get("start") and r.get("end")) and (day(r["end"]) - day(r["start"])).days > LIVE_MAX_DAYS
+
+
 def month_of(d):
     return (d or "")[:7]
 
@@ -758,8 +763,9 @@ def build_summaries(event_list, cached, standings):
         "signature": [r for r in index if r["level"] == "Signature"],
         "recent": sorted((r for r in index if r["status"] == "done" and r["results"]),
                          key=lambda r: (r["end"], r["id"]), reverse=True)[:10],
-        "upcoming": [r for r in index if r["status"] == "live"
-                     or (r["status"] == "upcoming" and day(r["start"]) <= soon)][:40],
+        "upcoming": [r for r in index if not is_long(r) and (r["status"] == "live"
+                     or (r["status"] == "upcoming" and day(r["start"]) <= soon))][:80],
+        "leaguesRunning": sum(1 for r in index if is_long(r) and r["status"] == "live"),
         "worldsEvents": [r for r in index if (r["level"] or "").lower() == "world"],
     }
 

@@ -789,7 +789,7 @@ function renderOverview() {
   ]);
 
   h += `<div class="grid-2">
-    <div class="panel"><h2>In progress and next 7 days</h2><div class="sub">${plural(week.length, 'event')}</div>${eventRows(week.slice(0, 12))}${week.length > 12 ? `<a class="back" style="margin:10px 0 0" href="#events">All events &rarr;</a>` : ''}</div>
+    <div class="panel"><h2>In progress and next 7 days</h2><div class="sub">${plural(week.length, 'event')}${S.season.leaguesRunning ? ` &bull; ${plural(S.season.leaguesRunning, 'league')} also running (see <a href="#events">Events by month</a>)` : ''}</div>${eventRows(week.slice(0, 12))}${week.length > 12 ? `<a class="back" style="margin:10px 0 0" href="#events">All events &rarr;</a>` : ''}</div>
     <div class="panel"><h2>Latest results</h2><div class="sub">Tournament champions of the most recently finished events</div>${eventRows(S.season.recent, { empty: 'No finished events yet.' })}</div>
   </div>`;
 
