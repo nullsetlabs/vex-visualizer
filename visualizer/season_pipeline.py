@@ -67,10 +67,14 @@ USER_AGENT = "VEX-Visualizer/2.0 (+https://vex.nullsetlabs.org/visualizer/)"
 REQUEST_TIMEOUT = 30    # seconds per request
 MAX_ATTEMPTS = 4        # per request, for 5xx / network errors
 MAX_RATE_LIMITED = 8    # per request, waits after HTTP 429 (too many requests)
-# The VEX Events API allows roughly 100 requests a minute (seen Oct 2026:
-# HTTP 429 about once a minute at ~2.7 requests/second). 0.7 s between
-# request starts keeps a run near 85 a minute.
-MIN_INTERVAL = 0.7
+# The VEX Events API reports x-ratelimit-limit: 100. At 85 requests a minute
+# it still answered HTTP 429 after about four minutes (Oct 2026), so requests
+# start 1.0 s apart (60 a minute).
+MIN_INTERVAL = 1.0
+
+# Events longer than this (leagues that run for weeks) are refreshed by the
+# daily full run only, not by the 30-minute live checks.
+LIVE_MAX_DAYS = 7
 
 # An event whose awards never get finalized stops being refetched this many
 # days after it ends.
@@ -434,7 +438,6 @@ def compact_event(ev, teams, skills, awards, rankings, matches):
         "grade": grade,
         "ongoing": bool(ev.get("ongoing")), "awardsFinalized": bool(ev.get("awards_finalized")),
         "complete": is_complete(ev, today),
-        "fetchedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "divisions": [{"id": d.get("id"), "name": d.get("name")} for d in ev.get("divisions") or []],
         "teams": out_teams, "rankings": out_rank, "skills": out_skills,
         "matches": out_matches, "awards": out_awards,
@@ -620,16 +623,17 @@ def build_summaries(event_list, cached, standings):
     today = today_utc()
     listed = {e["id"]: e for e in event_list}
     index = [event_row(listed.get(eid), cached.get(eid), today) for eid in set(listed) | set(cached)]
-    index.sort(key=lambda r: (r["start"] or "9999", r["name"] or ""))
+    index.sort(key=lambda r: (r["start"] or "9999", r["name"] or "", r["id"]))
     by_id = {r["id"]: r for r in index}
 
     # Team records, built event by event in date order.
     teams = {}
-    for ev in sorted(cached.values(), key=lambda e: e["start"]):
+    by_date = sorted(cached.values(), key=lambda e: (e["start"], e["id"]))
+    for ev in by_date:
         info = {t["n"]: t for t in ev["teams"]}
         competed = {r["team"] for r in ev["rankings"]} | {s["team"] for s in ev["skills"]}
         competed |= {t for m in ev["matches"] if m["played"] for t in m["red"] + m["blue"]}
-        for n in competed:
+        for n in sorted(competed):
             if not n:
                 continue
             ti = info.get(n, {})
@@ -687,7 +691,7 @@ def build_summaries(event_list, cached, standings):
     week_of = lambda d: (d - timedelta(days=d.weekday())).isoformat()
     weeks, months = {}, {}
     best_match = None
-    for ev in cached.values():
+    for ev in by_date:
         mo = months.setdefault(month_of(ev["start"]), {"events": 0, "signature": 0, "scores": [], "skills": 0, "worlds": 0})
         played = [m for m in ev["matches"] if m["played"]]
         if played or ev["skills"] or ev["awards"]:
@@ -767,8 +771,8 @@ def build_summaries(event_list, cached, standings):
         t["opr"], by_id.get(t["events"][-1]["id"], {}).get("start", "") if t["events"] else "",
     ] for t in sorted(teams.values(), key=lambda t: t["team"])]}
     buckets = {b: {} for b in range(TEAM_BUCKETS)}
-    for n, t in teams.items():
-        buckets[team_bucket(n)][n] = t
+    for n in sorted(teams):
+        buckets[team_bucket(n)][n] = teams[n]
     return index, team_index, buckets, season
 
 
@@ -815,6 +819,7 @@ def main():
             if args.live:
                 todo = [e for e in event_list
                         if day(e.get("start")) and day(e.get("end"))
+                        and (day(e["end"]) - day(e["start"])).days <= LIVE_MAX_DAYS
                         and day(e["start"]) - timedelta(days=1) <= today <= day(e["end"]) + timedelta(days=1)]
                 if not todo:
                     # Nothing running: leave the data untouched so the workflow has nothing to commit.
