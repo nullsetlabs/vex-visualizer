@@ -6,6 +6,7 @@ Writes analytics/USAGE_REPORT.md and analytics/usage.json at the repo root with:
   - month-by-month visitors since the site launched (April 2026)
   - season-over-season comparison (2025-2026 Push Back vs 2026-2027 Override),
     including the growth multiple ("this season is N times last season")
+  - how people arrive each season (search, direct, referral, social) and from where
   - which sections people open (view_* events) and what they click (click_*,
     search_team, compare_regions events sent by the page)
   - countries and devices
@@ -102,6 +103,15 @@ def main():
         t = totals(c, start, clip(end))
         t.update({"season": name, "start": start, "end": clip(end), "complete": end <= today})
         out["seasons"].append(t)
+    # How people arrive each season: channel (search, direct, referral, social)
+    # and the sites they came from
+    def users_by(dim, start, end, limit):
+        rows = report(c, [dim], ["totalUsers"], start, end,
+                      order=OrderBy(metric=OrderBy.MetricOrderBy(metric_name="totalUsers"), desc=True), limit=limit)
+        return {d[0]: int(m[0]) for d, m in rows}
+    for s in out["seasons"]:
+        s["channels"] = users_by("sessionDefaultChannelGroup", s["start"], s["end"], 20)
+        s["sources"] = users_by("sessionSource", s["start"], s["end"], 15)
     out["windows"] = []
     for name, start, end in WINDOWS:
         if start <= today:
@@ -144,6 +154,22 @@ def main():
         for w in out["windows"]:
             L.append(f"| {w['window']} | {w['start']} to {w['end']} | {w['users']:,} | {w['sessions']:,} | {w['views']:,} |")
         L.append("")
+    if out["seasons"]:
+        names = [s["season"] for s in out["seasons"]]
+        head = ["| {} | " + " | ".join(names) + " |", "|---" * (len(names) + 1) + "|"]
+        for key, title, note in (
+                ("channels", "How people arrive (users by channel)",
+                 "GA4 default channel groups. Organic Search is Google and other search engines; "
+                 "Direct includes typed and shared links opened from apps."),
+                ("sources", "Where they came from (users by source)",
+                 "Top sites and apps that sent visitors; (direct) means no referring site.")):
+            rows = sorted({k for s in out["seasons"] for k in s[key]},
+                          key=lambda k: (-sum(s[key].get(k, 0) for s in out["seasons"]), k))
+            L += [f"## {title}", "", note + " A user who arrived more than one way is counted in each row.", "",
+                  head[0].format("Channel" if key == "channels" else "Source"), head[1]]
+            for k in rows:
+                L.append(f"| {k} | " + " | ".join(f"{s[key].get(k, 0):,}" for s in out["seasons"]) + " |")
+            L.append("")
     L += ["## Month by month", "", "| Month | Users | Sessions | Page views | Engaged sessions |", "|---|---|---|---|---|"]
     for m in out["monthly"]:
         L.append(f"| {m['month']} | {m['users']:,} | {m['sessions']:,} | {m['views']:,} | {m['engagedSessions']:,} |")
