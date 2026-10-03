@@ -116,7 +116,7 @@
   .hero { background: linear-gradient(135deg, #0f172a 0%, #0a0a0f 50%, #0c1a2e 100%); border-bottom: 1px solid var(--border); padding: 14px 24px 10px; position: sticky; top: 44px; z-index: 100; }
   .hero-inner { max-width: 1600px; margin: 0 auto; }
   .hero-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .hero-brand { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+  .hero-brand { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; text-decoration: none; color: inherit; }
   .hero-logo { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #c19a5b, #d4b076, #c19a5b); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(193,154,91,0.3); flex-shrink: 0; }
   .hero-logo svg { width: 24px; height: 24px; }
   .hero h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--accent2); }
@@ -557,7 +557,10 @@
     .archive-link { display: none; }
     .search-wrapper { order: 3; width: auto; }
     .help-btn { order: 4; padding: 9px 12px; }
-    .nav-row { display: none; }
+    .nav-row { margin-top: 8px; }
+    .nav-row .tabs { flex-wrap: nowrap; gap: 6px; margin: 0 -14px; padding: 0 14px 2px; }
+    .nav-tab { padding: 6px 11px; font-size: 12.5px; gap: 5px; border-radius: 999px; }
+    .nav-tab .ic { width: 13px; height: 13px; }
     .main { padding-top: 10px; }
     .season-banner { padding: 12px 14px; gap: 0; margin-bottom: 10px; border-radius: 14px; }
     .season-banner > div:first-child { display: flex; align-items: baseline; gap: 8px; }
@@ -620,7 +623,7 @@
 <header class="hero">
   <div class="hero-inner">
     <div class="hero-top">
-      <div class="hero-brand">
+      <a class="hero-brand" href="#home" aria-label="VEX Visualizer: back to the Overview" data-track="click_brand_home">
         <div class="hero-logo" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <line x1="12" y1="1" x2="12" y2="4" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
@@ -637,7 +640,7 @@
           <h1>VEX Visualizer <span class="by">by Arjun</span></h1>
           <div class="hero-tagline">Team <strong>6121 Conestoga Pioneers</strong> &bull; V5RC Override 2026-2027 season tracker</div>
         </div>
-      </div>
+      </a>
       <div class="search-wrapper">
         <input type="text" class="search-input" id="searchInput" placeholder="Find a team, e.g. 6121E" autocomplete="off" aria-label="Find a team by number or name">
         <div class="autocomplete-list" id="acList" role="listbox"></div>
@@ -1783,6 +1786,12 @@ function route() {
   const tok = ++routeTok;
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + view));
   document.querySelectorAll('[data-view]').forEach(a => a.classList.toggle('active', a.dataset.view === TAB_FOR[view]));
+  // On phones the tab row scrolls sideways: bring the open tab into view.
+  const tabRow = document.querySelector('.nav-row .tabs'), onTab = tabRow && tabRow.querySelector('.nav-tab.active');
+  if (onTab && tabRow.scrollWidth > tabRow.clientWidth) {
+    const a = onTab.getBoundingClientRect(), b = tabRow.getBoundingClientRect();
+    tabRow.scrollLeft += (a.left + a.width / 2) - (b.left + b.width / 2);
+  }
   if (view === 'home') renderOverview();
   else if (view === 'signature') renderSignature();
   else if (view === 'events') renderEvents(arg, tok);
