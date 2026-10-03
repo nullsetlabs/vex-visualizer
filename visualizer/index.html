@@ -836,6 +836,12 @@ const needSkills = () => lazy('skills', async () => {
   S.skills = (await loadJSON('data/skills.json')) || { hs: [], ms: [] };
   for (const key of ['hs', 'ms']) for (const r of S.skills[key] || []) S.skillsByTeam[r.team] = { ...r, grade: key === 'hs' ? 'High School' : 'Middle School' };
 });
+// Last season (Push Back 2025-2026): teams that competed at Worlds 2026, from the frozen archive.
+const needPushback = () => lazy('pushback', async () => {
+  const d = await loadJSON('data/pushback_2026.json');
+  S.pushback = {};
+  if (d) for (const [n, r] of Object.entries(d.teams)) S.pushback[n] = Object.fromEntries(d.cols.map((c, i) => [c, r[i]]));
+});
 // Same shard key as team_bucket() in season_pipeline.py.
 const bucketOf = n => [...n.toUpperCase()].reduce((a, c, i) => a + (i + 1) * c.charCodeAt(0), 0) % 64;
 async function loadTeam(n) {
@@ -1433,14 +1439,16 @@ async function renderTeams(tok) {
 async function renderTeam(num, tok) {
   const el = $('view-team');
   el.innerHTML = `<a class="back" href="#teams">&larr; All teams</a>${loading()}`;
-  const [t] = await Promise.all([loadTeam(num), needEvents()]);
+  const [t] = await Promise.all([loadTeam(num), needEvents(), needPushback()]);
   if (tok !== routeTok) return;
   const back = `<a class="back" href="#teams">&larr; All teams</a>`;
   if (!t) {
-    el.innerHTML = `${back}<div class="team-hero"><div><div class="num" translate="no">${esc(num.toUpperCase())}</div>
-      <div class="nm">No results yet this season</div>
-      <div class="meta">This team has not played a match, run skills or won an award in the 2026-2027 season so far, or is not registered for it. Results appear here after its first event: within 30 minutes at a signature event, otherwise within three or four days.</div></div>
-      <div class="ext-links"><a href="${officialTeam(num.toUpperCase())}" target="_blank" rel="noopener">Official team page &#8599;</a></div></div>`;
+    const prev = lastSeason(num);
+    el.innerHTML = `${back}<div class="team-hero ${prev ? GRADE_CLASS[prev.grade] || '' : ''}"><div><div class="num" translate="no">${esc(num.toUpperCase())}</div>
+      <div class="nm">${prev ? esc(prev.name) : 'No results yet this season'}</div>
+      <div class="meta">${prev ? `${esc([prev.region, prev.country === 'United States' ? '' : prev.country].filter(Boolean).join(', '))} ${gradeBadge(prev)} <span class="badge b-up">No 2026-2027 results yet</span>` : ''}</div>
+      <div class="meta">This team has not played a match, run skills or won an award in the 2026-2027 season so far${prev ? '' : ', or is not registered for it'}. Results appear here after its first event: within 30 minutes at a signature event, otherwise within three or four days.${prev ? ' Last season is shown below.' : ''}</div></div>
+      <div class="ext-links"><a href="${officialTeam(num.toUpperCase())}" target="_blank" rel="noopener">Official team page &#8599;</a></div></div>${pushbackPanel(num)}`;
     return;
   }
   const sk = t.skills;
@@ -1475,7 +1483,24 @@ async function renderTeam(num, tok) {
       <td class="num">${x.rank ? `${x.rank} <span class="dim">of ${x.of}</span>` : '-'}</td><td>${record(x)}</td><td>${esc(x.result) || '<span class="dim">-</span>'}</td>
       <td class="num">${x.skills || '-'}</td><td class="num">${dec1(x.opr)}</td><td class="wrap">${esc(x.awards.join(', '))}</td></tr>`; }).join('')}
     </tbody></table></div></div>`;
+  h += pushbackPanel(t.team);
   el.innerHTML = h;
+}
+
+function lastSeason(num) {
+  return (S.pushback && (S.pushback[num] || S.pushback[num.toUpperCase()])) || null;
+}
+function pushbackPanel(num) {
+  const p = lastSeason(num);
+  if (!p) return '';
+  return `<div class="panel" style="--c:var(--accent2)"><h2>${icon('clock')}Last season: Push Back 2025-2026</h2>
+    <div class="sub">This team competed at the 2026 VEX Robotics World Championship. Season numbers as shown in the Worlds 2026 dashboard.</div>
+    ${tiles([
+      { v: esc(p.division) || '-', k: 'Worlds 2026 division', i: 'globe', c: 'c-worlds' },
+      { v: `${p.wins}-${p.losses}`, k: 'Season record', n: p.winPct != null ? `${dec1(p.winPct)}% wins` : '', i: 'target', c: 'c-teams' },
+      { v: (p.driverMax || 0) + (p.autoMax || 0) || '-', k: 'Skills: best driver + best autonomous', n: `driver ${p.driverMax}, autonomous ${p.autoMax}`, i: 'bolt', c: 'c-skills' },
+    ])}
+    <a class="back" href="worlds-2026/" style="margin:0">Open the Worlds 2026 dashboard &rarr;</a></div>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -1569,26 +1594,30 @@ function searchTeams(q) {
   q = q.trim().toLowerCase();
   if (!q) return [];
   const out = [];
-  for (const t of S.teamRows) {
+  const consider = (t, extra) => {
     const n = t.team.toLowerCase();
-    const score = n === q ? 0 : n.startsWith(q) ? 1 : `${t.name} ${t.org}`.toLowerCase().includes(q) ? 2 : -1;
-    if (score >= 0) out.push({ ...t, score });
+    const score = n === q ? 0 : n.startsWith(q) ? 1 : `${t.name} ${t.org || ''}`.toLowerCase().includes(q) ? 2 : -1;
+    if (score >= 0) out.push({ ...t, ...extra, score: score + (extra ? 0.5 : 0) });
+  };
+  for (const t of S.teamRows) consider(t);
+  for (const [n, p] of Object.entries(S.pushback || {})) {
+    if (!S.teamByNum[n]) consider({ team: n, name: p.name }, { label: `${p.name} (Worlds 2026; no results yet this season)` });
   }
   out.sort((a, b) => a.score - b.score || a.team.length - b.team.length || a.team.localeCompare(b.team));
   // A full team number with no results yet: say so instead of showing nothing.
-  if (!out.some(t => t.score === 0) && /^\d{1,6}[a-z]$/i.test(q)) out.unshift({ team: q.toUpperCase(), name: 'No results yet this season', none: true });
+  if (!out.some(t => t.score < 1) && /^\d{1,6}[a-z]$/i.test(q)) out.unshift({ team: q.toUpperCase(), name: 'No results yet this season', none: true });
   return out.slice(0, 12);
 }
 function setupSearch() {
   const inp = $('searchInput'), list = $('acList');
   let items = [], sel = -1;
   const draw = () => {
-    list.innerHTML = items.map((t, i) => `<div class="ac-item${i === sel ? ' selected' : ''}${t.none ? ' none' : ''}" role="option" data-i="${i}"><span class="ac-team" translate="no">${esc(t.team)}</span><span class="ac-name">${esc(t.name)}</span></div>`).join('');
+    list.innerHTML = items.map((t, i) => `<div class="ac-item${i === sel ? ' selected' : ''}${t.none ? ' none' : ''}" role="option" data-i="${i}"><span class="ac-team" translate="no">${esc(t.team)}</span><span class="ac-name">${esc(t.label || t.name)}</span></div>`).join('');
     list.classList.toggle('show', items.length > 0);
   };
   const pick = t => { list.classList.remove('show'); inp.value = ''; inp.blur(); location.hash = '#team/' + encodeURIComponent(t.team); };
-  const update = async () => { await needTeams(); items = searchTeams(inp.value); sel = items.length ? 0 : -1; draw(); };
-  inp.onfocus = () => { needTeams(); };
+  const update = async () => { await Promise.all([needTeams(), needPushback()]); items = searchTeams(inp.value); sel = items.length ? 0 : -1; draw(); };
+  inp.onfocus = () => { needTeams(); needPushback(); };
   inp.oninput = update;
   inp.onkeydown = ev => {
     if (ev.key === 'ArrowDown') { sel = Math.min(items.length - 1, sel + 1); draw(); ev.preventDefault(); }
