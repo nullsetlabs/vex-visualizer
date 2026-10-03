@@ -25,6 +25,11 @@ Usage
 
 Computed values (OPR, DPR, CCWM) are least-squares estimates from qualification
 match scores. They are labeled as computed on the page.
+
+Webcasts
+  VEX's event pages block automated requests, so webcast links are not pulled.
+  data/webcasts.json is kept by hand: {"<event code>": [{"url": "...", "label": "..."}]}.
+  The page shows those as "Watch webcast"; this script never touches the file.
 """
 
 import argparse
@@ -734,6 +739,16 @@ def build_summaries(event_list, cached, standings):
 
     held = [r for r in index if r["status"] != "upcoming"]
     soon = today + timedelta(days=14)
+    # Winners at finished signature events, newest first (the season's top fields).
+    winners = []
+    for r in sorted((r for r in index if r["level"] == "Signature" and r["status"] == "done" and r["results"]),
+                    key=lambda r: (r["end"], r["id"]), reverse=True):
+        for award, key in (("Tournament Champions", "champions"), ("Excellence Award", "excellence")):
+            for n in r.get(key) or []:
+                t = teams.get(n, {})
+                winners.append({"team": n, "name": t.get("name", ""), "grade": t.get("grade", ""),
+                                "region": t.get("region", ""), "country": t.get("country", ""),
+                                "award": award, "event": r["id"], "eventName": r["name"], "date": r["end"]})
     title_leaders = sorted((t for t in teams.values() if t["titles"]),
                            key=lambda t: (-t["titles"], -t["excellence"], -(t["winPct"] or 0), t["team"]))[:8]
     season = {
@@ -759,6 +774,7 @@ def build_summaries(event_list, cached, standings):
                        for t in title_leaders],
             "skillsHS": standings.get("hs", [])[:5],
             "skillsMS": standings.get("ms", [])[:5],
+            "signatureWinners": winners[:16],
         },
         "signature": [r for r in index if r["level"] == "Signature"],
         "recent": sorted((r for r in index if r["status"] == "done" and r["results"]),

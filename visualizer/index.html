@@ -368,6 +368,85 @@
     .help-body dd { margin-bottom: 8px; }
   }
 
+
+  /* ===== Landing page leaders, watch links, state comparison, skills cards ===== */
+  .block-head { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 800; margin: 4px 0 2px; }
+  .block-head .ic { color: var(--gold); width: 18px; height: 18px; }
+  .block-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 10px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .grid-4 > .panel { margin-bottom: 0; min-width: 0; }
+  .ld-list { display: flex; flex-direction: column; gap: 4px; }
+  .ld-row { display: grid; grid-template-columns: 26px auto 1fr auto; gap: 8px; align-items: center; padding: 6px 8px; border-radius: 9px; text-decoration: none; color: var(--text); background: var(--surface2); border: 1px solid transparent; }
+  .ld-row:hover { border-color: var(--c, var(--accent)); }
+  .ld-rank { font-size: 12px; font-weight: 800; color: var(--text-dim); text-align: center; display: inline-flex; justify-content: center; }
+  .ld-rank.top1 { color: var(--gold); } .ld-rank.top2 { color: #cbd5e1; } .ld-rank.top3 { color: #d97706; }
+  .ld-team { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 12.5px; padding: 2px 6px; border-radius: 6px; background: var(--surface3); color: var(--accent2); }
+  .ld-main { display: flex; flex-direction: column; min-width: 0; }
+  .ld-name { font-size: 12.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ld-where { font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ld-stat { font-size: 13px; white-space: nowrap; }
+  .watch { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .watch a { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; text-decoration: none; padding: 3px 8px; border-radius: 999px; background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim); }
+  .watch a:hover { color: var(--text); border-color: #ef4444; }
+  .watch a .ic { width: 12px; height: 12px; color: #ef4444; }
+  .watch a.w-direct { color: #fecaca; border-color: rgba(239,68,68,0.5); background: rgba(239,68,68,0.12); }
+  .ext-links a .ic { width: 13px; height: 13px; vertical-align: -2px; }
+  .cmp-controls { align-items: center; }
+  .cmp-pick { display: inline-flex; align-items: center; gap: 6px; }
+  .cmp-pick .sw { width: 12px; height: 12px; border-radius: 3px; }
+  .cmp-pick.a .sw, .cmp-bar.a span { background: var(--series-1); }
+  .cmp-pick.b .sw, .cmp-bar.b span { background: var(--series-2); }
+  .cmp-pick select { max-width: 240px; }
+  .vs { font-size: 12px; font-weight: 800; color: var(--text-dim); }
+  .cmp-head, .cmp-row { display: grid; grid-template-columns: 220px 1fr 1fr; gap: 14px; align-items: center; }
+  .cmp-head { font-size: 13px; font-weight: 800; margin: 6px 0 4px; }
+  .cmp-row { padding: 6px 0; border-bottom: 1px solid var(--grid); }
+  .cmp-label { font-size: 12.5px; color: var(--text-dim); }
+  .cmp-bar { display: flex; align-items: center; gap: 8px; }
+  .cmp-bar span { display: block; height: 10px; border-radius: 0 4px 4px 0; min-width: 0; }
+  .cmp-bar b { font-size: 13px; font-variant-numeric: tabular-nums; }
+  .cmp-tops { margin-top: 14px; }
+  .cmp-tops h3 { font-size: 12.5px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .cmp-tops h3::before { content: ''; width: 10px; height: 10px; border-radius: 3px; }
+  .cmp-tops h3.a::before { background: var(--series-1); } .cmp-tops h3.b::before { background: var(--series-2); }
+  .seg button .ic { width: 13px; height: 13px; vertical-align: -2px; }
+  .sk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .sk-card { min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: 14px; text-decoration: none; color: var(--text); background: var(--surface); border: 1px solid var(--border); transition: transform 0.15s, border-color 0.15s; }
+  .sk-card:hover { transform: translateY(-2px); border-color: var(--c-skills); }
+  .sk-card.medal1 { border-color: rgba(251,191,36,0.6); background: linear-gradient(160deg, rgba(251,191,36,0.14), var(--surface) 60%); }
+  .sk-card.medal2 { border-color: rgba(203,213,225,0.5); background: linear-gradient(160deg, rgba(203,213,225,0.10), var(--surface) 60%); }
+  .sk-card.medal3 { border-color: rgba(217,119,6,0.55); background: linear-gradient(160deg, rgba(217,119,6,0.12), var(--surface) 60%); }
+  .sk-top { display: flex; justify-content: space-between; align-items: center; }
+  .sk-rank { font-size: 13px; font-weight: 800; color: var(--text-dim); }
+  .medal1 .sk-rank { color: var(--gold); } .medal2 .sk-rank { color: #cbd5e1; } .medal3 .sk-rank { color: #f59e0b; }
+  .sk-team { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 800; color: var(--accent2); margin-top: 2px; }
+  .sk-team.g-hs, .ld-team.g-hs { color: var(--hs); } .sk-team.g-ms, .ld-team.g-ms { color: var(--ms); }
+  .sk-team.g-hs, .sk-team.g-ms { background: none; }
+  .sk-name { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sk-where { font-size: 11px; color: var(--text-dim); min-height: 14px; }
+  .sk-score { display: flex; align-items: baseline; gap: 6px; margin-top: 6px; }
+  .sk-score strong { font-size: 26px; font-weight: 800; }
+  .sk-score span { font-size: 11px; color: var(--text-dim); }
+  .sk-split { display: flex; gap: 2px; height: 8px; border-radius: 4px; overflow: hidden; }
+  .sk-split .drv { background: var(--series-1); }
+  .sk-split .aut { background: var(--series-2); }
+  .sk-legend { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); }
+  .sk-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: 0; }
+  .sk-legend .kd { background: var(--series-1); } .sk-legend .ka { background: var(--series-2); }
+  @media (max-width: 1200px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) {
+    .grid-4 { grid-template-columns: 1fr; }
+    .cmp-head, .cmp-row { grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+    .cmp-head span:first-child { display: none; }
+    .cmp-label { grid-column: 1 / -1; }
+    .cmp-pick select { max-width: 150px; }
+    .sk-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .sk-card { padding: 11px; }
+    .sk-team { font-size: 18px; }
+    .sk-score strong { font-size: 21px; }
+    .sk-legend { flex-direction: column; }
+  }
+
   /* ===== Override game content (from the original page) ===== */
   .div-banner { background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
   .div-banner h2 { font-size: 18px; font-weight: 700; }
@@ -724,8 +803,9 @@ const S = {
 const UI = {
   events: { month: '', q: '', status: 'all', sig: false, grade: 'all', country: '' },
   teams: { q: '', grade: 'all', country: '', sort: 'titles', dir: -1, limit: 100 },
-  skills: { grade: 'hs', q: '', country: '', limit: 100 },
+  skills: { grade: 'hs', q: '', country: '', limit: 24, view: 'cards' },
   worlds: { grade: 'all' },
+  cmp: { a: '', b: '', grade: 'all' },
 };
 const pending = {};
 const lazy = (key, fn) => pending[key] || (pending[key] = fn());
@@ -811,6 +891,10 @@ const ICON = {
   flag: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
   clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
   target: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  play: '<polygon points="6 4 20 12 6 20 6 4"/>',
+  youtube: '<path d="M22.5 6.4a2.8 2.8 0 00-1.9-2C18.9 4 12 4 12 4s-6.9 0-8.6.5a2.8 2.8 0 00-1.9 2A29 29 0 001 12a29 29 0 00.5 5.6 2.8 2.8 0 001.9 2c1.7.4 8.6.4 8.6.4s6.9 0 8.6-.5a2.8 2.8 0 001.9-2A29 29 0 0023 12a29 29 0 00-.5-5.6z"/><polygon points="9.8 15 15.5 12 9.8 9 9.8 15"/>',
+  grid: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
+  list: '<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',
 };
 const icon = (name, cls = '') => `<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name] || ''}</svg>`;
 function awardInfo(title) {
@@ -944,16 +1028,35 @@ function eventRows(list, opts = {}) {
     if (e.champions && e.champions.length) res = `<span class="champ">${icon('trophy')}Champions</span> ${teamLinks(e.champions)}`;
     else if (e.status === 'live' || opts.badge) res = statusBadge(e);
     return `<div class="ev-row"><div class="when">${esc(fmtRange(e.start, e.end))}</div>
-      <div>${eventLink(e)} ${opts.noSig ? '' : sigBadge(e)} ${gradeBadge(e)}<div class="where">${esc(place(e))}</div></div>
+      <div>${eventLink(e)} ${opts.noSig ? '' : sigBadge(e)} ${gradeBadge(e)}<div class="where">${esc(place(e))}</div>${opts.watch ? watchLinks(e) : ''}</div>
       <div class="res">${res}</div></div>`;
   }).join('');
 }
 
+function shortEventName(name) {
+  return (name || '').split(':')[0].trim();
+}
+function watchLinks(e) {
+  const direct = (S.webcasts && S.webcasts[e.sku]) || [];
+  const yt = `https://www.youtube.com/results?search_query=${encodeURIComponent(shortEventName(e.name) + ' VEX')}`;
+  return `<span class="watch">${direct.map(w => `<a href="${esc(w.url)}" target="_blank" rel="noopener" class="w-direct">${icon('play')}${esc(w.label || 'Watch webcast')}</a>`).join('')}
+    <a href="${officialEvent(e.sku)}#webcast" target="_blank" rel="noopener">${icon('play')}Webcast</a>
+    <a href="${yt}" target="_blank" rel="noopener" title="Search YouTube for this event">${icon('youtube')}YouTube</a></span>`;
+}
+
+function leaderRows(rows, stat) {
+  if (!rows.length) return '<div class="empty">None yet.</div>';
+  return `<div class="ld-list">${rows.map((r, i) => `<a class="ld-row" href="#team/${encodeURIComponent(r.team)}">
+      <span class="ld-rank${i < 3 ? ' top' + (i + 1) : ''}">${r.rank || i + 1}</span>
+      <span class="ld-team ${GRADE_CLASS[r.grade] || ''}" translate="no">${esc(r.team)}</span>
+      <span class="ld-main"><span class="ld-name">${esc(r.name)}</span><span class="ld-where">${esc([r.region, r.country === 'United States' ? '' : r.country].filter(Boolean).join(', '))}</span></span>
+      <span class="ld-stat">${stat(r)}</span></a>`).join('')}</div>`;
+}
+
 function renderOverview() {
   const el = $('view-home');
-  let h = `<p class="intro">Season tracker for the VEX V5 Robotics Competition 2026-2027 game, Override. Results come from official VEX Events data and refresh during event weekends. The 2025-2026 Push Back season and Worlds 2026 are in the <a href="worlds-2026/">Worlds 2026 archive</a>.</p>`;
   if (!S.season) {
-    el.innerHTML = h + `<div class="notice">Event results, team records and charts will appear after the first season data update. The <a href="#skills">official skills standings</a> are already live.</div>`;
+    el.innerHTML = `<p class="intro">Season tracker for the VEX V5 Robotics Competition 2026-2027 game, Override.</p><div class="notice">Event results, team records and charts will appear after the first season data update. The <a href="#skills">official skills standings</a> are already live.</div>`;
     return;
   }
   const c = S.season.counts, L = S.season.leaders, rec = S.season.records;
@@ -963,7 +1066,7 @@ function renderOverview() {
   const daysTo = e => Math.round((utc(e.start) - utc(today)) / 864e5);
   const built = S.meta && S.meta.builtAt ? new Date(S.meta.builtAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
   const pct = c.signature ? Math.round(100 * c.signatureDone / c.signature) : 0;
-  h = `<section class="season-banner">
+  let h = `<section class="season-banner">
     <div>
       <div class="sb-kicker">VEX V5 Robotics Competition</div>
       <div class="sb-title">Override 2026-2027 season</div>
@@ -986,45 +1089,51 @@ function renderOverview() {
     { c: 'c-game', i: 'game', t: 'Learn the game', d: 'How Override is played and scored', href: '#override' },
   ];
   h += `<nav class="start-grid" aria-label="Start here">${START.map(x => `<a class="start-card ${x.c}" href="${x.href}"${x.act ? ` data-act="${x.act}"` : ''}><span class="sc-icon">${icon(x.i)}</span><span class="sc-title">${esc(x.t)}</span><span class="sc-desc">${esc(x.d)}</span></a>`).join('')}</nav>`;
+
+  // Season leaders: official results only (signature event wins, tournament titles, official skills standings).
+  const sigW = L.signatureWinners || [];
+  h += `<h2 class="block-head">${icon('trophy')}Season leaders</h2>
+    <p class="block-sub">Teams leading on official results. Signature event winners come from the season's top events.</p>
+    <div class="grid-4">
+      <div class="panel" style="--c:var(--gold)"><h2>${icon('star')}Signature event winners</h2><div class="sub">Tournament Champions and Excellence, newest first. <a href="#signature">All signature events</a></div>
+        ${sigW.length ? `<div class="ld-list">${sigW.slice(0, 8).map(w => { const [ai, ac] = awardInfo(w.award); return `<a class="ld-row" href="#team/${encodeURIComponent(w.team)}">
+          <span class="ld-rank">${icon(ai, ac)}</span>
+          <span class="ld-team ${GRADE_CLASS[w.grade] || ''}" translate="no">${esc(w.team)}</span>
+          <span class="ld-main"><span class="ld-name">${esc(w.name)}</span><span class="ld-where">${esc(shortEventName(w.eventName))}</span></span></a>`; }).join('')}</div>` : '<div class="empty">No signature events finished yet.</div>'}</div>
+      <div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Most tournament titles</h2><div class="sub">Tournament Champions wins this season. <a href="#teams">All teams</a></div>
+        ${leaderRows(L.titles.slice(0, 8), t => `<strong>${t.titles}</strong> <span class="dim">title${t.titles === 1 ? '' : 's'}</span>`)}</div>
+      <div class="panel" style="--c:var(--hs)"><h2>${icon('bolt')}Top skills, high school</h2><div class="sub">Official World Skills Standings. <a href="#skills">Full leaderboard</a></div>
+        ${leaderRows(L.skillsHS.map(r => ({ ...r, grade: 'High School' })), r => `<strong>${r.score}</strong>`)}</div>
+      <div class="panel" style="--c:var(--ms)"><h2>${icon('bolt')}Top skills, middle school</h2><div class="sub">Official World Skills Standings. <a href="#skills">Full leaderboard</a></div>
+        ${leaderRows(L.skillsMS.map(r => ({ ...r, grade: 'Middle School' })), r => `<strong>${r.score}</strong>`)}</div>
+    </div>`;
+
+  h += `<div class="grid-2" style="margin-top:16px">
+    <div class="panel" id="week-panel" style="--c:var(--c-events)"><h2>${icon('calendar')}In progress and next 7 days</h2><div class="sub">${plural(week.length, 'event')}${S.season.leaguesRunning ? ` &bull; ${plural(S.season.leaguesRunning, 'league')} also running (see <a href="#events">Events</a>)` : ''}</div>${eventRows(week.slice(0, 6), { watch: true })}${week.length > 6 ? `<a class="back" style="margin:10px 0 0" href="#events">All ${week.length} events this week &rarr;</a>` : ''}</div>
+    <div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Latest results</h2><div class="sub">Tournament champions of the most recently finished events</div>${eventRows(S.season.recent.slice(0, 6), { empty: 'No finished events yet.', watch: true })}</div>
+  </div>`;
+
+  h += `<div class="panel" id="compare-box" style="margin-top:16px;--c:var(--c-worlds)"><h2>${icon('globe')}Compare states and regions</h2><div class="sub">Pick two states, provinces or regions to compare their teams this season.</div><div class="empty">Loading teams...</div></div>`;
+
+  h += `<h2 class="block-head" style="margin-top:22px">${icon('chart')}Season in numbers</h2>`;
   h += tiles([
     { v: fmtInt(c.eventsHeld), k: 'Events held so far', n: `${fmtInt(c.eventsListed)} listed for the season`, i: 'calendar', c: 'c-events' },
     { v: `${c.signatureDone} of ${c.signature}`, k: 'Signature events held', i: 'star', c: 'c-sig' },
     { v: fmtInt(c.teams), k: 'Teams with results', n: `<span style="color:var(--hs)">${fmtInt(c.teamsHS)} HS</span> &bull; <span style="color:var(--ms)">${fmtInt(c.teamsMS)} MS</span>`, i: 'users', c: 'c-teams' },
-    { v: fmtInt(c.matches), k: 'Matches played', i: 'target', c: 'c-game' },
     { v: fmtInt(c.worldsQualified), k: 'Worlds qualifiers so far', n: 'from qualifying awards', i: 'globe', c: 'c-worlds' },
-    { v: rec.match ? fmtInt(rec.match.score) : '-', k: 'Highest alliance score', i: 'trophy', c: 'c-skills' },
+    { v: rec.match ? fmtInt(rec.match.score) : '-', k: 'Highest alliance score', n: rec.match ? `${rec.match.teams.map(esc).join(' + ')}` : '', i: 'trophy', c: 'c-skills' },
   ]);
 
-  h += `<div class="grid-2">
-    <div class="panel" id="week-panel" style="--c:var(--c-events)"><h2>${icon('calendar')}In progress and next 7 days</h2><div class="sub">${plural(week.length, 'event')}${S.season.leaguesRunning ? ` &bull; ${plural(S.season.leaguesRunning, 'league')} also running (see <a href="#events">Events</a>)` : ''}</div>${eventRows(week.slice(0, 12))}${week.length > 12 ? `<a class="back" style="margin:10px 0 0" href="#events">All events &rarr;</a>` : ''}</div>
-    <div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Latest results</h2><div class="sub">Tournament champions of the most recently finished events</div>${eventRows(S.season.recent, { empty: 'No finished events yet.' })}</div>
-  </div>`;
-
   const months = S.season.monthly;
-  h += `<div class="panel" style="margin-top:16px;--c:var(--c-events)"><h2>${icon('calendar')}Season by month</h2><div class="sub">One row per month: events with results, matches played, alliance scores, the top skills score and new Worlds qualifiers. Select a month to see its events.</div>
-    ${months.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Month</th><th class="num">Events</th><th class="num">Signature</th><th class="num">Matches</th><th class="num">Highest score</th><th class="num">Median score</th><th class="num">Top skills</th><th class="num">Worlds qualifiers</th></tr></thead><tbody>
-    ${months.slice().reverse().map(m => `<tr><td><a class="ev-link" href="#events/${m.month}">${esc(fmtMonth(m.month))}</a></td><td class="num">${fmtInt(m.events)}</td><td class="num">${m.signature || ''}</td><td class="num">${fmtInt(m.matches)}</td><td class="num">${m.max ?? '-'}</td><td class="num">${m.median ?? '-'}</td><td class="num">${m.skillsMax ?? '-'}</td><td class="num">${m.worlds || ''}</td></tr>`).join('')}
+  h += `<div class="panel" style="--c:var(--c-events)"><h2>${icon('calendar')}Season by month</h2><div class="sub">One row per month: events with results, alliance scores, the top skills score and new Worlds qualifiers. Select a month to see its events.</div>
+    ${months.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Month</th><th class="num">Events</th><th class="num">Signature</th><th class="num">Highest score</th><th class="num">Median score</th><th class="num">Top skills</th><th class="num">Worlds qualifiers</th></tr></thead><tbody>
+    ${months.slice().reverse().map(m => `<tr><td><a class="ev-link" href="#events/${m.month}">${esc(fmtMonth(m.month))}</a></td><td class="num">${fmtInt(m.events)}</td><td class="num">${m.signature || ''}</td><td class="num">${m.max ?? '-'}</td><td class="num">${m.median ?? '-'}</td><td class="num">${m.skillsMax ?? '-'}</td><td class="num">${m.worlds || ''}</td></tr>`).join('')}
     </tbody></table></div>` : '<div class="empty">No results yet.</div>'}</div>`;
 
   h += `<div class="grid-2">
     <div class="panel" style="--c:var(--series-1)"><h2>${icon('chart')}Alliance scores by week</h2><div class="sub">Highest and median alliance score across all played matches each week. Shows how scoring develops as teams learn the game.</div><div id="chart-scores">${S.season.weekly.some(w => w.matches) ? '' : '<div class="empty">No match data yet.</div>'}</div></div>
     <div class="panel" style="--c:var(--c-skills)"><h2>${icon('bolt')}Top skills score by week</h2><div class="sub">Best combined driver + autonomous skills score at any event held that week</div><div id="chart-skills">${S.season.weekly.some(w => w.skillsMax) ? '' : '<div class="empty">No skills data yet.</div>'}</div></div>
   </div>`;
-
-  const leaderTable = (rows, cols) => rows.length ? `<div class="tbl-wrap"><table class="tbl"><tbody>${rows.map(cols).join('')}</tbody></table></div>` : '<div class="empty">None yet.</div>';
-  h += `<div class="grid-3">
-    <div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Most tournament titles</h2><div class="sub">Tournament Champions wins this season. <a href="#teams">Full team table</a></div>
-      ${leaderTable(L.titles, t => `<tr><td>${teamLink(t.team)}</td><td class="dim">${esc(t.name)}</td><td class="num"><strong>${t.titles}</strong></td><td class="dim">${t.excellence ? plural(t.excellence, 'Excellence award') : ''}</td></tr>`)}</div>
-    <div class="panel" style="--c:var(--hs)"><h2>${icon('bolt')}Top skills, high school</h2><div class="sub">Official World Skills Standings. <a href="#skills">All standings</a></div>
-      ${leaderTable(L.skillsHS, r => `<tr><td class="num">${r.rank}</td><td>${teamLink(r.team)}</td><td class="dim">${esc(r.name)}</td><td class="num"><strong>${r.score}</strong></td></tr>`)}</div>
-    <div class="panel" style="--c:var(--ms)"><h2>${icon('bolt')}Top skills, middle school</h2><div class="sub">Official World Skills Standings</div>
-      ${leaderTable(L.skillsMS, r => `<tr><td class="num">${r.rank}</td><td>${teamLink(r.team)}</td><td class="dim">${esc(r.name)}</td><td class="num"><strong>${r.score}</strong></td></tr>`)}</div>
-  </div>`;
-
-  if (rec.match) {
-    const ev = S.season.recent.concat(S.season.signature).find(e => e.id === rec.match.event);
-    h += `<div class="panel" style="margin-top:16px"><h2>Highest alliance score this season</h2><div class="sub"><strong style="color:var(--text);font-size:15px">${fmtInt(rec.match.score)}</strong> by ${teamLinks(rec.match.teams)} in ${esc(rec.match.match)}${ev ? ` at ${eventLink(ev)}` : ` (<a href="#event/${rec.match.event}">event</a>)`}</div></div>`;
-  }
   el.innerHTML = h;
   el.querySelectorAll('[data-act]').forEach(a => a.onclick = ev => {
     ev.preventDefault();
@@ -1046,6 +1155,69 @@ function renderOverview() {
     title: 'Top skills score by week', labels: sk.map(w => w.week),
     series: [{ name: 'Top skills score', color: 'var(--series-1)', values: sk.map(w => w.skillsMax) }],
   });
+  renderCompare(routeTok);
+}
+
+// ---------------------------------------------------------------------------
+// Compare two states or regions (from the team index)
+// ---------------------------------------------------------------------------
+function loadPref(key) { try { return localStorage.getItem(key) || ''; } catch (e) { return ''; } }
+function savePref(key, v) { try { localStorage.setItem(key, v); } catch (e) { /* storage unavailable */ } }
+
+async function renderCompare(tok) {
+  await needTeams(); if (tok !== routeTok) return;
+  const box = $('compare-box'); if (!box) return;
+  const f = UI.cmp;
+  const count = {};
+  for (const t of S.teamRows) if (t.region) { const k = `${t.region}|${t.country}`; count[k] = (count[k] || 0) + 1; }
+  const keys = Object.keys(count);
+  if (keys.length < 2) { box.querySelector('.empty').textContent = 'Not enough team data yet.'; return; }
+  const byCountry = {};
+  for (const k of keys) { const country = k.split('|')[1]; (byCountry[country] = byCountry[country] || []).push(k); }
+  const countryOrder = Object.keys(byCountry).sort((a, b) => byCountry[b].reduce((s, k) => s + count[k], 0) - byCountry[a].reduce((s, k) => s + count[k], 0));
+  const top = keys.slice().sort((a, b) => count[b] - count[a]);
+  const pick = (want, fallback) => keys.includes(want) ? want : fallback;
+  f.a = keys.includes(f.a) ? f.a : pick(loadPref('cmpA') || 'Pennsylvania|United States', top[0]);
+  f.b = keys.includes(f.b) ? f.b : pick(loadPref('cmpB') || 'California|United States', top[1] === f.a ? top[0] : top[1]);
+  const label = k => { const [r, c] = k.split('|'); return c === 'United States' ? r : `${r}, ${c}`; };
+  const options = sel => countryOrder.map(cn => `<optgroup label="${esc(cn)}">${byCountry[cn].sort((x, y) => count[y] - count[x]).map(k => `<option value="${esc(k)}"${k === sel ? ' selected' : ''}>${esc(k.split('|')[0])} (${count[k]})</option>`).join('')}</optgroup>`).join('');
+  const stats = k => {
+    const [r, c] = k.split('|');
+    const ts = S.teamRows.filter(t => t.region === r && t.country === c && (f.grade === 'all' || t.grade === f.grade));
+    const bySkills = ts.filter(t => t.skills != null).sort((x, y) => y.skills - x.skills);
+    return {
+      ts, bySkills,
+      rows: [
+        ['Teams with results', ts.length],
+        ['Tournament titles', ts.reduce((s, t) => s + (t.titles || 0), 0)],
+        ['Excellence awards', ts.reduce((s, t) => s + (t.excellence || 0), 0)],
+        ['Worlds qualifiers', ts.filter(t => t.worlds).length],
+        ['Teams in the world skills top 100', ts.filter(t => t.skillsRank && t.skillsRank <= 100).length],
+        ['Best skills score', bySkills.length ? bySkills[0].skills : 0],
+      ],
+    };
+  };
+  const A = stats(f.a), B = stats(f.b);
+  const bars = A.rows.map(([name, a], i) => {
+    const b = B.rows[i][1], m = Math.max(a, b, 1);
+    return `<div class="cmp-row"><div class="cmp-label">${esc(name)}</div>
+      <div class="cmp-bar a"><span style="width:${Math.max(a ? 3 : 0, 100 * a / m)}%"></span><b>${fmtInt(a)}</b></div>
+      <div class="cmp-bar b"><span style="width:${Math.max(b ? 3 : 0, 100 * b / m)}%"></span><b>${fmtInt(b)}</b></div></div>`;
+  }).join('');
+  const topList = S_ => S_.bySkills.length ? `<div class="ld-list">${S_.bySkills.slice(0, 5).map((t, i) => `<a class="ld-row" href="#team/${encodeURIComponent(t.team)}"><span class="ld-rank">${i + 1}</span><span class="ld-team ${GRADE_CLASS[t.grade] || ''}" translate="no">${esc(t.team)}</span><span class="ld-main"><span class="ld-name">${esc(t.name)}</span><span class="ld-where">${t.titles ? plural(t.titles, 'title') : ''}</span></span><span class="ld-stat"><strong>${t.skills}</strong></span></a>`).join('')}</div>` : '<div class="empty">No skills scores yet.</div>';
+  box.innerHTML = `<h2>${icon('globe')}Compare states and regions</h2><div class="sub">Pick two states, provinces or regions to compare their teams this season. Counts come from official results.</div>
+    <div class="filters cmp-controls">
+      <label class="cmp-pick a"><span class="sw"></span><select id="cmpA" aria-label="First state or region">${options(f.a)}</select></label>
+      <span class="vs">vs</span>
+      <label class="cmp-pick b"><span class="sw"></span><select id="cmpB" aria-label="Second state or region">${options(f.b)}</select></label>
+      ${segButtons('cmpGrade', [['all', 'All'], ['High School', 'High school'], ['Middle School', 'Middle school']], f.grade)}
+    </div>
+    <div class="cmp-head"><span></span><span class="a">${esc(label(f.a))}</span><span class="b">${esc(label(f.b))}</span></div>
+    ${bars}
+    <div class="grid-2 cmp-tops"><div><h3 class="a">Top skills scores, ${esc(label(f.a))}</h3>${topList(A)}</div><div><h3 class="b">Top skills scores, ${esc(label(f.b))}</h3>${topList(B)}</div></div>`;
+  $('cmpA').onchange = ev => { f.a = ev.target.value; savePref('cmpA', f.a); renderCompare(routeTok); };
+  $('cmpB').onchange = ev => { f.b = ev.target.value; savePref('cmpB', f.b); renderCompare(routeTok); };
+  box.querySelectorAll('#cmpGrade button').forEach(bt => bt.onclick = () => { f.grade = bt.dataset.v; renderCompare(routeTok); });
 }
 
 // ---------------------------------------------------------------------------
@@ -1143,7 +1315,7 @@ async function renderEvent(id, tok) {
   let h = `${back}
     <div class="detail-head"><div><h2>${esc(e.name)}</h2>
       <div class="meta">${esc(fmtRange(e.start, e.end))} &bull; ${esc(place(e) || e.country)} ${e.grade ? `&bull; ${esc(e.grade)}` : ''} &bull; ${esc(e.sku)} ${sigBadge(e)} ${statusBadge(base || e)}</div></div>
-      <div class="ext-links"><a href="${officialEvent(e.sku)}" target="_blank" rel="noopener">Official event page &#8599;</a><a href="${officialEvent(e.sku)}#webcast" target="_blank" rel="noopener">Webcast &#8599;</a></div></div>`;
+      <div class="ext-links"><a href="${officialEvent(e.sku)}" target="_blank" rel="noopener">Official event page &#8599;</a>${((S.webcasts && S.webcasts[e.sku]) || []).map(w => `<a href="${esc(w.url)}" target="_blank" rel="noopener">${icon('play')} ${esc(w.label || 'Watch webcast')}</a>`).join('')}<a href="${officialEvent(e.sku)}#webcast" target="_blank" rel="noopener">${icon('play')} Webcast</a><a href="https://www.youtube.com/results?search_query=${encodeURIComponent(shortEventName(e.name) + ' VEX')}" target="_blank" rel="noopener">${icon('youtube')} YouTube</a></div></div>`;
   if (!ev || (!ev.matches.length && !ev.awards.length && !ev.skills.length)) {
     h += `<div class="notice">${base && base.status === 'upcoming' ? 'This event has not started yet. Results appear here once matches are played.' : 'No results have been published for this event yet.'}</div>`;
     el.innerHTML = h; return;
@@ -1265,7 +1437,7 @@ async function renderTeam(num, tok) {
       <div class="nm">${esc(t.name)}</div>
       <div class="meta">${esc(t.org)} ${place(t) ? '&bull; ' + esc(place(t)) : ''} ${gradeBadge(t)}
       ${t.worlds ? `<span class="badge b-world">${icon('globe')}Qualified for Worlds</span>` : ''}</div></div>
-      <div class="ext-links"><a href="${officialTeam(t.team)}" target="_blank" rel="noopener">Official team page &#8599;</a></div></div>`;
+      <div class="ext-links"><a href="${officialTeam(t.team)}" target="_blank" rel="noopener">Official team page &#8599;</a><a href="https://www.youtube.com/results?search_query=${encodeURIComponent('VEX ' + t.team + ' Override')}" target="_blank" rel="noopener" title="Search YouTube for this team">${icon('youtube')} Find videos</a></div></div>`;
   h += tiles([
     { v: t.events.length, k: 'Events', i: 'calendar', c: 'c-events' },
     { v: record(t), k: 'Qualification record', n: t.winPct != null ? `${dec1(t.winPct)}% wins` : '', i: 'target', c: 'c-teams' },
@@ -1296,29 +1468,50 @@ async function renderTeam(num, tok) {
 // ---------------------------------------------------------------------------
 // Skills standings (official)
 // ---------------------------------------------------------------------------
+function skillCard(r, grade) {
+  const total = (r.driver || 0) + (r.prog || 0);
+  const d = total ? Math.round(100 * r.driver / total) : 50;
+  const where = [r.region, r.country === 'United States' ? '' : r.country].filter(Boolean).join(', ');
+  return `<a class="sk-card${r.rank <= 3 ? ' medal' + r.rank : ''}" href="#team/${encodeURIComponent(r.team)}">
+    <div class="sk-top"><span class="sk-rank">#${r.rank}</span>${gradeBadge({ grade })}</div>
+    <div class="sk-team ${GRADE_CLASS[grade] || ''}" translate="no">${esc(r.team)}</div>
+    <div class="sk-name">${esc(r.name)}</div>
+    <div class="sk-where">${esc(where)}</div>
+    <div class="sk-score"><strong>${r.score}</strong><span>skills score</span></div>
+    <div class="sk-split" role="img" aria-label="Driver ${r.driver}, autonomous ${r.prog}"><span class="drv" style="width:${d}%"></span><span class="aut" style="width:${100 - d}%"></span></div>
+    <div class="sk-legend"><span><i class="kd"></i>Driver ${r.driver}</span><span><i class="ka"></i>Autonomous ${r.prog}</span></div>
+  </a>`;
+}
+
 async function renderSkills(tok) {
   const el = $('view-skills'), f = UI.skills;
   if (!S.skills) el.innerHTML = loading();
   await needSkills(); if (tok !== routeTok) return;
   const all = S.skills[f.grade] || [];
+  const grade = f.grade === 'hs' ? 'High School' : 'Middle School';
   const q = f.q.trim().toLowerCase();
   const rows = all.filter(r => (!f.country || r.country === f.country) && (!q || `${r.team} ${r.name} ${r.org} ${r.region}`.toLowerCase().includes(q)));
-  el.innerHTML = `<p class="intro">Official World Skills Standings: each team's best combined driver + autonomous score from a single event this season. Ranks match events.vex.com.</p>
+  const step = f.view === 'cards' ? 24 : 100;
+  el.innerHTML = `<p class="intro">Official World Skills Standings: each team's best combined driver + autonomous score from a single event this season. Ranks match events.vex.com. ${helpLink('What are robot skills?')}</p>
     <div class="filters">
       ${segButtons('skGrade', [['hs', 'High school'], ['ms', 'Middle school']], f.grade)}
+      <div class="seg" id="skView"><button data-v="cards" class="${f.view === 'cards' ? 'on' : ''}">${icon('grid')} Cards</button><button data-v="table" class="${f.view === 'table' ? 'on' : ''}">${icon('list')} Table</button></div>
       <input type="text" id="skQ" placeholder="Search team, name, school or region" value="${esc(f.q)}">
       <select id="skCountry">${opt('', 'All countries', f.country)}${countries(all).map(c => opt(c, c, f.country)).join('')}</select>
       <span class="count">${plural(rows.length, 'team')}</span>
     </div>
-    ${all.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th class="num">Rank</th><th>Team</th><th class="num">Score</th><th class="num">Autonomous</th><th class="num">Driver</th><th>Name</th><th>Organization</th><th>Location</th><th>Event code</th><th>Date</th></tr></thead><tbody>
+    ${!all.length ? noData('Skills standings') : f.view === 'cards'
+      ? `<div class="sk-grid">${rows.slice(0, f.limit).map(r => skillCard(r, grade)).join('')}</div>`
+      : `<div class="tbl-wrap"><table class="tbl"><thead><tr><th class="num">Rank</th><th>Team</th><th class="num">Score</th><th class="num">Autonomous</th><th class="num">Driver</th><th>Name</th><th>Organization</th><th>Location</th><th>Event code</th><th>Date</th></tr></thead><tbody>
       ${rows.slice(0, f.limit).map(r => `<tr><td class="num">${r.rank}</td><td>${teamLink(r.team)}</td><td class="num"><strong>${r.score}</strong></td><td class="num">${r.prog}</td><td class="num">${r.driver}</td>
         <td class="dim">${esc(r.name)}</td><td class="dim">${esc(r.org)}</td><td class="dim">${esc([r.region, r.country].filter(Boolean).join(', '))}</td><td><a href="${officialEvent(r.event)}" target="_blank" rel="noopener" class="dim">${esc(r.event)}</a></td><td class="dim">${esc(fmtDate(r.date))}</td></tr>`).join('')}
-    </tbody></table></div>` : noData('Skills standings')}
-    ${rows.length > f.limit ? `<button class="more" id="skMore">Show ${Math.min(100, rows.length - f.limit)} more</button>` : ''}`;
-  el.querySelectorAll('#skGrade button').forEach(b => b.onclick = () => { f.grade = b.dataset.v; f.country = ''; f.limit = 100; renderSkills(routeTok); });
-  $('skQ').oninput = ev => { f.q = ev.target.value; f.limit = 100; keepFocus('skQ', () => renderSkills(routeTok)); };
-  $('skCountry').onchange = ev => { f.country = ev.target.value; renderSkills(routeTok); };
-  if ($('skMore')) $('skMore').onclick = () => { f.limit += 100; renderSkills(routeTok); };
+    </tbody></table></div>`}
+    ${rows.length > f.limit ? `<button class="more" id="skMore">Show ${Math.min(step, rows.length - f.limit)} more</button>` : ''}`;
+  el.querySelectorAll('#skGrade button').forEach(b => b.onclick = () => { f.grade = b.dataset.v; f.country = ''; f.limit = step; renderSkills(routeTok); });
+  el.querySelectorAll('#skView button').forEach(b => b.onclick = () => { f.view = b.dataset.v; f.limit = f.view === 'cards' ? 24 : 100; renderSkills(routeTok); });
+  $('skQ').oninput = ev => { f.q = ev.target.value; f.limit = step; keepFocus('skQ', () => renderSkills(routeTok)); };
+  $('skCountry').onchange = ev => { f.country = ev.target.value; f.limit = step; renderSkills(routeTok); };
+  if ($('skMore')) $('skMore').onclick = () => { f.limit += step; renderSkills(routeTok); };
 }
 
 // ---------------------------------------------------------------------------
@@ -1419,7 +1612,7 @@ function route() {
 (async function init() {
   document.querySelectorAll('.nav-tab[data-icon]').forEach(a => a.insertAdjacentHTML('afterbegin', icon(a.dataset.icon)));
   setupSearch();
-  [S.season, S.meta] = await Promise.all([loadJSON('data/season.json'), loadJSON('data/meta.json')]);
+  [S.season, S.meta, S.webcasts] = await Promise.all([loadJSON('data/season.json'), loadJSON('data/meta.json'), loadJSON('data/webcasts.json')]);
   window.addEventListener('hashchange', () => { route(); window.scrollTo(0, 0); });
   route();
 })();
