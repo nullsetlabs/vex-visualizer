@@ -6,7 +6,7 @@
 # visualizer/worlds-2026/ is frozen and never touched by this workflow.
 #
 # Update plan (light on the VEX Events API)
-#   - Every 30 minutes, "live" mode: follows only signature events (and the
+#   - Every 30 minutes (minutes 7 and 37, off the busy top of the hour), "live" mode: follows only signature events (and the
 #     World Championship once listed) from the day before to the day after
 #     they run; skills standings at most every 3 hours. With no signature event
 #     running it exits in seconds without a single API request. Runs every day
@@ -22,7 +22,7 @@ name: Update VEX Visualizer Data
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '7,37 * * * *'
     - cron: '17 6 * * 1,4'
   workflow_dispatch:
     inputs:
