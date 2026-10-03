@@ -635,6 +635,12 @@
       <dt>OPR</dt><dd>Offensive power rating: an estimate of how many points a team adds to its alliance's score. Computed by this site from qualification match scores, so it is a guide, not an official number.</dd>
       <dt>CCWM</dt><dd>An estimate of how much a team adds to its alliance's winning margin. Also computed by this site.</dd>
     </dl>
+    <h3>How often the data updates</h3>
+    <dl>
+      <dt>Signature events</dt><dd>Every 30 minutes while the event is running, so rankings, matches and awards appear during the event.</dd>
+      <dt>All other events</dt><dd>Twice a week, on Monday and Thursday mornings (UTC). A tournament usually appears here within three or four days.</dd>
+      <dt>Skills standings</dt><dd>With every update; at most every 3 hours during signature events.</dd>
+    </dl>
     <div class="tip">Reading in another language? Your browser's translate feature works on this page. Team numbers stay as they are.</div>
   </div>
 </dialog>
@@ -922,8 +928,11 @@ function tiles(list) {
 function openHelp() { const d = $('helpDialog'); if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
 const helpLink = (txt = 'What do these words mean?') => `<button type="button" class="help-link" onclick="openHelp()">${txt}</button>`;
 const countries = rows => [...new Set(rows.map(r => r.country).filter(Boolean))].sort();
-function keepFocus(id, fn) {
-  const pos = $(id).selectionStart; fn();
+// Re-rendering a view replaces its search box. The render functions are async,
+// so wait for the new box to exist before putting the cursor back in it.
+async function keepFocus(id, fn) {
+  const pos = $(id).selectionStart;
+  await fn();
   const inp = $(id); if (inp) { inp.focus(); inp.setSelectionRange(pos, pos); }
 }
 function segButtons(id, options, current) {
@@ -1070,7 +1079,7 @@ function renderOverview() {
     <div>
       <div class="sb-kicker">VEX V5 Robotics Competition</div>
       <div class="sb-title">Override 2026-2027 season</div>
-      <div class="sb-sub">Results from official VEX Events data${built ? `, updated ${esc(built)}` : ''}. New to VEX? ${helpLink('Start with the word guide')}. Last season is in the <a href="worlds-2026/">Worlds 2026 archive</a>.</div>
+      <div class="sb-sub">Results from official VEX Events data${built ? `, updated ${esc(built)}` : ''}. Signature events update every 30 minutes while they run; all other events on Mondays and Thursdays. New to VEX? ${helpLink('Start with the word guide')}. Last season is in the <a href="worlds-2026/">Worlds 2026 archive</a>.</div>
     </div>
     <div class="sb-progress">
       <div class="sb-label"><span>Signature events held</span><strong>${c.signatureDone} of ${c.signature}</strong></div>
