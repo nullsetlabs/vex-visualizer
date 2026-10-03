@@ -18,7 +18,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vex.nullsetlabs.org/">
 <meta property="og:title" content="VEX at Null Set Labs">
-<meta property="og:description" content="VEX robotics work from Null Set Labs. Live scouting visualizer for Worlds and ongoing statistical research on VEX competition data.">
+<meta property="og:description" content="VEX robotics work from Null Set Labs: a season tracker for the 2026-2027 VEX V5 Robotics Competition and the Worlds 2026 dashboard archive.">
 <meta property="og:image" content="https://vex.nullsetlabs.org/og-preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -27,11 +27,11 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="VEX at Null Set Labs">
-<meta name="twitter:description" content="VEX robotics work from Null Set Labs. Live scouting visualizer for Worlds and ongoing statistical research on VEX competition data.">
+<meta name="twitter:description" content="VEX robotics work from Null Set Labs: a season tracker for the 2026-2027 VEX V5 Robotics Competition and the Worlds 2026 dashboard archive.">
 <meta name="twitter:image" content="https://vex.nullsetlabs.org/og-preview.png">
 
 <!-- General Meta -->
-<meta name="description" content="VEX robotics work from Null Set Labs. Live scouting visualizer and statistical research on VEX competition data.">
+<meta name="description" content="VEX robotics work from Null Set Labs: a season tracker for the 2026-2027 VEX V5 Robotics Competition and the Worlds 2026 dashboard archive.">
 <meta name="author" content="Arjun Mohanan">
 <link rel="canonical" href="https://vex.nullsetlabs.org/">
 <meta name="robots" content="index, follow">
@@ -149,7 +149,7 @@
     letter-spacing: -0.4px; color: var(--text);
     margin-bottom: 40px; line-height: 1.15;
   }
-  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .projects { display: grid; grid-template-columns: minmax(0, 620px); gap: 20px; }
   .project-card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 12px; transition: all 0.25s ease;
@@ -354,7 +354,6 @@
     <span class="nav-section">VEX</span>
     <div class="nav-links">
       <a href="/visualizer/">Visualizer</a>
-      <a href="/research/">Research</a>
       <a href="https://nullsetlabs.org/">All projects</a>
     </div>
   </div>
@@ -373,8 +372,8 @@
     <line x1="42" y1="158" x2="158" y2="42" stroke="url(#heroSlashGradient)" stroke-width="9" stroke-linecap="round"/>
   </svg>
   <div class="hero-eyebrow">VEX at Null Set Labs</div>
-  <h1>Robotics research and open tools.</h1>
-  <p class="hero-tagline">Live tools for the VEX community, plus ongoing research on VEX competition data. Open source by default.</p>
+  <h1>Open tools for VEX robotics.</h1>
+  <p class="hero-tagline">Live tools for the VEX community. Open source by default.</p>
 </header>
 
 <section>
@@ -414,34 +413,6 @@
       </div>
     </a>
 
-    <a class="project-card" href="/research/">
-      <div class="project-visual">
-        <svg viewBox="0 0 280 158" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <linearGradient id="bellFill" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stop-color="#c19a5b" stop-opacity="0.5"/>
-              <stop offset="1" stop-color="#c19a5b" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <line x1="32" y1="130" x2="248" y2="130" stroke="#26262f" stroke-width="1"/>
-          <path d="M 38 128 Q 90 128 110 90 Q 132 38 154 90 Q 178 128 244 128 L 244 130 L 38 130 Z" fill="url(#bellFill)"/>
-          <path d="M 38 128 Q 90 128 110 90 Q 132 38 154 90 Q 178 128 244 128" fill="none" stroke="#c19a5b" stroke-width="2"/>
-          <circle cx="132" cy="38" r="3" fill="#c19a5b"/>
-          <circle cx="80" cy="118" r="2" fill="#8a8a92"/>
-          <circle cx="190" cy="118" r="2" fill="#8a8a92"/>
-        </svg>
-      </div>
-      <div class="project-content">
-        <div class="project-card-header">
-          <div class="project-name">VEX Research</div>
-          <span class="pill pill-progress">In Preparation</span>
-        </div>
-        <p class="project-subtitle">Statistical research on VEX competition data. In preparation.</p>
-        <div class="project-meta">
-          <span class="project-link">vex.nullsetlabs.org/research</span>
-        </div>
-      </div>
-    </a>
 
   </div>
 </section>
