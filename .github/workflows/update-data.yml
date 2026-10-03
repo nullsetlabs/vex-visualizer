@@ -1,53 +1,42 @@
-# GitHub Actions Workflow: Auto-Update VEX Visualizer Data
-# Save as: .github/workflows/update-data.yml in the new repo
+# GitHub Actions workflow: update the VEX Visualizer season data (2026-2027 Override)
 #
-# UPDATED for the new repo structure where visualizer files live in /visualizer/.
-# Key changes from the old workflow:
-#   - Python scripts now run with working-directory: visualizer
-#   - Git diff and git add paths now use visualizer/ prefix
-#   - Summary step reads JSON from visualizer/ folder
+# Runs visualizer/season_pipeline.py and commits visualizer/data/ when it changes.
+# The page (visualizer/index.html) is static and reads those JSON files, so
+# there is no HTML rebuild step. The Worlds 2026 archive in
+# visualizer/worlds-2026/ is frozen and never touched by this workflow.
 #
-# SMART SCHEDULING (unchanged from original):
-#   - Worlds week (Apr 21 - Apr 27): Every 15 minutes
-#   - Worlds month (Apr 1 - Apr 30): Every 2 hours
-#   - Rest of season: Once per day at 6 AM UTC
-#   - Manual trigger: Anytime from the Actions tab
+# Schedule
+#   - Every 30 minutes, "live" mode: fetches only events in progress (start-1
+#     day to end+1 day). When nothing is running it exits in seconds and
+#     writes nothing. Runs every day because some signature events (Asia)
+#     are held midweek.
+#   - Once a day at 06:17 UTC, "full" mode: refreshes the season event list,
+#     fetches newly finished events and the official skills standings.
+#   - Manual: Actions tab > Update VEX Visualizer Data > Run workflow.
 #
-# SETUP:
-#   1. Get a RobotEvents API token: https://www.robotevents.com/api/v2
-#   2. Repo Settings > Secrets > Actions > New secret
-#      Name: ROBOTEVENTS_TOKEN   Value: your-token
-#   3. Push this file to .github/workflows/update-data.yml
+# Secret: ROBOTEVENTS_TOKEN = an events.vex.com API v2 token.
 
 name: Update VEX Visualizer Data
 
 on:
   schedule:
-    # WORLDS WEEK (Apr 21 - Apr 27): every 15 minutes
-    - cron: '*/15 * 21-27 4 *'
-
-    # WORLDS MONTH (April): every 2 hours
-    - cron: '0 */2 1-20 4 *'
-    - cron: '0 */2 28-30 4 *'
-
-    # REST OF SEASON: once per day at 6 AM UTC
-    - cron: '0 6 * 1-3 *'
-    - cron: '0 6 * 5-12 *'
-
+    - cron: '*/30 * * * *'
+    - cron: '17 6 * * *'
   workflow_dispatch:
     inputs:
-      force_rebuild:
-        description: 'Force rebuild even if data unchanged'
+      mode:
+        description: 'full = event list + new events + standings; live = events in progress only; rebuild = no API calls'
         required: false
-        default: 'false'
+        default: 'full'
         type: choice
         options:
-          - 'false'
-          - 'true'
+          - full
+          - live
+          - rebuild
 
 concurrency:
   group: data-update
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -58,16 +47,6 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - name: Check if this run is relevant
-        id: schedule_check
-        run: |
-          MONTH=$(date -u +%m)
-          DAY=$(date -u +%d)
-          WORLDS_WEEK="false"
-          if [[ "$MONTH" == "04" && "$DAY" -ge 21 && "$DAY" -le 27 ]]; then WORLDS_WEEK="true"; fi
-          echo "worlds_week=$WORLDS_WEEK" >> $GITHUB_OUTPUT
-          echo "Current: $(date -u), Worlds week: $WORLDS_WEEK"
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -76,70 +55,61 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Fetch Middle School data
+      - name: Pick mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            MODE="${{ inputs.mode }}"
+          elif [ "${{ github.event.schedule }}" = "17 6 * * *" ]; then
+            MODE="full"
+          else
+            MODE="live"
+          fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "Mode: $MODE"
+
+      - name: Run season pipeline
         working-directory: visualizer
         env:
           ROBOTEVENTS_TOKEN: ${{ secrets.ROBOTEVENTS_TOKEN }}
-        run: python fetch_ms_data.py || echo "MS fetch failed (non-fatal)"
-
-      - name: Rebuild index.html
-        working-directory: visualizer
-        run: python update_data.py
-
-      - name: Sanity check rebuilt index.html
-        # Refuse to commit if the rebuild produced an empty or suspiciously small file.
-        # Real index.html is ~950 KB. Threshold of 500 KB catches catastrophic failures
-        # (empty file, half-written file, template-only file with no team data) without
-        # being so tight it flags normal data fluctuations.
         run: |
-          if [ ! -s visualizer/index.html ]; then
-            echo "ERROR: visualizer/index.html is empty or missing. Refusing to commit; previous version stays live."
-            exit 1
-          fi
-          SIZE=$(stat -c%s visualizer/index.html)
-          if [ "$SIZE" -lt 500000 ]; then
-            echo "ERROR: visualizer/index.html is suspiciously small ($SIZE bytes, expected at least 500000). Refusing to commit; previous version stays live."
-            exit 1
-          fi
-          echo "Sanity check passed: visualizer/index.html is $SIZE bytes"
+          case "${{ steps.mode.outputs.mode }}" in
+            full)    python -u season_pipeline.py --budget-min 20 ;;
+            live)    python -u season_pipeline.py --live --budget-min 10 ;;
+            rebuild) python -u season_pipeline.py --rebuild ;;
+          esac
 
-      - name: Check for changes
-        id: changes
+      - name: Check the data files
         run: |
-          git diff --quiet visualizer/index.html visualizer/teams_data.json visualizer/ms_teams_data.json visualizer/version.json 2>/dev/null && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+          python - <<'EOF'
+          import json, os
+          d = "visualizer/data"
+          for f in ("events.json", "teams.json", "season.json", "skills.json", "meta.json"):
+              p = os.path.join(d, f)
+              if os.path.exists(p):
+                  json.load(open(p, encoding="utf-8"))
+          print("Data files are valid JSON")
+          EOF
 
       - name: Commit and push
-        if: steps.changes.outputs.changed == 'true'
         run: |
+          git add visualizer/data
+          if git diff --cached --quiet; then
+            echo "No data changes; nothing to commit."
+            exit 0
+          fi
           git config user.name "VEX Visualizer Bot"
           git config user.email "actions@github.com"
-          git add visualizer/index.html visualizer/teams_data.json visualizer/ms_teams_data.json visualizer/version.json
-
-          if [[ "${{ steps.schedule_check.outputs.worlds_week }}" == "true" ]]; then
-            PREFIX="[Worlds Live]"
-          else
-            PREFIX="[Scheduled]"
-          fi
-
-          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
-          HS_COUNT=$(python3 -c "import json; print(len(json.load(open('visualizer/teams_data.json'))))" 2>/dev/null || echo "?")
-          MS_COUNT=$(python3 -c "import json; print(len(json.load(open('visualizer/ms_teams_data.json'))))" 2>/dev/null || echo "0")
-
-          git commit -m "$PREFIX Update data: ${HS_COUNT} HS + ${MS_COUNT} MS teams: $TIMESTAMP"
+          SUMMARY=$(python3 -c "import json; m=json.load(open('visualizer/data/meta.json')); print(f\"{m.get('eventsCached', 0)} events, {m.get('teams', 0)} teams\")")
+          git commit -m "[${{ steps.mode.outputs.mode }}] Season data: $SUMMARY: $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git pull --rebase --quiet origin main
           git push
 
       - name: Summary
+        if: always()
         run: |
-          echo "### VEX Visualizer Update" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          if [[ "${{ steps.changes.outputs.changed }}" == "true" ]]; then
-            echo "**Data updated and deployed**" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "**No changes detected, skipped**" >> $GITHUB_STEP_SUMMARY
+          echo "### VEX Visualizer season data" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Mode: ${{ steps.mode.outputs.mode }}" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f visualizer/data/meta.json ]; then
+            echo "- Meta: $(cat visualizer/data/meta.json)" >> "$GITHUB_STEP_SUMMARY"
           fi
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- Worlds week mode: ${{ steps.schedule_check.outputs.worlds_week }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Time: $(date -u +"%Y-%m-%d %H:%M UTC")" >> $GITHUB_STEP_SUMMARY
-          HS=$(python3 -c "import json; print(len(json.load(open('visualizer/teams_data.json'))))" 2>/dev/null || echo "?")
-          MS=$(python3 -c "import json; print(len(json.load(open('visualizer/ms_teams_data.json'))))" 2>/dev/null || echo "0")
-          echo "- HS teams: $HS, MS teams: $MS" >> $GITHUB_STEP_SUMMARY
