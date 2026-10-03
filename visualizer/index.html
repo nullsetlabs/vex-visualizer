@@ -99,6 +99,9 @@
   .nsl-glyph { width: 18px; height: 18px; flex-shrink: 0; }
   .nsl-breadcrumb { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; color: #8a8a92; display: flex; align-items: center; gap: 8px; }
   .nsl-crumb-active { color: #c19a5b; }
+  a.nsl-crumb { color: #8a8a92; text-decoration: none; }
+  a.nsl-crumb:hover { color: #c19a5b; }
+  .nsl-home { width: 14px; height: 14px; }
   .nsl-sep { color: #5e5e66; }
   .nsl-link { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: #c19a5b; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 8px 12px; min-height: 32px; border-radius: 999px; background: rgba(193,154,91,0.12); border: 1px solid rgba(193,154,91,0.25); }
   .nsl-link:hover { background: rgba(193,154,91,0.22); color: #d4b076; }
@@ -448,6 +451,30 @@
     .sk-legend { flex-direction: column; }
   }
 
+
+  /* Season leader cards */
+  #leaders-box { margin-bottom: 18px; }
+  .leader-tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 4px 0 12px; padding-bottom: 2px; }
+  .leader-tabs::-webkit-scrollbar { display: none; }
+  .leader-tabs button { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; white-space: nowrap; font: inherit; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface2); color: var(--text-dim); cursor: pointer; }
+  .leader-tabs button .ic { width: 14px; height: 14px; color: var(--gold); }
+  .leader-tabs button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .leader-tabs button.on .ic { color: #fff; }
+  .leader-more { margin-top: 10px; }
+  .leader-more .back { margin: 0; }
+  .sk-award { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700; color: var(--text); }
+  .sk-award .ic { width: 14px; height: 14px; }
+  .sk-event { font-size: 11.5px; color: var(--text-dim); margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--grid); }
+  .sk-card.sig-win { border-top: 3px solid var(--gold); }
+  .sk-legend .ic { width: 12px; height: 12px; vertical-align: -2px; }
+  @media (max-width: 768px) {
+    .start-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+    .start-card { padding: 10px 8px; align-items: center; text-align: center; gap: 6px; }
+    .start-card .sc-desc { display: none; }
+    .start-card .sc-icon { width: 34px; height: 34px; }
+    .start-card .sc-title { font-size: 12px; line-height: 1.25; }
+  }
+
   /* ===== Override game content (from the original page) ===== */
   .div-banner { background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
   .div-banner h2 { font-size: 18px; font-weight: 700; }
@@ -465,6 +492,8 @@
   /* ===== Footer and mobile nav ===== */
   .footer { text-align: center; padding: 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-dim); margin-top: 30px; line-height: 1.6; }
   .footer strong { color: var(--text); }
+  .footer-nav { margin-top: 10px; font-size: 12px; line-height: 2; }
+  .footer-nav a { color: var(--accent2); text-decoration: none; }
   .footer .fine { margin-top: 6px; font-size: 10px; color: #556; max-width: 760px; margin-left: auto; margin-right: auto; }
   .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(180deg, #111827f0, #0a0e1af8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border); z-index: 200; padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px)); }
   .bottom-nav-inner { display: flex; justify-content: space-around; max-width: 520px; margin: 0 auto; }
@@ -484,7 +513,6 @@
     .bottom-nav { display: block; }
     .nsl-strip-inner { padding: 0 14px; gap: 10px; }
     .nsl-breadcrumb .nsl-crumb, .nsl-breadcrumb .nsl-sep { display: none; }
-    .nsl-link .nsl-link-label { display: none; }
     .hero { padding: 10px 16px 8px; position: static; }
     .hero h1 { font-size: 18px; }
     .hero-logo { width: 32px; height: 32px; }
@@ -517,10 +545,10 @@
       </svg>
       <span>Null Set Labs</span>
     </a>
-    <div class="nsl-breadcrumb" aria-hidden="true">
-      <span class="nsl-crumb">Robotics</span><span class="nsl-sep">/</span><span class="nsl-crumb-active">VEX Visualizer</span>
-    </div>
-    <a href="https://robotics.nullsetlabs.org/" class="nsl-link" aria-label="Robotics pillar"><span class="nsl-link-label">Robotics</span><span aria-hidden="true">&#8599;</span></a>
+    <nav class="nsl-breadcrumb" aria-label="Breadcrumb">
+      <a class="nsl-crumb" href="https://robotics.nullsetlabs.org/">Robotics</a><span class="nsl-sep">/</span><a class="nsl-crumb" href="https://vex.nullsetlabs.org/">VEX</a><span class="nsl-sep">/</span><span class="nsl-crumb-active">Visualizer</span>
+    </nav>
+    <a href="https://nullsetlabs.org/" class="nsl-link" aria-label="Back to Null Set Labs home"><svg class="nsl-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="nsl-link-label">Home</span></a>
   </div>
 </div>
 <!-- END Null Set Labs context strip -->
@@ -588,6 +616,7 @@
   <div class="fine">
     This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International. VEX and VEX Robotics are trademarks or service marks of Innovation First International.
   </div>
+  <div class="footer-nav"><a href="https://nullsetlabs.org/">Null Set Labs home</a> &bull; <a href="https://robotics.nullsetlabs.org/">Robotics</a> &bull; <a href="https://vex.nullsetlabs.org/">VEX at Null Set Labs</a> &bull; <a href="worlds-2026/">Worlds 2026 archive</a></div>
   <div class="fine">&copy; 2026 Arjun_6121_Conestoga &bull; All rights reserved</div>
 </footer>
 
@@ -813,6 +842,7 @@ const UI = {
   skills: { grade: 'hs', q: '', country: '', limit: 24, view: 'cards' },
   worlds: { grade: 'all' },
   cmp: { a: '', b: '', grade: 'all' },
+  leaders: { tab: 'skillsHS' },
 };
 const pending = {};
 const lazy = (key, fn) => pending[key] || (pending[key] = fn());
@@ -1106,23 +1136,8 @@ function renderOverview() {
   ];
   h += `<nav class="start-grid" aria-label="Start here">${START.map(x => `<a class="start-card ${x.c}" href="${x.href}"${x.act ? ` data-act="${x.act}"` : ''}><span class="sc-icon">${icon(x.i)}</span><span class="sc-title">${esc(x.t)}</span><span class="sc-desc">${esc(x.d)}</span></a>`).join('')}</nav>`;
 
-  // Season leaders: official results only (signature event wins, tournament titles, official skills standings).
-  const sigW = L.signatureWinners || [];
-  h += `<h2 class="block-head">${icon('trophy')}Season leaders</h2>
-    <p class="block-sub">Teams leading on official results. Signature event winners come from the season's top events.</p>
-    <div class="grid-4">
-      <div class="panel" style="--c:var(--gold)"><h2>${icon('star')}Signature event winners</h2><div class="sub">Tournament Champions and Excellence, newest first. <a href="#signature">All signature events</a></div>
-        ${sigW.length ? `<div class="ld-list">${sigW.slice(0, 8).map(w => { const [ai, ac] = awardInfo(w.award); return `<a class="ld-row" href="#team/${encodeURIComponent(w.team)}">
-          <span class="ld-rank">${icon(ai, ac)}</span>
-          <span class="ld-team ${GRADE_CLASS[w.grade] || ''}" translate="no">${esc(w.team)}</span>
-          <span class="ld-main"><span class="ld-name">${esc(w.name)}</span><span class="ld-where">${esc(shortEventName(w.eventName))}</span></span></a>`; }).join('')}</div>` : '<div class="empty">No signature events finished yet.</div>'}</div>
-      <div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Most tournament titles</h2><div class="sub">Tournament Champions wins this season. <a href="#teams">All teams</a></div>
-        ${leaderRows(L.titles.slice(0, 8), t => `<strong>${t.titles}</strong> <span class="dim">title${t.titles === 1 ? '' : 's'}</span>`)}</div>
-      <div class="panel" style="--c:var(--hs)"><h2>${icon('bolt')}Top skills, high school</h2><div class="sub">Official World Skills Standings. <a href="#skills">Full leaderboard</a></div>
-        ${leaderRows(L.skillsHS.map(r => ({ ...r, grade: 'High School' })), r => `<strong>${r.score}</strong>`)}</div>
-      <div class="panel" style="--c:var(--ms)"><h2>${icon('bolt')}Top skills, middle school</h2><div class="sub">Official World Skills Standings. <a href="#skills">Full leaderboard</a></div>
-        ${leaderRows(L.skillsMS.map(r => ({ ...r, grade: 'Middle School' })), r => `<strong>${r.score}</strong>`)}</div>
-    </div>`;
+  // Season leaders as cards: official results only (skills standings, tournament titles, signature event awards).
+  h += `<section id="leaders-box"></section>`;
 
   h += `<div class="grid-2" style="margin-top:16px">
     <div class="panel" id="week-panel" style="--c:var(--c-events)"><h2>${icon('calendar')}In progress and next 7 days</h2><div class="sub">${plural(week.length, 'event')}${S.season.leaguesRunning ? ` &bull; ${plural(S.season.leaguesRunning, 'league')} also running (see <a href="#events">Events</a>)` : ''}</div>${eventRows(week.slice(0, 6), { watch: true })}${week.length > 6 ? `<a class="back" style="margin:10px 0 0" href="#events">All ${week.length} events this week &rarr;</a>` : ''}</div>
@@ -1171,7 +1186,51 @@ function renderOverview() {
     title: 'Top skills score by week', labels: sk.map(w => w.week),
     series: [{ name: 'Top skills score', color: 'var(--series-1)', values: sk.map(w => w.skillsMax) }],
   });
+  renderLeaders();
   renderCompare(routeTok);
+}
+
+const LEADER_TABS = [
+  ['skillsHS', 'Top skills, high school', 'bolt'],
+  ['skillsMS', 'Top skills, middle school', 'bolt'],
+  ['titles', 'Most tournament titles', 'trophy'],
+  ['sig', 'Signature event winners', 'star'],
+];
+function renderLeaders() {
+  const box = $('leaders-box'); if (!box || !S.season) return;
+  const L = S.season.leaders, tab = UI.leaders.tab;
+  const where = r => [r.region, r.country === 'United States' ? '' : r.country].filter(Boolean).join(', ');
+  let cards = '', more = '';
+  if (tab === 'skillsHS' || tab === 'skillsMS') {
+    const grade = tab === 'skillsHS' ? 'High School' : 'Middle School';
+    cards = (L[tab] || []).map(r => skillCard(r, grade)).join('');
+    more = `<a class="back" href="#skills">Full skills leaderboard &rarr;</a>`;
+  } else if (tab === 'titles') {
+    cards = (L.titles || []).map((t, i) => `<a class="sk-card${i < 3 ? ' medal' + (i + 1) : ''}" href="#team/${encodeURIComponent(t.team)}">
+      <div class="sk-top"><span class="sk-rank">#${i + 1}</span>${gradeBadge(t)}</div>
+      <div class="sk-team ${GRADE_CLASS[t.grade] || ''}" translate="no">${esc(t.team)}</div>
+      <div class="sk-name">${esc(t.name)}</div>
+      <div class="sk-where">${esc(where(t))}</div>
+      <div class="sk-score"><strong>${t.titles}</strong><span>tournament title${t.titles === 1 ? '' : 's'}</span></div>
+      <div class="sk-legend"><span>${t.excellence ? `${icon('star', 'aw-amber')} ${plural(t.excellence, 'Excellence award')}` : '&nbsp;'}</span><span>${t.winPct != null ? `${dec1(t.winPct)}% match wins` : ''}</span></div>
+    </a>`).join('');
+    more = `<a class="back" href="#teams">All teams &rarr;</a>`;
+  } else {
+    cards = (L.signatureWinners || []).slice(0, 8).map(w => { const [ai, ac] = awardInfo(w.award); return `<a class="sk-card sig-win" href="#team/${encodeURIComponent(w.team)}">
+      <div class="sk-top"><span class="sk-award">${icon(ai, ac)} ${esc(w.award)}</span>${gradeBadge(w)}</div>
+      <div class="sk-team ${GRADE_CLASS[w.grade] || ''}" translate="no">${esc(w.team)}</div>
+      <div class="sk-name">${esc(w.name)}</div>
+      <div class="sk-where">${esc(where(w))}</div>
+      <div class="sk-event">${esc(shortEventName(w.eventName))} &bull; ${esc(fmtDate(w.date))}</div>
+    </a>`; }).join('');
+    more = `<a class="back" href="#signature">All signature events &rarr;</a>`;
+  }
+  box.innerHTML = `<h2 class="block-head">${icon('trophy')}Season leaders</h2>
+    <p class="block-sub">Teams leading on official results this season. Tap a card for the team's full season.</p>
+    <div class="leader-tabs" role="tablist" aria-label="Leader boards">${LEADER_TABS.map(([k, label, ic]) => `<button role="tab" aria-selected="${k === tab}" class="${k === tab ? 'on' : ''}" data-k="${k}">${icon(ic)}${esc(label)}</button>`).join('')}</div>
+    ${cards ? `<div class="sk-grid leader-grid">${cards}</div>` : '<div class="empty">No results yet.</div>'}
+    <div class="leader-more">${more}</div>`;
+  box.querySelectorAll('.leader-tabs button').forEach(b => b.onclick = () => { UI.leaders.tab = b.dataset.k; renderLeaders(); });
 }
 
 // ---------------------------------------------------------------------------

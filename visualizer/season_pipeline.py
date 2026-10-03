@@ -782,8 +782,8 @@ def build_summaries(event_list, cached, standings):
         "leaders": {
             "titles": [{k: t[k] for k in ("team", "name", "grade", "region", "country", "titles", "excellence", "winPct")}
                        for t in title_leaders],
-            "skillsHS": standings.get("hs", [])[:5],
-            "skillsMS": standings.get("ms", [])[:5],
+            "skillsHS": standings.get("hs", [])[:8],
+            "skillsMS": standings.get("ms", [])[:8],
             "signatureWinners": winners[:16],
         },
         "signature": [r for r in index if r["level"] == "Signature"],
