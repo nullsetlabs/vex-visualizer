@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>VEX Visualizer - Override 2026-2027 Season</title>
+<title>VEX Visualizer by Arjun Mohanan | V5RC Override 2026-2027 Season Tracker</title>
 
 <!-- Google Analytics (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1S9F2Z4HS"></script>
@@ -17,18 +17,18 @@
 <!-- Open Graph / Link Preview -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vex.nullsetlabs.org/visualizer/">
-<meta property="og:title" content="VEX Visualizer - Override 2026-2027 Season">
+<meta property="og:title" content="VEX Visualizer by Arjun Mohanan | Override 2026-2027 Season Tracker">
 <meta property="og:description" content="Season tracker for VEX V5 Robotics Competition Override: event results, team records, skills standings and Worlds qualifiers from official VEX Events data.">
 <meta property="og:image" content="https://vex.nullsetlabs.org/visualizer/og-preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="VEX Visualizer">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="VEX Visualizer - Override 2026-2027 Season">
+<meta name="twitter:title" content="VEX Visualizer by Arjun Mohanan | Override 2026-2027 Season Tracker">
 <meta name="twitter:description" content="Season tracker for VEX V5 Robotics Competition Override: event results, team records, skills standings and Worlds qualifiers.">
 <meta name="twitter:image" content="https://vex.nullsetlabs.org/visualizer/og-preview.png">
 
-<meta name="description" content="Season tracker for the VEX V5 Robotics Competition 2026-2027 game Override. Event results, team records, signature events, official skills standings and World Championship qualifiers.">
+<meta name="description" content="VEX Visualizer by Arjun Mohanan (VEX team 6121 Conestoga Pioneers): a season tracker for the VEX V5 Robotics Competition 2026-2027 game Override with event results, team records, signature events, official skills standings and World Championship qualifiers.">
 <meta name="author" content="Arjun Mohanan">
 <link rel="canonical" href="https://vex.nullsetlabs.org/visualizer/">
 <meta name="robots" content="index, follow">
@@ -40,12 +40,19 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "VEX Visualizer - Override 2026-2027 Season",
-  "description": "Season tracker for the VEX V5 Robotics Competition 2026-2027 game Override, built from official VEX Events data.",
+  "name": "VEX Visualizer",
+  "alternateName": ["VEX Visualizer by Arjun Mohanan", "Arjun's VEX Visualizer", "VEX Visualizer - Override 2026-2027 Season"],
+  "description": "Season tracker for the VEX V5 Robotics Competition 2026-2027 game Override, built from official VEX Events data by Arjun Mohanan of VEX team 6121 Conestoga Pioneers.",
   "url": "https://vex.nullsetlabs.org/visualizer/",
   "applicationCategory": "Sports, Education",
   "operatingSystem": "Any",
-  "author": { "@type": "Person", "name": "Arjun Mohanan" },
+  "author": {
+    "@type": "Person",
+    "name": "Arjun Mohanan",
+    "memberOf": { "@type": "SportsTeam", "name": "6121 Conestoga Pioneers", "sport": "VEX V5 Robotics Competition" },
+    "sameAs": ["https://github.com/arjun-mohanan"]
+  },
+  "publisher": { "@type": "Organization", "name": "Null Set Labs", "url": "https://nullsetlabs.org/" },
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
 </script>
@@ -114,8 +121,10 @@
   .hero-logo { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #c19a5b, #d4b076, #c19a5b); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(193,154,91,0.3); flex-shrink: 0; }
   .hero-logo svg { width: 24px; height: 24px; }
   .hero h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--accent2); }
-  .hero-tagline { font-size: 12px; color: var(--text-dim); margin-top: 1px; }
+  .hero-tagline { font-size: 13.5px; color: var(--text-dim); margin-top: 3px; }
+  .hero h1 .by { font-size: 17px; font-weight: 700; color: #f1e5cc; letter-spacing: 0; margin-left: 8px; white-space: nowrap; }
   .hero-tagline strong { color: var(--accent2); font-weight: 700; }
+  @media (max-width: 768px) { .hero h1 .by { display: block; margin: 2px 0 0; font-size: 15px; } .hero-tagline { font-size: 12.5px; } }
   .archive-link { font-size: 12px; font-weight: 600; text-decoration: none; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); white-space: nowrap; }
   .archive-link:hover { color: var(--text); border-color: var(--accent); }
   .nav-row { margin-top: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
@@ -380,11 +389,11 @@
   .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .grid-4 > .panel { margin-bottom: 0; min-width: 0; }
   .ld-list { display: flex; flex-direction: column; gap: 4px; }
-  .ld-row { display: grid; grid-template-columns: 26px auto 1fr auto; gap: 8px; align-items: center; padding: 6px 8px; border-radius: 9px; text-decoration: none; color: var(--text); background: var(--surface2); border: 1px solid transparent; }
+  .ld-row { display: grid; grid-template-columns: 24px 76px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 6px 8px; border-radius: 9px; text-decoration: none; color: var(--text); background: var(--surface2); border: 1px solid transparent; }
   .ld-row:hover { border-color: var(--c, var(--accent)); }
   .ld-rank { font-size: 12px; font-weight: 800; color: var(--text-dim); text-align: center; display: inline-flex; justify-content: center; }
   .ld-rank.top1 { color: var(--gold); } .ld-rank.top2 { color: #cbd5e1; } .ld-rank.top3 { color: #d97706; }
-  .ld-team { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 12.5px; padding: 2px 6px; border-radius: 6px; background: var(--surface3); color: var(--accent2); }
+  .ld-team { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 12.5px; padding: 2px 4px; border-radius: 6px; background: var(--surface3); color: var(--accent2); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .ld-main { display: flex; flex-direction: column; min-width: 0; }
   .ld-name { font-size: 12.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .ld-where { font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -454,6 +463,8 @@
 
   /* Season leader cards */
   #leaders-box { margin-bottom: 18px; }
+  .leaders-narrow { display: none; }
+  @media (max-width: 900px) { .leaders-wide { display: none; } .leaders-narrow { display: block; } }
   .leader-tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 4px 0 12px; padding-bottom: 2px; }
   .leader-tabs::-webkit-scrollbar { display: none; }
   .leader-tabs button { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; white-space: nowrap; font: inherit; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface2); color: var(--text-dim); cursor: pointer; }
@@ -492,6 +503,7 @@
   /* ===== Footer and mobile nav ===== */
   .footer { text-align: center; padding: 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-dim); margin-top: 30px; line-height: 1.6; }
   .footer strong { color: var(--text); }
+  .about-line { margin-top: 8px; font-size: 12px; }
   .footer-nav { margin-top: 10px; font-size: 12px; line-height: 2; }
   .footer-nav a { color: var(--accent2); text-decoration: none; }
   .footer .fine { margin-top: 6px; font-size: 10px; color: #556; max-width: 760px; margin-left: auto; margin-right: auto; }
@@ -570,16 +582,16 @@
           </svg>
         </div>
         <div>
-          <h1>VEX Visualizer</h1>
-          <div class="hero-tagline">V5RC <strong>Override</strong> 2026-2027 season tracker &bull; Arjun &bull; 6121 Conestoga Pioneers</div>
+          <h1>VEX Visualizer <span class="by">by Arjun Mohanan</span></h1>
+          <div class="hero-tagline">Team <strong>6121 Conestoga Pioneers</strong> &bull; V5RC Override 2026-2027 season tracker</div>
         </div>
       </div>
       <div class="search-wrapper">
         <input type="text" class="search-input" id="searchInput" placeholder="Find a team, e.g. 6121E" autocomplete="off" aria-label="Find a team by number or name">
         <div class="autocomplete-list" id="acList" role="listbox"></div>
       </div>
-      <button class="help-btn" type="button" onclick="openHelp()" aria-haspopup="dialog">? Help</button>
-      <a class="archive-link" href="worlds-2026/">Worlds 2026 archive &rarr;</a>
+      <button class="help-btn" type="button" onclick="openHelp()" aria-haspopup="dialog" data-track="click_help">? Help</button>
+      <a class="archive-link" href="worlds-2026/" data-track="click_archive">Worlds 2026 archive &rarr;</a>
     </div>
     <div class="nav-row">
       <nav class="tabs" aria-label="Sections">
@@ -616,6 +628,7 @@
   <div class="fine">
     This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International. VEX and VEX Robotics are trademarks or service marks of Innovation First International.
   </div>
+  <div class="about-line">VEX Visualizer is built by Arjun Mohanan, a high school student on VEX team 6121 Conestoga Pioneers, and published by <a href="https://nullsetlabs.org/">Null Set Labs</a>.</div>
   <div class="footer-nav"><a href="https://nullsetlabs.org/">Null Set Labs home</a> &bull; <a href="https://robotics.nullsetlabs.org/">Robotics</a> &bull; <a href="https://vex.nullsetlabs.org/">VEX at Null Set Labs</a> &bull; <a href="worlds-2026/">Worlds 2026 archive</a></div>
   <div class="fine">&copy; 2026 Arjun_6121_Conestoga &bull; All rights reserved</div>
 </footer>
@@ -1085,14 +1098,14 @@ function shortEventName(name) {
 function watchLinks(e) {
   const direct = (S.webcasts && S.webcasts[e.sku]) || [];
   const yt = `https://www.youtube.com/results?search_query=${encodeURIComponent(shortEventName(e.name) + ' VEX')}`;
-  return `<span class="watch">${direct.map(w => `<a href="${esc(w.url)}" target="_blank" rel="noopener" class="w-direct">${icon('play')}${esc(w.label || 'Watch webcast')}</a>`).join('')}
-    <a href="${officialEvent(e.sku)}#webcast" target="_blank" rel="noopener">${icon('play')}Webcast</a>
-    <a href="${yt}" target="_blank" rel="noopener" title="Search YouTube for this event">${icon('youtube')}YouTube</a></span>`;
+  return `<span class="watch">${direct.map(w => `<a href="${esc(w.url)}" target="_blank" rel="noopener" class="w-direct" data-track="click_watch_direct">${icon('play')}${esc(w.label || 'Watch webcast')}</a>`).join('')}
+    <a href="${officialEvent(e.sku)}#webcast" target="_blank" rel="noopener" data-track="click_watch_webcast">${icon('play')}Webcast</a>
+    <a href="${yt}" target="_blank" rel="noopener" title="Search YouTube for this event" data-track="click_watch_youtube">${icon('youtube')}YouTube</a></span>`;
 }
 
 function leaderRows(rows, stat) {
   if (!rows.length) return '<div class="empty">None yet.</div>';
-  return `<div class="ld-list">${rows.map((r, i) => `<a class="ld-row" href="#team/${encodeURIComponent(r.team)}">
+  return `<div class="ld-list">${rows.map((r, i) => `<a class="ld-row" href="#team/${encodeURIComponent(r.team)}" data-track="click_leader_team">
       <span class="ld-rank${i < 3 ? ' top' + (i + 1) : ''}">${r.rank || i + 1}</span>
       <span class="ld-team ${GRADE_CLASS[r.grade] || ''}" translate="no">${esc(r.team)}</span>
       <span class="ld-main"><span class="ld-name">${esc(r.name)}</span><span class="ld-where">${esc([r.region, r.country === 'United States' ? '' : r.country].filter(Boolean).join(', '))}</span></span>
@@ -1127,14 +1140,14 @@ function renderOverview() {
     </div>
   </section>`;
   const START = [
-    { c: 'c-teams', i: 'search', t: 'Find your team', d: 'Record, awards and skills for any team', act: 'search', href: '#teams' },
-    { c: 'c-events', i: 'calendar', t: 'This week', d: `${plural(week.length, 'event')} in progress or coming up`, act: 'week', href: '#events' },
-    { c: 'c-sig', i: 'star', t: 'Signature events', d: `${c.signatureDone} of ${c.signature} held, with results`, href: '#signature' },
-    { c: 'c-skills', i: 'bolt', t: 'Skills leaderboard', d: 'Best robot skills scores worldwide', href: '#skills' },
-    { c: 'c-worlds', i: 'globe', t: 'Road to Worlds', d: `${plural(c.worldsQualified, 'team')} qualified so far`, href: '#worlds' },
-    { c: 'c-game', i: 'game', t: 'Learn the game', d: 'How Override is played and scored', href: '#override' },
+    { k: 'skills', c: 'c-skills', i: 'bolt', t: 'Skills leaderboard', d: 'Best robot skills scores worldwide', href: '#skills' },
+    { k: 'signature', c: 'c-sig', i: 'star', t: 'Signature events', d: `${c.signatureDone} of ${c.signature} held, with results`, href: '#signature' },
+    { k: 'week', c: 'c-events', i: 'calendar', t: 'This week', d: `${plural(week.length, 'event')} in progress or coming up`, act: 'week', href: '#events' },
+    { k: 'titles', c: 'c-teams', i: 'trophy', t: 'Most tournament titles', d: 'Teams ranked by tournament wins', href: '#teams' },
+    { k: 'worlds', c: 'c-worlds', i: 'globe', t: 'Road to Worlds', d: `${plural(c.worldsQualified, 'team')} qualified so far`, href: '#worlds' },
+    { k: 'game', c: 'c-game', i: 'game', t: 'Learn the game', d: 'How Override is played and scored', href: '#override' },
   ];
-  h += `<nav class="start-grid" aria-label="Start here">${START.map(x => `<a class="start-card ${x.c}" href="${x.href}"${x.act ? ` data-act="${x.act}"` : ''}><span class="sc-icon">${icon(x.i)}</span><span class="sc-title">${esc(x.t)}</span><span class="sc-desc">${esc(x.d)}</span></a>`).join('')}</nav>`;
+  h += `<nav class="start-grid" aria-label="Start here">${START.map(x => `<a class="start-card ${x.c}" href="${x.href}" data-track="click_start_${x.k}" data-label="${esc(x.t)}"${x.act ? ` data-act="${x.act}"` : ''}><span class="sc-icon">${icon(x.i)}</span><span class="sc-title">${esc(x.t)}</span><span class="sc-desc">${esc(x.d)}</span></a>`).join('')}</nav>`;
 
   // Season leaders as cards: official results only (skills standings, tournament titles, signature event awards).
   h += `<section id="leaders-box"></section>`;
@@ -1168,8 +1181,7 @@ function renderOverview() {
   el.innerHTML = h;
   el.querySelectorAll('[data-act]').forEach(a => a.onclick = ev => {
     ev.preventDefault();
-    if (a.dataset.act === 'search') { window.scrollTo(0, 0); $('searchInput').focus(); }
-    else if (a.dataset.act === 'week') $('week-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (a.dataset.act === 'week') $('week-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   const wk = S.season.weekly.filter(w => w.matches > 0);
@@ -1225,11 +1237,26 @@ function renderLeaders() {
     </a>`; }).join('');
     more = `<a class="back" href="#signature">All signature events &rarr;</a>`;
   }
+  const sigRows = (L.signatureWinners || []).slice(0, 8);
+  const wide = `<div class="grid-4 leaders-wide">
+      <div class="panel" style="--c:var(--gold)"><h2>${icon('star')}Signature event winners</h2><div class="sub">Tournament Champions and Excellence, newest first. <a href="#signature">All signature events</a></div>
+        ${sigRows.length ? `<div class="ld-list">${sigRows.map(w => { const [ai, ac] = awardInfo(w.award); return `<a class="ld-row" href="#team/${encodeURIComponent(w.team)}" data-track="click_leader_team">
+          <span class="ld-rank" title="${esc(w.award)}">${icon(ai, ac)}</span>
+          <span class="ld-team ${GRADE_CLASS[w.grade] || ''}" translate="no">${esc(w.team)}</span>
+          <span class="ld-main"><span class="ld-name">${esc(w.name)}</span><span class="ld-where">${esc(shortEventName(w.eventName))}</span></span></a>`; }).join('')}</div>` : '<div class="empty">No signature events finished yet.</div>'}</div>
+      <div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Most tournament titles</h2><div class="sub">Tournament Champions wins this season. <a href="#teams">All teams</a></div>
+        ${leaderRows((L.titles || []).slice(0, 8), t => `<strong>${t.titles}</strong> <span class="dim">title${t.titles === 1 ? '' : 's'}</span>`)}</div>
+      <div class="panel" style="--c:var(--hs)"><h2>${icon('bolt')}Top skills, high school</h2><div class="sub">Official World Skills Standings. <a href="#skills">Full leaderboard</a></div>
+        ${leaderRows((L.skillsHS || []).map(r => ({ ...r, grade: 'High School' })), r => `<strong>${r.score}</strong>`)}</div>
+      <div class="panel" style="--c:var(--ms)"><h2>${icon('bolt')}Top skills, middle school</h2><div class="sub">Official World Skills Standings. <a href="#skills">Full leaderboard</a></div>
+        ${leaderRows((L.skillsMS || []).map(r => ({ ...r, grade: 'Middle School' })), r => `<strong>${r.score}</strong>`)}</div>
+    </div>`;
   box.innerHTML = `<h2 class="block-head">${icon('trophy')}Season leaders</h2>
-    <p class="block-sub">Teams leading on official results this season. Tap a card for the team's full season.</p>
-    <div class="leader-tabs" role="tablist" aria-label="Leader boards">${LEADER_TABS.map(([k, label, ic]) => `<button role="tab" aria-selected="${k === tab}" class="${k === tab ? 'on' : ''}" data-k="${k}">${icon(ic)}${esc(label)}</button>`).join('')}</div>
+    <p class="block-sub">Teams leading on official results this season. Select a team for its full season.</p>
+    ${wide}<div class="leaders-narrow">
+    <div class="leader-tabs" role="tablist" aria-label="Leader boards">${LEADER_TABS.map(([k, label, ic]) => `<button role="tab" aria-selected="${k === tab}" class="${k === tab ? 'on' : ''}" data-k="${k}" data-track="click_leaders_tab_${k}">${icon(ic)}${esc(label)}</button>`).join('')}</div>
     ${cards ? `<div class="sk-grid leader-grid">${cards}</div>` : '<div class="empty">No results yet.</div>'}
-    <div class="leader-more">${more}</div>`;
+    <div class="leader-more">${more}</div></div>`;
   box.querySelectorAll('.leader-tabs button').forEach(b => b.onclick = () => { UI.leaders.tab = b.dataset.k; renderLeaders(); });
 }
 
@@ -1290,8 +1317,8 @@ async function renderCompare(tok) {
     <div class="cmp-head"><span></span><span class="a">${esc(label(f.a))}</span><span class="b">${esc(label(f.b))}</span></div>
     ${bars}
     <div class="grid-2 cmp-tops"><div><h3 class="a">Top skills scores, ${esc(label(f.a))}</h3>${topList(A)}</div><div><h3 class="b">Top skills scores, ${esc(label(f.b))}</h3>${topList(B)}</div></div>`;
-  $('cmpA').onchange = ev => { f.a = ev.target.value; savePref('cmpA', f.a); renderCompare(routeTok); };
-  $('cmpB').onchange = ev => { f.b = ev.target.value; savePref('cmpB', f.b); renderCompare(routeTok); };
+  $('cmpA').onchange = ev => { f.a = ev.target.value; savePref('cmpA', f.a); track('compare_regions', { label: `${f.a} vs ${f.b}` }); renderCompare(routeTok); };
+  $('cmpB').onchange = ev => { f.b = ev.target.value; savePref('cmpB', f.b); track('compare_regions', { label: `${f.a} vs ${f.b}` }); renderCompare(routeTok); };
   box.querySelectorAll('#cmpGrade button').forEach(bt => bt.onclick = () => { f.grade = bt.dataset.v; renderCompare(routeTok); });
 }
 
@@ -1517,7 +1544,7 @@ async function renderTeam(num, tok) {
       <div class="nm">${esc(t.name)}</div>
       <div class="meta">${esc(t.org)} ${place(t) ? '&bull; ' + esc(place(t)) : ''} ${gradeBadge(t)}
       ${t.worlds ? `<span class="badge b-world">${icon('globe')}Qualified for Worlds</span>` : ''}</div></div>
-      <div class="ext-links"><a href="${officialTeam(t.team)}" target="_blank" rel="noopener">Official team page &#8599;</a><a href="https://www.youtube.com/results?search_query=${encodeURIComponent('VEX ' + t.team + ' Override')}" target="_blank" rel="noopener" title="Search YouTube for this team">${icon('youtube')} Find videos</a></div></div>`;
+      <div class="ext-links"><a href="${officialTeam(t.team)}" target="_blank" rel="noopener">Official team page &#8599;</a><a href="https://www.youtube.com/results?search_query=${encodeURIComponent('VEX ' + t.team + ' Override')}" target="_blank" rel="noopener" title="Search YouTube for this team" data-track="click_team_videos">${icon('youtube')} Find videos</a></div></div>`;
   h += tiles([
     { v: t.events.length, k: 'Events', i: 'calendar', c: 'c-events' },
     { v: record(t), k: 'Qualification record', n: t.winPct != null ? `${dec1(t.winPct)}% wins` : '', i: 'target', c: 'c-teams' },
@@ -1569,7 +1596,7 @@ function skillCard(r, grade) {
   const total = (r.driver || 0) + (r.prog || 0);
   const d = total ? Math.round(100 * r.driver / total) : 50;
   const where = [r.region, r.country === 'United States' ? '' : r.country].filter(Boolean).join(', ');
-  return `<a class="sk-card${r.rank <= 3 ? ' medal' + r.rank : ''}" href="#team/${encodeURIComponent(r.team)}">
+  return `<a class="sk-card${r.rank <= 3 ? ' medal' + r.rank : ''}" href="#team/${encodeURIComponent(r.team)}" data-track="click_skills_card">
     <div class="sk-top"><span class="sk-rank">#${r.rank}</span>${gradeBadge({ grade })}</div>
     <div class="sk-team ${GRADE_CLASS[grade] || ''}" translate="no">${esc(r.team)}</div>
     <div class="sk-name">${esc(r.name)}</div>
@@ -1605,7 +1632,7 @@ async function renderSkills(tok) {
     </tbody></table></div>`}
     ${rows.length > f.limit ? `<button class="more" id="skMore">Show ${Math.min(step, rows.length - f.limit)} more</button>` : ''}`;
   el.querySelectorAll('#skGrade button').forEach(b => b.onclick = () => { f.grade = b.dataset.v; f.country = ''; f.limit = step; renderSkills(routeTok); });
-  el.querySelectorAll('#skView button').forEach(b => b.onclick = () => { f.view = b.dataset.v; f.limit = f.view === 'cards' ? 24 : 100; renderSkills(routeTok); });
+  el.querySelectorAll('#skView button').forEach(b => b.onclick = () => { track('click_skills_view_' + b.dataset.v); f.view = b.dataset.v; f.limit = f.view === 'cards' ? 24 : 100; renderSkills(routeTok); });
   $('skQ').oninput = ev => { f.q = ev.target.value; f.limit = step; keepFocus('skQ', () => renderSkills(routeTok)); };
   $('skCountry').onchange = ev => { f.country = ev.target.value; f.limit = step; renderSkills(routeTok); };
   if ($('skMore')) $('skMore').onclick = () => { f.limit += step; renderSkills(routeTok); };
@@ -1674,7 +1701,7 @@ function setupSearch() {
     list.innerHTML = items.map((t, i) => `<div class="ac-item${i === sel ? ' selected' : ''}${t.none ? ' none' : ''}" role="option" data-i="${i}"><span class="ac-team" translate="no">${esc(t.team)}</span><span class="ac-name">${esc(t.label || t.name)}</span></div>`).join('');
     list.classList.toggle('show', items.length > 0);
   };
-  const pick = t => { list.classList.remove('show'); inp.value = ''; inp.blur(); location.hash = '#team/' + encodeURIComponent(t.team); };
+  const pick = t => { track('search_team', { label: t.team }); list.classList.remove('show'); inp.value = ''; inp.blur(); location.hash = '#team/' + encodeURIComponent(t.team); };
   const update = async () => { await Promise.all([needTeams(), needPushback()]); items = searchTeams(inp.value); sel = items.length ? 0 : -1; draw(); };
   inp.onfocus = () => { needTeams(); needPushback(); };
   inp.oninput = update;
@@ -1710,8 +1737,19 @@ function route() {
   else if (view === 'skills') renderSkills(tok);
   else if (view === 'worlds') renderWorlds(tok);
   else if (view === 'override') renderOverride();
-  if (typeof gtag === 'function') gtag('event', 'section_view', { section: view });
+  track('view_' + view, { section: view });
 }
+
+// Usage events for GA4. Event names show up under Reports > Engagement > Events
+// without extra setup: view_<section> for each section opened, click_<target>
+// for the buttons and links marked with data-track.
+function track(name, params) {
+  try { if (typeof gtag === 'function') gtag('event', name, params || {}); } catch (e) { /* analytics blocked */ }
+}
+document.addEventListener('click', ev => {
+  const el = ev.target.closest('[data-track]');
+  if (el) track(el.dataset.track, { label: (el.dataset.label || el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80) });
+});
 
 (async function init() {
   document.querySelectorAll('.nav-tab[data-icon]').forEach(a => a.insertAdjacentHTML('afterbegin', icon(a.dataset.icon)));
