@@ -580,6 +580,21 @@
     .leader-tabs button { padding: 7px 12px; font-size: 12.5px; }
   }
 
+  /* Skills tab on phones: one-line intro, filters in two rows */
+  .intro-short { display: none; }
+  @media (max-width: 768px) {
+    #view-skills .intro-long { display: none; }
+    #view-skills .intro-short { display: block; font-size: 12.5px; margin-bottom: 8px; }
+    .sk-filters { display: grid; grid-template-columns: minmax(0, 1fr) 128px; gap: 6px; align-items: center; margin-bottom: 10px; }
+    .sk-filters #skGrade { display: flex; }
+    .sk-filters #skGrade button { flex: 1; white-space: nowrap; padding: 8px 6px; font-size: 12.5px; }
+    .sk-filters #skView { justify-self: stretch; display: flex; }
+    .sk-filters #skView button { flex: 1; padding: 8px 6px; }
+    .sk-filters #skView .lbl { display: none; }
+    .sk-filters #skView .ic { width: 16px; height: 16px; }
+    .sk-filters #skQ, .sk-filters #skCountry { min-width: 0; width: 100%; }
+    .sk-filters .count { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -1654,10 +1669,11 @@ async function renderSkills(tok) {
   const q = f.q.trim().toLowerCase();
   const rows = all.filter(r => (!f.country || r.country === f.country) && (!q || `${r.team} ${r.name} ${r.org} ${r.region}`.toLowerCase().includes(q)));
   const step = f.view === 'cards' ? 24 : 100;
-  el.innerHTML = `<p class="intro">Official World Skills Standings: each team's best combined driver + autonomous score from a single event this season. Ranks match events.vex.com. ${helpLink('What are robot skills?')}</p>
-    <div class="filters">
+  el.innerHTML = `<p class="intro intro-long">Official World Skills Standings: each team's best combined driver + autonomous score from a single event this season. Ranks match events.vex.com. ${helpLink('What are robot skills?')}</p>
+    <p class="intro intro-short">Official skills standings: best driver + autonomous score at one event. ${helpLink('How skills work')}</p>
+    <div class="filters sk-filters">
       ${segButtons('skGrade', [['hs', 'High school'], ['ms', 'Middle school']], f.grade)}
-      <div class="seg" id="skView"><button data-v="cards" class="${f.view === 'cards' ? 'on' : ''}">${icon('grid')} Cards</button><button data-v="table" class="${f.view === 'table' ? 'on' : ''}">${icon('list')} Table</button></div>
+      <div class="seg" id="skView"><button data-v="cards" class="${f.view === 'cards' ? 'on' : ''}" aria-label="Show as cards">${icon('grid')}<span class="lbl"> Cards</span></button><button data-v="table" class="${f.view === 'table' ? 'on' : ''}" aria-label="Show as table">${icon('list')}<span class="lbl"> Table</span></button></div>
       <input type="text" id="skQ" placeholder="Search team, name, school or region" value="${esc(f.q)}">
       <select id="skCountry">${opt('', 'All countries', f.country)}${countries(all).map(c => opt(c, c, f.country)).join('')}</select>
       <span class="count">${plural(rows.length, 'team')}</span>
