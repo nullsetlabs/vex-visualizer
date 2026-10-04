@@ -54,6 +54,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # The latest data, also when this run waited behind another update
+          # (the Cloudflare timer and GitHub's schedule can start one each).
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -107,7 +111,13 @@ jobs:
           git config user.email "actions@github.com"
           SUMMARY=$(python3 -c "import json; m=json.load(open('visualizer/data/meta.json')); print(f\"{m.get('eventsCached', 0)} events, {m.get('teams', 0)} teams\")")
           git commit -m "[${{ steps.mode.outputs.mode }}] Season data: $SUMMARY: $(date -u +'%Y-%m-%d %H:%M UTC')"
-          git pull --rebase --quiet origin main
+          if ! git pull --rebase --quiet origin main; then
+            # Another update saved data while this one ran; keep that one.
+            # Anything this run found is fetched again by the next run.
+            git rebase --abort
+            echo "Another update saved data first; this run's commit was dropped."
+            exit 0
+          fi
           git push
 
       - name: Summary
