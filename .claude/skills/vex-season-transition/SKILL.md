@@ -153,12 +153,15 @@ end of each transition with anything that changed.
   user session as Claude, not an Administrator window).
 - GitHub disables scheduled workflows after 60 days without repository
   activity; re-enable with `gh workflow enable`. In 2026 the last commit was
-  May 18, scheduled runs stopped July 19, and nothing ran on schedule again
-  even after re-enabling, an off-hour cron (7,37) and a disable/enable cycle
-  on October 3. Check with `gh run list -R nullsetlabs/vex-visualizer
-  --event schedule -L 3`; manual runs (`gh workflow run update-data.yml -f
-  mode=live`) still work. Before a quiet stretch (May to September), keep the
-  repository active, for example a small commit each month.
+  May 18 and scheduled runs stopped July 19. After re-enabling, an off-hour
+  cron (7,37) and a disable/enable cycle on October 3, GitHub's schedule came
+  back only about 12 hours later and then ran every few hours, not every 30
+  minutes. Since October 4, 2026 a Cloudflare Worker starts the runs instead
+  (`tools/cloudflare-timer/`, token expires October 4, 2027); GitHub's own
+  schedule stays as a backup. Check with `gh run list -R nullsetlabs/vex-visualizer
+  --workflow update-data.yml -L 5` (timer runs show as workflow_dispatch).
+  Before a quiet stretch (May to September), keep the repository active, for
+  example a small commit each month.
 - Keep unpublished research out of public repos and pages until it is
   published.
 
