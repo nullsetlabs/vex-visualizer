@@ -7,8 +7,10 @@
 // manual starts instead.
 //
 // Cron triggers (UTC), the same times as in .github/workflows/update-data.yml:
-//   7,37 * * * *   live: signature events in progress (exits at once if none)
-//   17 6 * * 1,4   full: event list, newly finished events, skills standings
+//   7,37 * * * *       live: signature events in progress (exits at once if none)
+//   17 6 * * MON,THU   full: event list, newly finished events, skills standings
+// Cloudflare numbers weekdays 1-7 from Sunday (GitHub uses 0-6), so the days
+// are written as names. Any trigger other than the live one starts a full update.
 //
 // Secret GITHUB_TOKEN: a fine-grained GitHub token limited to the repository
 // nullsetlabs/vex-visualizer with only "Actions: Read and write".
@@ -16,11 +18,11 @@
 
 const REPO = 'nullsetlabs/vex-visualizer';
 const WORKFLOW = 'update-data.yml';
-const FULL_CRON = '17 6 * * 1,4';
+const LIVE_CRON = '7,37 * * * *';
 
 export default {
   async scheduled(event, env) {
-    const mode = event.cron === FULL_CRON ? 'full' : 'live';
+    const mode = event.cron === LIVE_CRON ? 'live' : 'full';
     const res = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/${WORKFLOW}/dispatches`, {
       method: 'POST',
       headers: {

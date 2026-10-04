@@ -40,7 +40,10 @@ If the organization requires approval for fine-grained tokens, approve it under
    Value: paste the GitHub token. Select **Deploy** (or Save).
 5. **Trigger Events > Add > Cron Triggers**. Add two schedules (times are UTC):
    - `7,37 * * * *`
-   - `17 6 * * 1,4`
+   - `17 6 * * MON,THU`
+
+   Use the day names: Cloudflare numbers weekdays from Sunday = 1, so `1,4`
+   would mean Sunday and Wednesday there (GitHub counts Sunday = 0).
 6. Optional: under **Domains & Routes**, turn off the workers.dev address. The
    Worker does not need one.
 
@@ -63,6 +66,13 @@ permission; "404" means the token cannot see the repository.
 - **If GitHub's schedule starts working again**, both timers will start runs.
   That is harmless (runs wait their turn, and a live run with no signature event
   exits in seconds), but one of them can then be removed.
-- **Changing the times:** change them both here (`wrangler.toml`, the Worker's
-  `FULL_CRON`) and in the Worker's Cron Triggers, and keep
-  `.github/workflows/update-data.yml` in step.
+- **Changing the times:** change them here (`wrangler.toml`, and the Worker's
+  `LIVE_CRON` if the live schedule changes) and in the Worker's Cron Triggers,
+  and keep `.github/workflows/update-data.yml` in step.
+
+## Set up on October 3, 2026
+
+Worker `vex-visualizer-timer` in the nullsetlabs.org Cloudflare account, with
+both cron triggers. The dashboard copy of the code is `worker.js` typed as one
+long line (same statements, without the comments). GitHub token: fine-grained,
+nullsetlabs/vex-visualizer only, Actions read and write, expires October 4, 2027.
