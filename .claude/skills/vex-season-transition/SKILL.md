@@ -162,6 +162,12 @@ end of each transition with anything that changed.
   --workflow update-data.yml -L 5` (timer runs show as workflow_dispatch).
   Before a quiet stretch (May to September), keep the repository active, for
   example a small commit each month.
+- Both workflows are pinned to `runs-on: ubuntu-24.04` (October 2026, before
+  ubuntu-latest moved to Ubuntu 26). At each transition, check GitHub's
+  runner-images notices and move to a newer image once Python 3.12 runs there.
+- Emails saying "All jobs were cancelled" with "The job was not acquired by
+  Runner" are GitHub outages (githubstatus.com), not site problems; the next
+  run catches up.
 - Keep unpublished research out of public repos and pages until it is
   published.
 
