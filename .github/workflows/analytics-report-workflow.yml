@@ -28,7 +28,7 @@ permissions:
 
 jobs:
   report:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # pinned: ubuntu-latest moves to Ubuntu 26 from October 19, 2026
     timeout-minutes: 10
 
     steps:
