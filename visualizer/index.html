@@ -1857,8 +1857,8 @@ function setupSearch() {
 // ---------------------------------------------------------------------------
 // Visitor feedback and time spent per section (GA4 events, no personal data)
 // ---------------------------------------------------------------------------
-// Written suggestions go to a short Google Form; the link shows once this is set.
-const FEEDBACK_FORM = '';
+// Written suggestions go to a short Google Form (no sign-in, no email addresses collected).
+const FEEDBACK_FORM = 'https://forms.gle/RTyiyRtZt9rVnhqL9';
 const RATE_REASONS = [['find', 'Hard to find things'], ['data', 'Data looks wrong'], ['missing', 'Missing something I need'], ['phone', 'Hard to use on a phone']];
 const rated = new Set();
 function renderRateBar(view) {
