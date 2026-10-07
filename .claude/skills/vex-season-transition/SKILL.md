@@ -38,7 +38,15 @@ end of each transition with anything that changed.
   (listed in robots.txt). Styles in `visualizer/pages.css`. The workflow
   commits those folders with the data.
 - `visualizer/usage_report.py` and `.github/workflows/analytics-report-workflow.yml`:
-  monthly GA4 usage report in `analytics/` (season over season, sections, clicks).
+  monthly GA4 usage report in `analytics/` (season over season, how people
+  arrive, sections, time per section, "Is this page useful?" answers, clicks).
+  The page sends `view_<section>`, `time_<section>` (value = visible seconds),
+  `rate_yes_/rate_no_<section>`, `rate_reason_<reason>` and `click_*` events.
+- Share images: `visualizer/dev/make_og_images.py` writes `visualizer/og-visualizer.png`
+  (tracker and standalone pages) and `og-vex.png` (VEX home) from the Null Set
+  Labs card layout. Rerun it with the new season name; use a new file name if the
+  look changes, so social apps fetch it fresh. The Worlds 2026 archive keeps
+  `visualizer/og-preview.png`.
 - Tools: `visualizer/dev/test_season_pipeline.py` (tests, no network) and
   `visualizer/dev/make_preview_data.py` (synthetic data for layout checks).
 - Other pages that mention the season: robotics.nullsetlabs.org

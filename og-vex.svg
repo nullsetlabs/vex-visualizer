@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="VEX at Null Set Labs Open Graph preview">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c0c14"/>
+      <stop offset="100%" stop-color="#0a0a0f"/>
+    </linearGradient>
+    <linearGradient id="slashGradient" x1="15%" y1="85%" x2="85%" y2="15%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="50%" stop-color="#7d7a7a"/>
+      <stop offset="100%" stop-color="#c19a5b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c19a5b" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#c19a5b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  <circle cx="600" cy="170" r="240" fill="url(#glow)"/>
+  <g transform="translate(560 50)">
+    <circle cx="40" cy="40" r="30" fill="none" stroke="#c19a5b" stroke-width="3"/>
+    <line x1="16" y1="64" x2="64" y2="16" stroke="url(#slashGradient)" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <text x="600" y="170" text-anchor="middle" fill="#c19a5b" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="500" letter-spacing="5">ROBOTICS</text>
+  <text x="600" y="262" text-anchor="middle" fill="#ededeb" font-family="'Newsreader', Georgia, serif" font-size="80" font-weight="500" letter-spacing="-1">VEX at Null Set Labs</text>
+  <text x="600" y="340" text-anchor="middle" fill="#8a8a92" font-family="'Newsreader', Georgia, serif" font-size="28" font-style="italic" font-weight="400">The VEX Visualizer by Arjun: a V5RC Override 2026-2027 season tracker,</text>
+  <text x="600" y="382" text-anchor="middle" fill="#8a8a92" font-family="'Newsreader', Georgia, serif" font-size="28" font-style="italic" font-weight="400">and the Worlds 2026 dashboard archive.</text>
+  <text x="600" y="575" text-anchor="middle" fill="#5e5e66" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="500" letter-spacing="3">NULL SET LABS  /  vex.nullsetlabs.org</text>
+</svg>

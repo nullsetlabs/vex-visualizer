@@ -9,6 +9,8 @@ Writes analytics/USAGE_REPORT.md and analytics/usage.json at the repo root with:
   - how people arrive each season (search, direct, referral, social) and from where
   - which sections people open (view_* events) and what they click (click_*,
     search_team, compare_regions events sent by the page)
+  - time spent in each section (time_* events, value = visible seconds) and the
+    answers to "Is this page useful?" (rate_yes_*, rate_no_*, rate_reason_*)
   - countries and devices
 
 Only visits on the public hostnames are counted, so local testing is excluded.
@@ -121,10 +123,24 @@ def main():
 
     # What people open and click this season
     season_start = out["seasons"][-1]["start"] if out["seasons"] else LAUNCH
-    rows = report(c, ["eventName"], ["eventCount", "totalUsers"], season_start, today,
-                  order=OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True), limit=200)
-    events = [{"event": d[0], "count": int(m[0]), "users": int(m[1])} for d, m in rows]
-    out["sections"] = [e for e in events if e["event"].startswith("view_")]
+    rows = report(c, ["eventName"], ["eventCount", "totalUsers", "eventValue"], season_start, today,
+                  order=OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True), limit=500)
+    events = [{"event": d[0], "count": int(m[0]), "users": int(m[1]), "value": m[2]} for d, m in rows]
+    out["sections"] = [{k: e[k] for k in ("event", "count", "users")} for e in events if e["event"].startswith("view_")]
+    opened = {e["event"][5:]: e["count"] for e in out["sections"]}
+    out["timeBySection"] = sorted(({"section": e["event"][5:], "seconds": int(e["value"]), "opened": opened.get(e["event"][5:], 0),
+                                    "users": e["users"]} for e in events if e["event"].startswith("time_")),
+                                  key=lambda r: -r["seconds"])
+    for r in out["timeBySection"]:
+        r["avgSeconds"] = round(r["seconds"] / r["opened"]) if r["opened"] else None
+    ratings = {}
+    for e in events:
+        if e["event"].startswith(("rate_yes_", "rate_no_")):
+            _, answer, section = e["event"].split("_", 2)
+            ratings.setdefault(section, {"section": section, "yes": 0, "no": 0})[answer] += e["count"]
+    out["ratings"] = sorted(ratings.values(), key=lambda r: (-(r["yes"] + r["no"]), r["section"]))
+    out["ratingReasons"] = [{"reason": e["event"][len("rate_reason_"):], "count": e["count"]}
+                            for e in events if e["event"].startswith("rate_reason_")]
     out["clicks"] = [e for e in events if e["event"].startswith(("click_", "search_", "compare_"))]
     out["autoEvents"] = [e for e in events if e["event"] in ("page_view", "scroll", "click", "session_start", "user_engagement")]
 
@@ -177,6 +193,26 @@ def main():
           "From the page's view_* events (one per section opened).", "", "| Section | Times opened | Users |", "|---|---|---|"]
     for e in out["sections"]:
         L.append(f"| {e['event'][5:]} | {e['count']:,} | {e['users']:,} |")
+    def dur(sec):
+        sec = int(sec)
+        return f"{sec // 3600}:{sec % 3600 // 60:02d}:{sec % 60:02d}" if sec >= 3600 else f"{sec // 60}:{sec % 60:02d}"
+    L += ["", f"## Time spent in each section (since {season_start})", "",
+          "Time the page was visible in each section (time_* events, measured from October 6, 2026), as minutes:seconds. "
+          "Average = total time divided by the times the section was opened.", "",
+          "| Section | Total time | Times opened | Average per visit | Users |", "|---|---|---|---|---|"]
+    for r in out["timeBySection"]:
+        L.append(f"| {r['section']} | {dur(r['seconds'])} | {r['opened']:,} | {dur(r['avgSeconds']) if r['avgSeconds'] is not None else '-'} | {r['users']:,} |")
+    if not out["timeBySection"]:
+        L.append("| No data yet | | | | |")
+    reason_names = {"find": "Hard to find things", "data": "Data looks wrong",
+                    "missing": "Missing something I need", "phone": "Hard to use on a phone"}
+    L += ["", f"## Is this page useful? (since {season_start})", "",
+          "Answers to the Yes / No line above the page footer. After No, visitors can pick a reason.", "",
+          "| Section | Yes | No |", "|---|---|---|"]
+    L += [f"| {r['section']} | {r['yes']:,} | {r['no']:,} |" for r in out["ratings"]] or ["| No answers yet | | |"]
+    if out["ratingReasons"]:
+        L += ["", "| What could be better | Answers |", "|---|---|"]
+        L += [f"| {reason_names.get(r['reason'], r['reason'])} | {r['count']:,} |" for r in out["ratingReasons"]]
     L += ["", f"## Clicks (since {season_start})", "",
           "From click_*, search_team and compare_regions events. Outbound links are also counted by GA4 as 'click'.", "",
           "| What was clicked | Clicks | Users |", "|---|---|---|"]

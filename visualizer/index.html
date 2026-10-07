@@ -19,14 +19,15 @@
 <meta property="og:url" content="https://vex.nullsetlabs.org/visualizer/">
 <meta property="og:title" content="VEX Visualizer by Arjun | Override 2026-2027 Season Tracker">
 <meta property="og:description" content="Season tracker for VEX V5 Robotics Competition Override: event results, team records, TrueSkill rankings, skills standings and Worlds qualifiers from official VEX Events data.">
-<meta property="og:image" content="https://vex.nullsetlabs.org/visualizer/og-preview.png">
+<meta property="og:image" content="https://vex.nullsetlabs.org/visualizer/og-visualizer.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:site_name" content="VEX Visualizer">
+<meta property="og:image:alt" content="VEX Visualizer: V5RC Override 2026-2027 season tracker by Arjun">
+<meta property="og:site_name" content="Null Set Labs">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="VEX Visualizer by Arjun | Override 2026-2027 Season Tracker">
 <meta name="twitter:description" content="Season tracker for VEX V5 Robotics Competition Override: event results, team records, TrueSkill rankings, skills standings and Worlds qualifiers.">
-<meta name="twitter:image" content="https://vex.nullsetlabs.org/visualizer/og-preview.png">
+<meta name="twitter:image" content="https://vex.nullsetlabs.org/visualizer/og-visualizer.png">
 
 <meta name="description" content="VEX Visualizer by Arjun (VEX team 6121 Conestoga Pioneers): a season tracker for the VEX V5 Robotics Competition 2026-2027 game Override with event results, team records, signature events, TrueSkill rankings, official skills standings and World Championship qualifiers.">
 <meta name="author" content="Arjun, VEX team 6121 Conestoga Pioneers">
@@ -501,6 +502,12 @@
   #view-override .stat-tile .st-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
 
   /* ===== Footer and mobile nav ===== */
+  /* Feedback line above the footer */
+  .rate-bar { max-width: 1600px; margin: 28px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 10px; font-size: 13px; color: var(--text-dim); }
+  .rate-bar button, .rate-bar .rate-link { min-height: 44px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+  .rate-bar button:hover, .rate-bar .rate-link:hover { border-color: var(--accent); }
+  .rate-bar button:focus-visible, .rate-bar .rate-link:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+  .rate-bar .thanks { color: var(--text); }
   .footer { text-align: center; padding: 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-dim); margin-top: 30px; line-height: 1.6; }
   .footer strong { color: var(--text); }
   .about-line { margin-top: 8px; font-size: 12px; }
@@ -684,11 +691,13 @@
   <section class="view" id="view-override"></section>
 </main>
 
+<aside class="rate-bar" id="rateBar" aria-label="Feedback on this page" aria-live="polite"></aside>
+
 <footer class="footer">
   <strong>VEX Visualizer</strong> &bull; Developed by <strong>Arjun</strong> &bull; Override season (2026-2027) &bull; <a href="worlds-2026/">Worlds 2026 archive (Push Back)</a>
   <div class="fine">
     Event, team, match, skills and award data come from <a href="https://events.vex.com/" target="_blank" rel="noopener">VEX Events</a> (events.vex.com API and World Skills Standings).
-    Offensive rating (OPR), defensive rating (DPR) and win margin (CCWM) are computed by this site from qualification match scores and are estimates, not official values.
+    Offensive rating (OPR), defensive rating (DPR) and win margin (CCWM) are computed by this site from qualification match scores, and TrueSkill from all match results; they are estimates, not official values.
   </div>
   <div class="fine">
     This site is an independent community project and is not affiliated with, endorsed by, or sponsored by the REC Foundation, VEX Robotics, or Innovation First International. VEX and VEX Robotics are trademarks or service marks of Innovation First International.
@@ -1846,6 +1855,48 @@ function setupSearch() {
 }
 
 // ---------------------------------------------------------------------------
+// Visitor feedback and time spent per section (GA4 events, no personal data)
+// ---------------------------------------------------------------------------
+// Written suggestions go to a short Google Form; the link shows once this is set.
+const FEEDBACK_FORM = '';
+const RATE_REASONS = [['find', 'Hard to find things'], ['data', 'Data looks wrong'], ['missing', 'Missing something I need'], ['phone', 'Hard to use on a phone']];
+const rated = new Set();
+function renderRateBar(view) {
+  const bar = $('rateBar'); if (!bar) return;
+  const form = FEEDBACK_FORM ? `<a class="rate-link" href="${FEEDBACK_FORM}" target="_blank" rel="noopener" data-track="click_feedback_form">Write a suggestion</a>` : '';
+  if (rated.has(view)) { bar.innerHTML = `<span class="thanks">Thanks for the feedback.</span>${form}`; return; }
+  bar.innerHTML = `<span>Is this page useful?</span><button type="button" data-r="yes">Yes</button><button type="button" data-r="no">No</button>${form}`;
+  bar.querySelectorAll('button').forEach(b => b.onclick = () => {
+    track(`rate_${b.dataset.r}_${view}`, { section: view });
+    rated.add(view);
+    if (b.dataset.r === 'yes') { renderRateBar(view); return; }
+    bar.innerHTML = `<span>What could be better?</span>${RATE_REASONS.map(([k, t]) => `<button type="button" data-k="${k}">${t}</button>`).join('')}${form}`;
+    bar.querySelectorAll('button').forEach(r => r.onclick = () => { track(`rate_reason_${r.dataset.k}`, { section: view }); renderRateBar(view); });
+  });
+}
+
+// Time spent: counts only while the page is visible, and is sent as
+// time_<section> with value = seconds when the visitor moves to another section
+// or hides the page (switches tab, locks the phone, closes it). GA4 adds the
+// values up as eventValue; usage_report.py divides by the view_<section> count.
+const sectionClock = { view: null, ms: 0, since: 0 };
+function sendSectionTime() {
+  const c = sectionClock;
+  if (c.since) { c.ms += Date.now() - c.since; c.since = document.visibilityState === 'visible' ? Date.now() : 0; }
+  const sec = Math.round(Math.min(c.ms, 30 * 60 * 1000) / 1000);
+  if (c.view && sec >= 2) track('time_' + c.view, { value: sec, section: c.view, transport_type: 'beacon' });
+  c.ms = 0;
+}
+function startSectionClock(view) {
+  sendSectionTime();
+  Object.assign(sectionClock, { view, ms: 0, since: document.visibilityState === 'visible' ? Date.now() : 0 });
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') { sendSectionTime(); sectionClock.since = 0; }
+  else sectionClock.since = Date.now();
+});
+
+// ---------------------------------------------------------------------------
 // Router
 // ---------------------------------------------------------------------------
 const TAB_FOR = { home: 'home', signature: 'signature', events: 'events', event: 'events', teams: 'teams', team: 'teams', skills: 'skills', trueskill: 'trueskill', worlds: 'worlds', override: 'override' };
@@ -1875,6 +1926,8 @@ function route() {
   else if (view === 'worlds') renderWorlds(tok);
   else if (view === 'override') renderOverride();
   track('view_' + view, { section: view });
+  startSectionClock(view);
+  renderRateBar(view);
 }
 
 // Usage events for GA4. Event names show up under Reports > Engagement > Events

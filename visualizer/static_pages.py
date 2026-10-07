@@ -97,8 +97,15 @@ def page(path_url, title, description, crumbs, body, jsonld=None):
 <meta property="og:url" content="{SITE}{e(path_url)}">
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(description)}">
-<meta property="og:image" content="{SITE}{BASE}/og-preview.png">
-<meta property="og:site_name" content="VEX Visualizer">
+<meta property="og:image" content="{SITE}{BASE}/og-visualizer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="VEX Visualizer: V5RC Override 2026-2027 season tracker by Arjun">
+<meta property="og:site_name" content="Null Set Labs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{e(title)}">
+<meta name="twitter:description" content="{e(description)}">
+<meta name="twitter:image" content="{SITE}{BASE}/og-visualizer.png">
 <meta name="theme-color" content="#0a0e1a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
