@@ -1,6 +1,6 @@
 # VEX Visualizer usage report
 
-Generated 2026-10-03T04:08:19+00:00 from Google Analytics 4 (property 533952361). Counts only visits on vex.nullsetlabs.org, arjun-mohanan.github.io.
+Generated 2026-10-07T02:45:43+00:00 from Google Analytics 4 (property 533952361). Counts only visits on vex.nullsetlabs.org, arjun-mohanan.github.io.
 
 ## Season over season
 
@@ -9,7 +9,7 @@ Generated 2026-10-03T04:08:19+00:00 from Google Analytics 4 (property 533952361)
 | Season | Dates | Users | Sessions | Page views | Engaged sessions |
 |---|---|---|---|---|---|
 | 2025-2026 Push Back | 2026-04-01 to 2026-05-31 | 162 | 395 | 587 | 167 |
-| 2026-2027 Override | 2026-06-01 to 2026-10-03 | 24 | 38 | 43 | 14 |
+| 2026-2027 Override | 2026-06-01 to 2026-10-07 | 24 | 55 | 166 | 27 |
 
 ## Comparison windows
 
@@ -26,7 +26,7 @@ GA4 default channel groups. Organic Search is Google and other search engines; D
 | Direct | 147 | 14 |
 | Organic Search | 13 | 7 |
 | Referral | 5 | 3 |
-| Unassigned | 1 | 2 |
+| Unassigned | 1 | 1 |
 
 ## Where they came from (users by source)
 
@@ -38,7 +38,7 @@ Top sites and apps that sent visitors; (direct) means no referring site. A user 
 | google | 13 | 0 |
 | arjun-mohanan.github.io | 5 | 3 |
 | bing | 0 | 4 |
-| (not set) | 1 | 2 |
+| (not set) | 1 | 1 |
 | cn.bing.com | 0 | 2 |
 | duckduckgo | 0 | 1 |
 
@@ -52,7 +52,7 @@ Top sites and apps that sent visitors; (direct) means no referring site. A user 
 | 2026-07 | 9 | 13 | 13 | 5 |
 | 2026-08 | 7 | 8 | 8 | 2 |
 | 2026-09 | 5 | 5 | 5 | 4 |
-| 2026-10 | 3 | 4 | 11 | 0 |
+| 2026-10 | 4 | 21 | 134 | 13 |
 
 ## Sections opened (since 2026-06-01)
 
@@ -60,6 +60,32 @@ From the page's view_* events (one per section opened).
 
 | Section | Times opened | Users |
 |---|---|---|
+| home | 109 | 3 |
+| skills | 30 | 2 |
+| signature | 24 | 2 |
+| team | 20 | 2 |
+| events | 9 | 1 |
+| trueskill | 7 | 2 |
+| event | 6 | 1 |
+| teams | 6 | 1 |
+| worlds | 6 | 1 |
+| override | 4 | 1 |
+
+## Time spent in each section (since 2026-06-01)
+
+Time the page was visible in each section (time_* events, measured from October 6, 2026), as minutes:seconds. Average = total time divided by the times the section was opened.
+
+| Section | Total time | Times opened | Average per visit | Users |
+|---|---|---|---|---|
+| No data yet | | | | |
+
+## Is this page useful? (since 2026-06-01)
+
+Answers to the Yes / No line above the page footer. After No, visitors can pick a reason.
+
+| Section | Yes | No |
+|---|---|---|
+| No answers yet | | |
 
 ## Clicks (since 2026-06-01)
 
@@ -67,6 +93,20 @@ From click_*, search_team and compare_regions events. Outbound links are also co
 
 | What was clicked | Clicks | Users |
 |---|---|---|
+| click_start_skills | 13 | 2 |
+| click_start_signature | 6 | 2 |
+| search_team | 6 | 1 |
+| click_skills_card | 4 | 2 |
+| compare_regions | 4 | 1 |
+| click_leaders_tab_skillsHS | 3 | 1 |
+| click_leaders_tab_skillsMS | 3 | 1 |
+| click_brand_home | 2 | 2 |
+| click_help | 1 | 1 |
+| click_leader_team | 1 | 1 |
+| click_start_game | 1 | 1 |
+| click_start_worlds | 1 | 1 |
+| click_trueskill_card | 1 | 1 |
+| click_trueskill_how | 1 | 1 |
 
 ## Countries (this season)
 
@@ -84,4 +124,4 @@ From click_*, search_team and compare_regions events. Outbound links are also co
 | Device | Users |
 |---|---|
 | desktop | 19 |
-| mobile | 5 |
+| mobile | 6 |

@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-03T04:08:19+00:00",
+ "generated": "2026-10-07T02:45:43+00:00",
  "hostnames": [
   "vex.nullsetlabs.org",
   "arjun-mohanan.github.io"
@@ -49,10 +49,10 @@
   },
   {
    "month": "2026-10",
-   "users": 3,
-   "sessions": 4,
-   "views": 11,
-   "engagedSessions": 0
+   "users": 4,
+   "sessions": 21,
+   "views": 134,
+   "engagedSessions": 13
   }
  ],
  "seasons": [
@@ -82,25 +82,25 @@
   {
    "users": 24,
    "newUsers": 21,
-   "sessions": 38,
-   "views": 43,
-   "engagedSessions": 14,
+   "sessions": 55,
+   "views": 166,
+   "engagedSessions": 27,
    "season": "2026-2027 Override",
    "start": "2026-06-01",
-   "end": "2026-10-03",
+   "end": "2026-10-07",
    "complete": false,
    "channels": {
     "Direct": 14,
     "Organic Search": 7,
     "Referral": 3,
-    "Unassigned": 2
+    "Unassigned": 1
    },
    "sources": {
     "(direct)": 14,
     "bing": 4,
     "arjun-mohanan.github.io": 3,
-    "(not set)": 2,
     "cn.bing.com": 2,
+    "(not set)": 1,
     "duckduckgo": 1
    }
   }
@@ -117,33 +117,177 @@
    "end": "2026-04-27"
   }
  ],
- "sections": [],
- "clicks": [],
+ "sections": [
+  {
+   "event": "view_home",
+   "count": 109,
+   "users": 3
+  },
+  {
+   "event": "view_skills",
+   "count": 30,
+   "users": 2
+  },
+  {
+   "event": "view_signature",
+   "count": 24,
+   "users": 2
+  },
+  {
+   "event": "view_team",
+   "count": 20,
+   "users": 2
+  },
+  {
+   "event": "view_events",
+   "count": 9,
+   "users": 1
+  },
+  {
+   "event": "view_trueskill",
+   "count": 7,
+   "users": 2
+  },
+  {
+   "event": "view_event",
+   "count": 6,
+   "users": 1
+  },
+  {
+   "event": "view_teams",
+   "count": 6,
+   "users": 1
+  },
+  {
+   "event": "view_worlds",
+   "count": 6,
+   "users": 1
+  },
+  {
+   "event": "view_override",
+   "count": 4,
+   "users": 1
+  }
+ ],
+ "timeBySection": [],
+ "ratings": [],
+ "ratingReasons": [],
+ "clicks": [
+  {
+   "event": "click_start_skills",
+   "count": 13,
+   "users": 2,
+   "value": 0.0
+  },
+  {
+   "event": "click_start_signature",
+   "count": 6,
+   "users": 2,
+   "value": 0.0
+  },
+  {
+   "event": "search_team",
+   "count": 6,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_skills_card",
+   "count": 4,
+   "users": 2,
+   "value": 0.0
+  },
+  {
+   "event": "compare_regions",
+   "count": 4,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_leaders_tab_skillsHS",
+   "count": 3,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_leaders_tab_skillsMS",
+   "count": 3,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_brand_home",
+   "count": 2,
+   "users": 2,
+   "value": 0.0
+  },
+  {
+   "event": "click_help",
+   "count": 1,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_leader_team",
+   "count": 1,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_start_game",
+   "count": 1,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_start_worlds",
+   "count": 1,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_trueskill_card",
+   "count": 1,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_trueskill_how",
+   "count": 1,
+   "users": 1,
+   "value": 0.0
+  }
+ ],
  "autoEvents": [
   {
    "event": "page_view",
-   "count": 43,
-   "users": 23
-  },
-  {
-   "event": "session_start",
-   "count": 33,
-   "users": 22
-  },
-  {
-   "event": "user_engagement",
-   "count": 28,
-   "users": 12
+   "count": 166,
+   "users": 24,
+   "value": 0.0
   },
   {
    "event": "scroll",
-   "count": 26,
-   "users": 12
+   "count": 127,
+   "users": 12,
+   "value": 0.0
+  },
+  {
+   "event": "user_engagement",
+   "count": 109,
+   "users": 13,
+   "value": 0.0
+  },
+  {
+   "event": "session_start",
+   "count": 42,
+   "users": 24,
+   "value": 0.0
   },
   {
    "event": "click",
-   "count": 3,
-   "users": 1
+   "count": 25,
+   "users": 2,
+   "value": 0.0
   }
  ],
  "countries": [
@@ -179,7 +323,7 @@
   },
   {
    "device": "mobile",
-   "users": 5
+   "users": 6
   }
  ]
 }
