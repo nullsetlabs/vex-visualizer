@@ -1073,8 +1073,11 @@ def main():
         last = read_json(os.path.join(DATA_DIR, "pushback_2026.json"), {}) or {}
         cols = last.get("cols") or []
         last_season = {n: dict(zip(cols, row)) for n, row in (last.get("teams") or {}).items()}
-        written, removed = static_pages.build(SCRIPT_DIR, index, buckets, standings, cached, last_season)
+        written, removed, changed_urls, all_urls = static_pages.build(SCRIPT_DIR, index, buckets, standings, cached, last_season)
         log(f"Static pages: {written} written or changed, {removed} removed")
+        # Tell Bing and other IndexNow engines about the new and changed pages.
+        import indexnow
+        indexnow.run(changed_urls, all_urls, os.path.join(DATA_DIR, "indexnow.json"), read_json, write_json, log)
     except Exception as err:
         log(f"WARNING: static pages were not built: {err!r}")
     if changed or "builtAt" not in meta:

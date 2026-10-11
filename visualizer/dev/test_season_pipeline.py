@@ -126,4 +126,21 @@ with tempfile.TemporaryDirectory() as tmp:
     sr.apply(out, rows, tms)
     assert rows[0]["sub"] == "Western PA" and "sub" not in rows[1] and tms["PITT"]["sub"] == "Western PA" and tms["X1"]["sub"] == ""
 print(f"PA split: line {pa['lon']}, {len(pa['teams'])} teams, basis {pa['basis']}")
+
+# 5. IndexNow: only on GitHub Actions; everything once, then changed pages only.
+import indexnow
+sent = []
+fake_send = lambda urls, log: (sent.append(list(urls)), 200)[1]
+with tempfile.TemporaryDirectory() as tmp:
+    st = os.path.join(tmp, "indexnow.json")
+    every = ["https://vex.nullsetlabs.org/visualizer/team/96Z/", "https://vex.nullsetlabs.org/visualizer/skills/", "https://example.com/x"]
+    assert indexnow.run(every[:1], every, st, sp.read_json, sp.write_json, logs.append, {}, fake_send) == 0 and not sent
+    n = indexnow.run(every[:1], every, st, sp.read_json, sp.write_json, logs.append, {"GITHUB_ACTIONS": "true"}, fake_send)
+    assert n == 5 and "https://example.com/x" not in sent[0] and sp.read_json(st)["allSubmitted"]   # 2 pages + 3 main pages
+    n = indexnow.run(every[:1], every, st, sp.read_json, sp.write_json, logs.append, {"GITHUB_ACTIONS": "true"}, fake_send)
+    assert n == 1 and sent[1] == every[:1]
+    st2 = os.path.join(tmp, "fail.json")
+    assert indexnow.run([], every, st2, sp.read_json, sp.write_json, logs.append, {"GITHUB_ACTIONS": "true"}, lambda u, l: 403) == 0
+    assert not os.path.exists(st2)
+print("IndexNow: first run sends all pages once, then only changed pages")
 print("ALL TESTS PASSED")

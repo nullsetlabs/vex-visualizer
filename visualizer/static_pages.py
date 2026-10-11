@@ -372,7 +372,8 @@ def _write(path, text):
 
 
 def build(vis_dir, index, buckets, standings, cached, last_season=None):
-    """Write all pages under vis_dir. Returns (pages written or changed, pages removed)."""
+    """Write all pages under vis_dir. Returns (pages written or changed, pages removed,
+    full URLs of the changed pages, full URLs of all pages)."""
     teams = {n: t for b in buckets.values() for n, t in b.items()}
     by_id = {r["id"]: r for r in index}
     sig_rows = [r for r in index if r.get("level") == "Signature" and r.get("sku")]
@@ -393,11 +394,14 @@ def build(vis_dir, index, buckets, standings, cached, last_season=None):
 
     written = 0
     keep = set()
+    changed = []
     for url, text, _ in pages:
         rel = url[len(BASE) + 1:]
         path = os.path.join(vis_dir, *rel.strip("/").split("/"), "index.html")
         keep.add(os.path.normpath(path))
-        written += _write(path, text)
+        if _write(path, text):
+            written += 1
+            changed.append(SITE + url)
 
     removed = 0
     for top in ("team", "event"):
@@ -415,4 +419,4 @@ def build(vis_dir, index, buckets, standings, cached, last_season=None):
         sm.append(f"  <url><loc>{SITE}{html.escape(url)}</loc>{f'<lastmod>{lastmod[:10]}</lastmod>' if lastmod else ''}</url>")
     sm.append("</urlset>")
     written += _write(os.path.join(vis_dir, "sitemap-pages.xml"), "\n".join(sm) + "\n")
-    return written, removed
+    return written, removed, changed, [SITE + url for url, _, _ in pages]
