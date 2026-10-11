@@ -177,6 +177,11 @@
     font-family: 'Newsreader', serif; font-weight: 500;
     font-size: 22px; color: var(--text); letter-spacing: -0.2px;
   }
+  .faq { display: grid; gap: 12px; }
+  .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .faq-item h3 { font-size: 16px; font-weight: 600; color: var(--text); margin: 0 0 6px; line-height: 1.4; }
+  .faq-item p { font-size: 14px; color: var(--text-dim); line-height: 1.6; margin: 0; }
+  .faq-item a { color: var(--accent-bright); }
   .project-subtitle { font-size: 14px; color: var(--text-dim); line-height: 1.5; margin-bottom: 14px; }
   .project-meta { display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--text-dimmer); font-family: 'JetBrains Mono', monospace; }
   .project-link { color: var(--accent); }
@@ -306,6 +311,7 @@
   }
 
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Where can I see the VEX V5RC Override skills rankings?", "acceptedAnswer": {"@type": "Answer", "text": "The VEX Visualizer's skills leaderboard lists every high school and middle school team's best driver plus autonomous skills score from the official World Skills Standings, updated through the season."}}, {"@type": "Question", "name": "What is TrueSkill in VEX robotics?", "acceptedAnswer": {"@type": "Answer", "text": "TrueSkill is a rating method from Microsoft Research that estimates a team's strength from its match wins and losses, taking into account how strong its partners and opponents were. The VEX Visualizer computes it for every team from all of this season's official match results: see the TrueSkill rankings and how they are calculated."}}, {"@type": "Question", "name": "How do I look up my team's season?", "acceptedAnswer": {"@type": "Answer", "text": "Type your team number, for example 6121E, in the search box at the top of the VEX Visualizer. A team's page shows its events, qualification and elimination record, awards, skills score and TrueSkill, and last season's Worlds results for teams that were there. Every team with results also has its own page at vex.nullsetlabs.org/visualizer/team/ followed by the team number."}}, {"@type": "Question", "name": "Which teams have qualified for VEX Worlds 2027 so far?", "acceptedAnswer": {"@type": "Answer", "text": "The Worlds qualifiers list shows every team that has qualified for the 2027 VEX Robotics World Championship through an award, with the award and the event. Qualified teams are also marked in green throughout the tracker."}}, {"@type": "Question", "name": "Where can I follow signature event results?", "acceptedAnswer": {"@type": "Answer", "text": "The signature events page lists all of this season's signature events with dates, tournament champions and Excellence Award winners. Results update about every 30 minutes while an event is running."}}, {"@type": "Question", "name": "Can I see only the teams and events in my state?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Pick your state, province or country with the region button at the top of the tracker; its upcoming events, top teams and Worlds qualifiers then show first, and the lists can show only that region. Pennsylvania can also be split into Eastern PA and Western PA."}}, {"@type": "Question", "name": "Where does the data come from, and who makes the VEX Visualizer?", "acceptedAnswer": {"@type": "Answer", "text": "Event, team, match, skills and award data come from official VEX Events data (events.vex.com); TrueSkill and OPR are computed by the site. The VEX Visualizer is built by Arjun, a high school student on VEX team 6121 Conestoga Pioneers, and published by Null Set Labs. It is an independent project, not affiliated with VEX Robotics or the REC Foundation."}}, {"@type": "Question", "name": "Is the Worlds 2026 dashboard still available?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The Push Back 2025-2026 Worlds dashboard is kept as an archive at vex.nullsetlabs.org/visualizer/worlds-2026."}}]}</script>
 </head>
 <body>
 <!-- BEGIN Null Set Labs context strip -->
@@ -407,7 +413,7 @@
           <div class="project-name">VEX Visualizer</div>
           <span class="pill pill-live">Live</span>
         </div>
-        <p class="project-subtitle">By Arjun (VEX team 6121 Conestoga Pioneers). Season tracker for V5RC Override 2026-2027: event results, team records, skills standings and Worlds qualifiers. The Worlds 2026 dashboard is kept as an archive.</p>
+        <p class="project-subtitle">By Arjun (VEX team 6121 Conestoga Pioneers). Season tracker for V5RC Override 2026-2027: event results, team pages, the skills leaderboard, TrueSkill rankings, your region first, and Worlds qualifiers. The Worlds 2026 dashboard is kept as an archive.</p>
         <div class="project-meta">
           <span class="project-link">vex.nullsetlabs.org/visualizer</span>
         </div>
@@ -415,6 +421,45 @@
     </a>
 
 
+  </div>
+</section>
+
+<section style="padding-top: 0">
+  <div class="section-label">Questions</div>
+  <h2 class="section-title">Common questions.</h2>
+  <div class="faq">
+    <div class="faq-item">
+      <h3>Where can I see the VEX V5RC Override skills rankings?</h3>
+      <p>The VEX Visualizer's <a href="/visualizer/skills/">skills leaderboard</a> lists every high school and middle school team's best driver plus autonomous skills score from the official World Skills Standings, updated through the season.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What is TrueSkill in VEX robotics?</h3>
+      <p>TrueSkill is a rating method from Microsoft Research that estimates a team's strength from its match wins and losses, taking into account how strong its partners and opponents were. The VEX Visualizer computes it for every team from all of this season's official match results: see the <a href="/visualizer/trueskill/">TrueSkill rankings</a> and how they are calculated.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How do I look up my team&#x27;s season?</h3>
+      <p>Type your team number, for example 6121E, in the search box at the top of the <a href="/visualizer/">VEX Visualizer</a>. A team's page shows its events, qualification and elimination record, awards, skills score and TrueSkill, and last season's Worlds results for teams that were there. Every team with results also has its own page at vex.nullsetlabs.org/visualizer/team/ followed by the team number.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Which teams have qualified for VEX Worlds 2027 so far?</h3>
+      <p>The <a href="/visualizer/worlds-qualifiers/">Worlds qualifiers list</a> shows every team that has qualified for the 2027 VEX Robotics World Championship through an award, with the award and the event. Qualified teams are also marked in green throughout the tracker.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Where can I follow signature event results?</h3>
+      <p>The <a href="/visualizer/signature/">signature events page</a> lists all of this season's signature events with dates, tournament champions and Excellence Award winners. Results update about every 30 minutes while an event is running.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I see only the teams and events in my state?</h3>
+      <p>Yes. Pick your state, province or country with the region button at the top of the tracker; its upcoming events, top teams and Worlds qualifiers then show first, and the lists can show only that region. Pennsylvania can also be split into Eastern PA and Western PA.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Where does the data come from, and who makes the VEX Visualizer?</h3>
+      <p>Event, team, match, skills and award data come from official VEX Events data (events.vex.com); TrueSkill and OPR are computed by the site. The VEX Visualizer is built by Arjun, a high school student on VEX team 6121 Conestoga Pioneers, and published by Null Set Labs. It is an independent project, not affiliated with VEX Robotics or the REC Foundation.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is the Worlds 2026 dashboard still available?</h3>
+      <p>Yes. The Push Back 2025-2026 Worlds dashboard is kept as an archive at <a href="/visualizer/worlds-2026/">vex.nullsetlabs.org/visualizer/worlds-2026</a>.</p>
+    </div>
   </div>
 </section>
 

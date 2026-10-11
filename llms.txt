@@ -1,0 +1,19 @@
+# VEX Visualizer
+
+> Season tracker for the VEX V5 Robotics Competition (V5RC) 2026-2027 game Override, built from official VEX Events data by Arjun of VEX team 6121 Conestoga Pioneers and published by Null Set Labs. Updated twice a week, and about every 30 minutes while signature events are running.
+
+## Main pages
+
+- [Season tracker](https://vex.nullsetlabs.org/visualizer/): overview with the visitor's region first, events, teams, skills, TrueSkill, Road to Worlds and the Override game guide
+- [Skills leaderboard](https://vex.nullsetlabs.org/visualizer/skills/): official World Skills Standings for high school and middle school
+- [TrueSkill rankings](https://vex.nullsetlabs.org/visualizer/trueskill/): match-based ratings for every team, with how they are calculated
+- [Signature events](https://vex.nullsetlabs.org/visualizer/signature/): schedule, tournament champions and Excellence Award winners
+- [Worlds 2027 qualifiers](https://vex.nullsetlabs.org/visualizer/worlds-qualifiers/): teams qualified through awards
+- Team pages: https://vex.nullsetlabs.org/visualizer/team/ followed by the team number (for example /visualizer/team/96Z/), one for every team with results this season
+- [Worlds 2026 archive](https://vex.nullsetlabs.org/visualizer/worlds-2026/): the Push Back 2025-2026 Worlds dashboard
+
+## Notes
+
+- Records, awards, rankings and skills standings are official VEX data; TrueSkill, OPR, DPR and CCWM are computed by this site.
+- Eastern and Western Pennsylvania are an estimated split; VEX lists those teams and events as Pennsylvania.
+- Independent community project, not affiliated with VEX Robotics, the REC Foundation or Innovation First International.
