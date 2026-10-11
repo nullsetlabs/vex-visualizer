@@ -502,6 +502,52 @@
   #view-override .stat-tile .st-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
 
   /* ===== Footer and mobile nav ===== */
+  /* Your region: header button, picker, filter chip, Overview section */
+  .region-btn { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(193,154,91,0.5); background: rgba(193,154,91,0.12); color: var(--accent2); cursor: pointer; max-width: 220px; min-width: 0; }
+  .region-btn .ic { width: 14px; height: 14px; flex-shrink: 0; }
+  .region-btn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rg-note { font-size: 13px; color: var(--text-dim); margin: 0 0 8px; }
+  .rg-search { width: 100%; margin: 0 0 6px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font: inherit; font-size: 14px; }
+  .rg-group { margin: 12px 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dim); }
+  .rg-opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .rg-opt { min-height: 40px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-size: 13px; cursor: pointer; }
+  .rg-opt .n { color: var(--text-dim); font-size: 11px; margin-left: 6px; }
+  .rg-opt:hover, .rg-opt:focus-visible { border-color: var(--accent); }
+  .rg-opt.on { border-color: var(--accent); background: rgba(193,154,91,0.16); color: var(--accent2); }
+  .rg-clear { margin-top: 14px; }
+  .region-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; }
+  .region-chip .ic { width: 14px; height: 14px; }
+  .region-chip.on { border-color: var(--accent); background: rgba(193,154,91,0.16); color: var(--accent2); }
+  .region-chip:focus-visible, .region-btn:focus-visible, .rg-opt:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+  .region-box { margin: 0 0 18px; }
+  .rg-prompt { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 14px 16px; border-radius: 14px; border: 1px dashed rgba(193,154,91,0.6); background: rgba(193,154,91,0.07); }
+  .rg-prompt-text { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--text-dim); }
+  .rg-prompt-text strong { display: block; color: var(--text); font-size: 15px; }
+  .rg-prompt-text > .ic { width: 20px; height: 20px; color: var(--accent2); flex-shrink: 0; margin-top: 2px; }
+  .rg-prompt-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .rg-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .rg-head h2 { font-size: 19px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin: 0; }
+  .rg-head h2 .ic { width: 19px; height: 19px; color: var(--accent2); }
+  .rg-grade { margin: 0 0 8px; }
+  .rg-sum { font-size: 13px; color: var(--text-dim); margin: -2px 0 12px; }
+  .rg-champ { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; padding: 8px 10px; margin: 0 0 8px; border-radius: 10px; background: rgba(251,191,36,0.07); border-left: 3px solid var(--gold); }
+  .rg-champ .ic { width: 15px; height: 15px; color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .rg-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .rg-grid > .panel { margin-bottom: 0; min-width: 0; }
+  .rg-links { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-size: 13px; }
+  .rg-links a { color: var(--accent2); text-decoration: none; font-weight: 600; }
+  @media (max-width: 1200px) { .rg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .rg-grid { grid-template-columns: minmax(0, 1fr); } }
+
+  /* Teams qualified for Worlds 2027: pink number plus a globe, wherever a team number appears */
+  .team-link.wq, .ld-team.wq, .sk-team.wq, .ac-team.wq, .wq-legend .wq { color: var(--c-worlds) !important; }
+  .ld-team.wq { background: rgba(244,114,182,0.14); }
+  .wq-mark { display: inline-flex; vertical-align: -0.12em; margin-left: 3px; }
+  .wq-mark .ic { width: 0.9em; height: 0.9em; }
+  .wq-legend { font-size: 12px; color: var(--text-dim); margin: -4px 0 10px; }
+  .wq-legend .ic { width: 12px; height: 12px; vertical-align: -2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
   /* Feedback line above the footer */
   .rate-bar { max-width: 1600px; margin: 28px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 10px; font-size: 13px; color: var(--text-dim); }
   .rate-bar button, .rate-bar .rate-link { min-height: 44px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
@@ -554,7 +600,7 @@
   .sb-updated { display: none; }
   @media (max-width: 768px) {
     .hero { padding: 8px 14px 8px; }
-    .hero-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+    .hero-top { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: center; }
     .hero-brand { grid-column: 1 / -1; justify-content: flex-start; }
     .hero-logo { width: 34px; height: 34px; }
     .hero-titles, .hero-brand > div { text-align: left; }
@@ -563,7 +609,9 @@
     .hero-tagline { font-size: 12px; margin-top: 1px; }
     .archive-link { display: none; }
     .search-wrapper { order: 3; width: auto; }
-    .help-btn { order: 4; padding: 9px 12px; }
+    .region-btn { order: 4; padding: 9px 10px; max-width: 120px; }
+    .help-btn { order: 5; padding: 9px 12px; }
+    .sk-filters .region-chip { grid-column: 1 / -1; justify-content: center; }
     .nav-row { margin-top: 8px; }
     .nav-row .tabs { flex-wrap: nowrap; gap: 6px; margin: 0 -14px; padding: 0 14px 2px; }
     .nav-tab { padding: 6px 11px; font-size: 12.5px; gap: 5px; border-radius: 999px; }
@@ -660,6 +708,7 @@
         <input type="text" class="search-input" id="searchInput" placeholder="Find a team, e.g. 6121E" autocomplete="off" aria-label="Find a team by number or name">
         <div class="autocomplete-list" id="acList" role="listbox"></div>
       </div>
+      <button class="region-btn" id="regionBtn" type="button" aria-haspopup="dialog" data-region-open data-track="click_region_open"><span id="regionLabel">Your region</span></button>
       <button class="help-btn" type="button" onclick="openHelp()" aria-haspopup="dialog" data-track="click_help">? Help</button>
       <a class="archive-link" href="worlds-2026/" data-track="click_archive">Worlds 2026 archive &rarr;</a>
     </div>
@@ -718,6 +767,16 @@
   </div>
 </nav>
 
+<dialog class="help" id="regionDialog" aria-labelledby="regionTitle">
+  <div class="help-head"><h2 id="regionTitle">Pick your region</h2><button class="help-close" type="button" onclick="document.getElementById('regionDialog').close()">Close</button></div>
+  <div class="help-body">
+    <p class="rg-note">Your region shows first on the Overview, and the lists can show only its teams and events. The choice is saved on this device.</p>
+    <input type="text" class="rg-search" id="rgQ" placeholder="Type a state, province or country" autocomplete="off" aria-label="Find a region">
+    <div id="rgList"></div>
+    <button type="button" class="rg-opt rg-clear" id="rgClear">Show all regions</button>
+  </div>
+</dialog>
+
 <dialog class="help" id="helpDialog" aria-labelledby="helpTitle">
   <div class="help-head"><h2 id="helpTitle">What the words on this page mean</h2><button class="help-close" type="button" onclick="document.getElementById('helpDialog').close()">Close</button></div>
   <div class="help-body">
@@ -728,6 +787,8 @@
       <dt>League</dt><dd>An event that runs over several weeks, with matches on different days.</dd>
       <dt>Signature event</dt><dd>The top tier of events in the season. Large, strong fields, and awards there can qualify teams for the World Championship.</dd>
       <dt>Worlds</dt><dd>The VEX Robotics World Championship at the end of the season. A <strong>Worlds qualifier</strong> is a team that has earned a spot.</dd>
+      <dt>Your region</dt><dd>Pick your state, province or country with the region button (pin icon) at the top. Its teams and events then show first, and lists can show only that region.</dd>
+      <dt>Pink team numbers</dt><dd>Teams that have qualified for the 2027 World Championship, also marked with a small globe.</dd>
       <dt>HS, MS, HS + MS</dt><dd>High school, middle school, and events where both compete together. Blue marks high school, purple marks middle school, teal marks both.</dd>
     </dl>
     <h3>Matches and results</h3>
@@ -933,6 +994,8 @@ const UI = {
   worlds: { grade: 'all' },
   cmp: { a: '', b: '', grade: 'all' },
   leaders: { tab: 'skillsHS' },
+  region: { grade: 'High School' },
+  regionOnly: true,
 };
 const pending = {};
 const lazy = (key, fn) => pending[key] || (pending[key] = fn());
@@ -995,7 +1058,7 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
 const addDays = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);
 const place = o => [o.city, o.region, o.country === 'United States' ? '' : o.country].filter(Boolean).join(', ');
 const gradeShort = g => g === 'High School' ? 'HS' : g === 'Middle School' ? 'MS' : g === 'Blended' ? 'HS + MS' : '';
-const teamLink = n => `<a class="team-link" translate="no" href="#team/${encodeURIComponent(n)}">${esc(n)}</a>`;
+const teamLink = n => `<a class="team-link${wqClass(n)}" translate="no" href="#team/${encodeURIComponent(n)}">${esc(n)}${wqMark(n)}</a>`;
 const teamLinks = list => (list || []).map(teamLink).join(' ') || '<span class="dim">-</span>';
 const eventLink = e => `<a class="ev-link" href="#event/${e.id}">${esc(e.name)}</a>`;
 const officialEvent = sku => `https://events.vex.com/robot-competitions/vex-robotics-competition/${encodeURIComponent(sku)}.html`;
@@ -1009,6 +1072,7 @@ function statusBadge(e) {
   return '';
 }
 const ICON = {
+  pin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
   trend: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
   home: '<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
   star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
@@ -1185,7 +1249,7 @@ function leaderRows(rows, stat) {
   if (!rows.length) return '<div class="empty">None yet.</div>';
   return `<div class="ld-list">${rows.map((r, i) => `<a class="ld-row" href="#team/${encodeURIComponent(r.team)}" data-track="click_leader_team">
       <span class="ld-rank${i < 3 ? ' top' + (i + 1) : ''}">${r.rank || i + 1}</span>
-      <span class="ld-team ${GRADE_CLASS[r.grade] || ''}" translate="no">${esc(r.team)}</span>
+      <span class="ld-team ${GRADE_CLASS[r.grade] || ''}${wqClass(r.team)}" translate="no">${esc(r.team)}${wqMark(r.team)}</span>
       <span class="ld-main"><span class="ld-name">${esc(r.name)}</span><span class="ld-where">${esc([r.region, r.country === 'United States' ? '' : r.country].filter(Boolean).join(', '))}</span></span>
       <span class="ld-stat">${stat(r)}</span></a>`).join('')}</div>`;
 }
@@ -1218,6 +1282,7 @@ function renderOverview() {
       ${built ? `<div class="sb-updated">Updated ${esc(built)} &bull; ${helpLink('Word guide')}</div>` : ''}
     </div>
   </section>`;
+  h += `<section id="region-box" class="region-box" aria-label="Your region"></section>`;
   const START = [
     { k: 'skills', c: 'c-skills', i: 'bolt', t: 'Skills leaderboard', d: 'Best robot skills scores worldwide', href: '#skills' },
     { k: 'signature', c: 'c-sig', i: 'star', t: 'Signature events', d: `${c.signatureDone} of ${c.signature} held, with results`, href: '#signature' },
@@ -1278,6 +1343,7 @@ function renderOverview() {
     series: [{ name: 'Top skills score', color: 'var(--series-1)', values: sk.map(w => w.skillsMax) }],
   });
   renderLeaders();
+  renderRegionBox(routeTok);
   renderCompare(routeTok);
 }
 
@@ -1299,7 +1365,7 @@ function renderLeaders() {
   } else if (tab === 'titles') {
     cards = (L.titles || []).map((t, i) => `<a class="sk-card${i < 3 ? ' medal' + (i + 1) : ''}" href="#team/${encodeURIComponent(t.team)}">
       <div class="sk-top"><span class="sk-rank">#${i + 1}</span>${gradeBadge(t)}</div>
-      <div class="sk-team ${GRADE_CLASS[t.grade] || ''}" translate="no">${esc(t.team)}</div>
+      <div class="sk-team ${GRADE_CLASS[t.grade] || ''}${wqClass(t.team)}" translate="no">${esc(t.team)}${wqMark(t.team)}</div>
       <div class="sk-name">${esc(t.name)}</div>
       <div class="sk-where">${esc(where(t))}</div>
       <div class="sk-score"><strong>${t.titles}</strong><span>tournament title${t.titles === 1 ? '' : 's'}</span></div>
@@ -1309,7 +1375,7 @@ function renderLeaders() {
   } else {
     cards = (L.signatureWinners || []).slice(0, 8).map(w => { const [ai, ac] = awardInfo(w.award); return `<a class="sk-card sig-win" href="#team/${encodeURIComponent(w.team)}">
       <div class="sk-top"><span class="sk-award">${icon(ai, ac)} ${esc(w.award)}</span>${gradeBadge(w)}</div>
-      <div class="sk-team ${GRADE_CLASS[w.grade] || ''}" translate="no">${esc(w.team)}</div>
+      <div class="sk-team ${GRADE_CLASS[w.grade] || ''}${wqClass(w.team)}" translate="no">${esc(w.team)}${wqMark(w.team)}</div>
       <div class="sk-name">${esc(w.name)}</div>
       <div class="sk-where">${esc(where(w))}</div>
       <div class="sk-event">${esc(shortEventName(w.eventName))} &bull; ${esc(fmtDate(w.date))}</div>
@@ -1321,7 +1387,7 @@ function renderLeaders() {
       <div class="panel" style="--c:var(--gold)"><h2>${icon('star')}Signature event winners</h2><div class="sub">Tournament Champions and Excellence, newest first. <a href="#signature">All signature events</a></div>
         ${sigRows.length ? `<div class="ld-list">${sigRows.map(w => { const [ai, ac] = awardInfo(w.award); return `<a class="ld-row" href="#team/${encodeURIComponent(w.team)}" data-track="click_leader_team">
           <span class="ld-rank" title="${esc(w.award)}">${icon(ai, ac)}</span>
-          <span class="ld-team ${GRADE_CLASS[w.grade] || ''}" translate="no">${esc(w.team)}</span>
+          <span class="ld-team ${GRADE_CLASS[w.grade] || ''}${wqClass(w.team)}" translate="no">${esc(w.team)}${wqMark(w.team)}</span>
           <span class="ld-main"><span class="ld-name">${esc(w.name)}</span><span class="ld-where">${esc(shortEventName(w.eventName))}</span></span></a>`; }).join('')}</div>` : '<div class="empty">No signature events finished yet.</div>'}</div>
       <div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Most tournament titles</h2><div class="sub">Tournament Champions wins this season. <a href="#teams">All teams</a></div>
         ${leaderRows((L.titles || []).slice(0, 8), t => `<strong>${t.titles}</strong> <span class="dim">title${t.titles === 1 ? '' : 's'}</span>`)}</div>
@@ -1385,7 +1451,7 @@ async function renderCompare(tok) {
       <div class="cmp-bar a"><span style="width:${Math.max(a ? 3 : 0, 100 * a / m)}%"></span><b>${fmtInt(a)}</b></div>
       <div class="cmp-bar b"><span style="width:${Math.max(b ? 3 : 0, 100 * b / m)}%"></span><b>${fmtInt(b)}</b></div></div>`;
   }).join('');
-  const topList = S_ => S_.bySkills.length ? `<div class="ld-list">${S_.bySkills.slice(0, 5).map((t, i) => `<a class="ld-row" href="#team/${encodeURIComponent(t.team)}"><span class="ld-rank">${i + 1}</span><span class="ld-team ${GRADE_CLASS[t.grade] || ''}" translate="no">${esc(t.team)}</span><span class="ld-main"><span class="ld-name">${esc(t.name)}</span><span class="ld-where">${t.titles ? plural(t.titles, 'title') : ''}</span></span><span class="ld-stat"><strong>${t.skills}</strong></span></a>`).join('')}</div>` : '<div class="empty">No skills scores yet.</div>';
+  const topList = S_ => S_.bySkills.length ? `<div class="ld-list">${S_.bySkills.slice(0, 5).map((t, i) => `<a class="ld-row" href="#team/${encodeURIComponent(t.team)}"><span class="ld-rank">${i + 1}</span><span class="ld-team ${GRADE_CLASS[t.grade] || ''}${wqClass(t.team)}" translate="no">${esc(t.team)}${wqMark(t.team)}</span><span class="ld-main"><span class="ld-name">${esc(t.name)}</span><span class="ld-where">${t.titles ? plural(t.titles, 'title') : ''}</span></span><span class="ld-stat"><strong>${t.skills}</strong></span></a>`).join('')}</div>` : '<div class="empty">No skills scores yet.</div>';
   box.innerHTML = `<h2>${icon('globe')}Compare states and regions</h2><div class="sub">Pick two states, provinces or regions to compare their teams this season. Counts come from official results.</div>
     <div class="filters cmp-controls">
       <label class="cmp-pick a"><span class="sw"></span><select id="cmpA" aria-label="First state or region">${options(f.a)}</select></label>
@@ -1442,16 +1508,17 @@ async function renderEvents(month, tok) {
   if (!S.events) el.innerHTML = loading();
   await needEvents(); if (tok !== routeTok) return;
   if (!S.events.length) { el.innerHTML = noData('The season event list'); return; }
+  // Month chips count the events in view (only the visitor's region when that filter is on).
   const counts = {};
-  for (const e of S.events) if (e.month) counts[e.month] = (counts[e.month] || 0) + 1;
+  for (const e of S.events) if (e.month && regionOk(e)) counts[e.month] = (counts[e.month] || 0) + 1;
   const months = Object.keys(counts).sort();
   const cur = todayISO().slice(0, 7);
   if (month && counts[month]) f.month = month;
-  if (!f.month) f.month = counts[cur] ? cur : (months.filter(x => x <= cur).pop() || months[0]);
+  if (!counts[f.month]) f.month = counts[cur] ? cur : (months.find(x => x >= cur) || months[months.length - 1] || cur);
   const q = f.q.trim().toLowerCase();
   const rows = S.events.filter(e => (q ? true : e.month === f.month) &&
     (f.status === 'all' || e.status === f.status) && (!f.sig || e.level === 'Signature') &&
-    (f.grade === 'all' || e.grade === f.grade) && (!f.country || e.country === f.country) &&
+    (f.grade === 'all' || e.grade === f.grade) && (regionOn() ? inRegion(e) : (!f.country || e.country === f.country)) &&
     (!q || `${e.name} ${e.sku} ${e.city} ${e.region} ${e.country}`.toLowerCase().includes(q)));
   el.innerHTML = `<p class="intro">All Override events, one month at a time. Search looks across the whole season.</p>
     <div class="mchips" role="tablist" aria-label="Month">${months.map(x => `<a role="tab" class="mchip${x === f.month && !q ? ' on' : ''}" href="#events/${x}">${esc(fmtMonthShort(x))} <span class="n">${counts[x]}</span></a>`).join('')}</div>
@@ -1460,7 +1527,7 @@ async function renderEvents(month, tok) {
       ${segButtons('evStatus', [['all', 'All'], ['done', 'Finished'], ['live', 'In progress'], ['upcoming', 'Upcoming']], f.status)}
       <div class="seg"><button id="evSig" class="${f.sig ? 'on' : ''}">Signature events only</button></div>
       <select id="evGrade">${opt('all', 'All grades', f.grade)}${opt('High School', 'High school', f.grade)}${opt('Middle School', 'Middle school', f.grade)}${opt('Blended', 'High school + middle school', f.grade)}</select>
-      <select id="evCountry">${opt('', 'All countries', f.country)}${countries(S.events).map(c => opt(c, c, f.country)).join('')}</select>
+      ${regionChip()}${regionOn() ? '' : `<select id="evCountry">${opt('', 'All countries', f.country)}${countries(S.events).map(c => opt(c, c, f.country)).join('')}</select>`}
       <span class="count">${q ? `${plural(rows.length, 'event')} found` : `${plural(rows.length, 'event')} in ${esc(fmtMonth(f.month))}`}</span>
     </div>
     ${rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dates</th><th>Event</th><th>Location</th><th>Grade</th><th>Tournament champions</th><th class="num">Teams</th><th class="num">Top score</th></tr></thead><tbody>
@@ -1472,7 +1539,7 @@ async function renderEvents(month, tok) {
   el.querySelectorAll('#evStatus button').forEach(b => b.onclick = () => { f.status = b.dataset.v; renderEvents(null, routeTok); });
   $('evSig').onclick = () => { f.sig = !f.sig; renderEvents(null, routeTok); };
   $('evGrade').onchange = ev => { f.grade = ev.target.value; renderEvents(null, routeTok); };
-  $('evCountry').onchange = ev => { f.country = ev.target.value; renderEvents(null, routeTok); };
+  if ($('evCountry')) $('evCountry').onchange = ev => { f.country = ev.target.value; renderEvents(null, routeTok); };
   const on = el.querySelector('.mchip.on'); if (on) on.scrollIntoView({ block: 'nearest', inline: 'center' });
 }
 
@@ -1575,14 +1642,14 @@ async function renderTeams(tok) {
   if (!S.teamRows.length) { el.innerHTML = noData('Team records'); return; }
   const q = f.q.trim().toLowerCase();
   const col = TEAM_COLS.find(c => c.k === f.sort) || TEAM_COLS[1];
-  const rows = S.teamRows.filter(t => (f.grade === 'all' || t.grade === f.grade) && (!f.country || t.country === f.country) &&
+  const rows = S.teamRows.filter(t => (f.grade === 'all' || t.grade === f.grade) && (regionOn() ? inRegion(t) : (!f.country || t.country === f.country)) &&
       (!q || `${t.team} ${t.name} ${t.org} ${t.city} ${t.region}`.toLowerCase().includes(q)))
     .sort((a, b) => { const x = col.sort(a), y = col.sort(b); return (x < y ? -1 : x > y ? 1 : 0) * f.dir || a.team.localeCompare(b.team); });
-  el.innerHTML = `<p class="intro">Every team with results this season, built from official event results. Win % counts qualification matches. TrueSkill is a rating from every match this season and best OPR is the highest offensive rating at any one event (both <span class="computed">computed</span>; <a href="#trueskill">how TrueSkill works</a>). Skills score is the team's official World Skills Standings score. Select a column heading to sort.</p>
+  el.innerHTML = `<p class="intro">Every team with results this season, built from official event results. Win % counts qualification matches. TrueSkill is a rating from every match this season and best OPR is the highest offensive rating at any one event (both <span class="computed">computed</span>; <a href="#trueskill">how TrueSkill works</a>). Skills score is the team's official World Skills Standings score. Select a column heading to sort.</p>${wqLegend()}
     <div class="filters">
       <input type="text" id="tmQ" placeholder="Search team number, name, school or city" value="${esc(f.q)}">
       ${segButtons('tmGrade', [['all', 'All'], ['High School', 'High school'], ['Middle School', 'Middle school']], f.grade)}
-      <select id="tmCountry">${opt('', 'All countries', f.country)}${countries(S.teamRows).map(c => opt(c, c, f.country)).join('')}</select>
+      ${regionChip()}${regionOn() ? '' : `<select id="tmCountry">${opt('', 'All countries', f.country)}${countries(S.teamRows).map(c => opt(c, c, f.country)).join('')}</select>`}
       <span class="count">${plural(rows.length, 'team')}</span>
     </div>
     <div class="tbl-wrap"><table class="tbl"><thead><tr>${TEAM_COLS.map(c => `<th class="${c.num ? 'num ' : ''}${c.sort ? 'sortable' : ''}" data-k="${c.k}"${c.k === f.sort ? ` aria-sort="${f.dir < 0 ? 'descending' : 'ascending'}"` : ''}>${c.t}</th>`).join('')}</tr></thead><tbody>
@@ -1593,7 +1660,7 @@ async function renderTeams(tok) {
     ${rows.length > f.limit ? `<button class="more" id="tmMore">Show ${Math.min(100, rows.length - f.limit)} more</button>` : ''}`;
   $('tmQ').oninput = ev => { f.q = ev.target.value; f.limit = 100; keepFocus('tmQ', () => renderTeams(routeTok)); };
   el.querySelectorAll('#tmGrade button').forEach(b => b.onclick = () => { f.grade = b.dataset.v; renderTeams(routeTok); });
-  $('tmCountry').onchange = ev => { f.country = ev.target.value; renderTeams(routeTok); };
+  if ($('tmCountry')) $('tmCountry').onchange = ev => { f.country = ev.target.value; renderTeams(routeTok); };
   el.querySelectorAll('th.sortable').forEach(th => th.onclick = () => {
     const k = th.dataset.k, c = TEAM_COLS.find(x => x.k === k);
     if (f.sort === k) f.dir = -f.dir; else { f.sort = k; f.dir = c.txt ? 1 : -1; }
@@ -1679,7 +1746,7 @@ function skillCard(r, grade) {
   const where = [r.region, r.country === 'United States' ? '' : r.country].filter(Boolean).join(', ');
   return `<a class="sk-card${r.rank <= 3 ? ' medal' + r.rank : ''}" href="#team/${encodeURIComponent(r.team)}" data-track="click_skills_card">
     <div class="sk-top"><span class="sk-rank">#${r.rank}</span>${gradeBadge({ grade })}</div>
-    <div class="sk-team ${GRADE_CLASS[grade] || ''}" translate="no">${esc(r.team)}</div>
+    <div class="sk-team ${GRADE_CLASS[grade] || ''}${wqClass(r.team)}" translate="no">${esc(r.team)}${wqMark(r.team)}</div>
     <div class="sk-name">${esc(r.name)}</div>
     <div class="sk-where">${esc(where)}</div>
     <div class="sk-score"><strong>${r.score}</strong><span>skills score</span></div>
@@ -1695,15 +1762,15 @@ async function renderSkills(tok) {
   const all = S.skills[f.grade] || [];
   const grade = f.grade === 'hs' ? 'High School' : 'Middle School';
   const q = f.q.trim().toLowerCase();
-  const rows = all.filter(r => (!f.country || r.country === f.country) && (!q || `${r.team} ${r.name} ${r.org} ${r.region}`.toLowerCase().includes(q)));
+  const rows = all.filter(r => (regionOn() ? inRegion(r) : (!f.country || r.country === f.country)) && (!q || `${r.team} ${r.name} ${r.org} ${r.region}`.toLowerCase().includes(q)));
   const step = f.view === 'cards' ? 24 : 100;
-  el.innerHTML = `<p class="intro intro-long">Official World Skills Standings: each team's best combined driver + autonomous score from a single event this season. Ranks match events.vex.com. ${helpLink('What are robot skills?')}</p>
+  el.innerHTML = `<p class="intro intro-long">Official World Skills Standings: each team's best combined driver + autonomous score from a single event this season. Ranks match events.vex.com. ${helpLink('What are robot skills?')}</p>${wqLegend()}
     <p class="intro intro-short">Official skills standings: best driver + autonomous score at one event. ${helpLink('How skills work')}</p>
     <div class="filters sk-filters">
       ${segButtons('skGrade', [['hs', 'High school'], ['ms', 'Middle school']], f.grade)}
       <div class="seg" id="skView"><button data-v="cards" class="${f.view === 'cards' ? 'on' : ''}" aria-label="Show as cards">${icon('grid')}<span class="lbl"> Cards</span></button><button data-v="table" class="${f.view === 'table' ? 'on' : ''}" aria-label="Show as table">${icon('list')}<span class="lbl"> Table</span></button></div>
       <input type="text" id="skQ" placeholder="Search team, name, school or region" value="${esc(f.q)}">
-      <select id="skCountry">${opt('', 'All countries', f.country)}${countries(all).map(c => opt(c, c, f.country)).join('')}</select>
+      ${regionChip()}${regionOn() ? '' : `<select id="skCountry">${opt('', 'All countries', f.country)}${countries(all).map(c => opt(c, c, f.country)).join('')}</select>`}
       <span class="count">${plural(rows.length, 'team')}</span>
     </div>
     ${!all.length ? noData('Skills standings') : f.view === 'cards'
@@ -1716,7 +1783,7 @@ async function renderSkills(tok) {
   el.querySelectorAll('#skGrade button').forEach(b => b.onclick = () => { f.grade = b.dataset.v; f.country = ''; f.limit = step; renderSkills(routeTok); });
   el.querySelectorAll('#skView button').forEach(b => b.onclick = () => { track('click_skills_view_' + b.dataset.v); f.view = b.dataset.v; f.limit = f.view === 'cards' ? 24 : 100; renderSkills(routeTok); });
   $('skQ').oninput = ev => { f.q = ev.target.value; f.limit = step; keepFocus('skQ', () => renderSkills(routeTok)); };
-  $('skCountry').onchange = ev => { f.country = ev.target.value; f.limit = step; renderSkills(routeTok); };
+  if ($('skCountry')) $('skCountry').onchange = ev => { f.country = ev.target.value; f.limit = step; renderSkills(routeTok); };
   if ($('skMore')) $('skMore').onclick = () => { f.limit += step; renderSkills(routeTok); };
 }
 
@@ -1738,7 +1805,7 @@ function tsCard(t) {
   const where = [t.region, t.country === 'United States' ? '' : t.country].filter(Boolean).join(', ');
   return `<a class="sk-card${t.tsRank <= 3 ? ' medal' + t.tsRank : ''}" href="#team/${encodeURIComponent(t.team)}" data-track="click_trueskill_card">
     <div class="sk-top"><span class="sk-rank">#${t.tsRank}</span>${gradeBadge(t)}</div>
-    <div class="sk-team ${GRADE_CLASS[t.grade] || ''}" translate="no">${esc(t.team)}</div>
+    <div class="sk-team ${GRADE_CLASS[t.grade] || ''}${wqClass(t.team)}" translate="no">${esc(t.team)}${wqMark(t.team)}</div>
     <div class="sk-name">${esc(t.name)}</div>
     <div class="sk-where">${esc(where)}</div>
     <div class="sk-score"><strong>${dec1(t.ts)}</strong><span>TrueSkill</span></div>
@@ -1751,16 +1818,16 @@ async function renderTrueSkill(tok) {
   await needTeams(); if (tok !== routeTok) return;
   const all = S.teamRows.filter(t => t.ts != null && t.grade === f.grade).sort((a, b) => a.tsRank - b.tsRank);
   const q = f.q.trim().toLowerCase();
-  const rows = all.filter(t => (!f.country || t.country === f.country) && (!q || `${t.team} ${t.name} ${t.org} ${t.city} ${t.region}`.toLowerCase().includes(q)));
+  const rows = all.filter(t => (regionOn() ? inRegion(t) : (!f.country || t.country === f.country)) && (!q || `${t.team} ${t.name} ${t.org} ${t.city} ${t.region}`.toLowerCase().includes(q)));
   const step = f.view === 'cards' ? 24 : 100;
-  el.innerHTML = `<p class="intro intro-long">TrueSkill rates every team from its match results this season, taking into account how strong its partners and opponents were. Higher is better. <span class="computed">Computed</span> by this site from official match results; not an official VEX ranking. <a href="trueskill/" data-track="click_trueskill_page">Shareable rankings page</a></p>
+  el.innerHTML = `<p class="intro intro-long">TrueSkill rates every team from its match results this season, taking into account how strong its partners and opponents were. Higher is better. <span class="computed">Computed</span> by this site from official match results; not an official VEX ranking. <a href="trueskill/" data-track="click_trueskill_page">Shareable rankings page</a></p>${wqLegend()}
     <p class="intro intro-short">A rating from every match this season. Higher is better (<span class="computed">computed</span>).</p>
     <details class="ts-how"><summary data-track="click_trueskill_how">How TrueSkill is calculated</summary>${TS_HOW}</details>
     <div class="filters sk-filters">
       ${segButtons('tsGrade', [['High School', 'High school'], ['Middle School', 'Middle school']], f.grade)}
       <div class="seg" id="tsView"><button data-v="cards" class="${f.view === 'cards' ? 'on' : ''}" aria-label="Show as cards">${icon('grid')}<span class="lbl"> Cards</span></button><button data-v="table" class="${f.view === 'table' ? 'on' : ''}" aria-label="Show as table">${icon('list')}<span class="lbl"> Table</span></button></div>
       <input type="text" id="tsQ" placeholder="Search team, name, school or region" value="${esc(f.q)}">
-      <select id="tsCountry">${opt('', 'All countries', f.country)}${countries(all).map(c => opt(c, c, f.country)).join('')}</select>
+      ${regionChip()}${regionOn() ? '' : `<select id="tsCountry">${opt('', 'All countries', f.country)}${countries(all).map(c => opt(c, c, f.country)).join('')}</select>`}
       <span class="count">${plural(rows.length, 'team')}</span>
     </div>
     ${!all.length ? noData('TrueSkill rankings') : f.view === 'cards'
@@ -1773,7 +1840,7 @@ async function renderTrueSkill(tok) {
   el.querySelectorAll('#tsGrade button').forEach(b => b.onclick = () => { f.grade = b.dataset.v; f.country = ''; f.limit = step; renderTrueSkill(routeTok); });
   el.querySelectorAll('#tsView button').forEach(b => b.onclick = () => { track('click_trueskill_view_' + b.dataset.v); f.view = b.dataset.v; f.limit = f.view === 'cards' ? 24 : 100; renderTrueSkill(routeTok); });
   $('tsQ').oninput = ev => { f.q = ev.target.value; f.limit = step; keepFocus('tsQ', () => renderTrueSkill(routeTok)); };
-  $('tsCountry').onchange = ev => { f.country = ev.target.value; f.limit = step; renderTrueSkill(routeTok); };
+  if ($('tsCountry')) $('tsCountry').onchange = ev => { f.country = ev.target.value; f.limit = step; renderTrueSkill(routeTok); };
   if ($('tsMore')) $('tsMore').onclick = () => { f.limit += step; renderTrueSkill(routeTok); };
 }
 
@@ -1785,13 +1852,13 @@ async function renderWorlds(tok) {
   if (!S.teamRows.length) el.innerHTML = loading();
   await Promise.all([needTeams(), needEvents()]); if (tok !== routeTok) return;
   if (!S.teamRows.length) { el.innerHTML = noData('Worlds qualifiers'); return; }
-  const rows = S.teamRows.filter(t => t.worlds && (f.grade === 'all' || t.grade === f.grade))
+  const rows = S.teamRows.filter(t => t.worlds && regionOk(t) && (f.grade === 'all' || t.grade === f.grade))
     .map(t => ({ t, e: S.eventsById[t.worlds] || { id: t.worlds, name: `Event ${t.worlds}` } }))
     .sort((a, b) => (b.e.start || '').localeCompare(a.e.start || '') || a.t.team.localeCompare(b.t.team));
   const byMonth = {};
   for (const r of rows) (byMonth[r.e.month || ''] = byMonth[r.e.month || ''] || []).push(r);
   let h = `<p class="intro">Teams that have won an award VEX lists as qualifying for the 2027 VEX Robotics World Championship, such as Excellence, Tournament Champions or Design at qualifying events. Spots given through skills rankings or reallocation are not included. Newest first.</p>
-    <div class="filters">${segButtons('wqGrade', [['all', 'All'], ['High School', 'High school'], ['Middle School', 'Middle school']], f.grade)}<span class="count">${plural(rows.length, 'team')}</span></div>`;
+    <div class="filters">${regionChip()}${segButtons('wqGrade', [['all', 'All'], ['High School', 'High school'], ['Middle School', 'Middle school']], f.grade)}<span class="count">${plural(rows.length, 'team')}</span></div>`;
   if (!rows.length) h += '<div class="empty">No qualifiers yet.</div>';
   for (const m of Object.keys(byMonth).sort().reverse()) {
     h += `<h2 class="month-head">${esc(fmtMonth(m) || 'Date unknown')} <span class="dim">${plural(byMonth[m].length, 'team')}</span></h2>
@@ -1837,7 +1904,7 @@ function setupSearch() {
   const inp = $('searchInput'), list = $('acList');
   let items = [], sel = -1;
   const draw = () => {
-    list.innerHTML = items.map((t, i) => `<div class="ac-item${i === sel ? ' selected' : ''}${t.none ? ' none' : ''}" role="option" data-i="${i}"><span class="ac-team" translate="no">${esc(t.team)}</span><span class="ac-name">${esc(t.label || t.name)}</span></div>`).join('');
+    list.innerHTML = items.map((t, i) => `<div class="ac-item${i === sel ? ' selected' : ''}${t.none ? ' none' : ''}" role="option" data-i="${i}"><span class="ac-team${wqClass(t.team)}" translate="no">${esc(t.team)}${wqMark(t.team)}</span><span class="ac-name">${esc(t.label || t.name)}</span></div>`).join('');
     list.classList.toggle('show', items.length > 0);
   };
   const pick = t => { track('search_team', { label: t.team }); list.classList.remove('show'); inp.value = ''; inp.blur(); location.hash = '#team/' + encodeURIComponent(t.team); };
@@ -1852,6 +1919,109 @@ function setupSearch() {
   };
   list.onmousedown = ev => { const it = ev.target.closest('.ac-item'); if (it) pick(items[+it.dataset.i]); };
   inp.onblur = () => setTimeout(() => list.classList.remove('show'), 150);
+}
+
+// ---------------------------------------------------------------------------
+// Your region (saved on this device) and the Worlds-qualified team marking
+// ---------------------------------------------------------------------------
+let MY_REGION = loadPref('vexRegion');        // 'Country|Region', or 'Country|' for a whole country
+const SUGGESTED_REGIONS = ['United States|Pennsylvania'];
+const regionName = (k = MY_REGION) => { if (!k) return ''; const [c, r] = k.split('|'); return r ? (c === 'United States' ? r : `${r}, ${c}`) : c; };
+const inRegion = (o, k = MY_REGION) => { if (!k) return true; const [c, r] = k.split('|'); return o.country === c && (!r || o.region === r); };
+const regionOn = () => !!MY_REGION && UI.regionOnly;
+const regionOk = o => !regionOn() || inRegion(o);
+const regionChip = () => MY_REGION
+  ? `<button type="button" class="region-chip${UI.regionOnly ? ' on' : ''}" data-region-toggle aria-pressed="${UI.regionOnly}">${icon('pin')}${esc(regionName())} only</button>`
+  : `<button type="button" class="region-chip" data-region-open>${icon('pin')}Pick your region</button>`;
+
+let WQ = new Set();   // team numbers qualified for Worlds 2027 (season.json worldsTeams)
+const isWQ = n => WQ.has(n) || !!(S.teamByNum[n] && S.teamByNum[n].worlds);
+const wqClass = n => isWQ(n) ? ' wq' : '';
+const wqMark = n => isWQ(n) ? `<span class="wq-mark" title="Qualified for the 2027 World Championship">${icon('globe')}<span class="sr-only"> (qualified for Worlds)</span></span>` : '';
+const wqLegend = () => WQ.size ? `<p class="wq-legend"><span class="wq">${icon('globe')} Pink team numbers</span> have qualified for the 2027 World Championship.</p>` : '';
+
+function updateRegionButton() { const l = $('regionLabel'); if (l) l.textContent = MY_REGION ? regionName() : 'Your region'; }
+function setRegion(k) {
+  MY_REGION = k; savePref('vexRegion', k); UI.regionOnly = true;
+  track('click_region_set', { label: k ? regionName(k) : 'All regions' });
+  updateRegionButton();
+  const d = $('regionDialog'); if (d.open) { if (d.close) d.close(); else d.removeAttribute('open'); }
+  rerender();
+}
+function regionCounts() {
+  const count = {};
+  for (const t of S.teamRows) if (t.country) { const k = `${t.country}|${t.region || ''}`; count[k] = (count[k] || 0) + 1; }
+  for (const e of S.events || []) if (e.country) { const k = `${e.country}|${e.region || ''}`; if (!(k in count)) count[k] = 0; }
+  return count;
+}
+function drawRegionList(q) {
+  q = q.trim().toLowerCase();
+  const count = regionCounts(), byCountry = {};
+  for (const [k, n] of Object.entries(count)) {
+    const [c, r] = k.split('|');
+    const g = byCountry[c] = byCountry[c] || { n: 0, regions: [] };
+    g.n += n; if (r) g.regions.push([k, r, n]);
+  }
+  const opt = (k, label, n) => `<button type="button" class="rg-opt${k === MY_REGION ? ' on' : ''}" data-k="${esc(k)}">${esc(label)}${n ? `<span class="n">${plural(n, 'team')}</span>` : ''}</button>`;
+  let h = q ? '' : `<div class="rg-group">Suggested</div><div class="rg-opts">${SUGGESTED_REGIONS.map(k => opt(k, regionName(k), count[k] || 0)).join('')}</div>`;
+  for (const c of Object.keys(byCountry).sort((a, b) => byCountry[b].n - byCountry[a].n || a.localeCompare(b))) {
+    const g = byCountry[c], countryHit = !q || c.toLowerCase().includes(q);
+    const regs = g.regions.filter(([, r]) => countryHit || r.toLowerCase().includes(q)).sort((a, b) => a[1].localeCompare(b[1]));
+    if (!regs.length && !countryHit) continue;
+    h += `<div class="rg-group">${esc(c)}</div><div class="rg-opts">${countryHit ? opt(`${c}|`, `All of ${c}`, g.n) : ''}${regs.map(([k, r, n]) => opt(k, r, n)).join('')}</div>`;
+  }
+  $('rgList').innerHTML = h || '<div class="empty">No region matches. Try a state, province or country name.</div>';
+  $('rgList').querySelectorAll('.rg-opt').forEach(b => b.onclick = () => setRegion(b.dataset.k));
+}
+async function openRegion() {
+  const d = $('regionDialog'); if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+  $('rgList').innerHTML = loading();
+  const q = $('rgQ'); q.value = '';
+  await Promise.all([needTeams(), needEvents()]);
+  drawRegionList('');
+  q.oninput = () => drawRegionList(q.value);
+  $('rgClear').onclick = () => setRegion('');
+}
+document.addEventListener('click', ev => {
+  const pick = ev.target.closest('[data-region-pick]');
+  if (pick) { setRegion(pick.dataset.regionPick); return; }
+  if (ev.target.closest('[data-region-open]')) { ev.preventDefault(); openRegion(); return; }
+  if (ev.target.closest('[data-region-toggle]')) { UI.regionOnly = !UI.regionOnly; track('click_region_only_' + (UI.regionOnly ? 'on' : 'off')); rerender(); }
+});
+
+// The Overview's first section: the visitor's region.
+async function renderRegionBox(tok) {
+  const box = $('region-box'); if (!box) return;
+  if (!MY_REGION) {
+    box.innerHTML = `<div class="rg-prompt"><div class="rg-prompt-text">${icon('pin')}<div><strong>See your region first</strong>Pick your state, province or country to put its teams, events and Worlds qualifiers at the top of this page.</div></div>
+      <div class="rg-prompt-btns">${SUGGESTED_REGIONS.map(k => `<button type="button" class="region-chip on" data-region-pick="${esc(k)}">${icon('pin')}${esc(regionName(k))}</button>`).join('')}<button type="button" class="region-chip" data-region-open>Another region</button></div></div>`;
+    return;
+  }
+  box.innerHTML = `<div class="rg-head"><h2>${icon('pin')}${esc(regionName())}</h2></div>${loading()}`;
+  await Promise.all([needTeams(), needEvents(), needSkills()]); if (tok !== routeTok) return;
+  const f = UI.region, name = regionName();
+  const teams = S.teamRows.filter(t => inRegion(t));
+  const evs = S.events.filter(e => inRegion(e));
+  const upcoming = evs.filter(e => e.status === 'live' || e.status === 'upcoming').sort((a, b) => (a.status === 'live' ? -1 : 0) - (b.status === 'live' ? -1 : 0) || a.start.localeCompare(b.start));
+  const recent = evs.filter(e => e.status === 'done' && e.results).sort((a, b) => b.end.localeCompare(a.end));
+  const champs = evs.filter(e => e.level === 'Regional' || e.level === 'National' || /championship/i.test(e.name || '')).sort((a, b) => a.start.localeCompare(b.start));
+  const nextChamps = champs.filter(e => e.status !== 'done').slice(0, 2);
+  const skills = (S.skills[f.grade === 'Middle School' ? 'ms' : 'hs'] || []).filter(r => inRegion(r)).slice(0, 5)
+    .map((r, i) => ({ ...r, worldRank: r.rank, rank: i + 1, grade: f.grade }));
+  const ts = teams.filter(t => t.grade === f.grade && t.ts != null).sort((a, b) => b.ts - a.ts).slice(0, 5).map((t, i) => ({ ...t, rank: i + 1 }));
+  const wq = teams.filter(t => isWQ(t.team));
+  const g = f.grade === 'Middle School' ? 'middle school' : 'high school';
+  const held = evs.filter(e => e.status !== 'upcoming').length;
+  box.innerHTML = `<div class="rg-head"><h2>${icon('pin')}${esc(name)}</h2><button type="button" class="region-chip" data-region-open>Change region</button></div>
+    <p class="rg-sum">${plural(teams.length, 'team')} with results &bull; ${held} of ${plural(evs.length, 'event')} held &bull; ${wq.length ? `${wq.length} qualified for Worlds: ${wq.slice(0, 4).map(t => teamLink(t.team)).join(' ')}` : 'no Worlds qualifiers yet'}</p>
+    <div class="rg-grid">
+      <div class="panel" style="--c:var(--c-events)"><h2>${icon('calendar')}Coming up</h2><div class="sub">Next events in ${esc(name)}</div>${nextChamps.map(e => `<div class="rg-champ">${icon('trophy')}<span><strong>Championship:</strong> <a class="ev-link" href="#event/${e.id}">${esc(shortEventName(e.name))}</a> <span class="dim">${esc(fmtDate(e.start))}</span></span></div>`).join('')}${eventRows(upcoming.slice(0, 5), { empty: 'No upcoming events listed yet.', watch: true })}</div>
+      <div class="panel" style="--c:var(--c-skills)"><h2>${icon('bolt')}Top skills, ${g}</h2><div class="sub">Official standings; world rank in grey</div><div class="rg-grade">${segButtons('rgGrade', [['High School', 'High school'], ['Middle School', 'Middle school']], f.grade)}</div>${skills.length ? leaderRows(skills, r => `<strong>${r.score}</strong> <span class="dim">#${r.worldRank}</span>`) : `<div class="empty">No ${esc(name)} ${g} team has a skills score yet.</div>`}</div>
+      <div class="panel" style="--c:var(--c-ts)"><h2>${icon('trend')}Top TrueSkill, ${g}</h2><div class="sub">Rating from all matches (computed)</div>${ts.length ? leaderRows(ts, t => `<strong>${dec1(t.ts)}</strong>`) : `<div class="empty">No ${esc(name)} ${g} team has played a match yet.</div>`}</div>
+      <div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Latest results</h2><div class="sub">Finished events in ${esc(name)}</div>${eventRows(recent.slice(0, 4), { empty: 'No finished events yet this season.' })}</div>
+    </div>
+    <div class="rg-links"><a href="#teams">All ${esc(name)} teams &rarr;</a><a href="#events">${esc(name)} events &rarr;</a><a href="#skills">Skills &rarr;</a><a href="#trueskill">TrueSkill &rarr;</a><a href="#worlds">Worlds qualifiers &rarr;</a></div>`;
+  box.querySelectorAll('#rgGrade button').forEach(b => b.onclick = () => { f.grade = b.dataset.v; renderRegionBox(routeTok); });
 }
 
 // ---------------------------------------------------------------------------
@@ -1901,6 +2071,24 @@ document.addEventListener('visibilitychange', () => {
 // ---------------------------------------------------------------------------
 const TAB_FOR = { home: 'home', signature: 'signature', events: 'events', event: 'events', teams: 'teams', team: 'teams', skills: 'skills', trueskill: 'trueskill', worlds: 'worlds', override: 'override' };
 let routeTok = 0;
+function renderView(view, arg, tok) {
+  if (view === 'home') renderOverview();
+  else if (view === 'signature') renderSignature();
+  else if (view === 'events') renderEvents(arg, tok);
+  else if (view === 'event') renderEvent(+arg, tok);
+  else if (view === 'teams') renderTeams(tok);
+  else if (view === 'team') renderTeam(arg, tok);
+  else if (view === 'skills') renderSkills(tok);
+  else if (view === 'trueskill') renderTrueSkill(tok);
+  else if (view === 'worlds') renderWorlds(tok);
+  else if (view === 'override') renderOverride();
+}
+// Redraw the open section (after a region change) without counting a new visit.
+function rerender() {
+  let [view, ...rest] = decodeURIComponent(location.hash.replace(/^#/, '')).split('/');
+  if (!TAB_FOR[view]) view = 'home';
+  renderView(view, rest.join('/'), ++routeTok);
+}
 function route() {
   const raw = decodeURIComponent(location.hash.replace(/^#/, ''));
   let [view, ...rest] = raw.split('/');
@@ -1915,16 +2103,7 @@ function route() {
     const a = onTab.getBoundingClientRect(), b = tabRow.getBoundingClientRect();
     tabRow.scrollLeft += (a.left + a.width / 2) - (b.left + b.width / 2);
   }
-  if (view === 'home') renderOverview();
-  else if (view === 'signature') renderSignature();
-  else if (view === 'events') renderEvents(arg, tok);
-  else if (view === 'event') renderEvent(+arg, tok);
-  else if (view === 'teams') renderTeams(tok);
-  else if (view === 'team') renderTeam(arg, tok);
-  else if (view === 'skills') renderSkills(tok);
-  else if (view === 'trueskill') renderTrueSkill(tok);
-  else if (view === 'worlds') renderWorlds(tok);
-  else if (view === 'override') renderOverride();
+  renderView(view, arg, tok);
   track('view_' + view, { section: view });
   startSectionClock(view);
   renderRateBar(view);
@@ -1945,6 +2124,10 @@ document.addEventListener('click', ev => {
   document.querySelectorAll('.nav-tab[data-icon]').forEach(a => a.insertAdjacentHTML('afterbegin', icon(a.dataset.icon)));
   setupSearch();
   [S.season, S.meta, S.webcasts] = await Promise.all([loadJSON('data/season.json'), loadJSON('data/meta.json'), loadJSON('data/webcasts.json')]);
+  WQ = new Set((S.season && S.season.worldsTeams) || []);
+  if (window.matchMedia && matchMedia('(max-width: 768px)').matches) $('searchInput').placeholder = 'Team, e.g. 6121E';
+  $('regionBtn').insertAdjacentHTML('afterbegin', icon('pin'));
+  updateRegionButton();
   window.addEventListener('hashchange', () => { route(); window.scrollTo(0, 0); });
   route();
 })();

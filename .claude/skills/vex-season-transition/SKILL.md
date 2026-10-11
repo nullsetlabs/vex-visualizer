@@ -42,6 +42,12 @@ end of each transition with anything that changed.
   arrive, sections, time per section, "Is this page useful?" answers, clicks).
   The page sends `view_<section>`, `time_<section>` (value = visible seconds),
   `rate_yes_/rate_no_<section>`, `rate_reason_<reason>` and `click_*` events.
+- Your region: the visitor picks a state, province or country (saved in
+  localStorage as `vexRegion`, Pennsylvania suggested first). The Overview opens
+  with that region (upcoming events and championship first, then top skills and
+  TrueSkill, latest results), and Skills, TrueSkill, Teams, Events and Road to
+  Worlds have a "<region> only" switch. Worlds-qualified team numbers are pink
+  with a globe everywhere, from `season.json` `worldsTeams`.
 - Share images: `visualizer/dev/make_og_images.py` writes `visualizer/og-visualizer.png`
   (tracker and standalone pages) and `og-vex.png` (VEX home) from the Null Set
   Labs card layout. Rerun it with the new season name; use a new file name if the

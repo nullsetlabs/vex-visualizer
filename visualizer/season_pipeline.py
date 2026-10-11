@@ -909,6 +909,8 @@ def build_summaries(event_list, cached, standings):
                      or (r["status"] == "upcoming" and day(r["start"]) <= soon))][:80],
         "leaguesRunning": sum(1 for r in index if is_long(r) and r["status"] == "live"),
         "worldsEvents": [r for r in index if (r["level"] or "").lower() == "world"],
+        # Team numbers qualified for Worlds through awards; the page marks them everywhere.
+        "worldsTeams": sorted(n for n, t in teams.items() if t["worlds"]),
     }
 
     team_index = {"cols": TEAM_INDEX_COLS, "rows": [[
