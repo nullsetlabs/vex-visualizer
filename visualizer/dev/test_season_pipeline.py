@@ -100,21 +100,24 @@ class FakeClient:
         if path == "/events/4/teams":
             return [{"number": "6121E", "location": loc(-75.45)}]
         if path == "/teams":
-            return [{"number": "6121E", "location": loc(-75.45)}, {"number": "OLDEAST", "location": loc(-79.9)},
-                    {"number": "MID1", "location": loc(-77.0)}, {"number": "PITT", "location": loc(-79.99)},
-                    {"number": "OHIO1", "location": loc(-81.0, "Ohio")}, {"number": "NOLOC", "location": {"region": "Pennsylvania"}}]
+            everyone = [{"number": "6121E", "location": loc(-75.45)}, {"number": "OLDEAST", "location": loc(-79.9)},
+                        {"number": "MID1", "location": loc(-77.0)}, {"number": "PITT", "location": loc(-79.99)},
+                        {"number": "OHIO1", "location": loc(-81.0, "Ohio")}, {"number": "NOLOC", "location": {"region": "Pennsylvania"}}]
+            return [t for t in everyone if t["number"] in params["number[]"]]
         raise AssertionError(path)
 logs = []
 with tempfile.TemporaryDirectory() as tmp:
     path = os.path.join(tmp, "subregions.json")
     evlist = [{"id": 50, "location": loc(-80.0)}, {"id": 51, "location": loc(-75.4)}, {"id": 52, "location": loc(-82.0, "Ohio")}]
-    out = sr.refresh(FakeClient(), path, 204, 1, evlist, sp.is_canceled, sp.read_json, sp.write_json, logs.append)
+    known = {n: "United States|Pennsylvania" for n in ("6121E", "OLDEAST", "MID1", "PITT", "NOLOC")} | {"OHIO1": "United States|Ohio"}
+    out = sr.refresh(FakeClient(), path, 204, 1, evlist, sp.is_canceled, sp.read_json, sp.write_json, logs.append, None, known)
     pa = out["United States|Pennsylvania"]
     assert -79.0 < pa["lon"] < -76.0, pa["lon"]
     assert pa["teams"]["6121E"] == "Eastern PA"            # this season's championship
     assert pa["teams"]["OLDEAST"] == "Eastern PA"          # last season's championship beats its location
     assert pa["teams"]["PITT"] == "Western PA" and pa["teams"]["MID1"] == "Eastern PA"   # by location
     assert "OHIO1" not in pa["teams"] and "NOLOC" not in pa["teams"]
+    assert pa["teams"]["E3"] == "Eastern PA" and pa["teams"]["ODD"] == "Western PA"   # last season's fields, placed directly
     assert pa["events"] == {"50": "Western PA", "51": "Eastern PA"}
     assert "coordinates" not in open(path, encoding="utf-8").read()
     again = sr.refresh(None, path, 204, 1, evlist, sp.is_canceled, sp.read_json, sp.write_json, logs.append)

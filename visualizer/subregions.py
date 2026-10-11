@@ -41,6 +41,8 @@ SPLITS = {
 }
 LAST_SEASON_ID = 197      # Push Back 2025-2026
 REFRESH_DAYS = 6
+VERSION = 2               # bump to force a rebuild after a change to the rules
+LOOKUP_BATCH = 25         # team numbers per /teams request
 
 
 def lon_of(obj):
@@ -94,7 +96,8 @@ def championship_fields(client, cfg, season_id, is_canceled, log):
     return out
 
 
-def build_split(client, cfg, season_id, program_id, event_list, is_canceled, log):
+def build_split(client, cfg, season_id, program_id, event_list, is_canceled, log, state_teams=()):
+    """state_teams: numbers of this season's teams listed in the state (from the event data)."""
     this = championship_fields(client, cfg, season_id, is_canceled, log)
     last = championship_fields(client, cfg, LAST_SEASON_ID, is_canceled, log)
     points = [(lon, side) for side, lon in list(last.values()) + list(this.values()) if lon is not None]
@@ -102,27 +105,23 @@ def build_split(client, cfg, season_id, program_id, event_list, is_canceled, log
     lon_line = line if line is not None else cfg["fallback_lon"]
     side_of_lon = lambda lon: None if lon is None else ("east" if lon > lon_line else "west")
 
-    registered = client.pages("/teams", {"program[]": program_id, "country[]": cfg["country"], "registered": "true"})
     teams, basis = {}, {"thisSeasonChampionship": 0, "lastSeasonChampionship": 0, "location": 0}
-    for t in registered:
-        if ((t.get("location") or {}).get("region") or "") != cfg["region"]:
-            continue
-        n = (t.get("number") or "").strip()
-        if not n:
-            continue
-        if n in this:
-            side, rule = this[n][0], "thisSeasonChampionship"
-        elif n in last:
-            side, rule = last[n][0], "lastSeasonChampionship"
-        else:
-            side, rule = side_of_lon(lon_of(t)), "location"
-        if side:
-            teams[n] = cfg[side]
-            basis[rule] += 1
-    for n, (side, _) in this.items():          # championship teams not in the registered list
-        if n not in teams:
-            teams[n] = cfg[side]
-            basis["thisSeasonChampionship"] += 1
+    for n, (side, _) in last.items():
+        teams[n] = (side, "lastSeasonChampionship")
+    for n, (side, _) in this.items():
+        teams[n] = (side, "thisSeasonChampionship")
+    # Everyone else in the state this season: look up their listed location by team number.
+    rest = sorted(set(state_teams) - set(teams))
+    for i in range(0, len(rest), LOOKUP_BATCH):
+        for t in client.pages("/teams", {"number[]": rest[i:i + LOOKUP_BATCH], "program[]": program_id}):
+            n = (t.get("number") or "").strip()
+            loc = t.get("location") or {}
+            if n in rest and n not in teams and (loc.get("region") or "") == cfg["region"]:
+                side = side_of_lon(lon_of(t))
+                if side:
+                    teams[n] = (side, "location")
+    for side, rule in teams.values():
+        basis[rule] += 1
     events = {}
     for e in event_list:
         if ((e.get("location") or {}).get("region") or "") == cfg["region"]:
@@ -130,15 +129,19 @@ def build_split(client, cfg, season_id, program_id, event_list, is_canceled, log
             if side:
                 events[str(e["id"])] = cfg[side]
     basis.update({"lastSeasonChampionshipTeams": len(last), "thisSeasonChampionshipTeams": len(this),
+                  "stateTeamsThisSeason": len(set(state_teams)),
                   "lineFrom": "championship fields" if line is not None else "fallback"})
     log(f"  {cfg['region']}: dividing longitude {lon_line} ({basis['lineFrom']}); "
         f"{len(teams)} teams and {len(events)} events placed {basis}")
-    return {"labels": [cfg["east"], cfg["west"]], "lon": lon_line,
-            "teams": dict(sorted(teams.items())), "events": dict(sorted(events.items())), "basis": basis}
+    return {"labels": [cfg["east"], cfg["west"]], "lon": lon_line, "version": VERSION,
+            "teams": {n: cfg[side] for n, (side, _) in sorted(teams.items())},
+            "events": dict(sorted(events.items())), "basis": basis}
 
 
-def refresh(client, path, season_id, program_id, event_list, is_canceled, read_json, write_json, log, today=None):
-    """Rebuild data/subregions.json when it is missing or older than REFRESH_DAYS.
+def refresh(client, path, season_id, program_id, event_list, is_canceled, read_json, write_json, log, today=None,
+            known_teams=None):
+    """Rebuild data/subregions.json when it is missing, from an older VERSION, or older than
+    REFRESH_DAYS. known_teams: {team number: 'Country|Region'} from this season's event data.
     Returns the current contents. Any failure keeps the previous file."""
     today = today or date.today()
     current = read_json(path, {}) or {}
@@ -146,11 +149,12 @@ def refresh(client, path, season_id, program_id, event_list, is_canceled, read_j
     for key, cfg in SPLITS.items():
         prev = current.get(key) or {}
         age = (today - date.fromisoformat(prev["updated"])).days if prev.get("updated") else None
-        if age is not None and age < REFRESH_DAYS:
+        if age is not None and age < REFRESH_DAYS and prev.get("version") == VERSION:
             continue
         log(f"Estimating {cfg['east']} / {cfg['west']}...")
         try:
-            split = build_split(client, cfg, season_id, program_id, event_list, is_canceled, log)
+            state_teams = [n for n, k in (known_teams or {}).items() if k == key]
+            split = build_split(client, cfg, season_id, program_id, event_list, is_canceled, log, state_teams)
             split["updated"] = today.isoformat()
             out[key] = split
         except Exception as err:   # never block the data update

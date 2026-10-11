@@ -206,7 +206,8 @@ class Client:
 
     def pages(self, path, params=None, max_pages=60):
         """GET every page of a paginated v2 endpoint and return the combined data list."""
-        query = list((params or {}).items()) + [("per_page", 250)]
+        query = [(k, x) for k, v in (params or {}).items() for x in (v if isinstance(v, (list, tuple)) else [v])]
+        query.append(("per_page", 250))
         out = []
         page = 1
         while page <= max_pages:
@@ -1043,8 +1044,9 @@ def main():
                 except RuntimeError as err:
                     log(f"  kept the previous skills standings: {err}")
             if not args.live:
+                known = {t["n"]: f'{t["country"]}|{t["region"]}' for ev in cached.values() for t in ev["teams"] if t["n"]}
                 subregions_mod.refresh(client, subregions_path, SEASON_ID, PROGRAM_ID, event_list, is_canceled,
-                                       read_json, write_json, log, today)
+                                       read_json, write_json, log, today, known)
             if failed:
                 log(f"{failed} events failed and will be retried next run")
             log(f"Fetched {fetched} events with {client.calls} requests")
