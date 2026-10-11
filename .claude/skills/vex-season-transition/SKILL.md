@@ -46,8 +46,14 @@ end of each transition with anything that changed.
   localStorage as `vexRegion`, Pennsylvania suggested first). The Overview opens
   with that region (upcoming events and championship first, then top skills and
   TrueSkill, latest results), and Skills, TrueSkill, Teams, Events and Road to
-  Worlds have a "<region> only" switch. Worlds-qualified team numbers are pink
-  with a globe everywhere, from `season.json` `worldsTeams`.
+  Worlds have a "<region> only" switch. Worlds-qualified team numbers are green
+  (#34d399, light green background, globe) everywhere, from `season.json` `worldsTeams`.
+- Eastern / Western PA: `visualizer/subregions.py` estimates the split in full
+  runs (refreshed every 6 days) into `data/subregions.json`: a team goes with the
+  state championship it enters this season, else the one it attended last season
+  (`LAST_SEASON_ID`, update each season), else its location against the longitude
+  that best separates the championship fields. Events by location. Coordinates
+  are never written out.
 - Share images: `visualizer/dev/make_og_images.py` writes `visualizer/og-visualizer.png`
   (tracker and standalone pages) and `og-vex.png` (VEX home) from the Null Set
   Labs card layout. Rerun it with the new season name; use a new file name if the

@@ -46,6 +46,8 @@ import urllib.parse
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
 
+import subregions as subregions_mod
+
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
@@ -732,10 +734,10 @@ def event_row(base, ev, today):
 
 TEAM_INDEX_COLS = ["team", "name", "org", "grade", "city", "region", "country", "events", "w", "l", "t",
                    "winPct", "titles", "excellence", "awards", "worlds", "worldsAward", "skills", "skillsRank", "opr", "last",
-                   "ts", "tsRank", "tsMatches"]
+                   "ts", "tsRank", "tsMatches", "sub"]
 
 
-def build_summaries(event_list, cached, standings):
+def build_summaries(event_list, cached, standings, subregions=None):
     """Return (event index, team index, team buckets, season overview)."""
     today = today_utc()
     listed = {e["id"]: e for e in event_list}
@@ -803,6 +805,9 @@ def build_summaries(event_list, cached, standings):
         t["skills"] = {"rank": s["rank"], "score": s["score"], "driver": s["driver"], "prog": s["prog"]} if s else None
         total = t["w"] + t["l"] + t["t"]
         t["winPct"] = round(100 * t["w"] / total, 1) if total else None
+
+    # Approximate subregions (Eastern / Western PA) from data/subregions.json.
+    subregions_mod.apply(subregions, index, teams)
 
     # TrueSkill from every played match, ranked within each grade.
     ratings = season_trueskill(by_date)
@@ -911,6 +916,7 @@ def build_summaries(event_list, cached, standings):
         "worldsEvents": [r for r in index if (r["level"] or "").lower() == "world"],
         # Team numbers qualified for Worlds through awards; the page marks them everywhere.
         "worldsTeams": sorted(n for n, t in teams.items() if t["worlds"]),
+        "subregions": subregions_mod.summary(subregions),
     }
 
     team_index = {"cols": TEAM_INDEX_COLS, "rows": [[
@@ -920,7 +926,7 @@ def build_summaries(event_list, cached, standings):
         t["skills"]["score"] if t["skills"] else None, t["skills"]["rank"] if t["skills"] else None,
         t["opr"], by_id.get(t["events"][-1]["id"], {}).get("start", "") if t["events"] else "",
         t["trueskill"]["rating"] if t["trueskill"] else None, t["trueskill"]["rank"] if t["trueskill"] else None,
-        t["trueskill"]["matches"] if t["trueskill"] else None,
+        t["trueskill"]["matches"] if t["trueskill"] else None, t.get("sub", ""),
     ] for t in sorted(teams.values(), key=lambda t: t["team"])]}
     buckets = {b: {} for b in range(TEAM_BUCKETS)}
     for n in sorted(teams):
@@ -946,6 +952,7 @@ def main():
     log(f"  {len(cached)} events in the cache")
     list_path = os.path.join(DATA_DIR, "event_list_raw.json")
     standings_path = os.path.join(DATA_DIR, "skills.json")
+    subregions_path = os.path.join(DATA_DIR, "subregions.json")
     event_list = read_json(list_path, [])
     standings = read_json(standings_path, {"hs": [], "ms": []})
 
@@ -1035,6 +1042,9 @@ def main():
                     meta["standingsFetched"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
                 except RuntimeError as err:
                     log(f"  kept the previous skills standings: {err}")
+            if not args.live:
+                subregions_mod.refresh(client, subregions_path, SEASON_ID, PROGRAM_ID, event_list, is_canceled,
+                                       read_json, write_json, log, today)
             if failed:
                 log(f"{failed} events failed and will be retried next run")
             log(f"Fetched {fetched} events with {client.calls} requests")
@@ -1047,7 +1057,7 @@ def main():
         except BudgetExceeded:
             log("Time budget used up; writing summaries from what was fetched.")
 
-    index, team_index, buckets, season = build_summaries(event_list, cached, standings)
+    index, team_index, buckets, season = build_summaries(event_list, cached, standings, read_json(subregions_path, {}))
     outputs = [("events.json", index), ("teams_index.json", team_index), ("season.json", season)]
     outputs += [(f"teams/{b}.json", data) for b, data in buckets.items()]
     changed = [name for name, data in outputs if write_json(os.path.join(DATA_DIR, name), data)]

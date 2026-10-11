@@ -86,7 +86,7 @@
     --ms: #c084fc; --ms-bg: rgba(168,85,247,0.16);
     --mix: #2dd4bf; --mix-bg: rgba(20,184,166,0.15);
     /* Section colors for navigation */
-    --c-teams: #60a5fa; --c-events: #2dd4bf; --c-sig: #fbbf24; --c-skills: #fb923c; --c-worlds: #f472b6; --c-game: #a78bfa; --c-ts: #a3e635;
+    --c-teams: #60a5fa; --c-events: #2dd4bf; --c-sig: #fbbf24; --c-skills: #fb923c; --c-worlds: #f472b6; --c-game: #a78bfa; --c-ts: #a3e635; --wq: #34d399;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
@@ -515,6 +515,7 @@
   .rg-opt:hover, .rg-opt:focus-visible { border-color: var(--accent); }
   .rg-opt.on { border-color: var(--accent); background: rgba(193,154,91,0.16); color: var(--accent2); }
   .rg-clear { margin-top: 14px; }
+  .rg-sub-note { font-size: 12px; margin: 8px 0 0; }
   .region-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; }
   .region-chip .ic { width: 14px; height: 14px; }
   .region-chip.on { border-color: var(--accent); background: rgba(193,154,91,0.16); color: var(--accent2); }
@@ -539,9 +540,10 @@
   @media (max-width: 1200px) { .rg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 640px) { .rg-grid { grid-template-columns: minmax(0, 1fr); } }
 
-  /* Teams qualified for Worlds 2027: pink number plus a globe, wherever a team number appears */
-  .team-link.wq, .ld-team.wq, .sk-team.wq, .ac-team.wq, .wq-legend .wq { color: var(--c-worlds) !important; }
-  .ld-team.wq { background: rgba(244,114,182,0.14); }
+  /* Teams qualified for Worlds 2027: green number, light green background and a globe, wherever a team number appears */
+  .team-link.wq, .ld-team.wq, .sk-team.wq, .ac-team.wq, .wq-legend .wq { color: var(--wq) !important; }
+  .ld-team.wq, .team-link.wq, .ac-team.wq { background: rgba(52,211,153,0.14); }
+  .team-link.wq, .ac-team.wq { padding: 0 4px; border-radius: 5px; }
   .wq-mark { display: inline-flex; vertical-align: -0.12em; margin-left: 3px; }
   .wq-mark .ic { width: 0.9em; height: 0.9em; }
   .wq-legend { font-size: 12px; color: var(--text-dim); margin: -4px 0 10px; }
@@ -788,7 +790,8 @@
       <dt>Signature event</dt><dd>The top tier of events in the season. Large, strong fields, and awards there can qualify teams for the World Championship.</dd>
       <dt>Worlds</dt><dd>The VEX Robotics World Championship at the end of the season. A <strong>Worlds qualifier</strong> is a team that has earned a spot.</dd>
       <dt>Your region</dt><dd>Pick your state, province or country with the region button (pin icon) at the top. Its teams and events then show first, and lists can show only that region.</dd>
-      <dt>Pink team numbers</dt><dd>Teams that have qualified for the 2027 World Championship, also marked with a small globe.</dd>
+      <dt>Eastern PA, Western PA</dt><dd>VEX holds separate Eastern and Western PA state championships but lists every team and event only as Pennsylvania, so this site estimates the split. A team goes with the state championship it enters this season, or the one it attended last season; otherwise it is placed by its listed location. Events are placed by location. The split is updated twice a week.</dd>
+      <dt>Green team numbers</dt><dd>Teams that have qualified for the 2027 World Championship, also marked with a light green background and a small globe.</dd>
       <dt>HS, MS, HS + MS</dt><dd>High school, middle school, and events where both compete together. Blue marks high school, purple marks middle school, teal marks both.</dd>
     </dl>
     <h3>Matches and results</h3>
@@ -1758,7 +1761,7 @@ function skillCard(r, grade) {
 async function renderSkills(tok) {
   const el = $('view-skills'), f = UI.skills;
   if (!S.skills) el.innerHTML = loading();
-  await needSkills(); if (tok !== routeTok) return;
+  await Promise.all([needSkills(), needSub()]); if (tok !== routeTok) return;
   const all = S.skills[f.grade] || [];
   const grade = f.grade === 'hs' ? 'High School' : 'Middle School';
   const q = f.q.trim().toLowerCase();
@@ -1925,9 +1928,15 @@ function setupSearch() {
 // Your region (saved on this device) and the Worlds-qualified team marking
 // ---------------------------------------------------------------------------
 let MY_REGION = loadPref('vexRegion');        // 'Country|Region', or 'Country|' for a whole country
-const SUGGESTED_REGIONS = ['United States|Pennsylvania'];
-const regionName = (k = MY_REGION) => { if (!k) return ''; const [c, r] = k.split('|'); return r ? (c === 'United States' ? r : `${r}, ${c}`) : c; };
-const inRegion = (o, k = MY_REGION) => { if (!k) return true; const [c, r] = k.split('|'); return o.country === c && (!r || o.region === r); };
+const SUGGESTED_REGIONS = ['United States|Pennsylvania', 'United States|Pennsylvania|Eastern PA', 'United States|Pennsylvania|Western PA'];
+const regionName = (k = MY_REGION) => { if (!k) return ''; const [c, r, sub] = k.split('|'); return sub || (r ? (c === 'United States' ? r : `${r}, ${c}`) : c); };
+// Eastern / Western PA are estimates (data/subregions.json); skills rows get theirs from the team index.
+const subOf = o => o.sub || (o.team && S.teamByNum[o.team] ? S.teamByNum[o.team].sub : '') || '';
+const inRegion = (o, k = MY_REGION) => { if (!k) return true; const [c, r, sub] = k.split('|'); return o.country === c && (!r || o.region === r) && (!sub || subOf(o) === sub); };
+const isSubRegion = (k = MY_REGION) => !!(k && k.split('|')[2]);
+const needSub = () => isSubRegion() ? needTeams() : Promise.resolve();
+const hasSplit = k => { const [c, r] = k.split('|'); return !!(S.season && S.season.subregions && S.season.subregions[`${c}|${r}`]); };
+const SUB_NOTE = 'Eastern and Western PA are estimated: VEX lists every team and event as Pennsylvania. Teams are placed by the state championship they enter (this season or last), otherwise by location.';
 const regionOn = () => !!MY_REGION && UI.regionOnly;
 const regionOk = o => !regionOn() || inRegion(o);
 const regionChip = () => MY_REGION
@@ -1938,7 +1947,7 @@ let WQ = new Set();   // team numbers qualified for Worlds 2027 (season.json wor
 const isWQ = n => WQ.has(n) || !!(S.teamByNum[n] && S.teamByNum[n].worlds);
 const wqClass = n => isWQ(n) ? ' wq' : '';
 const wqMark = n => isWQ(n) ? `<span class="wq-mark" title="Qualified for the 2027 World Championship">${icon('globe')}<span class="sr-only"> (qualified for Worlds)</span></span>` : '';
-const wqLegend = () => WQ.size ? `<p class="wq-legend"><span class="wq">${icon('globe')} Pink team numbers</span> have qualified for the 2027 World Championship.</p>` : '';
+const wqLegend = () => WQ.size ? `<p class="wq-legend"><span class="wq">${icon('globe')} Green team numbers</span> have qualified for the 2027 World Championship.</p>` : '';
 
 function updateRegionButton() { const l = $('regionLabel'); if (l) l.textContent = MY_REGION ? regionName() : 'Your region'; }
 function setRegion(k) {
@@ -1950,25 +1959,34 @@ function setRegion(k) {
 }
 function regionCounts() {
   const count = {};
-  for (const t of S.teamRows) if (t.country) { const k = `${t.country}|${t.region || ''}`; count[k] = (count[k] || 0) + 1; }
-  for (const e of S.events || []) if (e.country) { const k = `${e.country}|${e.region || ''}`; if (!(k in count)) count[k] = 0; }
+  for (const t of S.teamRows) if (t.country) {
+    const k = `${t.country}|${t.region || ''}`; count[k] = (count[k] || 0) + 1;
+    if (t.sub) count[`${k}|${t.sub}`] = (count[`${k}|${t.sub}`] || 0) + 1;
+  }
+  for (const e of S.events || []) if (e.country) {
+    const k = `${e.country}|${e.region || ''}`; if (!(k in count)) count[k] = 0;
+    if (e.sub && !(`${k}|${e.sub}` in count)) count[`${k}|${e.sub}`] = 0;
+  }
   return count;
 }
 function drawRegionList(q) {
   q = q.trim().toLowerCase();
   const count = regionCounts(), byCountry = {};
+  const subs = {};
   for (const [k, n] of Object.entries(count)) {
-    const [c, r] = k.split('|');
+    const [c, r, sub] = k.split('|');
+    if (sub) { (subs[`${c}|${r}`] = subs[`${c}|${r}`] || []).push([k, sub, n]); continue; }
     const g = byCountry[c] = byCountry[c] || { n: 0, regions: [] };
     g.n += n; if (r) g.regions.push([k, r, n]);
   }
   const opt = (k, label, n) => `<button type="button" class="rg-opt${k === MY_REGION ? ' on' : ''}" data-k="${esc(k)}">${esc(label)}${n ? `<span class="n">${plural(n, 'team')}</span>` : ''}</button>`;
-  let h = q ? '' : `<div class="rg-group">Suggested</div><div class="rg-opts">${SUGGESTED_REGIONS.map(k => opt(k, regionName(k), count[k] || 0)).join('')}</div>`;
+  const suggested = SUGGESTED_REGIONS.filter(k => !isSubRegion(k) || hasSplit(k));
+  let h = q ? '' : `<div class="rg-group">Suggested</div><div class="rg-opts">${suggested.map(k => opt(k, regionName(k), count[k] || 0)).join('')}</div>${suggested.some(k => isSubRegion(k)) ? `<p class="rg-note rg-sub-note">${SUB_NOTE}</p>` : ''}`;
   for (const c of Object.keys(byCountry).sort((a, b) => byCountry[b].n - byCountry[a].n || a.localeCompare(b))) {
     const g = byCountry[c], countryHit = !q || c.toLowerCase().includes(q);
     const regs = g.regions.filter(([, r]) => countryHit || r.toLowerCase().includes(q)).sort((a, b) => a[1].localeCompare(b[1]));
     if (!regs.length && !countryHit) continue;
-    h += `<div class="rg-group">${esc(c)}</div><div class="rg-opts">${countryHit ? opt(`${c}|`, `All of ${c}`, g.n) : ''}${regs.map(([k, r, n]) => opt(k, r, n)).join('')}</div>`;
+    h += `<div class="rg-group">${esc(c)}</div><div class="rg-opts">${countryHit ? opt(`${c}|`, `All of ${c}`, g.n) : ''}${regs.map(([k, r, n]) => opt(k, r, n) + (subs[k] || []).sort((a, b) => a[1].localeCompare(b[1])).map(([sk, sub, sn]) => opt(sk, sub, sn)).join('')).join('')}</div>`;
   }
   $('rgList').innerHTML = h || '<div class="empty">No region matches. Try a state, province or country name.</div>';
   $('rgList').querySelectorAll('.rg-opt').forEach(b => b.onclick = () => setRegion(b.dataset.k));
@@ -1994,7 +2012,7 @@ async function renderRegionBox(tok) {
   const box = $('region-box'); if (!box) return;
   if (!MY_REGION) {
     box.innerHTML = `<div class="rg-prompt"><div class="rg-prompt-text">${icon('pin')}<div><strong>See your region first</strong>Pick your state, province or country to put its teams, events and Worlds qualifiers at the top of this page.</div></div>
-      <div class="rg-prompt-btns">${SUGGESTED_REGIONS.map(k => `<button type="button" class="region-chip on" data-region-pick="${esc(k)}">${icon('pin')}${esc(regionName(k))}</button>`).join('')}<button type="button" class="region-chip" data-region-open>Another region</button></div></div>`;
+      <div class="rg-prompt-btns">${SUGGESTED_REGIONS.filter(k => !isSubRegion(k) || hasSplit(k)).map(k => `<button type="button" class="region-chip on" data-region-pick="${esc(k)}">${icon('pin')}${esc(regionName(k))}</button>`).join('')}<button type="button" class="region-chip" data-region-open>Another region</button></div></div>`;
     return;
   }
   box.innerHTML = `<div class="rg-head"><h2>${icon('pin')}${esc(regionName())}</h2></div>${loading()}`;
@@ -2013,6 +2031,7 @@ async function renderRegionBox(tok) {
   const g = f.grade === 'Middle School' ? 'middle school' : 'high school';
   const held = evs.filter(e => e.status !== 'upcoming').length;
   box.innerHTML = `<div class="rg-head"><h2>${icon('pin')}${esc(name)}</h2><button type="button" class="region-chip" data-region-open>Change region</button></div>
+    ${isSubRegion() ? `<p class="rg-note">Estimated split: VEX lists every team as Pennsylvania. ${helpLink('How it is estimated')}</p>` : ''}
     <p class="rg-sum">${plural(teams.length, 'team')} with results &bull; ${held} of ${plural(evs.length, 'event')} held &bull; ${wq.length ? `${wq.length} qualified for Worlds: ${wq.slice(0, 4).map(t => teamLink(t.team)).join(' ')}` : 'no Worlds qualifiers yet'}</p>
     <div class="rg-grid">
       <div class="panel" style="--c:var(--c-events)"><h2>${icon('calendar')}Coming up</h2><div class="sub">Next events in ${esc(name)}</div>${nextChamps.map(e => `<div class="rg-champ">${icon('trophy')}<span><strong>Championship:</strong> <a class="ev-link" href="#event/${e.id}">${esc(shortEventName(e.name))}</a> <span class="dim">${esc(fmtDate(e.start))}</span></span></div>`).join('')}${eventRows(upcoming.slice(0, 5), { empty: 'No upcoming events listed yet.', watch: true })}</div>
