@@ -54,6 +54,12 @@ end of each transition with anything that changed.
   (`LAST_SEASON_ID`, update each season), else its location against the longitude
   that best separates the championship fields. Events by location. Coordinates
   are never written out.
+- Search visibility (October 2026): Google had indexed none of the Null Set Labs
+  sites; indexing was requested in Search Console (Arjun's account) for the tracker,
+  TrueSkill, Skills, nullsetlabs.org and Robotics. `visualizer/indexnow.py` sends new
+  and changed pages to IndexNow (Bing and others; key file at the repo root) from
+  GitHub runs only. The VEX home page has a plain-language FAQ with FAQPage
+  structured data, and `llms.txt` summarizes the site; update both for a new season.
 - Share images: `visualizer/dev/make_og_images.py` writes `visualizer/og-visualizer.png`
   (tracker and standalone pages) and `og-vex.png` (VEX home) from the Null Set
   Labs card layout. Rerun it with the new season name; use a new file name if the
