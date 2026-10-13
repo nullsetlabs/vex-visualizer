@@ -550,6 +550,13 @@
   .wq-legend .ic { width: 12px; height: 12px; vertical-align: -2px; }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
+  /* Plain-text description above the footer (also what search engines read first) */
+  .about-tracker { max-width: 1100px; margin: 28px auto 0; padding: 0 24px; font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .about-tracker h2 { font-size: 15px; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+  .about-tracker p { margin: 0 0 8px; }
+  .about-tracker a { color: var(--accent2); }
+  @media (max-width: 768px) { .about-tracker { padding: 0 16px; font-size: 12.5px; } }
+
   /* Feedback line above the footer */
   .rate-bar { max-width: 1600px; margin: 28px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 10px; font-size: 13px; color: var(--text-dim); }
   .rate-bar button, .rate-bar .rate-link { min-height: 44px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
@@ -743,6 +750,12 @@
 </main>
 
 <aside class="rate-bar" id="rateBar" aria-label="Feedback on this page" aria-live="polite"></aside>
+
+<section class="about-tracker" aria-labelledby="aboutTitle">
+  <h2 id="aboutTitle">About the VEX Visualizer</h2>
+  <p>The VEX Visualizer is a free season tracker for the VEX V5 Robotics Competition (V5RC) 2026-2027 game, Override. It follows the season from official VEX data: tournament results, qualification rankings and awards, the official skills standings, and the signature events that qualify teams for the 2027 VEX Robotics World Championship. Every team with results has a page with its season record, skills score and TrueSkill rating, a match-based rating computed by this site. Students can pick their state or region to see local teams and events first.</p>
+  <p>Start with the <a href="skills/">skills leaderboard</a>, the <a href="trueskill/">TrueSkill rankings</a>, <a href="signature/">signature event results</a> or the <a href="worlds-qualifiers/">Worlds 2027 qualifiers</a>.</p>
+</section>
 
 <footer class="footer">
   <strong>VEX Visualizer</strong> &bull; Developed by <strong>Arjun</strong> &bull; Override season (2026-2027) &bull; <a href="worlds-2026/">Worlds 2026 archive (Push Back)</a>

@@ -14,6 +14,11 @@ interactive tracker:
   /visualizer/trueskill/               TrueSkill rankings (HS and MS) and how they are calculated
   /visualizer/sitemap-pages.xml        sitemap of all of the above
 
+Thin team pages (one event, no awards, no Worlds qualification and no Worlds 2026
+history) are marked noindex and left out of the sitemap and IndexNow, so a new
+domain shows search engines its substantial pages first. A page becomes
+indexable on its own once the team has a second event or an award.
+
 Called by season_pipeline.py after the summaries are built. Files are only
 rewritten when their content changes, and pages for teams or events that drop
 out of the data are removed. Output contains no timestamps, so unchanged data
@@ -81,7 +86,12 @@ TRUESKILL_HOW = """<ul class="how">
 </ul>"""
 
 
-def page(path_url, title, description, crumbs, body, jsonld=None):
+def is_thin(t, last_season_row=None):
+    """Too little to index yet: one event, no awards, no Worlds qualification or history."""
+    return len(t["events"]) <= 1 and not t["awards"] and not t.get("worlds") and not last_season_row
+
+
+def page(path_url, title, description, crumbs, body, jsonld=None, robots=None):
     """Full HTML document. path_url is the page's path, e.g. /visualizer/team/96Z/."""
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>\n' if jsonld else ""
     crumb_html = " / ".join(f'<a href="{e(u)}">{e(t)}</a>' if u else e(t) for t, u in crumbs)
@@ -92,7 +102,7 @@ def page(path_url, title, description, crumbs, body, jsonld=None):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{e(title)}</title>
 <meta name="description" content="{e(description)}">
-<link rel="canonical" href="{SITE}{e(path_url)}">
+{f'<meta name="robots" content="{e(robots)}">{chr(10)}' if robots else ''}<link rel="canonical" href="{SITE}{e(path_url)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{SITE}{e(path_url)}">
 <meta property="og:title" content="{e(title)}">
@@ -202,7 +212,8 @@ def team_page(t, by_id, sig_pages, last_season):
           "sport": "VEX V5 Robotics Competition", "url": f"{SITE}{url}",
           "location": {"@type": "Place", "address": {"@type": "PostalAddress", "addressLocality": t.get("city", ""),
                                                      "addressRegion": t.get("region", ""), "addressCountry": t.get("country", "")}}}
-    return url, page(url, title, desc, [("Visualizer", f"{BASE}/"), ("Teams", None), (n, None)], body, ld)
+    return url, page(url, title, desc, [("Visualizer", f"{BASE}/"), ("Teams", None), (n, None)], body, ld,
+                     robots="noindex, follow" if is_thin(t, last_season) else None)
 
 
 def event_page(row, ev, team_names):
@@ -380,10 +391,13 @@ def build(vis_dir, index, buckets, standings, cached, last_season=None):
     sig_pages = {r["sku"] for r in sig_rows}
     last_season = last_season or {}
     pages = []
+    noindex = set()     # thin team pages: built, but not offered to search engines yet
     for n in sorted(teams):
         evs = teams[n]["events"]
         lastmod = by_id.get(evs[-1]["id"], {}).get("end", "") if evs else ""
         pages.append(team_page(teams[n], by_id, sig_pages, last_season.get(n)) + (lastmod,))
+        if is_thin(teams[n], last_season.get(n)):
+            noindex.add(team_url(n))
     for r in sig_rows:
         pages.append(event_page(r, cached.get(r["id"]), set(teams)) + (r.get("end") or "",))
     latest = max((r["end"] for r in index if r.get("results") and r.get("end")), default="")
@@ -401,7 +415,8 @@ def build(vis_dir, index, buckets, standings, cached, last_season=None):
         keep.add(os.path.normpath(path))
         if _write(path, text):
             written += 1
-            changed.append(SITE + url)
+            if url not in noindex:
+                changed.append(SITE + url)
 
     removed = 0
     for top in ("team", "event"):
@@ -415,8 +430,8 @@ def build(vis_dir, index, buckets, standings, cached, last_season=None):
                 removed += 1
 
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for url, _, lastmod in sorted(pages, key=lambda p: p[0]):
+    for url, _, lastmod in sorted((p for p in pages if p[0] not in noindex), key=lambda p: p[0]):
         sm.append(f"  <url><loc>{SITE}{html.escape(url)}</loc>{f'<lastmod>{lastmod[:10]}</lastmod>' if lastmod else ''}</url>")
     sm.append("</urlset>")
     written += _write(os.path.join(vis_dir, "sitemap-pages.xml"), "\n".join(sm) + "\n")
-    return written, removed, changed, [SITE + url for url, _, _ in pages]
+    return written, removed, changed, [SITE + url for url, _, _ in pages if url not in noindex]
