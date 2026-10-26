@@ -45,22 +45,26 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/event/VE-V5-27-65537/</loc><lastmod>2027-01-16</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/event/VE-V5-27-65550/</loc><lastmod>2027-01-29</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/event/VE-V5-27-65709/</loc><lastmod>2027-02-19</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/signature/</loc><lastmod>2027-02-11</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/skills/</loc><lastmod>2027-02-11</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/signature/</loc><lastmod>2027-02-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/skills/</loc><lastmod>2027-02-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1000A/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10012Y/</loc><lastmod>2026-10-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10017A/</loc><lastmod>2026-08-23</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10028A/</loc><lastmod>2026-08-06</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1002D/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1002V/</loc><lastmod>2026-09-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10017A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10017S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10017X/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10028A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1002D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1002V/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10038A/</loc><lastmod>2026-07-26</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10052A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10050A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10052A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10057D/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10068A/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10080A/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10070A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10080A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10082B/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10085X/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10089A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10089A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10091F/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10102A/</loc><lastmod>2026-08-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10102C/</loc><lastmod>2026-10-17</lastmod></url>
@@ -70,8 +74,13 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1010Y/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1010Z/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1011D/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10188S/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10222S/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10127A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10127C/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10127X/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10188S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10222S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10261A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10261B/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1028A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1028K/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1028T/</loc><lastmod>2026-10-17</lastmod></url>
@@ -80,15 +89,20 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10301B/</loc><lastmod>2027-01-30</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10301C/</loc><lastmod>2027-01-30</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10301D/</loc><lastmod>2027-01-30</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10606A/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10383A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10383C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10383X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10500A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10606A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10631A/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1064G/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10666A/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10676A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10688V/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1069A/</loc><lastmod>2026-12-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1069A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10702X/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10702Y/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10789A/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/10789A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10829V/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1082M/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1082P/</loc><lastmod>2026-10-10</lastmod></url>
@@ -97,24 +111,32 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10B/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10G/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/10K/</loc><lastmod>2026-08-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/11020A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11044A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11059K/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11101B/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11107X/</loc><lastmod>2026-08-06</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/11111Y/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/11111Y/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11112W/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11112X/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11227S/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/11254G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/11305X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11342A/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/11416M/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11475B/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11518B/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11552A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11629A/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11753A/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11753B/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/11777K/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/11777U/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/117B/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11811A/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11850S/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11850X/</loc><lastmod>2026-10-04</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1199A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/119B/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/119P/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/119X/</loc><lastmod>2026-09-27</lastmod></url>
@@ -123,13 +145,14 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11X/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/11Z/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12020Z/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12029M/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12029M/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12066F/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12110A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1211X/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12125A/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12125X/</loc><lastmod>2026-09-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1220X/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12125A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12125X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12125Z/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1220X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12223F/</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12223X/</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1229M/</loc><lastmod>2026-10-03</lastmod></url>
@@ -140,27 +163,35 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12366A/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12388T/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1239E/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12466A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12466A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1255D/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1255S/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12731P/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12790X/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12731M/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12731P/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12790X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12808Z/</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1281B/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1281U/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12858X/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12883K/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12883K/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12906A/</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12906B/</loc><lastmod>2026-09-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12906C/</loc><lastmod>2026-09-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12906D/</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/12913W/</loc><lastmod>2026-09-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12914X/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12914Y/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12966A/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12993S/</loc><lastmod>2026-08-23</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12S/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12914X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12914Y/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12966A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12993S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12M/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/12S/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/13000A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/13000B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/13000C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/13000D/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13056A/</loc><lastmod>2026-08-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/13135F/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13176A/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1318A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13191A/</loc><lastmod>2026-10-08</lastmod></url>
@@ -169,6 +200,7 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13205X/</loc><lastmod>2026-11-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1323C/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13322G/</loc><lastmod>2026-10-07</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/13358C/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13449K/</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13449T/</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13459A/</loc><lastmod>2026-09-05</lastmod></url>
@@ -179,7 +211,7 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13765A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13765C/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/13765W/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/13880A/</loc><lastmod>2026-07-26</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/13880A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1412J/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/14523N/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/14671A/</loc><lastmod>2026-09-21</lastmod></url>
@@ -193,29 +225,44 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1516X/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1523A/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/15383K/</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/15486P/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1555C/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/15486E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/15486N/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/15486P/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1555C/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/15820A/</loc><lastmod>2026-07-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/15820C/</loc><lastmod>2026-07-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1584A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1584V/</loc><lastmod>2026-08-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1590A/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1599A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1599B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1599C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1599N/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16099A/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16099B/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16099D/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1652A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1658X/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16609X/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16610A/</loc><lastmod>2026-08-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16610G/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16610M/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16610V/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1676A/</loc><lastmod>2026-08-06</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1677Y/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/16689A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1676A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1677Y/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16811K/</loc><lastmod>2026-10-07</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/16859B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/16859C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/16859D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/16859E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/16859F/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/16859X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1688H/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1688N/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1688Z/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16909M/</loc><lastmod>2026-08-06</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/16921A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/16961Z/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1698A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1698V/</loc><lastmod>2026-09-20</lastmod></url>
@@ -228,7 +275,8 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/17017V/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/17017Z/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/17021V/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/17022A/</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/17022A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1704K/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1737Y/</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/17380A/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1740X/</loc><lastmod>2026-12-11</lastmod></url>
@@ -240,14 +288,17 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1764P/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1764V/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/17661A/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1769A/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1782A/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1769A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1782A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/17888A/</loc><lastmod>2026-09-13</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/17888B/</loc><lastmod>2026-09-13</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/17924A/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18000A/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18000K/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18000M/</loc><lastmod>2026-09-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18000A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18000C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18000G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18000H/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18000K/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18000M/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/18186K/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/18186S/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/18190X/</loc><lastmod>2026-08-16</lastmod></url>
@@ -270,23 +321,31 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1831U/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1831V/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1840B/</loc><lastmod>2026-10-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18618B/</loc><lastmod>2026-08-23</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18618Y/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18618A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18618B/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18618Y/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1862A/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1862X/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1862X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1868C/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/18799M/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18886X/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18960A/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18960B/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18966G/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18968K/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18886X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18960A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18960B/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18962U/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18965J/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18966A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18966G/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18966H/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18966N/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/18968K/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/19012B/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1902M/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1902R/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/19091A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/19109A/</loc><lastmod>2026-08-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/19176S/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/19176Y/</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/19191M/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1920M/</loc><lastmod>2027-02-06</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1940A/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/1940B/</loc><lastmod>2026-10-10</lastmod></url>
@@ -300,47 +359,59 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/19539Y/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/19600Z/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/197E/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1996T/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/1996T/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20005F/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20005Z/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20025G/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20068A/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20068B/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2011A/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2011B/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2011F/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2011G/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20236A/</loc><lastmod>2026-08-23</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20236Z/</loc><lastmod>2026-08-23</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20360A/</loc><lastmod>2026-08-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20360C/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20360D/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20039A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20039S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20068A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20068B/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20089X/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2011A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2011B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2011D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2011F/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2011G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20156A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20156C/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20236A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20236X/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20236Z/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20360A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20360C/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20360D/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2037C/</loc><lastmod>2027-02-06</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20404Z/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2052A/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2052C/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20493A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2052A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2052C/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2052D/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2052E/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2052E/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2055A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2055X/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2072V/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20785R/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20785X/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20785Z/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850C/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850D/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850G/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850S/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850V/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850W/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850X/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850Z/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850W/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20850Z/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2088K/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2088X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20901C/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20901D/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/20901G/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20910T/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/20910T/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/21010V/</loc><lastmod>2026-10-03</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/210K/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/210K/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/21133W/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2115P/</loc><lastmod>2026-09-13</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2115P/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2131N/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2135A/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2137A/</loc><lastmod>2026-10-17</lastmod></url>
@@ -349,55 +420,83 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2142S/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2142X/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2143A/</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2145V/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2145W/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2145X/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2145Y/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2145V/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2145W/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2145X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2145Y/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2145Z/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2150A/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/21660A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/21688A/</loc><lastmod>2026-09-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/216F/</loc><lastmod>2026-10-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/216G/</loc><lastmod>2026-10-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/216H/</loc><lastmod>2026-10-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/216K/</loc><lastmod>2026-10-13</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/216F/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/216G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/216H/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/216K/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/21S/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/22020C/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/22020K/</loc><lastmod>2026-09-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/22020V/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/22020Z/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/22204N/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/222A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/222A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/222B/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/222S/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/222S/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/22391B/</loc><lastmod>2026-12-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2242C/</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2252F/</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2252H/</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2252R/</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/22585A/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/227R/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/227R/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2290Z/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/23083Y/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/23083Z/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2323Z/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/23401B/</loc><lastmod>2026-07-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/23401C/</loc><lastmod>2026-07-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/23401D/</loc><lastmod>2026-07-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/23401E/</loc><lastmod>2026-07-26</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2393S/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/23568S/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2360A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2360C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2360D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2360H/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2360N/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2360X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2393S/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2394V/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/24067Z/</loc><lastmod>2026-10-07</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2415X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2429A/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/244A/</loc><lastmod>2026-10-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/244C/</loc><lastmod>2026-10-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24500D/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2468X/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2468Y/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/244A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/244B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/244C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/244D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/244G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24500A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24500B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24500C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24500D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24500F/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2468X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2468Y/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2474A/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2474X/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2476S/</loc><lastmod>2026-09-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2479D/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24816A/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24816H/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24816T/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2479D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2479X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24816A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24816H/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24816T/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/24824B/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/248A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/248B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/248C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/248D/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/24904F/</loc><lastmod>2027-01-09</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2496Y/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2498B/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2499A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2499B/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2499V/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2502A/</loc><lastmod>2026-10-18</lastmod></url>
@@ -405,40 +504,52 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/25111A/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/25111B/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/252A/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/25335A/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2550R/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2551A/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/25335A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2536U/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/25425A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2550R/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2551A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/25666A/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2566C/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2566C/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2567M/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2567U/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2568Z/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2572A/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2572B/</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2577X/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2577X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2578U/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2608J/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/26163A/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/26163X/</loc><lastmod>2026-09-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/26163A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/26163K/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/26163X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2623K/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2627E/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2634X/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/26425A/</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/26425B/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/26425C/</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2646A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2652A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2652B/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2663V/</loc><lastmod>2026-09-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2676A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2676A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/27000K/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2701B/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2701C/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2701Y/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2701Z/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2715N/</loc><lastmod>2026-09-26</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2731K/</loc><lastmod>2026-08-06</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2715N/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2731K/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/27508A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2765A/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2766A/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2766A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2775S/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2775U/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2775Z/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/27908V/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/27925A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/27925B/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/27925C/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/28002A/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/28002B/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/28002C/</loc><lastmod>2027-01-09</lastmod></url>
@@ -446,6 +557,7 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/28002E/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/28006B/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/28111Z/</loc><lastmod>2026-10-07</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2813Z/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2815Z/</loc><lastmod>2026-07-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2821C/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2822A/</loc><lastmod>2026-10-17</lastmod></url>
@@ -454,7 +566,7 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2822E/</loc><lastmod>2027-01-30</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2822F/</loc><lastmod>2027-01-30</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2822M/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2826A/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2826A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2832A/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/283V/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2861A/</loc><lastmod>2026-08-14</lastmod></url>
@@ -463,10 +575,11 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2862B/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2876A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2883A/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/288A/</loc><lastmod>2026-10-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/288B/</loc><lastmod>2026-10-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/288C/</loc><lastmod>2026-10-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/288D/</loc><lastmod>2026-10-13</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/288A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/288B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/288C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/288D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/288V/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2899A/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2900C/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2900D/</loc><lastmod>2026-10-17</lastmod></url>
@@ -489,8 +602,9 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/29588Y/</loc><lastmod>2026-08-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/29599V/</loc><lastmod>2026-08-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/295A/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/295S/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/295Y/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2966X/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2966X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/29712C/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/29760A/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/29760B/</loc><lastmod>2026-10-03</lastmod></url>
@@ -502,23 +616,26 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2982Z/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2985A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2985B/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/2990U/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2996B/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/2996V/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3009H/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3012A/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3023A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3023A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3023C/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3023V/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3023V/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/30330Y/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3036A/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/30597J/</loc><lastmod>2027-01-16</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3061A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3102A/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/31101X/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/31110E/</loc><lastmod>2026-09-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/31110A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/31110E/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3116D/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3116G/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3116X/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/31218W/</loc><lastmod>2026-10-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/31218W/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/31260B/</loc><lastmod>2026-09-12</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/31260C/</loc><lastmod>2026-09-12</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/31260R/</loc><lastmod>2026-09-12</lastmod></url>
@@ -526,7 +643,7 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/31260Y/</loc><lastmod>2026-09-12</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3131V/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3134G/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3134P/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3134P/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3134R/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3134T/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3134V/</loc><lastmod>2026-09-05</lastmod></url>
@@ -540,35 +657,49 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3150V/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3150Y/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3150Z/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/31611C/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/31611G/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/31611N/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/31611V/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/31870X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/32023A/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/32028M/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3204A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3204S/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3204X/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32092B/</loc><lastmod>2026-12-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32092D/</loc><lastmod>2026-12-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32092G/</loc><lastmod>2026-12-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32092A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32092B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32092D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32092E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32092F/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32092G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32092H/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/32119A/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/32119C/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/32135H/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3216A/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3219A/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3219K/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3219X/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3219Y/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3219A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3219D/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3219K/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3219X/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3219Y/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3219Z/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/32324A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3234A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3239V/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3258A/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3258C/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3263S/</loc><lastmod>2026-07-31</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3266H/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3283A/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3296X/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/32C/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/32K/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3300Z/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3303W/</loc><lastmod>2026-09-26</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/33123A/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3328A/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3300Z/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3303W/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/33123A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3328A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3332A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/33333B/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/33333C/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3333B/</loc><lastmod>2026-11-19</lastmod></url>
@@ -578,36 +709,44 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3333Y/</loc><lastmod>2026-11-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3333Z/</loc><lastmod>2026-11-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/33377X/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3340F/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/333Y/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3340F/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3340N/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3340X/</loc><lastmod>2026-09-26</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3340X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/334C/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3376A/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3359A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3376A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/33783A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3397X/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/34071A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/34071D/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3419A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3440F/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3440M/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/34543M/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/34543Z/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/34543M/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/34543Z/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3457A/</loc><lastmod>2026-09-05</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3457B/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3457E/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3457V/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3457Z/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3477B/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3457E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3457V/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3457Z/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3477A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3477B/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3477C/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3477D/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3477E/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/34835A/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3477D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3477E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/34835A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/34A/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3534A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3534A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3534V/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3547F/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3547X/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/35555S/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/355T/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/355Z/</loc><lastmod>2026-08-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/35555S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/355B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/355P/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/355T/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/355V/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/355Z/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/35866A/</loc><lastmod>2026-09-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/35866B/</loc><lastmod>2026-09-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/35866N/</loc><lastmod>2026-09-19</lastmod></url>
@@ -615,19 +754,31 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3588R/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3588Y/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3650C/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3658A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3660X/</loc><lastmod>2026-12-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/36620A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/36620D/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3676A/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/36927A/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/36927A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3708E/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3723A/</loc><lastmod>2026-12-11</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3723D/</loc><lastmod>2026-12-11</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/37250E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3743A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3760X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/37688A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3771A/</loc><lastmod>2026-08-06</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/37775A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3793A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/37S/</loc><lastmod>2026-09-12</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/38000A/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/38169V/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/38301B/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/38301C/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/38301Z/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3866F/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/38535A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/38535X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3866F/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/38888X/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/38C/</loc><lastmod>2026-11-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/38R/</loc><lastmod>2026-11-19</lastmod></url>
@@ -635,15 +786,17 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/38W/</loc><lastmod>2026-11-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/38Z/</loc><lastmod>2026-11-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/39116E/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3929A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3929A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3929C/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3929V/</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3929V/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/3929Y/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/393R/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3946E/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3946Z/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3946E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3946W/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3946Z/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/39475K/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/39792E/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/3996M/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/39B/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/39K/</loc><lastmod>2026-11-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/39P/</loc><lastmod>2026-10-10</lastmod></url>
@@ -652,12 +805,16 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/40280X/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/404M/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/404S/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4051V/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4051V/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4073B/</loc><lastmod>2027-02-06</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/41000D/</loc><lastmod>2026-10-13</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/41000A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/41000B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/41000C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/41000D/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/41103C/</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/41103X/</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/41103Z/</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/41510D/</loc><lastmod>2026-10-23</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4154R/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4154S/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4189R/</loc><lastmod>2026-10-17</lastmod></url>
@@ -666,13 +823,21 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4233V/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/424B/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/424D/</loc><lastmod>2027-01-09</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/42652C/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/42652D/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/42652E/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4265X/</loc><lastmod>2026-12-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4253S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/42652C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/42652D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/42652E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/42652F/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4265E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4265P/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4265T/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4265X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4265Z/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4275H/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4275X/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4275Z/</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4303H/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/43230A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4326A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4326S/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/43280A/</loc><lastmod>2026-10-17</lastmod></url>
@@ -684,20 +849,26 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/44120A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/44120B/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4413A/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/44404E/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/44448X/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4478H/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4478N/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4478Z/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/44A/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/44A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/45000A/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4511P/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45133J/</loc><lastmod>2027-02-11</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45434A/</loc><lastmod>2027-02-11</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45434H/</loc><lastmod>2027-02-11</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45434M/</loc><lastmod>2027-02-11</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45434R/</loc><lastmod>2027-02-11</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4560Z/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45133J/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45133K/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45133M/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4541A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45434A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45434H/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45434M/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45434R/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/45519Z/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4560Z/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/457A/</loc><lastmod>2026-11-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/457C/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/457D/</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4610P/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4610W/</loc><lastmod>2026-09-27</lastmod></url>
@@ -708,23 +879,30 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4613P/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4613R/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4613Y/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/46141A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4621A/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4621B/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4621F/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4621K/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/462A/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/462V/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/46311B/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/46366B/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/46366X/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/46666A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/46666A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4691R/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/471A/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/471A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/471B/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/474G/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/47474B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/474G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/47747A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/47747B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/47775A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/47779A/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/47779V/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/47779X/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4787X/</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4787T/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4787X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4815E/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4815R/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/48327T/</loc><lastmod>2026-09-17</lastmod></url>
@@ -733,7 +911,7 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4863H/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/4873S/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/49086B/</loc><lastmod>2026-07-26</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4911E/</loc><lastmod>2026-11-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/4911E/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/491C/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/49381A/</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/49637A/</loc><lastmod>2027-01-09</lastmod></url>
@@ -743,7 +921,7 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/49637E/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/49842A/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/49898G/</loc><lastmod>2026-09-11</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/50001A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/50001A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5039A/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/50550A/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5069D/</loc><lastmod>2026-10-17</lastmod></url>
@@ -751,11 +929,14 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5069G/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5069W/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5069Y/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/50701A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/50701A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/50911B/</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/51000A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/50922S/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/50922T/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/51000A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/51000W/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5138M/</loc><lastmod>2026-07-26</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5138K/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5138M/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/51459M/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5150D/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/51521A/</loc><lastmod>2027-01-30</lastmod></url>
@@ -763,26 +944,30 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/51521C/</loc><lastmod>2027-01-30</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/51521D/</loc><lastmod>2027-01-30</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/51521E/</loc><lastmod>2027-01-30</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/52050A/</loc><lastmod>2026-09-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5176X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/52050A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/52111A/</loc><lastmod>2026-09-11</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/52140B/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/52140B/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5218B/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/52222A/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/52222B/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/52222W/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/52222X/</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/52222Y/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/52392A/</loc><lastmod>2026-09-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/52392B/</loc><lastmod>2026-09-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/52392C/</loc><lastmod>2026-09-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/52766A/</loc><lastmod>2026-12-05</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/52777C/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/52994Z/</loc><lastmod>2026-08-06</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5278A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5278D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/52994Z/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/53149A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5327A/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5327S/</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5327V/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/53333S/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/53333X/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/53333S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/53333X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/53397A/</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/53815Z/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/54001A/</loc><lastmod>2026-08-27</lastmod></url>
@@ -797,26 +982,34 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5459E/</loc><lastmod>2026-10-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/54677A/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/54845C/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/55252G/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/55098A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/55252G/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/55555A/</loc><lastmod>2026-08-23</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/55678C/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/55760R/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/55760V/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/55678C/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/55678D/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/55760R/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/55760V/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/55777B/</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5606A/</loc><lastmod>2026-09-05</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5606B/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5606C/</loc><lastmod>2026-09-19</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/56114A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56160A/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56333Z/</loc><lastmod>2026-08-16</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/56448A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56520Y/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56575B/</loc><lastmod>2026-10-07</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/56665A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56666E/</loc><lastmod>2026-08-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56668A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56787C/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56789S/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56827N/</loc><lastmod>2026-10-07</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5686X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56888H/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5690X/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5689E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5690G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5690X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/56S/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/57000G/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/57152C/</loc><lastmod>2026-10-10</lastmod></url>
@@ -826,37 +1019,46 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/57711C/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/57711E/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/57711N/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5776A/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5776T/</loc><lastmod>2026-09-26</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5776A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/5776T/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/57783A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5798V/</loc><lastmod>2026-10-12</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/5813R/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/58303A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/58676S/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/58988C/</loc><lastmod>2026-08-16</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/59266A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/59888X/</loc><lastmod>2026-08-06</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/60000X/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/60000X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/60066S/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/60066X/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6008G/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6008D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6008G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/60172V/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/60206Y/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/6023F/</loc><lastmod>2026-10-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/6023J/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/6023S/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/60304V/</loc><lastmod>2026-10-07</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/60441Z/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6062B/</loc><lastmod>2027-02-04</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/6079B/</loc><lastmod>2026-08-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/61103Y/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/61103Y/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/61150W/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/61187A/</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/61187C/</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/61234G/</loc><lastmod>2026-10-07</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/61353A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/61503A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/61568A/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/61B/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/62024N/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/62024P/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6210B/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6210H/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6210M/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6210P/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/62024A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/62024N/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/62024P/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6210B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6210H/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6210M/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6210P/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/62345A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/62345B/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/62345C/</loc><lastmod>2026-10-17</lastmod></url>
@@ -866,16 +1068,21 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/62880C/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/62880D/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/6293X/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/63031C/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/63180A/</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/63303Z/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/63331A/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/63544B/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/63600C/</loc><lastmod>2026-11-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/63600A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/63600C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/63600E/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/6386A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/63936G/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/6446A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/6446B/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/6446C/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/64762H/</loc><lastmod>2026-09-26</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6508X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/65100A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/65100B/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/65100C/</loc><lastmod>2026-10-17</lastmod></url>
@@ -888,10 +1095,17 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/65200Z/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/65404E/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/6546C/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/654T/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/654V/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/65715Y/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/65715Z/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/66123C/</loc><lastmod>2026-08-14</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6627A/</loc><lastmod>2026-09-13</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6627A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6627C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6627D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6627S/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6627X/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6627Y/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/663A/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/663D/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/663H/</loc><lastmod>2026-10-10</lastmod></url>
@@ -899,23 +1113,36 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/66540H/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/66540M/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/66556Z/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66616A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66616A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/66666A/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/666S/</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/666X/</loc><lastmod>2026-08-23</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66799T/</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66994D/</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66722A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66722E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66797S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66799T/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66799X/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66994D/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/66994V/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/66996X/</loc><lastmod>2026-08-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6741A/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6741C/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6741R/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/67605X/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/67002V/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/673B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/673G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6741A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6741C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6741D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6741R/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/67605X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/67670M/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/68000A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/68076H/</loc><lastmod>2026-09-11</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/68417Y/</loc><lastmod>2026-08-06</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6842V/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/68678M/</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/68168A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/68417Y/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6842V/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/68666A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/68666X/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/68678C/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/68678M/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/68699A/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/69153A/</loc><lastmod>2026-09-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/69153B/</loc><lastmod>2026-09-21</lastmod></url>
@@ -923,10 +1150,12 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/691A/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/692W/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/692X/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6978R/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6978F/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6978R/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/6978Y/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/69969A/</loc><lastmod>2026-09-13</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/70000K/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/70000Z/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/70000K/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/70000Z/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7006X/</loc><lastmod>2026-07-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/70123A/</loc><lastmod>2026-08-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/70258A/</loc><lastmod>2026-10-17</lastmod></url>
@@ -950,44 +1179,54 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7139X/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/71639K/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/71639V/</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/71666A/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/71666B/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/71666A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/71666B/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/71748A/</loc><lastmod>2026-09-05</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/71811N/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/72202Z/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7225G/</loc><lastmod>2026-08-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/72417W/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7258A/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7258C/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7258A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7258C/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7258K/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7258T/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7262A/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7262K/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7262T/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7262Y/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7368C/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7368G/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/72777Z/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/733C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7368C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7368G/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/73973A/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/73973C/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7405A/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7405M/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/74100A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/74100D/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/74100X/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7447X/</loc><lastmod>2026-09-20</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7479E/</loc><lastmod>2026-09-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7479B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7479E/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7486A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/74947J/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/75477G/</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/75477J/</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/75477M/</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/76058B/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/76058E/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7618A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7619C/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7619R/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7619T/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7619V/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7619W/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/76289X/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/76316J/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7633A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/76624S/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7686V/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7671C/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7686V/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/76981A/</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/76981B/</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7700E/</loc><lastmod>2026-10-17</lastmod></url>
@@ -995,21 +1234,24 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7700R/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7700T/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7700X/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7701S/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7701Z/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7701S/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7701Z/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/77234F/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7756G/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7756X/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7756G/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7756X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7756Y/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/77678A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/77776Z/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/77787W/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/78116X/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/78181A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/78780S/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7899A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7899G/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7899X/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7925A/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7925X/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7925A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7925S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7925X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7937A/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/79419C/</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/79419D/</loc><lastmod>2026-10-20</lastmod></url>
@@ -1020,13 +1262,19 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7983F/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7983P/</loc><lastmod>2027-01-09</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/7983T/</loc><lastmod>2027-01-09</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/80001C/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/7995A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/80001C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8000V/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8000X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/80088A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/80088B/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/80088C/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/80088D/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8009K/</loc><lastmod>2026-07-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8009Z/</loc><lastmod>2026-07-26</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8031A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8031D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8031E/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8110A/</loc><lastmod>2026-08-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8110C/</loc><lastmod>2026-08-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8110S/</loc><lastmod>2026-08-08</lastmod></url>
@@ -1038,17 +1286,22 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/81390Z/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/81391R/</loc><lastmod>2026-09-13</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8148T/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8176A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/81819A/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/81819C/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/81822A/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/81884S/</loc><lastmod>2026-07-31</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/81988N/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/81988W/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/81884S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/81988N/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/81988P/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/81988W/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/81Y/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8223A/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8223S/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8223A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8223S/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8223V/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8223W/</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/82333A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/82718D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/82718E/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/82777A/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/82777C/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8292Z/</loc><lastmod>2026-10-18</lastmod></url>
@@ -1062,29 +1315,33 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8331A/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8331B/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8336B/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/83686D/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8385C/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/83999W/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/84134A/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/84134H/</loc><lastmod>2026-09-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/83999W/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/84134A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/84134H/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/84184A/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8448G/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8448X/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8448G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8448X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8454W/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/84841A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/84949T/</loc><lastmod>2027-01-30</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/84949Y/</loc><lastmod>2027-01-30</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8501A/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/85301V/</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/85588A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/85659A/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/85665A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/857V/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/85829A/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/86254B/</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8632X/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/86668X/</loc><lastmod>2026-07-31</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8632X/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/86668X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8682A/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8682N/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8694V/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8694V/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8706S/</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8714X/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8714X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8737M/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8737S/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/87527A/</loc><lastmod>2026-10-07</lastmod></url>
@@ -1093,20 +1350,22 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/87867D/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8787A/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/87959A/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8796S/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88170A/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8823E/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8823E/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8823H/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8838A/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8838B/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8838A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8838B/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8838C/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8838D/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8838E/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8838D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8838E/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/884A/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88518Z/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8860C/</loc><lastmod>2026-11-12</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8860C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8860D/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88613A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88613M/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/88613R/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/88613R/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88613U/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88613V/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88613Y/</loc><lastmod>2026-10-08</lastmod></url>
@@ -1117,51 +1376,69 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/886J/</loc><lastmod>2026-10-12</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/886M/</loc><lastmod>2026-10-12</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/886S/</loc><lastmod>2026-08-08</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/88825A/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/88825H/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/88825A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/88825H/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88887A/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88909Y/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88941C/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/8894X/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/88S/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8917B/</loc><lastmod>2026-09-13</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/89089Y/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/89089Z/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8917B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/89206A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/89227X/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/89250K/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/89250X/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/89250Z/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/89801B/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8929B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/89509B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/89509K/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/89801B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8982A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8982B/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/89866C/</loc><lastmod>2026-07-31</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/89888A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/89889X/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/89944A/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/89944C/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/89944W/</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/89966A/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/8995H/</loc><lastmod>2027-01-11</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/89966A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/90008A/</loc><lastmod>2026-08-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/90018A/</loc><lastmod>2026-08-14</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/90028A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/90110X/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9039J/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9039A/</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9039J/</loc><lastmod>2026-11-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/9039K/</loc><lastmod>2026-11-19</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/90471B/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/90555X/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/90555X/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/90666W/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/90667A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/90696C/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/9098E/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/91200Y/</loc><lastmod>2026-07-26</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123A/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123K/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123S/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123V/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123Y/</loc><lastmod>2026-08-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123Z/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123D/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123K/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123S/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123T/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123V/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123Y/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9123Z/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/91416N/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9142B/</loc><lastmod>2027-02-04</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9142C/</loc><lastmod>2027-02-04</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/917X/</loc><lastmod>2026-10-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9185K/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9185C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9185K/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9185R/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9185S/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/92222T/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/92222X/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/9257C/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/92641A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/92808A/</loc><lastmod>2027-02-06</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/92821A/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/93211C/</loc><lastmod>2026-07-26</lastmod></url>
@@ -1175,8 +1452,9 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/9364E/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/936A/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/938Z/</loc><lastmod>2026-08-30</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/94201A/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/94201A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/94517A/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/945G/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/94S/</loc><lastmod>2026-08-15</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/95070A/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/95070B/</loc><lastmod>2026-10-18</lastmod></url>
@@ -1186,31 +1464,41 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/95071V/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/95071X/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/95071Y/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/95120A/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/95120A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/9568S/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/9568W/</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/96138A/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/96140B/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/9621V/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/96498C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/96498F/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/9652N/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/96668W/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/96969W/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/96969Y/</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/96Z/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/97167A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/97167B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/97230A/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/97230D/</loc><lastmod>2026-07-25</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/97230G/</loc><lastmod>2026-09-12</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/978A/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/978Z/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/97230G/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/97435B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/978A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/978Z/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/97934H/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/97934R/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/97934U/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/97934X/</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98040C/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/98225F/</loc><lastmod>2027-02-11</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98353Y/</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98377R/</loc><lastmod>2026-12-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98377Z/</loc><lastmod>2026-12-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98506H/</loc><lastmod>2026-07-31</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/98548D/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98548G/</loc><lastmod>2026-10-17</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/98548M/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/98548K/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/98548M/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98548N/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98548S/</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98601B/</loc><lastmod>2026-09-13</lastmod></url>
@@ -1219,9 +1507,14 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98829U/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98868A/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/98868B/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99040B/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99008S/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99040B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99040D/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99040K/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99040M/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/9909M/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99209X/</loc><lastmod>2026-10-10</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99195B/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99209X/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99219A/</loc><lastmod>2026-10-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99236M/</loc><lastmod>2026-07-26</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99266Y/</loc><lastmod>2026-10-07</lastmod></url>
@@ -1229,15 +1522,21 @@
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99319B/</loc><lastmod>2026-12-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99319S/</loc><lastmod>2026-12-07</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99319W/</loc><lastmod>2026-12-07</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99751A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99751T/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99751V/</loc><lastmod>2026-10-03</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99904E/</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99880A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99904A/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99904C/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99904E/</loc><lastmod>2026-10-24</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99905G/</loc><lastmod>2026-10-10</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99919A/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99919A/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/99987A/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99989E/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99989T/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/99989Y/</loc><lastmod>2026-10-03</lastmod></url>
   <url><loc>https://vex.nullsetlabs.org/visualizer/team/999A/</loc><lastmod>2026-10-07</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/team/Missing/</loc><lastmod>2026-10-09</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/trueskill/</loc><lastmod>2027-02-11</lastmod></url>
-  <url><loc>https://vex.nullsetlabs.org/visualizer/worlds-qualifiers/</loc><lastmod>2027-02-11</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/team/Missing/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/trueskill/</loc><lastmod>2027-02-27</lastmod></url>
+  <url><loc>https://vex.nullsetlabs.org/visualizer/worlds-qualifiers/</loc><lastmod>2027-02-27</lastmod></url>
 </urlset>
