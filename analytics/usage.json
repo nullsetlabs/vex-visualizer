@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-07T02:45:43+00:00",
+ "generated": "2026-10-30T20:56:20+00:00",
  "hostnames": [
   "vex.nullsetlabs.org",
   "arjun-mohanan.github.io"
@@ -49,10 +49,10 @@
   },
   {
    "month": "2026-10",
-   "users": 4,
-   "sessions": 21,
-   "views": 134,
-   "engagedSessions": 13
+   "users": 68,
+   "sessions": 123,
+   "views": 283,
+   "engagedSessions": 84
   }
  ],
  "seasons": [
@@ -80,28 +80,32 @@
    }
   },
   {
-   "users": 24,
-   "newUsers": 21,
-   "sessions": 55,
-   "views": 166,
-   "engagedSessions": 27,
+   "users": 88,
+   "newUsers": 85,
+   "sessions": 157,
+   "views": 315,
+   "engagedSessions": 98,
    "season": "2026-2027 Override",
    "start": "2026-06-01",
-   "end": "2026-10-07",
+   "end": "2026-10-30",
    "complete": false,
    "channels": {
-    "Direct": 14,
-    "Organic Search": 7,
-    "Referral": 3,
+    "Direct": 53,
+    "AI Assistant": 19,
+    "Organic Search": 11,
+    "Referral": 6,
     "Unassigned": 1
    },
    "sources": {
-    "(direct)": 14,
-    "bing": 4,
+    "(direct)": 53,
+    "chatgpt.com": 21,
+    "bing": 7,
     "arjun-mohanan.github.io": 3,
     "cn.bing.com": 2,
     "(not set)": 1,
-    "duckduckgo": 1
+    "127.0.0.1:8766": 1,
+    "duckduckgo": 1,
+    "google": 1
    }
   }
  ],
@@ -120,81 +124,187 @@
  "sections": [
   {
    "event": "view_home",
-   "count": 109,
-   "users": 3
-  },
-  {
-   "event": "view_skills",
-   "count": 30,
-   "users": 2
-  },
-  {
-   "event": "view_signature",
-   "count": 24,
-   "users": 2
+   "count": 255,
+   "users": 53
   },
   {
    "event": "view_team",
-   "count": 20,
-   "users": 2
+   "count": 54,
+   "users": 14
+  },
+  {
+   "event": "view_signature",
+   "count": 50,
+   "users": 9
+  },
+  {
+   "event": "view_skills",
+   "count": 41,
+   "users": 6
   },
   {
    "event": "view_events",
-   "count": 9,
-   "users": 1
-  },
-  {
-   "event": "view_trueskill",
-   "count": 7,
-   "users": 2
+   "count": 22,
+   "users": 7
   },
   {
    "event": "view_event",
-   "count": 6,
-   "users": 1
-  },
-  {
-   "event": "view_teams",
-   "count": 6,
-   "users": 1
+   "count": 20,
+   "users": 8
   },
   {
    "event": "view_worlds",
-   "count": 6,
-   "users": 1
+   "count": 20,
+   "users": 10
+  },
+  {
+   "event": "view_teams",
+   "count": 16,
+   "users": 6
+  },
+  {
+   "event": "view_trueskill",
+   "count": 16,
+   "users": 9
   },
   {
    "event": "view_override",
-   "count": 4,
-   "users": 1
+   "count": 13,
+   "users": 8
   }
  ],
- "timeBySection": [],
- "ratings": [],
- "ratingReasons": [],
+ "timeBySection": [
+  {
+   "section": "home",
+   "seconds": 1688,
+   "opened": 255,
+   "users": 45,
+   "avgSeconds": 7
+  },
+  {
+   "section": "team",
+   "seconds": 1304,
+   "opened": 54,
+   "users": 12,
+   "avgSeconds": 24
+  },
+  {
+   "section": "signature",
+   "seconds": 397,
+   "opened": 50,
+   "users": 8,
+   "avgSeconds": 8
+  },
+  {
+   "section": "worlds",
+   "seconds": 365,
+   "opened": 20,
+   "users": 9,
+   "avgSeconds": 18
+  },
+  {
+   "section": "trueskill",
+   "seconds": 268,
+   "opened": 16,
+   "users": 5,
+   "avgSeconds": 17
+  },
+  {
+   "section": "override",
+   "seconds": 244,
+   "opened": 13,
+   "users": 6,
+   "avgSeconds": 19
+  },
+  {
+   "section": "events",
+   "seconds": 160,
+   "opened": 22,
+   "users": 6,
+   "avgSeconds": 7
+  },
+  {
+   "section": "teams",
+   "seconds": 150,
+   "opened": 16,
+   "users": 5,
+   "avgSeconds": 9
+  },
+  {
+   "section": "event",
+   "seconds": 139,
+   "opened": 20,
+   "users": 6,
+   "avgSeconds": 7
+  },
+  {
+   "section": "skills",
+   "seconds": 136,
+   "opened": 41,
+   "users": 5,
+   "avgSeconds": 3
+  }
+ ],
+ "ratings": [
+  {
+   "section": "worlds",
+   "yes": 1,
+   "no": 1
+  }
+ ],
+ "ratingReasons": [
+  {
+   "reason": "data",
+   "count": 1
+  }
+ ],
  "clicks": [
   {
+   "event": "search_team",
+   "count": 21,
+   "users": 8,
+   "value": 0.0
+  },
+  {
    "event": "click_start_skills",
-   "count": 13,
-   "users": 2,
+   "count": 18,
+   "users": 3,
    "value": 0.0
   },
   {
    "event": "click_start_signature",
-   "count": 6,
-   "users": 2,
+   "count": 10,
+   "users": 3,
    "value": 0.0
   },
   {
-   "event": "search_team",
-   "count": 6,
-   "users": 1,
+   "event": "click_leaders_tab_skillsMS",
+   "count": 9,
+   "users": 3,
+   "value": 0.0
+  },
+  {
+   "event": "click_region_set",
+   "count": 9,
+   "users": 9,
    "value": 0.0
   },
   {
    "event": "click_skills_card",
-   "count": 4,
+   "count": 8,
+   "users": 4,
+   "value": 0.0
+  },
+  {
+   "event": "click_leaders_tab_skillsHS",
+   "count": 7,
    "users": 2,
+   "value": 0.0
+  },
+  {
+   "event": "click_brand_home",
+   "count": 4,
+   "users": 3,
    "value": 0.0
   },
   {
@@ -204,21 +314,39 @@
    "value": 0.0
   },
   {
-   "event": "click_leaders_tab_skillsHS",
-   "count": 3,
-   "users": 1,
-   "value": 0.0
-  },
-  {
-   "event": "click_leaders_tab_skillsMS",
-   "count": 3,
-   "users": 1,
-   "value": 0.0
-  },
-  {
-   "event": "click_brand_home",
+   "event": "click_leader_team",
    "count": 2,
    "users": 2,
+   "value": 0.0
+  },
+  {
+   "event": "click_start_worlds",
+   "count": 2,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_trueskill_card",
+   "count": 2,
+   "users": 2,
+   "value": 0.0
+  },
+  {
+   "event": "click_trueskill_how",
+   "count": 2,
+   "users": 2,
+   "value": 0.0
+  },
+  {
+   "event": "click_archive",
+   "count": 1,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_feedback_form",
+   "count": 1,
+   "users": 1,
    "value": 0.0
   },
   {
@@ -228,7 +356,25 @@
    "value": 0.0
   },
   {
-   "event": "click_leader_team",
+   "event": "click_leaders_tab_titles",
+   "count": 1,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_region_only_off",
+   "count": 1,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_region_only_on",
+   "count": 1,
+   "users": 1,
+   "value": 0.0
+  },
+  {
+   "event": "click_region_open",
    "count": 1,
    "users": 1,
    "value": 0.0
@@ -240,19 +386,19 @@
    "value": 0.0
   },
   {
-   "event": "click_start_worlds",
+   "event": "click_start_titles",
    "count": 1,
    "users": 1,
    "value": 0.0
   },
   {
-   "event": "click_trueskill_card",
+   "event": "click_start_week",
    "count": 1,
    "users": 1,
    "value": 0.0
   },
   {
-   "event": "click_trueskill_how",
+   "event": "click_watch_youtube",
    "count": 1,
    "users": 1,
    "value": 0.0
@@ -261,43 +407,51 @@
  "autoEvents": [
   {
    "event": "page_view",
-   "count": 166,
-   "users": 24,
+   "count": 315,
+   "users": 88,
    "value": 0.0
   },
   {
    "event": "scroll",
-   "count": 127,
-   "users": 12,
+   "count": 187,
+   "users": 41,
    "value": 0.0
   },
   {
    "event": "user_engagement",
-   "count": 109,
-   "users": 13,
+   "count": 167,
+   "users": 34,
    "value": 0.0
   },
   {
    "event": "session_start",
-   "count": 42,
-   "users": 24,
-   "value": 0.0
+   "count": 132,
+   "users": 88,
+   "value": 55.0
   },
   {
    "event": "click",
-   "count": 25,
-   "users": 2,
+   "count": 37,
+   "users": 10,
    "value": 0.0
   }
  ],
  "countries": [
   {
    "country": "United States",
-   "users": 18
+   "users": 74
   },
   {
    "country": "Singapore",
+   "users": 6
+  },
+  {
+   "country": "Taiwan",
    "users": 3
+  },
+  {
+   "country": "Canada",
+   "users": 2
   },
   {
    "country": "China",
@@ -319,11 +473,11 @@
  "devices": [
   {
    "device": "desktop",
-   "users": 19
+   "users": 47
   },
   {
    "device": "mobile",
-   "users": 6
+   "users": 42
   }
  ]
 }
