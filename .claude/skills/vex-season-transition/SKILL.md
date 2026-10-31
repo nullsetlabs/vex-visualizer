@@ -62,7 +62,7 @@ end of each transition with anything that changed.
   that best separates the championship fields. Events by location. Coordinates
   are never written out.
 - Search visibility (October 2026): Google had indexed none of the Null Set Labs
-  sites; indexing was requested in Search Console (Arjun's account) for the tracker,
+  sites; indexing was requested in the project's Search Console account for the tracker,
   TrueSkill, Skills, nullsetlabs.org and Robotics. `visualizer/indexnow.py` sends new
   and changed pages to IndexNow (Bing and others; key file at the repo root) from
   GitHub runs only. The VEX home page has a plain-language FAQ with FAQPage
