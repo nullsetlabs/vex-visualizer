@@ -48,6 +48,13 @@ end of each transition with anything that changed.
   TrueSkill, latest results), and Skills, TrueSkill, Teams, Events and Road to
   Worlds have a "<region> only" switch. Worlds-qualified team numbers are green
   (#34d399, light green background, globe) everywhere, from `season.json` `worldsTeams`.
+- Worlds qualifiers: an award counts when VEX marks it "World Championship". In
+  October 2026 VEX had marked only 2 of 10 finished signature events, so
+  `worlds_awards()` in the pipeline also counts the Excellence Award and
+  Tournament Champions at a signature event with nothing marked, shown as
+  "(signature event spot)". Full runs recheck those events' awards for 120 days
+  and switch to VEX's marks once they appear. Check each new season's signature
+  event pages (their "Worlds qualifying spots" lines) before keeping that rule.
 - Eastern / Western PA: `visualizer/subregions.py` estimates the split in full
   runs (refreshed every 6 days) into `data/subregions.json`: a team goes with the
   state championship it enters this season, else the one it attended last season

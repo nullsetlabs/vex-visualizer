@@ -59,9 +59,51 @@ assert sp.team_bucket("6121E") == sum((i + 1) * ord(ch) for i, ch in enumerate("
 assert season["monthly"][0]["month"] == "2026-09" and season["signature"][0]["champions"]
 t = tm[teams[0]]
 print("team summary:", {k: t[k] for k in ("w", "l", "ew", "el", "titles", "excellence", "worlds", "opr")}, t["events"][0]["result"])
-assert t["worlds"] == ["Tournament Champions", 1] or t["worlds"] == ["Excellence Award", 1]
+assert t["worlds"] == ["Excellence Award", 1, True], t["worlds"]
 assert t["events"][0]["result"] == "Champion" and tm[teams[2]]["events"][0]["result"] == "Finalist"
 print("event row:", {k: idx[0][k] for k in ("status", "results", "matches", "topScore", "champions", "excellence")})
+assert idx[0]["worldsAwards"] == ["Excellence Award", "Tournament Champions"] and idx[0]["worldsMarked"] is True
+
+# 2b. Worlds spots: a signature event with nothing marked counts its Excellence
+# Award and Tournament Champions; a regular event with nothing marked counts nothing.
+unmarked = [dict(a, qualifications=[]) for a in raw_awards] + [
+    {"order": 50, "title": "Excellence Award - Middle School (V5)", "qualifications": [],
+     "teamWinners": [{"team": idinfo(teams[5])}], "individualWinners": []},
+    {"order": 51, "title": "Design Award (V5)", "qualifications": [],
+     "teamWinners": [{"team": idinfo(teams[6])}], "individualWinners": []}]
+c2 = sp.compact_event(ev, raw_teams, raw_skills, unmarked, raw_rank, raw_matches)
+titles, marked = sp.worlds_awards(c2)
+assert titles == {"Excellence Award", "Excellence Award - Middle School", "Tournament Champions"} and marked is False, titles
+assert sp.worlds_awards(dict(c2, level="Other")) == (set(), True)
+idx2, tindex2, buckets2, season2 = sp.build_summaries([dict(ev, level="Signature")], {1: c2}, {"hs": [], "ms": []})
+tm2 = {n: t for b in buckets2.values() for n, t in b.items()}
+assert tm2[teams[1]]["worlds"] == ["Tournament Champions", 1, False] and tm2[teams[5]]["worlds"][2] is False
+assert not tm2[teams[6]]["worlds"] and season2["worldsTeams"] == sorted([teams[0], teams[1], teams[5]])
+assert idx2[0]["worldsMarked"] is False and tindex2["cols"][-1] == "worldsMarked"
+row1 = dict(zip(tindex2["cols"], next(r for r in tindex2["rows"] if r[0] == teams[1])))
+assert row1["worlds"] == 1 and row1["worldsAward"] == "Tournament Champions" and row1["worldsMarked"] is False
+
+# 2c. Full runs recheck the awards of unmarked signature events and pick up VEX's marks.
+class AwardsClient:
+    calls = 0
+    def remaining(self): return 600
+    def pages(self, path):
+        AwardsClient.calls += 1
+        return raw_awards
+saved_dir = sp.EVENTS_DIR
+with tempfile.TemporaryDirectory() as tmp:
+    sp.EVENTS_DIR = tmp
+    from datetime import date as _date
+    c3 = json.loads(json.dumps(c2))
+    sp.recheck_signature_awards(AwardsClient(), {1: c3}, _date(2026, 10, 31), lambda m: None)
+    assert AwardsClient.calls == 1 and sp.worlds_awards(c3) == ({"Excellence Award", "Tournament Champions"}, True)
+    assert os.path.exists(os.path.join(tmp, "1.json"))
+    sp.recheck_signature_awards(AwardsClient(), {1: c3}, _date(2026, 10, 31), lambda m: None)
+    assert AwardsClient.calls == 1                                   # marked now: no more requests
+    sp.recheck_signature_awards(AwardsClient(), {1: json.loads(json.dumps(c2))}, _date(2027, 6, 1), lambda m: None)
+    assert AwardsClient.calls == 1                                   # too old to recheck
+sp.EVENTS_DIR = saved_dir
+print("worlds spots: marked, signature fallback and awards recheck OK")
 
 # 3. TrueSkill matches the reference library (trueskill 0.4.5, default settings).
 close = lambda r, mu, sigma: abs(r[0] - mu) < 1e-3 and abs(r[1] - sigma) < 1e-3
@@ -78,7 +120,7 @@ ts = {n: tm[n]["trueskill"] for n in teams}
 assert sorted(x["rank"] for x in ts.values()) == list(range(1, 41)) and all(x["of"] == 40 for x in ts.values())
 top = min(teams, key=lambda n: ts[n]["rank"])
 assert true[top] > statistics.median(true.values()), (top, true[top])
-assert tindex["cols"][-4:] == ["ts", "tsRank", "tsMatches", "sub"] and season["leaders"]["trueSkillHS"][0]["team"] == top
+assert tindex["cols"][-5:-1] == ["ts", "tsRank", "tsMatches", "sub"] and season["leaders"]["trueSkillHS"][0]["team"] == top
 print(f"TrueSkill: #1 {top} rating {ts[top]['rating']} over {ts[top]['matches']} matches")
 print("season counts:", season["counts"])
 

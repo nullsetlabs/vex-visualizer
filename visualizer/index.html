@@ -1596,8 +1596,9 @@ async function renderEvent(id, tok) {
     h += `<div class="panel" style="--c:var(--gold)"><h2>${icon('trophy')}Winning alliance</h2><div class="sub">${champs.map(a => esc(a.title)).join(', ')}</div><div class="alliance-win">${champs.flatMap(a => a.teams).map(n => `<div class="tm"><div class="n">${teamLink(n)}</div><div class="nm">${esc((info[n] || {}).name || '')}${(info[n] || {}).org ? ' &bull; ' + esc(info[n].org) : ''}</div></div>`).join('')}</div></div>`;
   }
   if (ev.awards.length) {
-    h += `<div class="panel" style="--c:var(--accent2)"><h2>${icon('medal')}Awards</h2><div class="sub">${ev.awardsFinalized ? 'Final' : 'Not final yet'}. Awards marked "Qualifies for Worlds" earn a spot at the 2027 World Championship.</div><div class="award-list">
-      ${ev.awards.map(a => { const [ai, ac, aw] = awardInfo(a.title); return `<div class="award" style="--aw:${aw}"><div class="t">${icon(ai, ac)}${esc(a.title)} ${a.quals.includes('World Championship') ? '<span class="badge b-world">Qualifies for Worlds</span>' : ''}</div><div class="w">${a.teams.length ? teamLinks(a.teams) : esc(a.people.join(', ')) || '<span class="dim">Not awarded</span>'}</div></div>`; }).join('')}
+    const wq = (base && base.worldsAwards) || [];
+    h += `<div class="panel" style="--c:var(--accent2)"><h2>${icon('medal')}Awards</h2><div class="sub">${ev.awardsFinalized ? 'Final' : 'Not final yet'}. Awards marked "Qualifies for Worlds" earn a spot at the 2027 World Championship.${base && base.worldsMarked === false ? ' VEX has not marked the qualifying awards at this event yet. The Excellence Award and Tournament Champions are marked here because signature events give them Worlds spots.' : ''}</div><div class="award-list">
+      ${ev.awards.map(a => { const [ai, ac, aw] = awardInfo(a.title); return `<div class="award" style="--aw:${aw}"><div class="t">${icon(ai, ac)}${esc(a.title)} ${wq.includes(a.title) ? '<span class="badge b-world">Qualifies for Worlds</span>' : ''}</div><div class="w">${a.teams.length ? teamLinks(a.teams) : esc(a.people.join(', ')) || '<span class="dim">Not awarded</span>'}</div></div>`; }).join('')}
     </div></div>`;
   }
   const divs = ev.divisions.length > 1;
@@ -1726,7 +1727,7 @@ async function renderTeam(num, tok) {
   }
   if (t.worlds) {
     const we = S.eventsById[t.worlds[1]];
-    h += `<div class="notice" style="margin-bottom:16px">Qualified for the 2027 World Championship through the <strong>${esc(t.worlds[0])}</strong> award at ${we ? eventLink(we) : 'an event'}${we ? ` (${esc(fmtDate(we.start))})` : ''}.</div>`;
+    h += `<div class="notice" style="margin-bottom:16px">Qualified for the 2027 World Championship through the <strong>${esc(t.worlds[0])}</strong>${/award/i.test(t.worlds[0]) ? '' : ' award'} at ${we ? eventLink(we) : 'an event'}${we ? ` (${esc(fmtDate(we.start))})` : ''}.${t.worlds[2] === false ? ` ${UNMARKED_NOTE}` : ''}</div>`;
   }
   h += `<div class="panel"><h2>Events this season</h2><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dates</th><th>Event</th><th class="num">Rank</th><th>Record</th><th>Elimination result</th><th class="num">Skills</th><th class="num">OPR</th><th>Awards</th></tr></thead><tbody>
     ${t.events.slice().reverse().map(x => { const e = S.eventsById[x.id] || { id: x.id, name: `Event ${x.id}` }; return `<tr><td>${esc(fmtRange(e.start, e.end))}</td><td class="wrap">${eventLink(e)} ${sigBadge(e)}</td>
@@ -1863,6 +1864,8 @@ async function renderTrueSkill(tok) {
 // ---------------------------------------------------------------------------
 // Worlds qualifiers, grouped by the month they qualified
 // ---------------------------------------------------------------------------
+// Wording kept in step with WORLDS_INTRO and UNMARKED_NOTE in static_pages.py.
+const UNMARKED_NOTE = 'VEX has not marked this award as qualifying yet. It counts here because signature events give Worlds spots to their Excellence Award and Tournament Champions.';
 async function renderWorlds(tok) {
   const el = $('view-worlds'), f = UI.worlds;
   if (!S.teamRows.length) el.innerHTML = loading();
@@ -1873,13 +1876,13 @@ async function renderWorlds(tok) {
     .sort((a, b) => (b.e.start || '').localeCompare(a.e.start || '') || a.t.team.localeCompare(b.t.team));
   const byMonth = {};
   for (const r of rows) (byMonth[r.e.month || ''] = byMonth[r.e.month || ''] || []).push(r);
-  let h = `<p class="intro">Teams that have won an award VEX lists as qualifying for the 2027 VEX Robotics World Championship, such as Excellence, Tournament Champions or Design at qualifying events. Spots given through skills rankings or reallocation are not included. Newest first.</p>
+  let h = `<p class="intro">Teams that have won an award that qualifies for the 2027 VEX Robotics World Championship. VEX has marked the qualifying awards for only some signature events so far. For the others, this list counts the Excellence Award and Tournament Champions, which signature event pages list as qualifying, and labels them (signature event spot). Other qualifying awards, such as Skills Champion at some events, appear once VEX marks them. Spots given through skills rankings or reallocation are not included. Newest first.</p>
     <div class="filters">${regionChip()}${segButtons('wqGrade', [['all', 'All'], ['High School', 'High school'], ['Middle School', 'Middle school']], f.grade)}<span class="count">${plural(rows.length, 'team')}</span></div>`;
   if (!rows.length) h += '<div class="empty">No qualifiers yet.</div>';
   for (const m of Object.keys(byMonth).sort().reverse()) {
     h += `<h2 class="month-head">${esc(fmtMonth(m) || 'Date unknown')} <span class="dim">${plural(byMonth[m].length, 'team')}</span></h2>
       <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Team</th><th>Qualified by</th><th>Event</th><th>Date</th><th>Name</th><th>Location</th><th>Grade</th></tr></thead><tbody>
-      ${byMonth[m].map(({ t, e }) => `<tr><td>${teamLink(t.team)}</td><td>${esc(t.worldsAward)}</td><td class="wrap">${eventLink(e)} ${sigBadge(e)}</td><td class="dim">${esc(fmtDate(e.start))}</td><td class="dim">${esc(t.name)}</td><td class="dim">${esc(place(t))}</td><td>${esc(gradeShort(t.grade))}</td></tr>`).join('')}
+      ${byMonth[m].map(({ t, e }) => `<tr><td>${teamLink(t.team)}</td><td>${esc(t.worldsAward)}${t.worldsMarked === false ? ' <span class="dim">(signature event spot)</span>' : ''}</td><td class="wrap">${eventLink(e)} ${sigBadge(e)}</td><td class="dim">${esc(fmtDate(e.start))}</td><td class="dim">${esc(t.name)}</td><td class="dim">${esc(place(t))}</td><td>${esc(gradeShort(t.grade))}</td></tr>`).join('')}
       </tbody></table></div>`;
   }
   el.innerHTML = h;

@@ -36,6 +36,14 @@ GA_ID = "G-R1S9F2Z4HS"
 CF_BEACON = '{"token": "ead9ddf5a1cf4549be8975e34994ea70"}'
 SEASON_TITLE = "VEX V5RC Override 2026-2027"
 GENERATED_DIRS = ("team", "event", "skills", "signature", "worlds-qualifiers", "trueskill")
+# Worlds list wording, kept in step with renderWorlds() in index.html.
+WORLDS_INTRO = ("Teams that have won an award that qualifies for the 2027 VEX Robotics World Championship. "
+                "VEX has marked the qualifying awards for only some signature events so far. For the others, this list counts "
+                "the Excellence Award and Tournament Champions, which signature event pages list as qualifying, and labels them "
+                "(signature event spot). Other qualifying awards, such as Skills Champion at some events, appear once VEX marks them. "
+                "Spots given through skills rankings or reallocation are not included.")
+UNMARKED_NOTE = ("VEX has not marked this award as qualifying yet. It counts here because signature events give "
+                 "Worlds spots to their Excellence Award and Tournament Champions.")
 
 e = lambda s: html.escape(str(s if s is not None else ""), quote=True)
 
@@ -185,7 +193,9 @@ def team_page(t, by_id, sig_pages, last_season):
 """
     if t.get("worlds"):
         we = by_id.get(t["worlds"][1], {})
-        body += f'<p class="note">Qualified for the 2027 VEX Robotics World Championship through the {e(t["worlds"][0])} award at {e(we.get("name", "an event"))}.</p>'
+        award = t["worlds"][0] if "award" in t["worlds"][0].lower() else t["worlds"][0] + " award"
+        body += (f'<p class="note">Qualified for the 2027 VEX Robotics World Championship through the {e(award)} at {e(we.get("name", "an event"))}.'
+                 f'{"" if t["worlds"][2] else " " + UNMARKED_NOTE}</p>')
     if t["awards"]:
         body += "<h2>Awards this season</h2><div class=\"awards\">" + "".join(
             f'<div class="award"><b>{e(title)}</b><span class="dim">{e(by_id.get(eid, {}).get("name", ""))}</span></div>'
@@ -247,7 +257,7 @@ def event_page(row, ev, team_names):
             body += "<h2>Tournament champions</h2><p class=\"lead\">" + " and ".join(f'{tl(n)} {e(names.get(n, ""))}' for n in champs) + "</p>"
         if ev["awards"]:
             body += "<h2>Awards</h2><div class=\"awards\">" + "".join(
-                f'<div class="award"><b>{e(a["title"])}{" (qualifies for Worlds)" if "World Championship" in a["quals"] else ""}</b>'
+                f'<div class="award"><b>{e(a["title"])}{" (qualifies for Worlds)" if a["title"] in row.get("worldsAwards", ()) else ""}</b>'
                 f'{" ".join(tl(n) for n in a["teams"]) or e(", ".join(a["people"]))}</div>' for a in ev["awards"]) + "</div>"
         if ev["rankings"]:
             body += ("<h2>Qualification rankings</h2><div class=\"wrap\"><table><thead><tr><th class=\"n\">Rank</th><th>Team</th><th>Name</th>"
@@ -353,13 +363,14 @@ def worlds_page(teams, by_id):
     desc = (f"{len(q)} teams have qualified for the 2027 VEX Robotics World Championship through awards so far in the {SEASON_TITLE} season. "
             "List with the qualifying award and event.")
     body = f"""<h1>2027 World Championship qualifiers so far</h1>
-<p class="lead">Teams that have won an award VEX lists as qualifying for the 2027 VEX Robotics World Championship. Spots given through skills rankings or reallocation are not included. Newest first.</p>
+<p class="lead">{WORLDS_INTRO} Newest first.</p>
 <a class="cta" href="{BASE}/#worlds">Open in the VEX Visualizer</a>
 <div class="wrap" style="margin-top:18px"><table><thead><tr><th>Team</th><th>Name</th><th>Qualified by</th><th>Event</th><th>Date</th><th>Location</th></tr></thead><tbody>"""
     for t in q:
         ev = by_id.get(t["worlds"][1], {})
         body += (f'<tr><td><a class="tm" href="{team_url(t["team"])}">{e(t["team"])}</a></td><td class="dim">{e(t["name"])}</td>'
-                 f'<td>{e(t["worlds"][0])}</td><td class="w">{e(ev.get("name", ""))}</td><td class="dim">{e(fmt_date(ev.get("start")))}</td>'
+                 f'<td>{e(t["worlds"][0])}{"" if t["worlds"][2] else " <span class=dim>(signature event spot)</span>"}</td>'
+                 f'<td class="w">{e(ev.get("name", ""))}</td><td class="dim">{e(fmt_date(ev.get("start")))}</td>'
                  f'<td class="dim">{e(place(t))}</td></tr>')
     body += "</tbody></table></div>"
     return url, page(url, title, desc, [("Visualizer", f"{BASE}/"), ("Worlds qualifiers", None)], body)

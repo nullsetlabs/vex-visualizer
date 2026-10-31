@@ -16,6 +16,8 @@ Caching
   Each event is written once to data/events/{id}.json. An event is refetched
   only while it is in progress or its awards are not final; after that the
   cached file is reused, so a normal run only touches new or live events.
+  Full runs also recheck the awards of recent signature events that have no
+  Worlds spots marked yet (one request per event).
 
 Usage
   python season_pipeline.py                # full run: event list, new or live events, standings, summaries
@@ -98,6 +100,9 @@ STANDINGS_EVERY_HOURS = 3
 # An event whose awards never get finalized stops being refetched this many
 # days after it ends.
 STALE_AFTER_DAYS = 21
+# Full runs recheck the awards of signature events that ended within this many
+# days and still have no Worlds spots marked (VEX may mark them late).
+RECHECK_SIGNATURE_DAYS = 120
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(SCRIPT_DIR, "data")
@@ -373,6 +378,54 @@ def fetch_event(client, ev):
     return compact_event(ev, teams, skills, awards, rankings, matches)
 
 
+def recheck_signature_awards(client, cached, today, log):
+    """Refresh the awards of finished signature events with no Worlds spots marked."""
+    updated = 0
+    for ev in sorted(cached.values(), key=lambda e: e["id"]):
+        end = day(ev.get("end"))
+        if (ev.get("level") != "Signature" or not ev.get("complete") or not end
+                or end < today - timedelta(days=RECHECK_SIGNATURE_DAYS)
+                or any("World Championship" in a["quals"] for a in ev["awards"])):
+            continue
+        if client.remaining() < 90:
+            break
+        try:
+            awards = compact_awards(client.pages(f"/events/{ev['id']}/awards"))
+        except RuntimeError as err:
+            log(f"  awards recheck skipped for {ev.get('sku')}: {err}")
+            continue
+        if awards != ev["awards"]:
+            ev["awards"] = awards
+            write_json(os.path.join(EVENTS_DIR, f"{ev['id']}.json"), ev)
+            updated += 1
+    if updated:
+        log(f"Signature event awards changed at {updated} events")
+
+
+def compact_awards(awards):
+    return [{
+        "title": AWARD_SUFFIX.sub("", a.get("title") or "").strip(),
+        "quals": a.get("qualifications") or [],
+        "teams": [team_num(w.get("team")) for w in a.get("teamWinners") or []],
+        "people": a.get("individualWinners") or [],
+    } for a in sorted(awards, key=lambda a: a.get("order") or 0)]
+
+
+# Signature events carry Worlds spots, but VEX often leaves their awards
+# unmarked (October 2026: 2 of the first 10 signature events marked). Every
+# signature event page that lists its spots includes the Excellence Award and
+# Tournament Champions, so those two count when nothing at the event is marked.
+SIGNATURE_WORLDS_AWARDS = ("Excellence Award", "Tournament Champions")
+
+
+def worlds_awards(ev):
+    """Return (award titles at this event that qualify for Worlds, True if VEX marked them)."""
+    marked = {a["title"] for a in ev["awards"] if "World Championship" in a["quals"]}
+    if marked or ev.get("level") != "Signature":
+        return marked, True
+    return {a["title"] for a in ev["awards"] if a["title"].startswith(SIGNATURE_WORLDS_AWARDS)}, False
+
+
 def compact_event(ev, teams, skills, awards, rankings, matches):
     loc = ev.get("location") or {}
     out_teams = []
@@ -439,14 +492,7 @@ def compact_event(ev, teams, skills, awards, rankings, matches):
         })
     out_matches.sort(key=lambda x: (x["div"] or 0, x["round"] != 2, x["round"] or 0, x["inst"] or 0, x["num"] or 0))
 
-    out_awards = []
-    for a in sorted(awards, key=lambda a: a.get("order") or 0):
-        out_awards.append({
-            "title": AWARD_SUFFIX.sub("", a.get("title") or "").strip(),
-            "quals": a.get("qualifications") or [],
-            "teams": [team_num(w.get("team")) for w in a.get("teamWinners") or []],
-            "people": a.get("individualWinners") or [],
-        })
+    out_awards = compact_awards(awards)
 
     today = today_utc()
     return {
@@ -730,12 +776,15 @@ def event_row(base, ev, today):
                            ("skillsChampion", "Robot Skills Champion")):
             row[key] = [t for a in ev["awards"] if a["title"].startswith(title) for t in a["teams"]]
         row["topSkills"] = (ev["skills"][0]["driver"] + ev["skills"][0]["prog"]) if ev["skills"] else 0
+        titles, marked = worlds_awards(ev)
+        if titles:
+            row["worldsAwards"], row["worldsMarked"] = sorted(titles), marked
     return row
 
 
 TEAM_INDEX_COLS = ["team", "name", "org", "grade", "city", "region", "country", "events", "w", "l", "t",
                    "winPct", "titles", "excellence", "awards", "worlds", "worldsAward", "skills", "skillsRank", "opr", "last",
-                   "ts", "tsRank", "tsMatches", "sub"]
+                   "ts", "tsRank", "tsMatches", "sub", "worldsMarked"]
 
 
 def build_summaries(event_list, cached, standings, subregions=None):
@@ -776,8 +825,8 @@ def build_summaries(event_list, cached, standings, subregions=None):
             won = [a for a in ev["awards"] if n in a["teams"]]
             for a in won:
                 t["awards"].append([a["title"], ev["id"]])
-                if "World Championship" in a["quals"] and not t["worlds"]:
-                    t["worlds"] = [a["title"], ev["id"]]
+                if a["title"] in by_id[ev["id"]].get("worldsAwards", ()) and not t["worlds"]:
+                    t["worlds"] = [a["title"], ev["id"], by_id[ev["id"]]["worldsMarked"]]
             sk = next((s for s in ev["skills"] if s["team"] == n), None)
             opr = ev["opr"].get(n)
             t["events"].append({
@@ -915,7 +964,8 @@ def build_summaries(event_list, cached, standings, subregions=None):
                      or (r["status"] == "upcoming" and day(r["start"]) <= soon))][:80],
         "leaguesRunning": sum(1 for r in index if is_long(r) and r["status"] == "live"),
         "worldsEvents": [r for r in index if (r["level"] or "").lower() == "world"],
-        # Team numbers qualified for Worlds through awards; the page marks them everywhere.
+        # Team numbers qualified for Worlds through awards (including signature event
+        # spots VEX has not marked yet); the page marks them everywhere.
         "worldsTeams": sorted(n for n, t in teams.items() if t["worlds"]),
         "subregions": subregions_mod.summary(subregions),
     }
@@ -928,6 +978,7 @@ def build_summaries(event_list, cached, standings, subregions=None):
         t["opr"], by_id.get(t["events"][-1]["id"], {}).get("start", "") if t["events"] else "",
         t["trueskill"]["rating"] if t["trueskill"] else None, t["trueskill"]["rank"] if t["trueskill"] else None,
         t["trueskill"]["matches"] if t["trueskill"] else None, t.get("sub", ""),
+        t["worlds"][2] if t["worlds"] else None,
     ] for t in sorted(teams.values(), key=lambda t: t["team"])]}
     buckets = {b: {} for b in range(TEAM_BUCKETS)}
     for n in sorted(teams):
@@ -1044,6 +1095,7 @@ def main():
                 except RuntimeError as err:
                     log(f"  kept the previous skills standings: {err}")
             if not args.live:
+                recheck_signature_awards(client, cached, today, log)
                 known = {t["n"]: f'{t["country"]}|{t["region"]}' for ev in cached.values() for t in ev["teams"] if t["n"]}
                 subregions_mod.refresh(client, subregions_path, SEASON_ID, PROGRAM_ID, event_list, is_canceled,
                                        read_json, write_json, log, today, known)
