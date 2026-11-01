@@ -1,15 +1,15 @@
 # VEX Visualizer usage report
 
-Generated 2026-10-30T20:56:20+00:00 from Google Analytics 4 (property 533952361). Counts only visits on vex.nullsetlabs.org, arjun-mohanan.github.io.
+Generated 2026-11-01T14:09:09+00:00 from Google Analytics 4 (property 533952361). Counts only visits on vex.nullsetlabs.org, arjun-mohanan.github.io.
 
 ## Season over season
 
-**2026-2027 Override (to date): 88 users, 0.5x the 2025-2026 Push Back season (162 users).**
+**2026-2027 Override (to date): 93 users, 0.6x the 2025-2026 Push Back season (162 users).**
 
 | Season | Dates | Users | Sessions | Page views | Engaged sessions |
 |---|---|---|---|---|---|
 | 2025-2026 Push Back | 2026-04-01 to 2026-05-31 | 162 | 395 | 587 | 167 |
-| 2026-2027 Override | 2026-06-01 to 2026-10-30 | 88 | 157 | 315 | 98 |
+| 2026-2027 Override | 2026-06-01 to 2026-11-01 | 93 | 164 | 322 | 104 |
 
 ## Comparison windows
 
@@ -24,8 +24,8 @@ GA4 default channel groups. Organic Search is Google and other search engines; D
 | Channel | 2025-2026 Push Back | 2026-2027 Override |
 |---|---|---|
 | Direct | 147 | 53 |
+| AI Assistant | 0 | 24 |
 | Organic Search | 13 | 11 |
-| AI Assistant | 0 | 19 |
 | Referral | 5 | 6 |
 | Unassigned | 1 | 1 |
 
@@ -36,7 +36,7 @@ Top sites and apps that sent visitors; (direct) means no referring site. A user 
 | Source | 2025-2026 Push Back | 2026-2027 Override |
 |---|---|---|
 | (direct) | 147 | 53 |
-| chatgpt.com | 0 | 21 |
+| chatgpt.com | 0 | 26 |
 | google | 13 | 1 |
 | arjun-mohanan.github.io | 5 | 3 |
 | bing | 0 | 7 |
@@ -55,7 +55,7 @@ Top sites and apps that sent visitors; (direct) means no referring site. A user 
 | 2026-07 | 9 | 13 | 13 | 5 |
 | 2026-08 | 7 | 8 | 8 | 2 |
 | 2026-09 | 5 | 5 | 5 | 4 |
-| 2026-10 | 68 | 123 | 283 | 84 |
+| 2026-10 | 73 | 130 | 290 | 90 |
 
 ## Sections opened (since 2026-06-01)
 
@@ -63,15 +63,15 @@ From the page's view_* events (one per section opened).
 
 | Section | Times opened | Users |
 |---|---|---|
-| home | 255 | 53 |
-| team | 54 | 14 |
+| home | 259 | 56 |
+| team | 68 | 17 |
 | signature | 50 | 9 |
 | skills | 41 | 6 |
 | events | 22 | 7 |
 | event | 20 | 8 |
 | worlds | 20 | 10 |
-| teams | 16 | 6 |
-| trueskill | 16 | 9 |
+| teams | 18 | 7 |
+| trueskill | 17 | 10 |
 | override | 13 | 8 |
 
 ## Time spent in each section (since 2026-06-01)
@@ -80,14 +80,14 @@ Time the page was visible in each section (time_* events, measured from October 
 
 | Section | Total time | Times opened | Average per visit | Users |
 |---|---|---|---|---|
-| home | 28:08 | 255 | 0:07 | 45 |
-| team | 21:44 | 54 | 0:24 | 12 |
+| team | 33:14 | 68 | 0:29 | 15 |
+| home | 29:25 | 259 | 0:07 | 48 |
+| trueskill | 7:48 | 17 | 0:28 | 6 |
 | signature | 6:37 | 50 | 0:08 | 8 |
 | worlds | 6:05 | 20 | 0:18 | 9 |
-| trueskill | 4:28 | 16 | 0:17 | 5 |
 | override | 4:04 | 13 | 0:19 | 6 |
+| teams | 2:51 | 18 | 0:10 | 6 |
 | events | 2:40 | 22 | 0:07 | 6 |
-| teams | 2:30 | 16 | 0:09 | 5 |
 | event | 2:19 | 20 | 0:07 | 6 |
 | skills | 2:16 | 41 | 0:03 | 5 |
 
@@ -109,16 +109,17 @@ From click_*, search_team and compare_regions events. Outbound links are also co
 
 | What was clicked | Clicks | Users |
 |---|---|---|
-| search_team | 21 | 8 |
+| search_team | 34 | 11 |
 | click_start_skills | 18 | 3 |
 | click_start_signature | 10 | 3 |
 | click_leaders_tab_skillsMS | 9 | 3 |
 | click_region_set | 9 | 9 |
 | click_skills_card | 8 | 4 |
 | click_leaders_tab_skillsHS | 7 | 2 |
+| compare_regions | 5 | 2 |
 | click_brand_home | 4 | 3 |
-| compare_regions | 4 | 1 |
 | click_leader_team | 2 | 2 |
+| click_region_open | 2 | 2 |
 | click_start_worlds | 2 | 1 |
 | click_trueskill_card | 2 | 2 |
 | click_trueskill_how | 2 | 2 |
@@ -128,7 +129,6 @@ From click_*, search_team and compare_regions events. Outbound links are also co
 | click_leaders_tab_titles | 1 | 1 |
 | click_region_only_off | 1 | 1 |
 | click_region_only_on | 1 | 1 |
-| click_region_open | 1 | 1 |
 | click_start_game | 1 | 1 |
 | click_start_titles | 1 | 1 |
 | click_start_week | 1 | 1 |
@@ -138,18 +138,19 @@ From click_*, search_team and compare_regions events. Outbound links are also co
 
 | Country | Users |
 |---|---|
-| United States | 74 |
+| United States | 77 |
 | Singapore | 6 |
 | Taiwan | 3 |
 | Canada | 2 |
 | China | 2 |
+| Japan | 2 |
+| Australia | 1 |
 | Brazil | 1 |
 | Israel | 1 |
-| Japan | 1 |
 
 ## Devices (this season)
 
 | Device | Users |
 |---|---|
-| desktop | 47 |
-| mobile | 42 |
+| desktop | 51 |
+| mobile | 43 |

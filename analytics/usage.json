@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-30T20:56:20+00:00",
+ "generated": "2026-11-01T14:09:09+00:00",
  "hostnames": [
   "vex.nullsetlabs.org",
   "arjun-mohanan.github.io"
@@ -49,10 +49,10 @@
   },
   {
    "month": "2026-10",
-   "users": 68,
-   "sessions": 123,
-   "views": 283,
-   "engagedSessions": 84
+   "users": 73,
+   "sessions": 130,
+   "views": 290,
+   "engagedSessions": 90
   }
  ],
  "seasons": [
@@ -80,25 +80,25 @@
    }
   },
   {
-   "users": 88,
-   "newUsers": 85,
-   "sessions": 157,
-   "views": 315,
-   "engagedSessions": 98,
+   "users": 93,
+   "newUsers": 90,
+   "sessions": 164,
+   "views": 322,
+   "engagedSessions": 104,
    "season": "2026-2027 Override",
    "start": "2026-06-01",
-   "end": "2026-10-30",
+   "end": "2026-11-01",
    "complete": false,
    "channels": {
     "Direct": 53,
-    "AI Assistant": 19,
+    "AI Assistant": 24,
     "Organic Search": 11,
     "Referral": 6,
     "Unassigned": 1
    },
    "sources": {
     "(direct)": 53,
-    "chatgpt.com": 21,
+    "chatgpt.com": 26,
     "bing": 7,
     "arjun-mohanan.github.io": 3,
     "cn.bing.com": 2,
@@ -124,13 +124,13 @@
  "sections": [
   {
    "event": "view_home",
-   "count": 255,
-   "users": 53
+   "count": 259,
+   "users": 56
   },
   {
    "event": "view_team",
-   "count": 54,
-   "users": 14
+   "count": 68,
+   "users": 17
   },
   {
    "event": "view_signature",
@@ -159,13 +159,13 @@
   },
   {
    "event": "view_teams",
-   "count": 16,
-   "users": 6
+   "count": 18,
+   "users": 7
   },
   {
    "event": "view_trueskill",
-   "count": 16,
-   "users": 9
+   "count": 17,
+   "users": 10
   },
   {
    "event": "view_override",
@@ -175,18 +175,25 @@
  ],
  "timeBySection": [
   {
+   "section": "team",
+   "seconds": 1994,
+   "opened": 68,
+   "users": 15,
+   "avgSeconds": 29
+  },
+  {
    "section": "home",
-   "seconds": 1688,
-   "opened": 255,
-   "users": 45,
+   "seconds": 1765,
+   "opened": 259,
+   "users": 48,
    "avgSeconds": 7
   },
   {
-   "section": "team",
-   "seconds": 1304,
-   "opened": 54,
-   "users": 12,
-   "avgSeconds": 24
+   "section": "trueskill",
+   "seconds": 468,
+   "opened": 17,
+   "users": 6,
+   "avgSeconds": 28
   },
   {
    "section": "signature",
@@ -203,13 +210,6 @@
    "avgSeconds": 18
   },
   {
-   "section": "trueskill",
-   "seconds": 268,
-   "opened": 16,
-   "users": 5,
-   "avgSeconds": 17
-  },
-  {
    "section": "override",
    "seconds": 244,
    "opened": 13,
@@ -217,18 +217,18 @@
    "avgSeconds": 19
   },
   {
+   "section": "teams",
+   "seconds": 171,
+   "opened": 18,
+   "users": 6,
+   "avgSeconds": 10
+  },
+  {
    "section": "events",
    "seconds": 160,
    "opened": 22,
    "users": 6,
    "avgSeconds": 7
-  },
-  {
-   "section": "teams",
-   "seconds": 150,
-   "opened": 16,
-   "users": 5,
-   "avgSeconds": 9
   },
   {
    "section": "event",
@@ -261,8 +261,8 @@
  "clicks": [
   {
    "event": "search_team",
-   "count": 21,
-   "users": 8,
+   "count": 34,
+   "users": 11,
    "value": 0.0
   },
   {
@@ -302,19 +302,25 @@
    "value": 0.0
   },
   {
+   "event": "compare_regions",
+   "count": 5,
+   "users": 2,
+   "value": 0.0
+  },
+  {
    "event": "click_brand_home",
    "count": 4,
    "users": 3,
    "value": 0.0
   },
   {
-   "event": "compare_regions",
-   "count": 4,
-   "users": 1,
+   "event": "click_leader_team",
+   "count": 2,
+   "users": 2,
    "value": 0.0
   },
   {
-   "event": "click_leader_team",
+   "event": "click_region_open",
    "count": 2,
    "users": 2,
    "value": 0.0
@@ -374,12 +380,6 @@
    "value": 0.0
   },
   {
-   "event": "click_region_open",
-   "count": 1,
-   "users": 1,
-   "value": 0.0
-  },
-  {
    "event": "click_start_game",
    "count": 1,
    "users": 1,
@@ -407,39 +407,39 @@
  "autoEvents": [
   {
    "event": "page_view",
-   "count": 315,
-   "users": 88,
+   "count": 322,
+   "users": 93,
    "value": 0.0
   },
   {
    "event": "scroll",
-   "count": 187,
-   "users": 41,
+   "count": 190,
+   "users": 44,
    "value": 0.0
   },
   {
    "event": "user_engagement",
-   "count": 167,
-   "users": 34,
+   "count": 169,
+   "users": 35,
    "value": 0.0
   },
   {
    "event": "session_start",
-   "count": 132,
-   "users": 88,
+   "count": 139,
+   "users": 93,
    "value": 55.0
   },
   {
    "event": "click",
-   "count": 37,
-   "users": 10,
+   "count": 41,
+   "users": 11,
    "value": 0.0
   }
  ],
  "countries": [
   {
    "country": "United States",
-   "users": 74
+   "users": 77
   },
   {
    "country": "Singapore",
@@ -458,26 +458,30 @@
    "users": 2
   },
   {
+   "country": "Japan",
+   "users": 2
+  },
+  {
+   "country": "Australia",
+   "users": 1
+  },
+  {
    "country": "Brazil",
    "users": 1
   },
   {
    "country": "Israel",
    "users": 1
-  },
-  {
-   "country": "Japan",
-   "users": 1
   }
  ],
  "devices": [
   {
    "device": "desktop",
-   "users": 47
+   "users": 51
   },
   {
    "device": "mobile",
-   "users": 42
+   "users": 43
   }
  ]
 }
