@@ -18,10 +18,13 @@ Caching
   cached file is reused, so a normal run only touches new or live events.
   Full runs also recheck the awards of recent signature events that have no
   Worlds spots marked yet (one request per event).
+  Registered teams of upcoming events go to data/registrations/{id}.json (one
+  request per event) and are removed a day after the event ends.
 
 Usage
   python season_pipeline.py                # full run: event list, new or live events, standings, summaries
-  python season_pipeline.py --live         # only signature (and World) events in progress; no API calls if none
+  python season_pipeline.py --live         # only signature, World and watched events in progress, plus due
+                                           # registration lists of watched events; no API calls if none
   python season_pipeline.py --rebuild      # no network; rebuild the summary files from the cache
   python season_pipeline.py --max-events 40 --budget-min 15
 
@@ -84,10 +87,13 @@ MAX_RATE_LIMITED = 8    # per request, waits after HTTP 429 (too many requests)
 MIN_INTERVAL = 1.0
 
 # Update plan (see .github/workflows/update-data.yml):
-#   - Live checks every 30 minutes follow only these event levels while they run
-#     (day before to day after). Everything else waits for the full run.
+#   - Live checks every 30 minutes follow only these event levels, and events
+#     in WATCH_REGIONS, while they run (day before to day after), and refresh
+#     the registered teams of watched events that start within
+#     REGISTRATION_DAYS. Everything else waits for the full run.
 #   - Full runs twice a week (Monday and Thursday) fetch the event list, every
-#     newly finished event and the skills standings.
+#     newly finished event, the registered teams of every event starting within
+#     REGISTRATION_DAYS, and the skills standings.
 LIVE_LEVELS = ("Signature", "World")
 # Events longer than this (leagues that run for weeks) are never live-tracked.
 LIVE_MAX_DAYS = 7
@@ -96,6 +102,16 @@ LIVE_MAX_DAYS = 7
 LIST_MAX_AGE_DAYS = 4
 # During live tracking, refresh the skills standings at most this often.
 STANDINGS_EVERY_HOURS = 3
+# Events in these regions, and any listed by id, are also followed live like
+# signature events (day before to day after). Kept to a few events a weekend
+# so live checks stay light on the API.
+WATCH_REGIONS = ("Pennsylvania",)
+WATCH_EVENT_IDS = ()
+# Registered teams are saved to data/registrations/{id}.json for events that
+# start within this many days: every event on full runs, and watched events on
+# live checks at most every REGISTRATION_EVERY_HOURS.
+REGISTRATION_DAYS = 14
+REGISTRATION_EVERY_HOURS = 6
 
 # An event whose awards never get finalized stops being refetched this many
 # days after it ends.
@@ -107,6 +123,7 @@ RECHECK_SIGNATURE_DAYS = 120
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(SCRIPT_DIR, "data")
 EVENTS_DIR = os.path.join(DATA_DIR, "events")
+REG_DIR = os.path.join(DATA_DIR, "registrations")
 
 # Match round codes in the v2 API (checked against Override events).
 ROUND_NAMES = {1: "Practice", 2: "Qualification", 3: "Quarterfinal", 4: "Semifinal",
@@ -378,6 +395,74 @@ def fetch_event(client, ev):
     return compact_event(ev, teams, skills, awards, rankings, matches)
 
 
+def is_watched(e):
+    """True for events in WATCH_REGIONS or WATCH_EVENT_IDS (followed live like signature events)."""
+    return e.get("id") in WATCH_EVENT_IDS or (e.get("location") or {}).get("region") in WATCH_REGIONS
+
+
+def upcoming_within(event_list, today, days):
+    """Short (not league) events that start between tomorrow and `days` from today."""
+    last = today + timedelta(days=days)
+    out = []
+    for e in event_list:
+        start, end = day(e.get("start")), day(e.get("end"))
+        if start and end and today < start <= last and (end - start).days <= LIVE_MAX_DAYS:
+            out.append(e)
+    return sorted(out, key=lambda e: (e["start"], e["id"]))
+
+
+def registration_due(e, now):
+    """True if an event's saved registration list is missing or older than REGISTRATION_EVERY_HOURS."""
+    saved = read_json(os.path.join(REG_DIR, f"{e['id']}.json"), {}) or {}
+    checked = saved.get("checked")
+    return not checked or now - datetime.fromisoformat(checked) >= timedelta(hours=REGISTRATION_EVERY_HOURS)
+
+
+def fetch_registrations(client, events, log):
+    """Save the registered teams of upcoming events to data/registrations/{id}.json."""
+    saved = 0
+    for e in events:
+        if client.remaining() < 90:
+            log("Time budget nearly used; the other registration lists wait for the next run.")
+            break
+        try:
+            teams = compact_teams(client.pages(f"/events/{e['id']}/teams"))
+        except RuntimeError as err:
+            log(f"  registered teams skipped for {e.get('sku')}: {err}")
+            continue
+        teams.sort(key=lambda t: t["n"])
+        write_json(os.path.join(REG_DIR, f"{e['id']}.json"), {
+            "id": e["id"], "sku": e.get("sku"),
+            "checked": datetime.now(timezone.utc).isoformat(timespec="seconds"), "teams": teams})
+        saved += 1
+    if saved:
+        log(f"Registered teams saved for {saved} upcoming events")
+
+
+def prune_registrations(event_list, today):
+    """Remove registration lists of events that have ended or left the season list."""
+    if not event_list or not os.path.isdir(REG_DIR):
+        return
+    ends = {e["id"]: day(e.get("end")) for e in event_list}
+    for f in os.listdir(REG_DIR):
+        if not f.endswith(".json") or not f[:-5].isdigit():
+            continue
+        end = ends.get(int(f[:-5]))
+        if end is None or end < today - timedelta(days=1):
+            os.remove(os.path.join(REG_DIR, f))
+
+
+def load_registrations():
+    """{event id: {"count", "checked"}} for the saved registration lists."""
+    out = {}
+    if os.path.isdir(REG_DIR):
+        for f in os.listdir(REG_DIR):
+            if f.endswith(".json") and f[:-5].isdigit():
+                r = read_json(os.path.join(REG_DIR, f), {}) or {}
+                out[int(f[:-5])] = {"count": len(r.get("teams") or []), "checked": r.get("checked")}
+    return out
+
+
 def recheck_signature_awards(client, cached, today, log):
     """Refresh the awards of finished signature events with no Worlds spots marked."""
     updated = 0
@@ -426,12 +511,11 @@ def worlds_awards(ev):
     return {a["title"] for a in ev["awards"] if a["title"].startswith(SIGNATURE_WORLDS_AWARDS)}, False
 
 
-def compact_event(ev, teams, skills, awards, rankings, matches):
-    loc = ev.get("location") or {}
-    out_teams = []
+def compact_teams(teams):
+    out = []
     for t in teams:
         tl = t.get("location") or {}
-        out_teams.append({
+        out.append({
             "n": t.get("number", ""),
             "name": (t.get("team_name") or "").strip(),
             "org": (t.get("organization") or "").strip(),
@@ -440,6 +524,12 @@ def compact_event(ev, teams, skills, awards, rankings, matches):
             "region": tl.get("region") or "",
             "country": tl.get("country") or "",
         })
+    return out
+
+
+def compact_event(ev, teams, skills, awards, rankings, matches):
+    loc = ev.get("location") or {}
+    out_teams = compact_teams(teams)
 
     grades = {t["grade"] for t in out_teams if t["grade"]}
     if len(grades) == 1:
@@ -746,8 +836,8 @@ def month_of(d):
     return (d or "")[:7]
 
 
-def event_row(base, ev, today):
-    """One line of the event index: listing info plus a results summary when cached."""
+def event_row(base, ev, today, reg=None):
+    """One line of the event index: listing info, a results summary when cached, and the registered team count."""
     base = base or {}
     src = ev or base
     loc = base.get("location") or {}
@@ -779,6 +869,11 @@ def event_row(base, ev, today):
         titles, marked = worlds_awards(ev)
         if titles:
             row["worldsAwards"], row["worldsMarked"] = sorted(titles), marked
+    if reg and not row["results"] and row["status"] != "done":
+        row["reg"], row["regChecked"] = reg["count"], reg["checked"]
+    # Followed by the live checks every 30 minutes while it runs.
+    if row["level"] in LIVE_LEVELS or row["region"] in WATCH_REGIONS or row["id"] in WATCH_EVENT_IDS:
+        row["tracked"] = True
     return row
 
 
@@ -787,11 +882,12 @@ TEAM_INDEX_COLS = ["team", "name", "org", "grade", "city", "region", "country", 
                    "ts", "tsRank", "tsMatches", "sub", "worldsMarked"]
 
 
-def build_summaries(event_list, cached, standings, subregions=None):
+def build_summaries(event_list, cached, standings, subregions=None, registrations=None):
     """Return (event index, team index, team buckets, season overview)."""
     today = today_utc()
     listed = {e["id"]: e for e in event_list}
-    index = [event_row(listed.get(eid), cached.get(eid), today) for eid in set(listed) | set(cached)]
+    registrations = registrations or {}
+    index = [event_row(listed.get(eid), cached.get(eid), today, registrations.get(eid)) for eid in set(listed) | set(cached)]
     index.sort(key=lambda r: (r["start"] or "9999", r["name"] or "", r["id"]))
     by_id = {r["id"]: r for r in index}
 
@@ -1030,23 +1126,30 @@ def main():
                                        for e in event_list])
                 listed_now = True
 
+            reg_todo = []
             if args.live:
                 todo = [e for e in event_list
-                        if e.get("level") in LIVE_LEVELS
+                        if (e.get("level") in LIVE_LEVELS or is_watched(e))
                         and day(e.get("start")) and day(e.get("end"))
                         and (day(e["end"]) - day(e["start"])).days <= LIVE_MAX_DAYS
                         and day(e["start"]) - timedelta(days=1) <= today <= day(e["end"]) + timedelta(days=1)]
-                if not todo:
-                    # No signature event running: leave the data untouched so the
+                # Watched events coming up: keep their registered teams current.
+                tracking = {e["id"] for e in todo}
+                now = datetime.now(timezone.utc)
+                reg_todo = [e for e in upcoming_within(event_list, today, REGISTRATION_DAYS)
+                            if is_watched(e) and e["id"] not in tracking and registration_due(e, now)]
+                if not todo and not reg_todo:
+                    # Nothing running or due: leave the data untouched so the
                     # workflow has nothing to commit (and VEX gets no requests).
-                    log("No signature event in progress; nothing to fetch.")
+                    log("No signature or watched event in progress and no registration list due; nothing to fetch.")
                     if listed_now:
                         meta["listFetched"] = today.isoformat()
                         write_json(meta_path, meta)
                     return 0
                 if not need_list:
                     verify_season(client)
-                log("Live tracking: " + ", ".join((e.get("name") or "")[:50] for e in todo))
+                if todo:
+                    log("Live tracking: " + ", ".join((e.get("name") or "")[:50] for e in todo))
             else:
                 todo = []
                 for e in event_list:
@@ -1057,6 +1160,7 @@ def main():
                     if c and c.get("complete"):
                         continue
                     todo.append(e)
+                reg_todo = upcoming_within(event_list, today, REGISTRATION_DAYS)
             live = [e for e in todo if event_status(e, today) == "live"]
             rest = sorted([e for e in todo if event_status(e, today) != "live"], key=lambda e: e.get("end") or "", reverse=True)
             todo = (live + rest)[:args.max_events]
@@ -1083,9 +1187,13 @@ def main():
                 cached[e["id"]] = detail
                 fetched += 1
 
+            if reg_todo:
+                log(f"Registered teams for {len(reg_todo)} upcoming events")
+                fetch_registrations(client, reg_todo, log)
+
             last = meta.get("standingsFetched")
-            due = (not args.live or not last or
-                   datetime.now(timezone.utc) - datetime.fromisoformat(last) >= timedelta(hours=STANDINGS_EVERY_HOURS))
+            due = (not args.live or (todo and (not last or
+                   datetime.now(timezone.utc) - datetime.fromisoformat(last) >= timedelta(hours=STANDINGS_EVERY_HOURS))))
             if due:
                 log("Fetching the official skills standings...")
                 try:
@@ -1111,7 +1219,9 @@ def main():
         except BudgetExceeded:
             log("Time budget used up; writing summaries from what was fetched.")
 
-    index, team_index, buckets, season = build_summaries(event_list, cached, standings, read_json(subregions_path, {}))
+    prune_registrations(event_list, today)
+    index, team_index, buckets, season = build_summaries(event_list, cached, standings, read_json(subregions_path, {}),
+                                                         load_registrations())
     outputs = [("events.json", index), ("teams_index.json", team_index), ("season.json", season)]
     outputs += [(f"teams/{b}.json", data) for b, data in buckets.items()]
     changed = [name for name, data in outputs if write_json(os.path.join(DATA_DIR, name), data)]

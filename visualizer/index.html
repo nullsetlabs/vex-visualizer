@@ -833,8 +833,9 @@
     </dl>
     <h3>How often the data updates</h3>
     <dl>
-      <dt>Signature events</dt><dd>Every 30 minutes while the event is running, so rankings, matches and awards appear during the event.</dd>
+      <dt>Signature events and Pennsylvania events</dt><dd>Every 30 minutes while the event is running, so rankings, matches and awards appear during the event.</dd>
       <dt>All other events</dt><dd>Twice a week, on Monday and Thursday mornings (UTC). A tournament usually appears here within three or four days.</dd>
+      <dt>Registered teams</dt><dd>For events starting in the next 14 days, with each update; every 6 hours for Pennsylvania events. The list comes from VEX Events and can change until the event starts.</dd>
       <dt>Skills standings</dt><dd>With every update; at most every 3 hours during signature events.</dd>
     </dl>
     <div class="tip">Reading in another language? Your browser's translate feature works on this page. Team numbers stay as they are.</div>
@@ -1243,7 +1244,8 @@ function eventRows(list, opts = {}) {
   return list.map(e => {
     let res = '';
     if (e.champions && e.champions.length) res = `<span class="champ">${icon('trophy')}Champions</span> ${teamLinks(e.champions)}`;
-    else if (e.status === 'live' || opts.badge) res = statusBadge(e);
+    else if (e.status === 'live' || opts.badge) res = statusBadge(e) + (e.reg ? ` <span class="dim">${plural(e.reg, 'team')} registered</span>` : '');
+    else if (e.reg) res = `<span class="dim">${plural(e.reg, 'team')} registered</span>`;
     return `<div class="ev-row"><div class="when">${esc(fmtRange(e.start, e.end))}</div>
       <div>${eventLink(e)} ${opts.noSig ? '' : sigBadge(e)} ${gradeBadge(e)}<div class="where">${esc(place(e))}</div>${opts.watch ? watchLinks(e) : ''}</div>
       <div class="res">${res}</div></div>`;
@@ -1287,7 +1289,7 @@ function renderOverview() {
     <div>
       <div class="sb-kicker">VEX V5 Robotics Competition</div>
       <div class="sb-title">Override 2026-2027 season</div>
-      <div class="sb-sub">Results from official VEX Events data${built ? `, updated ${esc(built)}` : ''}. Signature events update every 30 minutes while they run; all other events on Mondays and Thursdays. New to VEX? ${helpLink('Start with the word guide')}. Last season is in the <a href="worlds-2026/">Worlds 2026 archive</a>.</div>
+      <div class="sb-sub">Results from official VEX Events data${built ? `, updated ${esc(built)}` : ''}. Signature events and Pennsylvania events update every 30 minutes while they run; all other events on Mondays and Thursdays. New to VEX? ${helpLink('Start with the word guide')}. Last season is in the <a href="worlds-2026/">Worlds 2026 archive</a>.</div>
     </div>
     <div class="sb-progress">
       <div class="sb-label"><span>Signature events held</span><strong>${c.signatureDone} of ${c.signature}</strong></div>
@@ -1549,7 +1551,7 @@ async function renderEvents(month, tok) {
     ${rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dates</th><th>Event</th><th>Location</th><th>Grade</th><th>Tournament champions</th><th class="num">Teams</th><th class="num">Top score</th></tr></thead><tbody>
     ${rows.slice(0, 400).map(e => `<tr><td>${esc(fmtRange(e.start, e.end))}</td><td class="wrap">${eventLink(e)} ${sigBadge(e)} ${statusBadge(e)}</td>
       <td class="wrap dim">${esc(place(e))}</td><td>${esc(gradeShort(e.grade))}</td><td>${e.champions && e.champions.length ? teamLinks(e.champions) : '<span class="dim">-</span>'}</td>
-      <td class="num">${e.teams ?? ''}</td><td class="num">${e.topScore || ''}</td></tr>`).join('')}
+      <td class="num">${e.teams ?? (e.reg ? `<span class="dim" title="Registered teams, from VEX Events">${e.reg} reg.</span>` : '')}</td><td class="num">${e.topScore || ''}</td></tr>`).join('')}
     </tbody></table></div>` : '<div class="empty">No events match these filters.</div>'}`;
   $('evQ').oninput = ev => { f.q = ev.target.value; keepFocus('evQ', () => renderEvents(null, routeTok)); };
   el.querySelectorAll('#evStatus button').forEach(b => b.onclick = () => { f.status = b.dataset.v; renderEvents(null, routeTok); });
@@ -1565,9 +1567,43 @@ async function renderEvents(month, tok) {
 const ROUND_ORDER = [5, 4, 3, 6, 7, 8];
 const ROUND_NAME = { 3: 'Quarterfinals', 4: 'Semifinals', 5: 'Finals', 6: 'Round of 16', 7: 'Round of 32', 8: 'Round of 64' };
 
-async function renderEvent(id, tok) {
+// Registered teams for an event that has no results yet, with each team's season so far.
+function registeredPanel(reg) {
+  const rows = reg.teams.map(t => ({ ...t, s: S.teamByNum[t.n] || null }))
+    .sort((a, b) => ((b.s && b.s.ts) ?? -999) - ((a.s && a.s.ts) ?? -999) || a.n.localeCompare(b.n, 'en', { numeric: true }));
+  const withRes = rows.filter(r => r.s).length, qualified = rows.filter(r => WQ.has(r.n)).length;
+  const top = rows.find(r => r.s && r.s.ts != null);
+  const when = reg.checked ? new Date(reg.checked).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+  const dash = '<span class="dim">-</span>';
+  return tiles([
+    { v: fmtInt(rows.length), k: 'Teams registered' },
+    { v: fmtInt(withRes), k: 'With results this season' },
+    { v: fmtInt(qualified), k: 'Qualified for Worlds' },
+    { v: top ? dec1(top.s.ts) : '-', k: 'Highest TrueSkill', n: top ? esc(top.n) : '' },
+  ]) + `<div class="panel" style="--c:var(--c-teams)"><h2>${icon('users')}Registered teams</h2>
+    <div class="sub">From VEX Events${when ? `, checked ${esc(when)}` : ''}. The list can change until the event starts. Sorted by TrueSkill, a rating <span class="computed">computed</span> from every match this season; teams without a match yet are listed last. ${helpLink()}</div>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Team</th><th>Name</th><th>Organization</th><th>Location</th><th class="num">Events</th><th class="num">Record</th><th class="num">TrueSkill</th><th class="num">Skills score</th><th>Worlds</th></tr></thead><tbody>
+    ${rows.map(r => `<tr><td>${teamLink(r.n)}</td><td class="dim">${esc(r.name)}</td><td class="dim">${esc(r.org)}</td><td class="dim">${esc(place(r))}</td>
+      <td class="num">${r.s ? r.s.events : 0}</td><td class="num">${r.s ? record(r.s) : dash}</td><td class="num">${r.s && r.s.ts != null ? dec1(r.s.ts) : dash}</td>
+      <td class="num">${r.s && r.s.skills != null ? r.s.skills : dash}</td><td>${WQ.has(r.n) ? '<span class="badge b-world">Qualified</span>' : ''}</td></tr>`).join('')}
+    </tbody></table></div></div>`;
+}
+
+// While an event the live checks follow is in progress, reload its data every 5 minutes (only while the tab is visible).
+function scheduleLiveRefresh(id, tok) {
+  clearTimeout(S.liveTimer);
+  S.liveTimer = setTimeout(async () => {
+    if (tok !== routeTok) return;
+    if (document.visibilityState !== 'visible') return scheduleLiveRefresh(id, tok);
+    delete S.eventCache[id];
+    S.meta = (await loadJSON('data/meta.json')) || S.meta;
+    if (tok === routeTok) renderEvent(id, tok, true);
+  }, 5 * 60 * 1000);
+}
+
+async function renderEvent(id, tok, refresh) {
   const el = $('view-event');
-  el.innerHTML = `<a class="back" href="#events">&larr; All events</a>${loading()}`;
+  if (!refresh) el.innerHTML = `<a class="back" href="#events">&larr; All events</a>${loading()}`;
   const [ev] = await Promise.all([loadEvent(id), needEvents()]);
   if (tok !== routeTok) return;
   const base = S.eventsById[id];
@@ -1580,10 +1616,25 @@ async function renderEvent(id, tok) {
     <div class="detail-head"><div><h2>${esc(e.name)}</h2>
       <div class="meta">${esc(fmtRange(e.start, e.end))} &bull; ${esc(place(e) || e.country)} ${e.grade ? `&bull; ${esc(e.grade)}` : ''} &bull; ${esc(e.sku)} ${sigBadge(e)} ${statusBadge(base || e)}</div></div>
       <div class="ext-links">${e.level === 'Signature' ? `<a href="event/${encodeURIComponent(e.sku)}/" data-track="click_share_event">Share page</a>` : ''}<a href="${officialEvent(e.sku)}" target="_blank" rel="noopener">Official event page &#8599;</a>${((S.webcasts && S.webcasts[e.sku]) || []).map(w => `<a href="${esc(w.url)}" target="_blank" rel="noopener">${icon('play')} ${esc(w.label || 'Watch webcast')}</a>`).join('')}<a href="${officialEvent(e.sku)}#webcast" target="_blank" rel="noopener">${icon('play')} Webcast</a><a href="https://www.youtube.com/results?search_query=${encodeURIComponent(shortEventName(e.name) + ' VEX')}" target="_blank" rel="noopener">${icon('youtube')} YouTube</a></div></div>`;
+  const tracked = !!(base && base.tracked), isLive = !!(base && base.status === 'live');
+  const updated = S.meta && S.meta.builtAt ? new Date(S.meta.builtAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+  const liveNote = !isLive ? '' : `<div class="notice">${tracked
+    ? `This event is in progress. Results are checked about every 30 minutes while it runs, and this page reloads them every 5 minutes.${updated ? ` Data updated ${esc(updated)}.` : ''}`
+    : 'This event is in progress. Its results are added with the next update, on Monday or Thursday.'}</div>`;
   if (!ev || (!ev.matches.length && !ev.awards.length && !ev.skills.length)) {
-    h += `<div class="notice">${base && base.status === 'upcoming' ? 'This event has not started yet. Results appear here once matches are played.' : 'No results have been published for this event yet.'}</div>`;
-    el.innerHTML = h; return;
+    const reg = ev && ev.teams.length ? { teams: ev.teams, checked: S.meta && S.meta.builtAt } : await loadJSON(`data/registrations/${id}.json`);
+    if (tok !== routeTok) return;
+    const hasReg = !!(reg && reg.teams && reg.teams.length);
+    if (hasReg) { await needTeams(); if (tok !== routeTok) return; }
+    h += liveNote || `<div class="notice">${base && base.status === 'upcoming'
+      ? `This event has not started yet. ${tracked ? 'Results appear here during the event, checked about every 30 minutes.' : 'Results appear here after the event, with the Monday or Thursday update.'}`
+      : 'No results have been published for this event yet.'}</div>`;
+    if (hasReg) h += registeredPanel(reg);
+    el.innerHTML = h;
+    if (tracked && isLive) scheduleLiveRefresh(id, tok);
+    return;
   }
+  h += liveNote;
   const played = ev.matches.filter(m => m.played);
   const scores = played.flatMap(m => [m.rs, m.bs]);
   h += tiles([
@@ -1631,6 +1682,7 @@ async function renderEvent(id, tok) {
       </tbody></table></div></div>`;
   }
   el.innerHTML = h;
+  if (tracked && isLive) scheduleLiveRefresh(id, tok);
 }
 
 // ---------------------------------------------------------------------------
