@@ -211,6 +211,15 @@
   .b-up { background: var(--surface3); color: var(--text-dim); border: 1px solid var(--border); }
   .b-world { background: rgba(251,191,36,0.12); color: var(--highlight); border: 1px solid rgba(251,191,36,0.35); }
   .b-grade { background: var(--surface3); color: var(--text-dim); }
+  /* Season labels on the registered-teams list */
+  .lbls { display: flex; flex-wrap: wrap; gap: 4px; min-width: 270px; max-width: 360px; }
+  .lb { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 600; padding: 2px 7px; border-radius: 999px; white-space: nowrap;
+    color: var(--lc); background: color-mix(in srgb, var(--lc) 13%, transparent); border: 1px solid color-mix(in srgb, var(--lc) 38%, transparent); }
+  .lb .icon { width: 11px; height: 11px; }
+  .lb-wq { --lc: var(--wq); } .lb-champ { --lc: var(--gold); } .lb-exc { --lc: #f59e0b; } .lb-award { --lc: #cbd5e1; }
+  .lb-ts { --lc: var(--c-ts); } .lb-skl { --lc: var(--c-skills); } .lb-reg { --lc: var(--c-teams); } .lb-new { --lc: var(--text-dim); }
+  .reg-summary { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 2px 0 12px; font-size: 12.5px; color: var(--text-dim); }
+  .reg-summary b { color: var(--text); }
   .g-hs { background: var(--hs-bg); color: var(--hs); }
   .g-ms { background: var(--ms-bg); color: var(--ms); }
   .g-mix { background: var(--mix-bg); color: var(--mix); }
@@ -1567,12 +1576,56 @@ async function renderEvents(month, tok) {
 const ROUND_ORDER = [5, 4, 3, 6, 7, 8];
 const ROUND_NAME = { 3: 'Quarterfinals', 4: 'Semifinals', 5: 'Finals', 6: 'Round of 16', 7: 'Round of 32', 8: 'Round of 64' };
 
+// "This event starts on Saturday, November 14 (in 11 days)." for an upcoming event.
+function startsLine(e) {
+  const long = d => utc(d).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' });
+  const days = Math.round((utc(e.start) - utc(todayISO())) / 864e5);
+  const until = days === 1 ? ' (tomorrow)' : days > 1 ? ` (in ${days} days)` : '';
+  return e.end && e.end !== e.start
+    ? `This event starts on ${long(e.start)} and ends on ${long(e.end)}${until}.`
+    : `This event starts on ${long(e.start)}${until}.`;
+}
+
+// Season labels for a registered team, from this site's records of earlier events.
+// TrueSkill and skills ranks are within the team's grade; the state rank is by TrueSkill among teams with results there.
+function seasonLabels(r, stateRank) {
+  const s = r.s, out = [];
+  const lb = (cls, ic, txt, title) => `<span class="lb ${cls}" title="${esc(title)}">${ic ? icon(ic) : ''}${esc(txt)}</span>`;
+  if (WQ.has(r.n)) out.push(lb('lb-wq', 'globe', 'Worlds qualified', 'Qualified for the 2027 World Championship'));
+  if (!s) return lb('lb-new', '', 'First event this season', 'No match, skills run or award yet this season');
+  if (s.titles) out.push(lb('lb-champ', 'trophy', s.titles > 1 ? `Champion x${s.titles}` : 'Champion', 'Tournament champion this season'));
+  if (s.excellence) out.push(lb('lb-exc', 'star', s.excellence > 1 ? `Excellence x${s.excellence}` : 'Excellence Award', 'Excellence Award this season'));
+  const other = (s.awards || 0) - (s.titles || 0) - (s.excellence || 0);
+  if (other > 0) out.push(lb('lb-award', 'medal', plural(other, 'award'), 'Other awards this season'));
+  const g = gradeShort(s.grade) ? ` (${gradeShort(s.grade)})` : '';
+  if (s.tsRank && s.tsRank <= 50) out.push(lb('lb-ts', 'trend', `TrueSkill #${s.tsRank} world${g}`, `TrueSkill rank among ${s.grade || 'all'} teams worldwide`));
+  if (s.skillsRank && s.skillsRank <= 50) out.push(lb('lb-skl', 'bolt', `Skills #${s.skillsRank} world${g}`, `World Skills Standings rank, ${s.grade || 'all grades'}`));
+  if (stateRank && stateRank <= 5 && s.region) out.push(lb('lb-reg', 'pin', `TrueSkill #${stateRank} ${s.region}${g}`, `TrueSkill rank among ${s.grade || 'all'} teams in ${s.region}`));
+  return out.join('');
+}
+
 // Registered teams for an event that has no results yet, with each team's season so far.
 function registeredPanel(reg) {
   const rows = reg.teams.map(t => ({ ...t, s: S.teamByNum[t.n] || null }))
     .sort((a, b) => ((b.s && b.s.ts) ?? -999) - ((a.s && a.s.ts) ?? -999) || a.n.localeCompare(b.n, 'en', { numeric: true }));
+  // TrueSkill rank within each registered team's own state (or country) and grade.
+  const stateRank = {};
+  for (const r of rows) {
+    if (!r.s || r.s.ts == null) continue;
+    const peers = S.teamRows.filter(t => t.ts != null && t.grade === r.s.grade && t.region === r.s.region && t.country === r.s.country);
+    stateRank[r.n] = 1 + peers.filter(t => t.ts > r.s.ts).length;
+  }
   const withRes = rows.filter(r => r.s).length, qualified = rows.filter(r => WQ.has(r.n)).length;
   const top = rows.find(r => r.s && r.s.ts != null);
+  const count = f => rows.filter(f).length;
+  const facts = [
+    [count(r => r.s && r.s.titles), 'tournament champion', 'tournament champions'],
+    [count(r => r.s && r.s.excellence), 'Excellence Award winner', 'Excellence Award winners'],
+    [qualified, 'Worlds qualifier', 'Worlds qualifiers'],
+    [count(r => r.s && r.s.tsRank && r.s.tsRank <= 50), 'team in the world TrueSkill top 50', 'teams in the world TrueSkill top 50'],
+    [count(r => r.s && r.s.skillsRank && r.s.skillsRank <= 50), 'team in the world skills top 50', 'teams in the world skills top 50'],
+    [count(r => !r.s), 'team at its first event this season', 'teams at their first event this season'],
+  ].filter(([n]) => n).map(([n, one, many]) => `<span><b>${fmtInt(n)}</b> ${esc(n === 1 ? one : many)}</span>`);
   const when = reg.checked ? new Date(reg.checked).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
   const dash = '<span class="dim">-</span>';
   return tiles([
@@ -1581,11 +1634,13 @@ function registeredPanel(reg) {
     { v: fmtInt(qualified), k: 'Qualified for Worlds' },
     { v: top ? dec1(top.s.ts) : '-', k: 'Highest TrueSkill', n: top ? esc(top.n) : '' },
   ]) + `<div class="panel" style="--c:var(--c-teams)"><h2>${icon('users')}Registered teams</h2>
-    <div class="sub">From VEX Events${when ? `, checked ${esc(when)}` : ''}. The list can change until the event starts. Sorted by TrueSkill, a rating <span class="computed">computed</span> from every match this season; teams without a match yet are listed last. ${helpLink()}</div>
-    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Team</th><th>Name</th><th>Organization</th><th>Location</th><th class="num">Events</th><th class="num">Record</th><th class="num">TrueSkill</th><th class="num">Skills score</th><th>Worlds</th></tr></thead><tbody>
-    ${rows.map(r => `<tr><td>${teamLink(r.n)}</td><td class="dim">${esc(r.name)}</td><td class="dim">${esc(r.org)}</td><td class="dim">${esc(place(r))}</td>
-      <td class="num">${r.s ? r.s.events : 0}</td><td class="num">${r.s ? record(r.s) : dash}</td><td class="num">${r.s && r.s.ts != null ? dec1(r.s.ts) : dash}</td>
-      <td class="num">${r.s && r.s.skills != null ? r.s.skills : dash}</td><td>${WQ.has(r.n) ? '<span class="badge b-world">Qualified</span>' : ''}</td></tr>`).join('')}
+    <div class="sub">From VEX Events${when ? `, checked ${esc(when)}` : ''}. The list can change until the event starts. Sorted by TrueSkill, a rating <span class="computed">computed</span> from every match this season; teams without a match yet are listed last. Labels come from this season's results so far. ${helpLink()}</div>
+    ${facts.length ? `<div class="reg-summary">${facts.join('')}</div>` : ''}
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Team</th><th>Name</th><th>This season</th><th class="num">Record</th><th class="num">TrueSkill</th><th class="num">Skills score</th><th class="num">Events</th><th>Organization</th><th>Location</th></tr></thead><tbody>
+    ${rows.map(r => `<tr><td>${teamLink(r.n)}</td><td>${esc(r.name)}</td><td><div class="lbls">${seasonLabels(r, stateRank[r.n])}</div></td>
+      <td class="num">${r.s ? record(r.s) : dash}</td><td class="num">${r.s && r.s.ts != null ? dec1(r.s.ts) : dash}</td>
+      <td class="num">${r.s && r.s.skills != null ? r.s.skills : dash}</td><td class="num">${r.s ? r.s.events : 0}</td>
+      <td class="dim">${esc(r.org)}</td><td class="dim">${esc(place(r))}</td></tr>`).join('')}
     </tbody></table></div></div>`;
 }
 
@@ -1627,7 +1682,7 @@ async function renderEvent(id, tok, refresh) {
     const hasReg = !!(reg && reg.teams && reg.teams.length);
     if (hasReg) { await needTeams(); if (tok !== routeTok) return; }
     h += liveNote || `<div class="notice">${base && base.status === 'upcoming'
-      ? `This event has not started yet. ${tracked ? 'Results appear here during the event, checked about every 30 minutes.' : 'Results appear here after the event, with the Monday or Thursday update.'}`
+      ? `${startsLine(e)} ${tracked ? 'Results will appear here during the event, checked about every 30 minutes.' : 'Results will appear here after the event, with the Monday or Thursday update.'}`
       : 'No results have been published for this event yet.'}</div>`;
     if (hasReg) h += registeredPanel(reg);
     el.innerHTML = h;
