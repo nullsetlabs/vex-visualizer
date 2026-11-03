@@ -86,7 +86,7 @@
     --ms: #c084fc; --ms-bg: rgba(168,85,247,0.16);
     --mix: #2dd4bf; --mix-bg: rgba(20,184,166,0.15);
     /* Section colors for navigation */
-    --c-teams: #60a5fa; --c-events: #2dd4bf; --c-sig: #fbbf24; --c-skills: #fb923c; --c-worlds: #f472b6; --c-game: #a78bfa; --c-ts: #a3e635; --wq: #34d399;
+    --c-teams: #60a5fa; --c-events: #2dd4bf; --c-sig: #fbbf24; --c-skills: #fb923c; --c-worlds: #f472b6; --c-game: #a78bfa; --c-ts: #a3e635; --wq: #34d399; --c-hist: #c4b5fd;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
@@ -217,9 +217,15 @@
     color: var(--lc); background: color-mix(in srgb, var(--lc) 13%, transparent); border: 1px solid color-mix(in srgb, var(--lc) 38%, transparent); }
   .lb .icon { width: 11px; height: 11px; }
   .lb-wq { --lc: var(--wq); } .lb-champ { --lc: var(--gold); } .lb-exc { --lc: #f59e0b; } .lb-award { --lc: #cbd5e1; }
-  .lb-ts { --lc: var(--c-ts); } .lb-skl { --lc: var(--c-skills); } .lb-reg { --lc: var(--c-teams); } .lb-new { --lc: var(--text-dim); }
+  .lb-ts { --lc: var(--c-ts); } .lb-skl { --lc: var(--c-skills); } .lb-reg { --lc: var(--c-teams); } .lb-new { --lc: var(--text-dim); } .lb-hist { --lc: var(--c-hist); }
   .reg-summary { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 2px 0 12px; font-size: 12.5px; color: var(--text-dim); }
   .reg-summary b { color: var(--text); }
+  .hist-leaders { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 8px 16px; }
+  .hl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .hl .lbls { grid-column: 1 / -1; min-width: 0; max-width: none; }
+  .hl .dim { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; }
+  .hist-season { margin-bottom: 14px; }
+  .hist-season h3 { font-size: 13px; font-weight: 700; margin: 6px 0 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
   .g-hs { background: var(--hs-bg); color: var(--hs); }
   .g-ms { background: var(--ms-bg); color: var(--ms); }
   .g-mix { background: var(--mix-bg); color: var(--mix); }
@@ -739,6 +745,7 @@
         <a class="nav-tab" data-view="skills" data-icon="bolt" style="--tab-c:var(--c-skills)" href="#skills">Skills</a>
         <a class="nav-tab" data-view="trueskill" data-icon="trend" style="--tab-c:var(--c-ts)" href="#trueskill">TrueSkill</a>
         <a class="nav-tab" data-view="worlds" data-icon="globe" style="--tab-c:var(--c-worlds)" href="#worlds">Road to Worlds</a>
+        <a class="nav-tab" data-view="history" data-icon="clock" style="--tab-c:var(--c-hist)" href="#history">History</a>
         <a class="nav-tab" data-view="override" data-icon="game" style="--tab-c:var(--c-game)" href="#override">Override game</a>
       </nav>
     </div>
@@ -755,6 +762,7 @@
   <section class="view" id="view-skills"></section>
   <section class="view" id="view-trueskill"></section>
   <section class="view" id="view-worlds"></section>
+  <section class="view" id="view-history"></section>
   <section class="view" id="view-override"></section>
 </main>
 
@@ -845,6 +853,7 @@
       <dt>Signature events and Pennsylvania events</dt><dd>Every 30 minutes while the event is running, so rankings, matches and awards appear during the event.</dd>
       <dt>All other events</dt><dd>Twice a week, on Monday and Thursday mornings (UTC). A tournament usually appears here within three or four days.</dd>
       <dt>Registered teams</dt><dd>For events starting in the next 14 days, with each update; every 6 hours for Pennsylvania events. The list comes from VEX Events and can change until the event starts.</dd>
+      <dt>Earlier seasons</dt><dd>Awards from the 2025-2026 and 2024-2025 seasons, loaded once from VEX Events; past results do not change. They appear in the History tab, on team pages and as labels on registered teams.</dd>
       <dt>Skills standings</dt><dd>With every update; at most every 3 hours during signature events.</dd>
     </dl>
     <div class="tip">Reading in another language? Your browser's translate feature works on this page. Team numbers stay as they are.</div>
@@ -1018,6 +1027,7 @@ const UI = {
   skills: { grade: 'hs', q: '', country: '', limit: 24, view: 'cards' },
   trueskill: { grade: 'High School', q: '', country: '', limit: 24, view: 'cards' },
   worlds: { grade: 'all' },
+  history: { season: '', kind: 'exc', q: '', country: '', limit: 100 },
   cmp: { a: '', b: '', grade: 'all' },
   leaders: { tab: 'skillsHS' },
   region: { grade: 'High School' },
@@ -1051,6 +1061,27 @@ const needPushback = () => lazy('pushback', async () => {
   S.pushback = {};
   if (d) for (const [n, r] of Object.entries(d.teams)) S.pushback[n] = Object.fromEntries(d.cols.map((c, i) => [c, r[i]]));
 });
+// Earlier seasons' awards (history.py): counts per team and season, a season's full award list, a team's awards.
+const needHistory = () => lazy('history', async () => { S.history = await loadJSON('data/history/index.json'); });
+async function loadHistorySeason(id) {
+  S.histSeasons = S.histSeasons || {};
+  if (!(id in S.histSeasons)) S.histSeasons[id] = await loadJSON(`data/history/seasons/${id}.json`);
+  return S.histSeasons[id];
+}
+async function loadTeamHistory(n) {
+  S.histBuckets = S.histBuckets || {};
+  const b = bucketOf(n);
+  if (!(b in S.histBuckets)) S.histBuckets[b] = (await loadJSON(`data/history/teams/${b}.json`)) || {};
+  return S.histBuckets[b][n] || S.histBuckets[b][n.toUpperCase()] || null;
+}
+// [{season, exc, champ, design, skills, awards, wq, worlds} or null] per earlier season, newest first.
+function histRow(n) {
+  const H = S.history;
+  const r = H && H.teams && (H.teams[n] || H.teams[n.toUpperCase()]);
+  return r ? H.seasons.map((s, i) => r[i] ? { season: s, ...Object.fromEntries(H.cols.map((c, j) => [c, r[i][j]])) } : null) : null;
+}
+const shortSeason = label => label.replace(/^(\d{4})-\d{2}(\d{2})$/, '$1-$2');   // 2025-2026 -> 2025-26
+const worldsYear = label => label.slice(5);                                     // 2025-2026 -> 2026
 // Same shard key as team_bucket() in season_pipeline.py.
 const bucketOf = n => [...n.toUpperCase()].reduce((a, c, i) => a + (i + 1) * c.charCodeAt(0), 0) % 64;
 async function loadTeam(n) {
@@ -1591,8 +1622,17 @@ function startsLine(e) {
 function seasonLabels(r, stateRank) {
   const s = r.s, out = [];
   const lb = (cls, ic, txt, title) => `<span class="lb ${cls}" title="${esc(title)}">${ic ? icon(ic) : ''}${esc(txt)}</span>`;
+  // Earlier seasons: Excellence, champion titles and Worlds, one label per season.
+  const past = (histRow(r.n) || []).filter(Boolean).map(h => {
+    const parts = [];
+    if (h.exc) parts.push(h.exc > 1 ? `Excellence x${h.exc}` : 'Excellence');
+    if (h.champ) parts.push(h.champ > 1 ? `Champion x${h.champ}` : 'Champion');
+    if (h.worlds) parts.push(`Worlds ${worldsYear(h.season.label)}`);
+    return parts.length ? lb('lb-hist', 'clock', `${shortSeason(h.season.label)}: ${parts.join(', ')}`,
+      `${h.season.label} ${h.season.game}: ${plural(h.awards, 'award')} in all`) : '';
+  }).join('');
   if (WQ.has(r.n)) out.push(lb('lb-wq', 'globe', 'Worlds qualified', 'Qualified for the 2027 World Championship'));
-  if (!s) return lb('lb-new', '', 'First event this season', 'No match, skills run or award yet this season');
+  if (!s) return out.join('') + lb('lb-new', '', 'First event this season', 'No match, skills run or award yet this season') + past;
   if (s.titles) out.push(lb('lb-champ', 'trophy', s.titles > 1 ? `Champion x${s.titles}` : 'Champion', 'Tournament champion this season'));
   if (s.excellence) out.push(lb('lb-exc', 'star', s.excellence > 1 ? `Excellence x${s.excellence}` : 'Excellence Award', 'Excellence Award this season'));
   const other = (s.awards || 0) - (s.titles || 0) - (s.excellence || 0);
@@ -1601,7 +1641,7 @@ function seasonLabels(r, stateRank) {
   if (s.tsRank && s.tsRank <= 50) out.push(lb('lb-ts', 'trend', `TrueSkill #${s.tsRank} world${g}`, `TrueSkill rank among ${s.grade || 'all'} teams worldwide`));
   if (s.skillsRank && s.skillsRank <= 50) out.push(lb('lb-skl', 'bolt', `Skills #${s.skillsRank} world${g}`, `World Skills Standings rank, ${s.grade || 'all grades'}`));
   if (stateRank && stateRank <= 5 && s.region) out.push(lb('lb-reg', 'pin', `TrueSkill #${stateRank} ${s.region}${g}`, `TrueSkill rank among ${s.grade || 'all'} teams in ${s.region}`));
-  return out.join('');
+  return out.join('') + past;
 }
 
 // Registered teams for an event that has no results yet, with each team's season so far.
@@ -1618,6 +1658,7 @@ function registeredPanel(reg) {
   const withRes = rows.filter(r => r.s).length, qualified = rows.filter(r => WQ.has(r.n)).length;
   const top = rows.find(r => r.s && r.s.ts != null);
   const count = f => rows.filter(f).length;
+  const lastLabel = S.history && S.history.seasons && S.history.seasons[0] ? S.history.seasons[0].label : '';
   const facts = [
     [count(r => r.s && r.s.titles), 'tournament champion', 'tournament champions'],
     [count(r => r.s && r.s.excellence), 'Excellence Award winner', 'Excellence Award winners'],
@@ -1625,6 +1666,8 @@ function registeredPanel(reg) {
     [count(r => r.s && r.s.tsRank && r.s.tsRank <= 50), 'team in the world TrueSkill top 50', 'teams in the world TrueSkill top 50'],
     [count(r => r.s && r.s.skillsRank && r.s.skillsRank <= 50), 'team in the world skills top 50', 'teams in the world skills top 50'],
     [count(r => !r.s), 'team at its first event this season', 'teams at their first event this season'],
+    [count(r => { const h = (histRow(r.n) || [])[0]; return h && (h.exc || h.champ); }), `team with an Excellence or champion award in ${lastLabel}`, `teams with Excellence or champion awards in ${lastLabel}`],
+    [count(r => { const h = (histRow(r.n) || [])[0]; return h && h.worlds; }), `team that competed at Worlds ${lastLabel ? worldsYear(lastLabel) : ''}`, `teams that competed at Worlds ${lastLabel ? worldsYear(lastLabel) : ''}`],
   ].filter(([n]) => n).map(([n, one, many]) => `<span><b>${fmtInt(n)}</b> ${esc(n === 1 ? one : many)}</span>`);
   const when = reg.checked ? new Date(reg.checked).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
   const dash = '<span class="dim">-</span>';
@@ -1634,7 +1677,7 @@ function registeredPanel(reg) {
     { v: fmtInt(qualified), k: 'Qualified for Worlds' },
     { v: top ? dec1(top.s.ts) : '-', k: 'Highest TrueSkill', n: top ? esc(top.n) : '' },
   ]) + `<div class="panel" style="--c:var(--c-teams)"><h2>${icon('users')}Registered teams</h2>
-    <div class="sub">From VEX Events${when ? `, checked ${esc(when)}` : ''}. The list can change until the event starts. Sorted by TrueSkill, a rating <span class="computed">computed</span> from every match this season; teams without a match yet are listed last. Labels come from this season's results so far. ${helpLink()}</div>
+    <div class="sub">From VEX Events${when ? `, checked ${esc(when)}` : ''}. The list can change until the event starts. Sorted by TrueSkill, a rating <span class="computed">computed</span> from every match this season; teams without a match yet are listed last. Labels come from this season's results so far; labels with a clock are from earlier seasons. ${helpLink()}</div>
     ${facts.length ? `<div class="reg-summary">${facts.join('')}</div>` : ''}
     <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Team</th><th>Name</th><th>This season</th><th class="num">Record</th><th class="num">TrueSkill</th><th class="num">Skills score</th><th class="num">Events</th><th>Organization</th><th>Location</th></tr></thead><tbody>
     ${rows.map(r => `<tr><td>${teamLink(r.n)}</td><td>${esc(r.name)}</td><td><div class="lbls">${seasonLabels(r, stateRank[r.n])}</div></td>
@@ -1680,7 +1723,7 @@ async function renderEvent(id, tok, refresh) {
     const reg = ev && ev.teams.length ? { teams: ev.teams, checked: S.meta && S.meta.builtAt } : await loadJSON(`data/registrations/${id}.json`);
     if (tok !== routeTok) return;
     const hasReg = !!(reg && reg.teams && reg.teams.length);
-    if (hasReg) { await needTeams(); if (tok !== routeTok) return; }
+    if (hasReg) { await Promise.all([needTeams(), needHistory()]); if (tok !== routeTok) return; }
     h += liveNote || `<div class="notice">${base && base.status === 'upcoming'
       ? `${startsLine(e)} ${tracked ? 'Results will appear here during the event, checked about every 30 minutes.' : 'Results will appear here after the event, with the Monday or Thursday update.'}`
       : 'No results have been published for this event yet.'}</div>`;
@@ -1796,7 +1839,7 @@ async function renderTeams(tok) {
 async function renderTeam(num, tok) {
   const el = $('view-team');
   el.innerHTML = `<a class="back" href="#teams">&larr; All teams</a>${loading()}`;
-  const [t] = await Promise.all([loadTeam(num), needEvents(), needPushback()]);
+  const [t, th] = await Promise.all([loadTeam(num), loadTeamHistory(num), needEvents(), needPushback(), needHistory()]);
   if (tok !== routeTok) return;
   const back = `<a class="back" href="#teams">&larr; All teams</a>`;
   if (!t) {
@@ -1805,7 +1848,7 @@ async function renderTeam(num, tok) {
       <div class="nm">${prev ? esc(prev.name) : 'No results yet this season'}</div>
       <div class="meta">${prev ? `${esc([prev.region, prev.country === 'United States' ? '' : prev.country].filter(Boolean).join(', '))} ${gradeBadge(prev)} <span class="badge b-up">No 2026-2027 results yet</span>` : ''}</div>
       <div class="meta">This team has not played a match, run skills or won an award in the 2026-2027 season so far${prev ? '' : ', or is not registered for it'}. Results appear here after its first event: within 30 minutes at a signature event, otherwise within three or four days.${prev ? ' Last season is shown below.' : ''}</div></div>
-      <div class="ext-links"><a href="${officialTeam(num.toUpperCase())}" target="_blank" rel="noopener">Official team page &#8599;</a></div></div>${pushbackPanel(num)}`;
+      <div class="ext-links"><a href="${officialTeam(num.toUpperCase())}" target="_blank" rel="noopener">Official team page &#8599;</a></div></div>${historyPanel(th, histRow(num))}${pushbackPanel(num)}`;
     return;
   }
   const sk = t.skills;
@@ -1841,8 +1884,90 @@ async function renderTeam(num, tok) {
       <td class="num">${x.rank ? `${x.rank} <span class="dim">of ${x.of}</span>` : '-'}</td><td>${record(x)}</td><td>${esc(x.result) || '<span class="dim">-</span>'}</td>
       <td class="num">${x.skills || '-'}</td><td class="num">${dec1(x.opr)}</td><td class="wrap">${esc(x.awards.join(', '))}</td></tr>`; }).join('')}
     </tbody></table></div></div>`;
+  h += historyPanel(th, histRow(t.team));
   h += pushbackPanel(t.team);
   el.innerHTML = h;
+}
+
+// Earlier seasons on a team page: every award by season (history.py), and Worlds attendance.
+function historyPanel(th, hr) {
+  const H = S.history;
+  if (!H || (!th && !(hr || []).some(h => h && h.worlds))) return '';
+  const blocks = H.seasons.map((s, i) => {
+    const list = (th && th[s.label]) || [], h = (hr || [])[i];
+    if (!list.length && !(h && h.worlds)) return '';
+    return `<div class="hist-season"><h3>${esc(s.label)} ${esc(s.game)}${h && h.worlds ? ` <span class="lb lb-hist">${icon('globe')}Competed at Worlds ${esc(worldsYear(s.label))}</span>` : ''}</h3>
+      <div class="shelf">${list.map(([title, , ename, date]) => { const [ai, ac] = awardInfo(title);
+        return `<span class="chip">${icon(ai, ac)}<strong>${esc(title)}</strong> <span class="dim">${esc(shortEventName(ename))}, ${esc(fmtDate(date))} ${esc(date.slice(0, 4))}</span></span>`; }).join('')}</div></div>`;
+  }).join('');
+  return blocks ? `<div class="panel" style="--c:var(--c-hist)"><h2>${icon('clock')}Previous seasons</h2>
+    <div class="sub">Awards at earlier seasons' events, from official VEX Events data. Team numbers carry over between seasons; team members can change.</div>${blocks}
+    <a class="back" href="#history" style="margin:0">All past-season awards &rarr;</a></div>` : '';
+}
+
+// History tab: award winners of earlier seasons, by award type and region, with the most decorated teams first.
+const HIST_KINDS = {
+  exc: t => /^excellence/i.test(t), champ: t => /^(tournament champions|division champion)/i.test(t),
+  design: t => /^design/i.test(t), skills: t => /^robot skills champion/i.test(t), all: () => true,
+};
+const histInRegion = o => { if (!MY_REGION) return true; const [c, r] = MY_REGION.split('|'); return o.country === c && (!r || o.region === r); };
+async function renderHistory(tok) {
+  const el = $('view-history'), f = UI.history;
+  if (!S.history) el.innerHTML = loading();
+  await Promise.all([needHistory(), needTeams()]); if (tok !== routeTok) return;
+  const H = S.history;
+  if (!H || !H.seasons || !H.seasons.length) { el.innerHTML = '<div class="notice">Earlier seasons are being loaded from VEX Events and will appear here soon.</div>'; return; }
+  const season = H.seasons.find(s => String(s.id) === String(f.season)) || H.seasons[0];
+  f.season = season.id;
+  const rec = await loadHistorySeason(season.id); if (tok !== routeTok) return;
+  if (!rec) { el.innerHTML = '<div class="notice">This season could not be loaded. Try again in a moment.</div>'; return; }
+  const q = f.q.trim().toLowerCase(), useRegion = regionOn();
+  const inArea = ev => useRegion ? histInRegion({ region: ev[4], country: ev[5] }) : (!f.country || ev[5] === f.country);
+  const all = [], tally = {};
+  for (const [eid, awards] of Object.entries(rec.awards)) {
+    const ev = rec.events[eid];
+    if (!ev || !inArea(ev)) continue;
+    for (const [title, teams, wq] of awards) {
+      for (const n of teams) {
+        const t = tally[n] || (tally[n] = { n, exc: 0, champ: 0, awards: 0 });
+        t.awards++; if (HIST_KINDS.exc(title)) t.exc++; if (HIST_KINDS.champ(title)) t.champ++;
+      }
+      if (!HIST_KINDS[f.kind](title)) continue;
+      if (q && !`${teams.join(' ')} ${ev[1]} ${title}`.toLowerCase().includes(q)) continue;
+      all.push({ sku: ev[0], name: ev[1], start: ev[2], level: ev[3], region: ev[4], country: ev[5], title, teams, wq });
+    }
+  }
+  all.sort((a, b) => b.start.localeCompare(a.start) || a.name.localeCompare(b.name));
+  const leaders = Object.values(tally).filter(t => t.exc || t.champ)
+    .sort((a, b) => b.exc - a.exc || b.champ - a.champ || b.awards - a.awards || a.n.localeCompare(b.n, 'en', { numeric: true })).slice(0, 12);
+  // Past events carry a state and country but no Eastern/Western PA split, so a subregion counts as its whole state.
+  const area = useRegion ? (MY_REGION.split('|')[1] || MY_REGION.split('|')[0]) : (f.country || 'all regions');
+  const countries = [...new Set(Object.values(rec.events).map(e => e[5]).filter(Boolean))].sort();
+  el.innerHTML = `<p class="intro">Awards from earlier seasons, from official VEX Events data, to see which teams have won before. Team numbers carry over between seasons; team members can change. Event links open the official VEX event pages.</p>
+    ${season.complete ? '' : `<div class="notice">This season is still being loaded: ${fmtInt(season.eventsDone)} of ${fmtInt(season.events)} events so far.</div>`}
+    <div class="filters">
+      ${segButtons('hsSeason', H.seasons.map(s => [String(s.id), `${s.label} ${s.game}`]), String(season.id))}
+      ${segButtons('hsKind', [['exc', 'Excellence'], ['champ', 'Champions'], ['design', 'Design'], ['skills', 'Skills champions'], ['all', 'All awards']], f.kind)}
+    </div>
+    <div class="filters">
+      <input type="text" id="hsQ" placeholder="Search team number, event or award" value="${esc(f.q)}">
+      ${regionChip()}${useRegion ? '' : `<select id="hsCountry">${opt('', 'All countries', f.country)}${countries.map(c => opt(c, c, f.country)).join('')}</select>`}
+      <span class="count">${plural(all.length, 'award')}</span>
+    </div>
+    ${leaders.length ? `<div class="panel" style="--c:var(--c-hist)"><h2>${icon('trophy')}Most Excellence and champion awards</h2><div class="sub">${esc(season.label)} ${esc(season.game)}, ${esc(area)}</div>
+      <div class="hist-leaders">${leaders.map(t => `<div class="hl"><span class="hl-team">${teamLink(t.n)}</span><span class="dim">${esc((S.teamByNum[t.n] || {}).name || '')}</span>
+        <span class="lbls">${t.exc ? `<span class="lb lb-exc">${icon('star')}Excellence${t.exc > 1 ? ` x${t.exc}` : ''}</span>` : ''}${t.champ ? `<span class="lb lb-champ">${icon('trophy')}Champion${t.champ > 1 ? ` x${t.champ}` : ''}</span>` : ''}<span class="lb lb-award">${plural(t.awards, 'award')}</span></span></div>`).join('')}</div></div>` : ''}
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Date</th><th>Event</th><th>Award</th><th>Teams</th><th>Location</th></tr></thead><tbody>
+    ${all.slice(0, f.limit).map(a => `<tr><td>${esc(fmtDate(a.start))} ${esc(a.start.slice(0, 4))}</td>
+      <td class="wrap"><a class="ev-link" href="${officialEvent(a.sku)}" target="_blank" rel="noopener">${esc(a.name)}</a>${(a.level || '').toLowerCase() === 'world' ? ' <span class="badge b-world">World Championship</span>' : a.level === 'Signature' ? ' <span class="badge b-sig">Signature</span>' : ''}</td>
+      <td>${esc(a.title)}${a.wq ? ' <span class="dim">(qualified for Worlds)</span>' : ''}</td><td>${teamLinks(a.teams)}</td><td class="dim">${esc(place(a))}</td></tr>`).join('')}
+    </tbody></table></div>
+    ${all.length > f.limit ? `<button class="more" id="hsMore">Show ${Math.min(100, all.length - f.limit)} more</button>` : ''}`;
+  el.querySelectorAll('#hsSeason button').forEach(b => b.onclick = () => { f.season = b.dataset.v; f.limit = 100; renderHistory(routeTok); });
+  el.querySelectorAll('#hsKind button').forEach(b => b.onclick = () => { f.kind = b.dataset.v; f.limit = 100; renderHistory(routeTok); });
+  $('hsQ').oninput = ev => { f.q = ev.target.value; f.limit = 100; keepFocus('hsQ', () => renderHistory(routeTok)); };
+  if ($('hsCountry')) $('hsCountry').onchange = ev => { f.country = ev.target.value; renderHistory(routeTok); };
+  if ($('hsMore')) $('hsMore').onclick = () => { f.limit += 100; renderHistory(routeTok); };
 }
 
 function lastSeason(num) {
@@ -2211,7 +2336,7 @@ document.addEventListener('visibilitychange', () => {
 // ---------------------------------------------------------------------------
 // Router
 // ---------------------------------------------------------------------------
-const TAB_FOR = { home: 'home', signature: 'signature', events: 'events', event: 'events', teams: 'teams', team: 'teams', skills: 'skills', trueskill: 'trueskill', worlds: 'worlds', override: 'override' };
+const TAB_FOR = { home: 'home', signature: 'signature', events: 'events', event: 'events', teams: 'teams', team: 'teams', skills: 'skills', trueskill: 'trueskill', worlds: 'worlds', history: 'history', override: 'override' };
 let routeTok = 0;
 function renderView(view, arg, tok) {
   if (view === 'home') renderOverview();
@@ -2223,6 +2348,7 @@ function renderView(view, arg, tok) {
   else if (view === 'skills') renderSkills(tok);
   else if (view === 'trueskill') renderTrueSkill(tok);
   else if (view === 'worlds') renderWorlds(tok);
+  else if (view === 'history') renderHistory(tok);
   else if (view === 'override') renderOverride();
 }
 // Redraw the open section (after a region change) without counting a new visit.
