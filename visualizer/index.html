@@ -218,8 +218,40 @@
   .lb .icon { width: 11px; height: 11px; }
   .lb-wq { --lc: var(--wq); } .lb-champ { --lc: var(--gold); } .lb-exc { --lc: #f59e0b; } .lb-award { --lc: #cbd5e1; }
   .lb-ts { --lc: var(--c-ts); } .lb-skl { --lc: var(--c-skills); } .lb-reg { --lc: var(--c-teams); } .lb-new { --lc: var(--text-dim); } .lb-hist { --lc: var(--c-hist); }
-  .reg-summary { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 2px 0 12px; font-size: 12.5px; color: var(--text-dim); }
-  .reg-summary b { color: var(--text); }
+  .reg-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 12px; }
+  .reg-filter button { font: inherit; font-size: 12.5px; color: var(--text-dim); background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 999px; padding: 6px 12px; min-height: 40px; cursor: pointer; }
+  .reg-filter button b { color: var(--text); margin-left: 4px; }
+  .reg-filter button[aria-pressed="true"] { color: var(--text); border-color: var(--c-teams); background: color-mix(in srgb, var(--c-teams) 16%, transparent); }
+  .reg-table .m-only { display: none; }
+  .reg-table tr[hidden] { display: none !important; }
+  .reg-hint { display: none; }
+  /* Phones: one compact row per team (number, name, up to two pointers); a tap opens it into a card. */
+  @media (max-width: 640px) {
+    .reg-hint { display: block; font-size: 12px; color: var(--text-dim); margin: -4px 0 8px; }
+    .reg-table thead { display: none; }
+    .reg-table, .reg-table tbody { display: block; width: 100%; }
+    .reg-table tr { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "team name tog" "ptr ptr tog" "lbls lbls lbls" "stats stats stats";
+      gap: 3px 10px; padding: 9px 12px; border-bottom: 1px solid var(--border); cursor: pointer; }
+    .reg-table td { display: block; padding: 0; border: 0; }
+    .reg-table td.d-only, .reg-table td.c-lbls, .reg-table td.c-stats { display: none; }
+    .reg-table td.c-team { grid-area: team; align-self: center; }
+    .reg-table td.c-name { grid-area: name; align-self: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+    .reg-table td.c-tog { display: flex; grid-area: tog; align-items: center; }
+    .reg-table td.c-ptr { display: block; grid-area: ptr; }
+    .reg-table td.c-ptr .lbls, .reg-table td.c-lbls .lbls { min-width: 0; max-width: none; }
+    .reg-table td.c-ptr .lbls:empty { display: none; }
+    .reg-table tr.open { background: var(--surface2); }
+    .reg-table tr.open td.c-ptr { display: none; }
+    .reg-table tr.open td.c-lbls { display: block; grid-area: lbls; padding-top: 4px; }
+    .reg-table tr.open td.c-stats { display: block; grid-area: stats; font-size: 12.5px; line-height: 1.5; color: var(--text-dim); white-space: normal; min-width: 0; }
+    .reg-filter { gap: 5px; }
+    .reg-filter button { font-size: 12px; padding: 5px 10px; min-height: 36px; }
+    .reg-tog { width: 36px; height: 36px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-dim);
+      display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+    .reg-tog svg { width: 16px; height: 16px; transition: transform 0.2s; }
+    .reg-table tr.open .reg-tog svg { transform: rotate(180deg); }
+  }
   .hist-leaders { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 8px 16px; }
   .hl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
   .hl .lbls { grid-column: 1 / -1; min-width: 0; max-width: none; }
@@ -1644,6 +1676,20 @@ function seasonLabels(r, stateRank) {
   return out.join('') + past;
 }
 
+// Up to two short pointers for a registered team on phones: this season first, then the last earlier season.
+function pointers(r) {
+  const s = r.s, h = (histRow(r.n) || [])[0], out = [];
+  const pt = (cls, ic, txt) => `<span class="lb ${cls}">${ic ? icon(ic) : ''}${esc(txt)}</span>`;
+  if (WQ.has(r.n)) out.push(pt('lb-wq', 'globe', 'Qualified'));
+  if (s && s.titles) out.push(pt('lb-champ', 'trophy', s.titles > 1 ? `Champion x${s.titles}` : 'Champion'));
+  else if (s && s.excellence) out.push(pt('lb-exc', 'star', 'Excellence'));
+  if (s && ((s.tsRank && s.tsRank <= 50) || (s.skillsRank && s.skillsRank <= 50))) out.push(pt('lb-ts', 'trend', 'World top 50'));
+  if (h && (h.exc || h.champ)) out.push(pt('lb-hist', 'clock', `${shortSeason(h.season.label)} ${h.exc ? 'Excellence' : 'champion'}`));
+  if (h && h.worlds) out.push(pt('lb-hist', 'globe', `Worlds ${worldsYear(h.season.label)}`));
+  if (!out.length && !s) out.push(pt('lb-new', '', 'First event'));
+  return out.slice(0, 2).join('');
+}
+
 // Registered teams for an event that has no results yet, with each team's season so far.
 function registeredPanel(reg) {
   const rows = reg.teams.map(t => ({ ...t, s: S.teamByNum[t.n] || null }))
@@ -1659,16 +1705,28 @@ function registeredPanel(reg) {
   const top = rows.find(r => r.s && r.s.ts != null);
   const count = f => rows.filter(f).length;
   const lastLabel = S.history && S.history.seasons && S.history.seasons[0] ? S.history.seasons[0].label : '';
-  const facts = [
-    [count(r => r.s && r.s.titles), 'tournament champion', 'tournament champions'],
-    [count(r => r.s && r.s.excellence), 'Excellence Award winner', 'Excellence Award winners'],
-    [qualified, 'Worlds qualifier', 'Worlds qualifiers'],
-    [count(r => r.s && r.s.tsRank && r.s.tsRank <= 50), 'team in the world TrueSkill top 50', 'teams in the world TrueSkill top 50'],
-    [count(r => r.s && r.s.skillsRank && r.s.skillsRank <= 50), 'team in the world skills top 50', 'teams in the world skills top 50'],
-    [count(r => !r.s), 'team at its first event this season', 'teams at their first event this season'],
-    [count(r => { const h = (histRow(r.n) || [])[0]; return h && (h.exc || h.champ); }), `team with an Excellence or champion award in ${lastLabel}`, `teams with Excellence or champion awards in ${lastLabel}`],
-    [count(r => { const h = (histRow(r.n) || [])[0]; return h && h.worlds; }), `team that competed at Worlds ${lastLabel ? worldsYear(lastLabel) : ''}`, `teams that competed at Worlds ${lastLabel ? worldsYear(lastLabel) : ''}`],
-  ].filter(([n]) => n).map(([n, one, many]) => `<span><b>${fmtInt(n)}</b> ${esc(n === 1 ? one : many)}</span>`);
+  // Tags behind the filter buttons: each button shows only the teams with that tag.
+  const yr = lastLabel ? shortSeason(lastLabel) : '';
+  for (const r of rows) {
+    const h = (histRow(r.n) || [])[0], t = [];
+    if (r.s && (r.s.titles || r.s.excellence)) t.push('won');
+    if (WQ.has(r.n)) t.push('wq');
+    if (r.s && ((r.s.tsRank && r.s.tsRank <= 50) || (r.s.skillsRank && r.s.skillsRank <= 50))) t.push('top');
+    if (h && (h.exc || h.champ)) t.push('past');
+    if (h && h.worlds) t.push('worlds');
+    if (!r.s) t.push('new');
+    r.tags = t;
+  }
+  const wy = lastLabel ? worldsYear(lastLabel) : '';
+  const filters = [
+    ['won', 'Won this season', 'Tournament champion or Excellence Award this season'], ['wq', 'Worlds qualified', 'Qualified for the 2027 World Championship'],
+    ['top', 'World top 50', 'TrueSkill or skills rank in the world top 50 for its grade'],
+    ['past', `Won in ${yr}`, `Tournament champion or Excellence Award in ${lastLabel}`], ['worlds', `At Worlds ${wy}`, `Competed at the ${wy} World Championship`],
+    ['new', 'First event', 'No match, skills run or award yet this season'],
+  ].map(([k, txt, title]) => [k, txt, title, rows.filter(r => r.tags.includes(k)).length]).filter(([, , , n]) => n);
+  const filterBar = filters.length ? `<div class="reg-filter" role="group" aria-label="Show only these teams">
+    <button type="button" data-f="all" aria-pressed="true">All teams <b>${rows.length}</b></button>
+    ${filters.map(([k, txt, title, n]) => `<button type="button" data-f="${k}" aria-pressed="false" title="${esc(title)}">${esc(txt)} <b>${n}</b></button>`).join('')}</div>` : '';
   const when = reg.checked ? new Date(reg.checked).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
   const dash = '<span class="dim">-</span>';
   return tiles([
@@ -1678,13 +1736,42 @@ function registeredPanel(reg) {
     { v: top ? dec1(top.s.ts) : '-', k: 'Highest TrueSkill', n: top ? esc(top.n) : '' },
   ]) + `<div class="panel" style="--c:var(--c-teams)"><h2>${icon('users')}Registered teams</h2>
     <div class="sub">From VEX Events${when ? `, checked ${esc(when)}` : ''}. The list can change until the event starts. Sorted by TrueSkill, a rating <span class="computed">computed</span> from every match this season; teams without a match yet are listed last. Labels come from this season's results so far; labels with a clock are from earlier seasons. ${helpLink()}</div>
-    ${facts.length ? `<div class="reg-summary">${facts.join('')}</div>` : ''}
-    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Team</th><th>Name</th><th>This season</th><th class="num">Record</th><th class="num">TrueSkill</th><th class="num">Skills score</th><th class="num">Events</th><th>Organization</th><th>Location</th></tr></thead><tbody>
-    ${rows.map(r => `<tr><td>${teamLink(r.n)}</td><td>${esc(r.name)}</td><td><div class="lbls">${seasonLabels(r, stateRank[r.n])}</div></td>
-      <td class="num">${r.s ? record(r.s) : dash}</td><td class="num">${r.s && r.s.ts != null ? dec1(r.s.ts) : dash}</td>
-      <td class="num">${r.s && r.s.skills != null ? r.s.skills : dash}</td><td class="num">${r.s ? r.s.events : 0}</td>
-      <td class="dim">${esc(r.org)}</td><td class="dim">${esc(place(r))}</td></tr>`).join('')}
+    ${filterBar}
+    <p class="reg-hint">Tap a team for all its labels and numbers.</p>
+    <div class="tbl-wrap"><table class="tbl reg-table"><thead><tr><th>Team</th><th>Name</th><th>Labels</th><th class="num">Record</th><th class="num">TrueSkill</th><th class="num">Skills score</th><th class="num">Events</th><th>Organization</th><th>Location</th></tr></thead><tbody>
+    ${rows.map(r => `<tr data-tags="${r.tags.join(' ')}"><td class="c-team">${teamLink(r.n)}</td><td class="c-name">${esc(r.name)}</td><td class="c-lbls"><div class="lbls">${seasonLabels(r, stateRank[r.n])}</div></td>
+      <td class="num d-only">${r.s ? record(r.s) : dash}</td><td class="num d-only">${r.s && r.s.ts != null ? dec1(r.s.ts) : dash}</td>
+      <td class="num d-only">${r.s && r.s.skills != null ? r.s.skills : dash}</td><td class="num d-only">${r.s ? r.s.events : 0}</td>
+      <td class="dim d-only">${esc(r.org)}</td><td class="dim d-only">${esc(place(r))}</td>
+      <td class="m-only c-ptr"><div class="lbls">${pointers(r)}</div></td>
+      <td class="m-only c-tog"><button type="button" class="reg-tog" aria-expanded="false" aria-label="Details for ${esc(r.n)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></td>
+      <td class="m-only c-stats">${r.s ? [`Record ${record(r.s)}`, r.s.ts != null ? `TrueSkill ${dec1(r.s.ts)}` : '', r.s.skills != null ? `Skills ${r.s.skills}` : '', plural(r.s.events, 'event')].filter(Boolean).join(' &middot; ') : 'No results yet this season'}
+        <div class="dim">${esc([r.org, place(r)].filter(Boolean).join(' · '))}</div></td></tr>`).join('')}
     </tbody></table></div></div>`;
+}
+
+// Filter buttons above the registered teams: show only the teams with the chosen tag.
+function wireRegFilter(el) {
+  const bar = el.querySelector('.reg-filter');
+  if (!bar) return;
+  const rows = el.querySelectorAll('.reg-table tbody tr');
+  bar.onclick = ev => {
+    const b = ev.target.closest('button[data-f]');
+    if (!b) return;
+    const f = b.dataset.f;
+    bar.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    rows.forEach(tr => { tr.hidden = f !== 'all' && !tr.dataset.tags.split(' ').includes(f); });
+    track('filter_registered', { label: f });
+  };
+  const body = el.querySelector('.reg-table tbody');
+  if (body) body.onclick = ev => {
+    if (ev.target.closest('a') || !matchMedia('(max-width: 640px)').matches) return;
+    const tr = ev.target.closest('tr');
+    if (!tr) return;
+    const open = tr.classList.toggle('open');
+    const b = tr.querySelector('.reg-tog');
+    if (b) b.setAttribute('aria-expanded', String(open));
+  };
 }
 
 // While an event the live checks follow is in progress, reload its data every 5 minutes (only while the tab is visible).
@@ -1729,6 +1816,7 @@ async function renderEvent(id, tok, refresh) {
       : 'No results have been published for this event yet.'}</div>`;
     if (hasReg) h += registeredPanel(reg);
     el.innerHTML = h;
+    wireRegFilter(el);
     if (tracked && isLive) scheduleLiveRefresh(id, tok);
     return;
   }
