@@ -864,11 +864,11 @@
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
         <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Game Objective</h3>
         <p style="font-size:12px;color:var(--text-dim);line-height:1.7">
-          Two alliances (Red and Blue), each with two teams, compete on a 12'x12' field. The primary objective is to score points by
-          <strong style="color:var(--text)">strategically stacking Pins and Cups on Goals</strong>,
-          managing field quadrants via <strong style="color:var(--highlight)">Toggles</strong>, and
-          physically controlling the <strong style="color:var(--highlight)">Midfield Boundary</strong> during the Endgame.
-          Override rewards <strong style="color:var(--text)">precision and orientation</strong> over brute-force collection.
+          Two alliances (Red and Blue) of two teams each play on a 12'x12' field. Points come from
+          <strong style="color:var(--text)">stacking Pins and Cups on Goals</strong>, from
+          <strong style="color:var(--highlight)">Toggles</strong> that set which alliance a quadrant's Yellow Pins count for, and from robot positions inside the
+          <strong style="color:var(--highlight)">Midfield Boundary</strong> at the end of the match.
+          Only the visible color of a Pin scores, so <strong style="color:var(--text)">the orientation of each Cup</strong> affects the score.
         </p>
       </div>
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
@@ -877,7 +877,7 @@
           <strong style="color:var(--text)">56 Cups</strong> . Hollow, hourglass-shaped with one <strong style="color:var(--highlight)">opaque</strong> side and one <strong style="color:var(--highlight)">transparent</strong> side. Orientation controls which colors are visible.<br><br>
           <strong style="color:var(--text)">63 Pins</strong> . Two-toned pins that fit inside Cups:<br>
           &nbsp;&bull; 20 Red/Yellow &nbsp;&bull; 20 Blue/Yellow &nbsp;&bull; 19 Yellow/Yellow<br>
-          &nbsp;&bull; <strong style="color:#f87171">Only 4 Red/Blue</strong> (highly contested!)<br><br>
+          &nbsp;&bull; <strong style="color:#f87171">4 Red/Blue</strong> (the fewest of any Pin type)<br><br>
           <strong style="color:var(--text)">9 Goals</strong> . 5 Neutral (either alliance) + 4 Alliance-specific (2 Red, 2 Blue). All 9 equipped with <strong style="color:#a5b4fc">AprilTags</strong> for vision sensor tracking.
         </p>
       </div>
@@ -906,7 +906,7 @@
         <div class="stat-tile" style="border-color:var(--accent)"><div class="st-val" style="color:#a5b4fc">12 pts</div><div class="st-label">Autonomous Bonus</div></div>
         <div class="stat-tile"><div class="st-val" style="color:#a78bfa">5 pts</div><div class="st-label">Visible Red/Blue Pin</div></div>
         <div class="stat-tile"><div class="st-val" style="color:var(--text-dim)">0 pts</div><div class="st-label">Yellow Pin (unclaimed)</div></div>
-        <div class="stat-tile" style="border-color:var(--highlight)"><div class="st-val" style="color:var(--highlight)">10 pts</div><div class="st-label">Yellow Pin (Toggled!)</div></div>
+        <div class="stat-tile" style="border-color:var(--highlight)"><div class="st-val" style="color:var(--highlight)">10 pts</div><div class="st-label">Yellow Pin (quadrant toggled)</div></div>
         <div class="stat-tile"><div class="st-val" style="color:var(--competitive)">8 pts</div><div class="st-label">Endgame Position</div></div>
         <div class="stat-tile" style="border-color:#a78bfa"><div class="st-val" style="color:#a78bfa">Bonus</div><div class="st-label">Center Goal (most robots)</div></div>
       </div>
@@ -918,10 +918,10 @@
 
     <!-- The Toggle System -->
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--highlight);border-radius:14px;padding:18px;margin-bottom:16px">
-      <h3 style="font-size:14px;font-weight:700;margin-bottom:8px;color:var(--highlight)">The Toggle System: Override's Signature Mechanic</h3>
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:8px;color:var(--highlight)">Toggles and Quadrant Control</h3>
       <p style="font-size:12px;color:var(--text-dim);line-height:1.7">
         The field is divided into <strong style="color:var(--text)">four quadrants</strong>, each with a physical <strong style="color:var(--highlight)">Toggle switch</strong> that starts on Neutral/Yellow.
-        When an Alliance flips a quadrant's Toggle to their color (e.g., Red), every visible <strong style="color:var(--highlight)">Yellow Pin on any stack in that quadrant instantly becomes worth 10 points</strong> for that Alliance.
+        When an Alliance flips a quadrant's Toggle to their color (e.g., Red), every visible <strong style="color:var(--highlight)">Yellow Pin on any stack in that quadrant counts 10 points</strong> for that Alliance.
         Yellow Pins are worth 0 points when unclaimed, but a single Toggle flip can claim multiple Yellow Pins at once.
       </p>
       <div class="override-grid-3" style="margin-top:12px">
@@ -936,42 +936,42 @@
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
         <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">Robot Constraints</h3>
         <p style="font-size:12px;color:var(--text-dim);line-height:1.8">
-          <strong style="color:#f87171">Possession Limit: 1 Cup + 1 Pin.</strong> Robots can only hold one Cup and one Pin at any time. No hoarding. Fast cycle times are critical.<br><br>
-          <strong style="color:var(--highlight)">50-inch Height Limit.</strong> Standard vertical expansion cap throughout the match.<br><br>
+          <strong style="color:#f87171">Possession Limit: 1 Cup + 1 Pin.</strong> A robot can hold at most one Cup and one Pin at a time, so scoring takes repeated trips between objects and Goals.<br><br>
+          <strong style="color:var(--highlight)">50-inch Height Limit.</strong> Maximum robot height throughout the match.<br><br>
           <strong style="color:#a78bfa">55W Drivetrain Power Cap.</strong> V5 Smart Motors are 11W each, so this means a <strong style="color:var(--text)">5-motor maximum for your drive base</strong>. You can still use remaining motor capacity elsewhere on the robot.<br><br>
-          <strong style="color:var(--competitive)">18-inch Endgame Height.</strong> Any robot inside the Midfield Boundary during the last 10 seconds must stay under 18 inches. Requires a mechanical transformation.
+          <strong style="color:var(--competitive)">18-inch Endgame Height.</strong> Any robot inside the Midfield Boundary during the last 10 seconds must stay under 18 inches, so a robot that extends higher has to lower itself before then.
         </p>
       </div>
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px">
         <h3 style="font-size:14px;font-weight:700;margin-bottom:8px">The Endgame (Last 10 Seconds)</h3>
         <p style="font-size:12px;color:var(--text-dim);line-height:1.8">
-          <strong style="color:var(--highlight)">Midfield Boundary.</strong> The final 10 seconds revolve around physical control of the midfield.<br><br>
+          <strong style="color:var(--highlight)">Midfield Boundary.</strong> The last 10 seconds score robot positions in the midfield.<br><br>
           <strong style="color:var(--text)">8 pts per robot.</strong> Any robot breaking the plane of the Midfield Boundary when time expires earns positioning points.<br><br>
           <strong style="color:#a78bfa">Center Goal Bonus.</strong> The Alliance with the <strong style="color:var(--text)">most robots inside the boundary</strong> at the buzzer claims all Yellow Pin points on the Center Goal.<br><br>
-          <strong style="color:#f87171">Expect brawling.</strong> Heavy defense and shoving matches in midfield. Your 55W drive base needs enough traction to hold position.
+          <strong style="color:#f87171">Contact.</strong> Robots from both alliances can be inside the boundary at once, so drivetrain traction under the 55W cap affects whether a robot holds its position.
         </p>
       </div>
     </div>
 
     <!-- Strategic Takeaways -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
-      <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">Key Strategic Takeaways</h3>
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">Design Considerations from the Rules</h3>
       <div class="override-strat-grid">
         <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
           <strong style="color:var(--highlight)">1. Drivetrain Power Allocation</strong><br>
-          You can no longer brute-force with an 8-motor drive. Optimize a 4- or 5-motor drivetrain to run efficiently on 55W. The silver lining: ample motor power left over for complex intakes, orienting mechanisms, and fast 50-inch lifts.<br><br>
-          <strong style="color:#a78bfa">2. Orientation is King</strong><br>
-          Because of the opaque/transparent Cup sides, your intake mechanism must rapidly flip and control the orientation of Cups before placing them on a stack. This is a precision challenge, not a power challenge.<br><br>
-          <strong style="color:#a5b4fc">3. Vision Sensors are Mandatory</strong><br>
-          With AprilTags on all 9 Goals and strict 1-Cup/1-Pin possession limits, your robot will make many trips. Vision/AI sensors will be crucial to automate alignment and minimize cycle times.
+          With the 55W drivetrain cap, a drive base uses at most five 11W motors. The remaining motor capacity can go to intakes, Cup-orienting mechanisms and lifts.<br><br>
+          <strong style="color:#a78bfa">2. Cup Orientation</strong><br>
+          Each Cup has one opaque and one transparent side, and only visible Pin colors score, so an intake has to control how a Cup is turned before it is placed on a stack.<br><br>
+          <strong style="color:#a5b4fc">3. Vision Sensing</strong><br>
+          All 9 Goals carry AprilTags, and the one-Cup, one-Pin possession limit means many trips per match. Vision sensors can be used to automate alignment with Goals.
         </div>
         <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
-          <strong style="color:#f87171">4. Toggle Defense</strong><br>
-          A single Toggle flip creates a 20+ point swing. Have a dedicated strategy for defending the Toggles in your highest-scoring quadrants. These will decide matches.<br><br>
+          <strong style="color:#f87171">4. Toggle Control</strong><br>
+          Flipping a quadrant's Toggle from the opposing color to your own moves each visible Yellow Pin there to your alliance: 10 points gained and 10 denied per Pin.<br><br>
           <strong style="color:var(--competitive)">5. The 4 Red/Blue Pins</strong><br>
-          With only 4 Red/Blue Pins on the entire field, these are the most contested objects. They score 5 points regardless of Toggle state and cannot be neutralized. Control them early.<br><br>
-          <strong style="color:#4ade80">6. Endgame Brawling</strong><br>
-          Robots in midfield must retract under 18 inches. Your lift must retract quickly and reliably, and your 55W drive base needs enough traction to avoid being shoved out of the boundary for the massive Center Goal Bonus.
+          There are 4 Red/Blue Pins on the field. A visible Red/Blue Pin scores 5 points whatever the Toggle state.<br><br>
+          <strong style="color:#4ade80">6. Endgame Height</strong><br>
+          Robots inside the Midfield Boundary in the last 10 seconds must be under 18 inches, so a lift has to retract before then. The Center Goal Bonus goes to the alliance with more robots inside the boundary.
         </div>
       </div>
     </div>
