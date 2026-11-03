@@ -1677,7 +1677,7 @@ function registeredPanel(reg) {
     { v: fmtInt(qualified), k: 'Qualified for Worlds' },
     { v: top ? dec1(top.s.ts) : '-', k: 'Highest TrueSkill', n: top ? esc(top.n) : '' },
   ]) + `<div class="panel" style="--c:var(--c-teams)"><h2>${icon('users')}Registered teams</h2>
-    <div class="sub">From VEX Events${when ? `, checked ${esc(when)}` : ''}. The list can change until the event starts. Sorted by TrueSkill, a rating <span class="computed">computed</span> from every match this season; teams without a match yet are listed last. Labels come from this season's results so far. ${helpLink()}</div>
+    <div class="sub">From VEX Events${when ? `, checked ${esc(when)}` : ''}. The list can change until the event starts. Sorted by TrueSkill, a rating <span class="computed">computed</span> from every match this season; teams without a match yet are listed last. Labels come from this season's results so far; labels with a clock are from earlier seasons. ${helpLink()}</div>
     ${facts.length ? `<div class="reg-summary">${facts.join('')}</div>` : ''}
     <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Team</th><th>Name</th><th>This season</th><th class="num">Record</th><th class="num">TrueSkill</th><th class="num">Skills score</th><th class="num">Events</th><th>Organization</th><th>Location</th></tr></thead><tbody>
     ${rows.map(r => `<tr><td>${teamLink(r.n)}</td><td>${esc(r.name)}</td><td><div class="lbls">${seasonLabels(r, stateRank[r.n])}</div></td>
