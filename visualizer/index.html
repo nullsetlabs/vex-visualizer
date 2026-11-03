@@ -1956,7 +1956,7 @@ async function renderHistory(tok) {
     </div>
     ${leaders.length ? `<div class="panel" style="--c:var(--c-hist)"><h2>${icon('trophy')}Most Excellence and champion awards</h2><div class="sub">${esc(season.label)} ${esc(season.game)}, ${esc(area)}</div>
       <div class="hist-leaders">${leaders.map(t => `<div class="hl"><span class="hl-team">${teamLink(t.n)}</span><span class="dim">${esc((S.teamByNum[t.n] || {}).name || '')}</span>
-        <span class="lbls">${t.exc ? `<span class="lb lb-exc">${icon('star')}Excellence x${t.exc}</span>` : ''}${t.champ ? `<span class="lb lb-champ">${icon('trophy')}Champion x${t.champ}</span>` : ''}<span class="lb lb-award">${plural(t.awards, 'award')}</span></span></div>`).join('')}</div></div>` : ''}
+        <span class="lbls">${t.exc ? `<span class="lb lb-exc">${icon('star')}Excellence${t.exc > 1 ? ` x${t.exc}` : ''}</span>` : ''}${t.champ ? `<span class="lb lb-champ">${icon('trophy')}Champion${t.champ > 1 ? ` x${t.champ}` : ''}</span>` : ''}<span class="lb lb-award">${plural(t.awards, 'award')}</span></span></div>`).join('')}</div></div>` : ''}
     <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Date</th><th>Event</th><th>Award</th><th>Teams</th><th>Location</th></tr></thead><tbody>
     ${all.slice(0, f.limit).map(a => `<tr><td>${esc(fmtDate(a.start))} ${esc(a.start.slice(0, 4))}</td>
       <td class="wrap"><a class="ev-link" href="${officialEvent(a.sku)}" target="_blank" rel="noopener">${esc(a.name)}</a>${(a.level || '').toLowerCase() === 'world' ? ' <span class="badge b-world">World Championship</span>' : a.level === 'Signature' ? ' <span class="badge b-sig">Signature</span>' : ''}</td>
