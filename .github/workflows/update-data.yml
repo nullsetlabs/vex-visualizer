@@ -18,6 +18,9 @@
 #     event starting in the next 14 days, and the skills standings.
 #     Ordinary tournament results therefore appear within three to four days.
 #   - Manual: Actions tab > Update VEX Visualizer Data > Run workflow.
+#     Mode "history" continues the one-time backfill of past-season awards
+#     (visualizer/history.py, about 2,500 requests a season, up to 25 minutes a
+#     run); run it until data/history/index.json lists every season as complete.
 #   - GitHub stopped running this schedule in July 2026 (60 days without
 #     commits) and did not resume it, so a Cloudflare Worker starts the same
 #     runs at the same times: tools/cloudflare-timer/.
@@ -33,7 +36,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'full = event list + new events + standings; live = events in progress only; rebuild = no API calls'
+        description: 'full = event list + new events + standings; live = events in progress only; rebuild = no API calls; history = continue the past-season award backfill'
         required: false
         default: 'full'
         type: choice
@@ -41,6 +44,7 @@ on:
           - full
           - live
           - rebuild
+          - history
 
 concurrency:
   group: data-update
@@ -89,6 +93,7 @@ jobs:
             full)    python -u season_pipeline.py --budget-min 20 ;;
             live)    python -u season_pipeline.py --live --budget-min 10 ;;
             rebuild) python -u season_pipeline.py --rebuild ;;
+            history) python -u history.py --budget-min 25 ;;
           esac
 
       - name: Check the data files
