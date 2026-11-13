@@ -1806,7 +1806,11 @@ async function renderEvent(id, tok, refresh) {
   const liveNote = !isLive ? '' : `<div class="notice">${tracked
     ? `This event is in progress. Results are checked about every 30 minutes while it runs, and this page reloads them every 5 minutes.${updated ? ` Data updated ${esc(updated)}.` : ''}`
     : 'This event is in progress. Its results are added with the next update, on Monday or Thursday.'}</div>`;
-  if (!ev || (!ev.matches.length && !ev.awards.length && !ev.skills.length)) {
+  // Before an event, live tracking can load its file with the award slots listed but no winners and no matches played.
+  // Until real results exist, show the registered teams instead of empty results.
+  const hasResults = !!ev && (ev.matches.some(m => m.played) || ev.skills.length > 0 ||
+    ev.awards.some(a => a.teams.length || (a.people || []).length));
+  if (!hasResults) {
     const reg = ev && ev.teams.length ? { teams: ev.teams, checked: S.meta && S.meta.builtAt } : await loadJSON(`data/registrations/${id}.json`);
     if (tok !== routeTok) return;
     const hasReg = !!(reg && reg.teams && reg.teams.length);
